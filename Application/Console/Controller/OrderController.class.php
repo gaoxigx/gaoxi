@@ -39,17 +39,26 @@ private function getequipment_name(){
 //通过产品id获取类别id,图片地址
 public function get_proid_to_typeid($id='',$typeid=''){
     $data=D('product');
-    $name = $data-> field('protype,pic')->where('id='.$id)->order('id desc')->find();
+    $name = $data-> field('protype,pic,pic1')->where('id='.$id)->order('id desc')->find();
     
     $pro = $name['protype'];
     $pic = $name['pic'];
-    if($typeid==1){
-        return $pro;
-    }else{
-        return $pic;
-}
-    // return $pic;
-    
+    $pic1 = $name['pic1'];
+    switch ($typeid) {
+        case 1:
+            return $pro;
+            break;
+        case 2:
+            return $pic;
+            break;
+        case 3:
+            return $pic1;
+            break;
+        
+        default:
+            # code...
+            break;
+    }    
 
 }
 
@@ -160,15 +169,17 @@ public function insert(){
     $data['payment_status'] = 0;
     // $dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@g.com');
     $roleList   =   D('order_info');
-    $set = $roleList->create($data);
+    // $set = $roleList->create($data);
 
     if($roleList->create()) {
         $result =   $roleList->add($data);
         if($result) {
             foreach( $data['newslist'] as $k=>$v){  
                 $dataList[] = array(
-                'protype'=>$this->get_proid_to_typeid($v,1),
-                'propic'=>$this->get_proid_to_typeid($v,2),
+                'proid'=>$data["id".$v],
+                'protype'=>$data["protype".$v],
+                'pic'=>$data["pic".$v],
+                'pic1'=>$data["pics".$v],
                 'product'=>$data["product".$v],
                 'price2'=>$data["price".$v],
                 'buynum'=>$data["text_box".$v],
@@ -178,7 +189,8 @@ public function insert(){
                 'addtime'=>time()
                 );
             }
-
+// dump($dataList);
+// exit;
             $user=M('order_goods');
             $user->addAll($dataList);
             // $sset = $User->addAll($dataList);
@@ -210,6 +222,8 @@ public function edit($id){
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
      $list = $data->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
+// dump($list);
+// exit;
      $this->assign('prolist',$list);// 赋值数据集
     // $this->display();
     $controller   =   M('order_info');

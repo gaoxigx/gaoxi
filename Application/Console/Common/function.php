@@ -1,5 +1,17 @@
 <?php
 
+
+//通用获取判断
+//
+function getstautsnum($stauts){
+    if ($stauts == 1) {
+        return '是';
+    }else{
+        return '否';
+    }
+
+}
+
 function getprotype(){
     $data=D('protype');
     $name = $data->where('1=1')->order('orderid')->select();

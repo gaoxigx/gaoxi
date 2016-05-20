@@ -115,35 +115,11 @@ class EquipmentController extends CommonController {
         // $this->display();
     }
 
-    //编辑
-    public function wecate_edit($id=0){
-    $controller   =   M('Wecate');
-    // 读取数据
-    $data =   $controller->find($id);
-    if($data) {
-        $this->assign('data',$data);// 模板变量赋值
-    }else{
-        $this->error('数据错误');
+    protected function top(){
+        // $this->display();
     }
-    $this->display();
 
-
-     }
-
-
-//更新数据
-    public function wecate_update(){
-    $roleList   =   D('Wecate');
-    if($roleList->create()) {
-        $result = $roleList->save();
-        if($result) {
-            $this->success('操作成功！');
-        }else{
-            $this->error('写入错误！');
-        }
-    }else{
-        $this->error($roleList->getError());
+    private function hello3(){
+        echo '这是private方法!';
     }
- }
 }
-

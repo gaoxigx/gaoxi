@@ -36,17 +36,17 @@ class WecateController extends CommonController {
         }
         $User = M('wecate'); // 实例化User对象
         $data=$User->select();
-        var_dump($data);
-        
-        exit();
+//        var_dump($data);
+//        
+//        exit();
         $count = $User->where($where)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->where($where)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
-        var_dump($list);
-        exit();
+//        var_dump($list);
+//        exit();
         //echo $User->getLastSql();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -60,14 +60,14 @@ class WecateController extends CommonController {
 
 //插入数据
     public function insert(){
-
+        $jumpUrl =U('Console/Wecate/Wecate');
         $roleList   =   D('Wecate');
         if($roleList->create()) {
             $result =   $roleList->add();
             if($result) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！', $jumpUrl);
             }else{
-                $this->error('数据添加错误！');
+                $this->error('数据添加错误！', $jumpUrl);
             }
         }else{
             $this->error($roleList->getError());
@@ -77,27 +77,30 @@ class WecateController extends CommonController {
 
 //修改管理员
     public function edit($id=0){
-//    $controller   =   M('Wecate');
-// 读取数据
-//    $data =   $controller->find($id);
+        
+        $jumpUrl =U('Console/Wecate/Wecate'); 
         $id = (int)$id;
         $model = D('Wecate');          
-        if (IS_POST) {            
+        if (IS_POST) {
+            $id = I('post.id');
+           
             if ($id > 0) {
                 $data=$model->create();
 //                var_dump($data);
-                exit();
-                $map['id']=I('post.id');
+//                exit();
+                $map['id']=$id;
                 $result=$model->where($map)->save($data);
                 if ($result){
-                    $this->success('修改成功');
+                    $this->success('修改成功', $jumpUrl);
                 } else {                    
-                    $this->error('修改失败');
+                    $this->error('修改失败', $jumpUrl);
                 }          
             } 
         } else {            
-         $user = $id ? $model->where(['id'=>$id])->find():[];
-         
+         if($id){
+             $user = $model->where(['id'=>$id])->find(); 
+         } 
+        
          $this->assign('user',$user);
          $this->assign('id',$id);            
          $this->display();

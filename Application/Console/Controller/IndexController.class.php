@@ -4,11 +4,10 @@ use Think\Controller;
 class IndexController extends CommonController {
     public function index(){
         // $this->show('','utf-8');
-
         $this->display();
     }
     public function main(){
-        // $this->show('','utf-8');    
+        // $this->show('','utf-8');
         $this->display();
     }
     public function left(){

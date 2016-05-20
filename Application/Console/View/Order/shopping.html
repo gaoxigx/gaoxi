@@ -97,9 +97,25 @@ setTotal(); GetCount();
 
 });
 
+$("#total{$i}").change(function(){
+
+ // $("#total{$i}").val(total.val());
+ $("#total{$i}").val(parseInt($(this).val()).toFixed(2));
+ $("#tolnums{$i}").val(parseInt($("#total{$i}").val()));
+alert(parseInt($("#total{$i}").val()).toFixed(2));
+
+
+ // setTotal2();
+ GetCount();
+
+});
+
+
+
 var t = $("#text_box{$i}");//产品数量
 var p = $("#price{$i}");//单价
 var z = $("#zhekou{$i}");//折扣
+var total = $("#total{$i}");//折扣后价格
 
 $("#add{$i}").click(function () {
 t.val(parseInt(t.val()) + 1)
@@ -113,6 +129,14 @@ setTotal(); GetCount();
 function setTotal() {
 $("#total{$i}").val(parseInt((parseInt(t.val()) * p.val() * z.val()*0.1)).toFixed(2));
  $("#tolnums{$i}").val(parseInt(t.val()) * p.val() * z.val()*0.1);
+ // alert(parseInt(t.val()) * p.val() * z.val()*0.1);
+ // alert(parseInt((parseInt(t.val()) * p.val() * z.val()*0.1)).toFixed(2));
+}
+
+function setTotal2() {
+ $("#total{$i}").val(total.val());
+ $("#tolnums{$i}").val(parseInt(total.val()).toFixed(2));
+alert(parseInt($total.val()).toFixed(2));
 }
 setTotal();
     })
@@ -122,8 +146,12 @@ setTotal();
 <td class="tb2_td1">
   <input type="checkbox" value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
 <input type="hidden" name="tolnums" id="tolnums{$i}" value="">
+<input type="hidden" name="id{$i}"  value="{$pvo.id}">
+<input type="hidden" name="protype{$i}"  value="{$pvo.protype}">
+<input type="hidden" name="pic{$i}"  value="{$pvo.pic}">
+<input type="hidden" name="pics{$i}"  value="{$pvo.pic1}">
 </td>
-<td class="tb2_td2"><a href="#"><img src="__PUBLIC__/console/images/img1.jpg"/></a></td>
+<td class="tb2_td2"><a href="#"><img src="/Uploads/{$pvo.pic1}"/></a></td>
 <td class="tb2_td3">
 <input   name="product{$i}" type="text" value="{$pvo.product}" class="totnum" style="width:200px;color:#666;" />
   

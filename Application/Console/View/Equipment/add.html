@@ -42,46 +42,34 @@
     
     <div class="formtext">请正确填写发布信息！</div>
     <ul class="forminfo">
-    <li><label>所属分组<b>*</b></label>  
-    
-
-    <div class="vocation uew-select">
-    <select id="roleid" name="roleid" class="uew-select-value">
-    <option value="1">管理员</option>
-    <option value="2">代言人</option>
-    </select>
-    </div>
-    
-    </li>
-
     <li><label>设备型号<b>*</b></label><input name="xinghao" type="text" class="dfinput" value=""  /></li>
 
     <li><label>设备编号<b>*</b></label><input name="bianhao" type="text" class="dfinput" value=""  /></li>
-    <li><label>设备绑定代言人<b>*</b></label><input name="daiyanren" type="text" class="dfinput" value=""  /></li>
-    <li><label>设备号码<b>*</b></label><input name="mobile" type="text" class="dfinput" value=""  />手机号</li>
-    <li><label>开机密码<b>*</b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
+    <li><label>绑定代言人<b></b></label><input name="daiyanren" type="text" class="dfinput" value=""  /></li>
+    <li><label>设备号码<b>*</b></label><input name="mobile" type="text" class="dfinput" value=""  />（手机号）</li>
+    <li><label>开机密码<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
 
-    <li><label>登陆微信号<b>*</b></label>
+    <li><label>登陆微信号<b></b></label>
         <input name="weixinhao" type="text" class="dfinput_left" value=""  />
-        <label class="pl10">微信密码<b>*</b></label>
+        <label class="pl10">微信密码<b></b></label>
         <input name="weixinpass" type="text" class="dfinput_left" value=""  />
     </li>
 
-    <li><label>登陆淘宝账号<b>*</b></label>
+    <li><label>登陆淘宝账号<b></b></label>
         <input name="taobaohao" type="text" class="dfinput_left" value=""  />
-        <label class="pl10">淘宝密码<b>*</b></label>
+        <label class="pl10">淘宝密码<b></b></label>
         <input name="taobaopass" type="text" class="dfinput_left" value=""  />
     </li>
 
-    <li><label>登陆QQ账号<b>*</b></label>
+    <li><label>登陆QQ账号<b></b></label>
         <input name="qqhao" type="text" class="dfinput_left" value=""  />
-        <label class="pl10">QQ密码<b>*</b></label>
+        <label class="pl10">QQ密码<b></b></label>
         <input name="qqpass" type="text" class="dfinput_left" value=""  />
     </li>
 
-    <li><label>微博账号<b>*</b></label>
+    <li><label>微博账号<b></b></label>
         <input name="weibohao" type="text" class="dfinput_left" value=""  />
-        <label class="pl10">微博密码<b>*</b></label>
+        <label class="pl10">微博密码<b></b></label>
         <input name="weibopass" type="text" class="dfinput_left" value=""  />
     </li>
 
@@ -96,7 +84,7 @@
     <li><label>登记日期<b>*</b></label><input name="addtime" type="text" class="Wdate" value="{:date('Y-m-d',time)}"  onClick="WdatePicker()" style="width:187px;"/></li>
    
 
-    <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+    <li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
     <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
 
     </ul>

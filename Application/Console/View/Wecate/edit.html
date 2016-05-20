@@ -45,7 +45,10 @@
 
         <div class="formbody">
             <div id="usual1" class="usual"> 
-                 <form name="form1" id="form1" method='post' action="__URL__/edit/id">
+                 <form name="form1" id="form1" method='post' action="__URL__/edit">
+                      <if condition="$id">
+                       <input name="id" type="hidden"   value="{$id}"/>
+                      </if> 
                 <div class="itab">
                    
                         <ul> 
@@ -86,9 +89,10 @@
                                 <input class="dfinput"  name="username" type="text"  placeholder="Username" />
                             </if>  
                         </li>
-
-                        <li><label>性别<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="2" name="sex">女</cite></li>
-
+                        
+                               
+                        <li><label>性别<b>*</b></label><cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
+                                  
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
                             &nbsp; &nbsp; &nbsp;
