@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">设备管理</a></li>
+    <li><a href="#">设备列表</a></li>  
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+     
+        <ul class="toolbar1">
+        <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
+        </ul>
+    <ul class="seachform">
+    <form action="/index.php/Console/Equipment/Plist" method="post" id="form2" name="form2">
+    <li><label>型号</label><input type="text" class="scinpute" name="xinghao"></li>
+    <li><label>编号</label><input type="text" class="scinpute" name="bianhao"></li>
+    <li><label>代言人</label><input type="text" class="scinpute" name="daiyanren"></li>
+    <li><label>手机</label><input type="text" class="scinpute" name="mobile"></li>
+    <li><label>负责人</label><input type="text" class="scinpute" name="fuzeren"></li>
+    <li><label>使用人</label><input type="text" class="scinpute" name="shiyongren"></li>
+
+    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
+    </li>
+    
+    </form></ul>
+    </div>
+    
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th><input name="" type="checkbox" value="" checked="checked"/></th>
+        <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+        <th>型号</th>
+        <th>编号</th>
+        <th>代言人</th>
+        <th>手机号</th>
+        <th>开机密码</th>
+        <th>微信</th>
+        <th>淘宝</th>
+        <th>QQ</th>
+        <th>微博</th>
+        <th>负责人</th>
+        <th>使用人</th>
+        <th>所在部门</th>
+        <th>所在工们</th>
+        <th>设备维护</th>
+        <th>添加日期</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="vo">
+        <tr>
+
+       <td><input name="" type="checkbox" value="" /></td>
+        <td>{$vo.id}</td>
+        <td>{$vo.xinghao}</td>
+        <td>{$vo.bianhao}</td>
+        <td>{$vo.daiyanren}</td>
+        <td>{$vo.mobile}</td>
+        <td>{$vo.kaijipassword}</td>
+        <td>{$vo.weixinhao}</td>
+        <td>{$vo.taobaohao}</td>
+        <td>{$vo.qqhao}</td>
+        <td>{$vo.weibohao}</td>
+        <td>{$vo.fuzeren}</td>
+        <td>{$vo.shiyongren}</td>
+        <td>{$vo.bumen}</td>
+        <td>{$vo.gongwei}</td>
+        <td>{$vo.weihu}</td>
+        <td>{$vo.addtime|date='Y-m-d',###}</td>
+        <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
+        </tr> 
+        </volist>
+        
+        </tbody>
+    </table>
+    
+   
+   <div id="page" class="pagination">
+　　{$page}
+</div>
+    
+    <div class="tip">
+    	<div class="tiptop"><span>提示信息</span><a></a></div>
+        
+      <div class="tipinfo">
+        <span><img src="__PUBLIC__/Console/images/ticon.png" /></span>
+        <div class="tipright">
+        <p>是否确认对信息的修改 ？</p>
+        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+        </div>
+        </div>
+        
+        <div class="tipbtn">
+        <input name="" type="button"  class="sure" value="确定" />&nbsp;
+        <input name="" type="button"  class="cancel" value="取消" />
+        </div>
+    
+    </div>
+    
+    
+    
+    
+    </div>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+
+</body>
+
+</html>

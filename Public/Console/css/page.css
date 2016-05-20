@@ -1,0 +1,43 @@
+    p{margin:0}
+            #page{
+                height:40px;
+                padding:20px 0px;
+                float: right;
+            }
+			#page span{
+                display:block;
+                float:left;
+                margin-right:10px;
+                padding:2px 12px;
+                height:24px;
+                border:1px #cccccc solid;
+                background:#fff;
+                text-decoration:none;
+                color:#ff0000;
+                font-size:12px;
+                line-height:24px;
+            }
+
+            #page a{
+                display:block;
+                float:left;
+                margin-right:10px;
+                padding:2px 12px;
+                height:24px;
+                border:1px #cccccc solid;
+                background:#fff;
+                text-decoration:none;
+                color:#808080;
+                font-size:12px;
+                line-height:24px;
+            }
+            #page a:hover{
+                color:#077ee3;
+                border:1px #077ee3 solid;
+            }
+            #page a.cur{
+                border:none;
+                background:#077ee3;
+                color:#fff;
+            }
+           

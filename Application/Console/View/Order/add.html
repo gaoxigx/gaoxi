@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/Console/js/jquery.1.4.2-min.js"></script>
+<script src="__PUBLIC__/Console/js/Calculation.js"></script>
+
+
+
+</head>
+
+<body>
+
+    <div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    
+    <li><a href="#">首页</a></li>
+    <li><a href="#">订单管理</a></li>
+    <li><a href="#">添加订单</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    <div id="usual1" class="usual"> 
+    
+    <div class="itab">
+        <form name="form1" id="form1" method='post' action="__URL__/insert">
+    <ul> 
+
+    <li><a href="#tab1" class="selected">发布信息</a></li> 
+   <input type="hidden" name="order_no"  value="2016051599535210">
+    </ul>
+    </div> 
+    
+    <div id="tab1" class="tabson">
+    
+    <div class="formtext">请正确填写发布信息！</div>
+    <ul class="forminfo">
+    <li><label>经纪人<b>*</b></label>  
+        <div class="vocation uew-select">
+            <select name="agent" class="uew-select-value">
+                <volist name="agent" id="vo1">
+                <option value="{$vo1.id}">{$vo1.username}({$vo1.accounts})</option>
+                </volist>
+            </select>
+        </div>
+    </li>
+
+    <li><label>经纪助理编号<b>*</b></label>  
+            <div class="vocation uew-select">
+                <select name="assistant" class="uew-select-value">
+                    <volist name="assistant" id="vo2">
+                    <option value="{$vo2.id}">{$vo2.username}({$vo2.accounts})</option>
+                    </volist>
+                </select>
+            </div>
+    </li>
+    <li><label>设备编号<b>*</b></label>  
+        <div class="vocation uew-select">
+            <select name="equipment" class="uew-select-value">
+                <volist name="equipment" id="vo3">
+                <option value="{$vo3.id}">{$vo3.xinghao}({$vo3.bianhao})</option>
+            </volist>
+            </select>
+        </div>
+    </li>
+
+        <li><label>支付方式<b>*</b></label>  
+            <div class="vocation uew-select">
+                <select name="Payment_method" class="uew-select-value">
+                    <volist name="payment" id="vo4">
+                    <option value="{$vo4.id}">{$vo4.payment}</option>
+                    </volist>
+                </select>
+            </div>
+    </li>
+
+    <li><label>买家微信号<b>*</b></label><input name="buyer_wechat" type="text" class="dfinput" value=""  /></li>
+    <li><label>订单来源<b>*</b></label><input name="source" type="text" class="dfinput" value=""  /></li>
+    <li><label>收件人姓名<b>*</b></label><input name="username" type="text" class="dfinput" value=""  /></li>
+    <li><label>收件人电话<b>*</b></label><input name="mobile" type="text" class="dfinput" value=""  /></li>
+    <li><label>收件人地址<b>*</b></label><input name="address" type="text" class="dfinput" value=""  /></li>
+    <li><label>订单备注<b>*</b></label><input name="note" type="text" class="dfinput" value=""  /></li>
+    <li><label><b>购买商品</b></li>
+    </ul>
+
+    <include file="./Application/Console/View/order/shopping.html" />
+
+
+    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="提交订单"/></li>
+
+    
+</form>    
+    </div> 
+      
+    </div> 
+    </div>
+
+
+    
+    
+    
+    
+    </div>
+</body>
+
+</html>

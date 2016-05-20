@@ -1,0 +1,189 @@
+<script>
+$(document).ready(function () {
+
+    //jquery特效制作复选框全选反选取消(无插件)
+    // 全选        
+    $(".allselect").click(function () {
+        $(".gwc_tb2 input[aajq=newslist]").each(function () {
+            $(this).attr("checked", true);
+            $(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+        });
+        GetCount();
+    });
+
+    //反选
+    $("#invert").click(function () {
+        $(".gwc_tb2 input[aajq=newslist]").each(function () {
+            if ($(this).attr("checked")) {
+                $(this).attr("checked", false);
+                //$(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+            } else {
+                $(this).attr("checked", true);
+                //$(this).next().css({ "background-color": "#3366cc", "color": "#000000" });
+            } 
+        });
+        GetCount();
+    });
+
+    //取消
+    $("#cancel").click(function () {
+        $(".gwc_tb2 input[aajq=newslist]").each(function () {
+            $(this).attr("checked", false);
+            // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+        });
+        GetCount();
+    });
+
+    // 所有复选(:checkbox)框点击事件
+    $(".gwc_tb2 input[aajq=newslist]").click(function () {
+        if ($(this).attr("checked")) {
+            //$(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+        } else {
+            // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+        }
+    });
+
+    // 输出
+    $(".gwc_tb2 input[aajq=newslist]").click(function () {
+        // $("#total2").html() = GetCount($(this));
+        GetCount();
+        //alert(conts);
+    });
+});
+//******************
+function GetCount() {
+    var conts = 0;
+    var aa = 0;
+    $(".gwc_tb2 input[aajq=newslist]").each(function () {
+        if ($(this).attr("checked")) {
+            for (var i = 0; i < $(this).length; i++) {
+                conts += parseInt($(this).next().val());
+                aa += 1;
+            }
+        }
+    });
+    $("#shuliang").val(aa);
+    $("#zong1").val((conts).toFixed(2));
+    $("#jz1").css("display", "none");
+    $("#jz2").css("display", "block");
+}
+</script>
+<div class="gwc" style=" margin:auto;">
+<table cellpadding="0" cellspacing="0" class="gwc_tb1">
+    <tr>
+      <td class="tb1_td1"><input id="Checkbox1" type="checkbox"  class="allselect"/></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb1_td3">商品</td>
+      <td class="tb1_td4">标准价</td>
+      <td class="tb1_td5">数量</td>
+      <td class="tb1_td6">优惠折扣</td>
+      <td class="tb1_td8">优惠总价</td>
+      <td class="tb1_td7">操作</td>
+    </tr>
+  </table>
+  <!---商品加减算总数---->
+  <volist name="prolist" id="pvo">
+<script>
+$(function () {
+//删除商品
+$(".mya").click(function()
+{
+$(this).parent().parent().parent().remove();
+GetCount();
+});
+
+$("#zhekou{$i}").change(function(){
+setTotal(); GetCount();
+
+});
+
+var t = $("#text_box{$i}");//产品数量
+var p = $("#price{$i}");//单价
+var z = $("#zhekou{$i}");//折扣
+
+$("#add{$i}").click(function () {
+t.val(parseInt(t.val()) + 1)
+setTotal(); GetCount();
+})
+$("#min{$i}").click(function () {
+t.val(parseInt(t.val()) - 1)
+if(t.val()<1){t.val(1)}//数量小于1为1
+setTotal(); GetCount();
+})
+function setTotal() {
+$("#total{$i}").val(parseInt((parseInt(t.val()) * p.val() * z.val()*0.1)).toFixed(2));
+ $("#tolnums{$i}").val(parseInt(t.val()) * p.val() * z.val()*0.1);
+}
+setTotal();
+    })
+    </script>
+<table cellpadding="0" cellspacing="0" class="gwc_tb2">
+<tr>
+<td class="tb2_td1">
+  <input type="checkbox" value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
+<input type="hidden" name="tolnums" id="tolnums{$i}" value="">
+</td>
+<td class="tb2_td2"><a href="#"><img src="__PUBLIC__/console/images/img1.jpg"/></a></td>
+<td class="tb2_td3">
+<input   name="product{$i}" type="text" value="{$pvo.product}" class="totnum" style="width:200px;color:#666;" />
+  
+</td>
+<td class="tb1_td4">
+￥<input id="price{$i}"  name="price{$i}" type="text" value="{$pvo.price2}" class="totnum" />
+</td>
+<td class="tb1_td5">
+<input id="min{$i}" name="" class="min" type="button" value="-" />
+<input id="text_box{$i}" name="text_box{$i}" type="text" value="1" class="num" />
+<input id="add{$i}" name="" class="add" type="button" value="+" />
+</td>
+<td class="tb1_td6">
+  <input id="zhekou{$i}" name="zhekou{$i}" type="text" value="{$pvo.discount}" class="num" />
+ 折</td>
+<td class="tb1_td8">
+ ￥<input id="total{$i}"  name="total{$i}" type="text" value="" class="totnum" />
+</td>
+<td class="tb1_td7"><a href="#" class="mya">删除</a></td>
+</tr>
+</table>
+</volist>
+  <!---总数---->
+  <script>
+    $(function () {
+        $(".quanxun").click(function () {
+            setTotal();
+            //alert($(lens[0]).text());
+        });
+        function setTotal() {
+            var len = $(".tot");
+            var num = 0;
+            for (var i = 0; i < len.length; i++) {
+                num = parseInt(num) + parseInt($(len[i]).text());
+
+            }
+            //alert(len.length);
+            $("#zong{$i}").text(parseInt(num));
+            $("#shuliang").text(len.length);
+        }
+        //setTotal();
+    })
+    </script>
+  <table cellpadding="0" cellspacing="0" class="gwc_tb3">
+    <tr>
+      <td class="tb1_td1"><input id="checkAll" class="allselect" type="checkbox" /></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb3_td1"><input id="invert" type="checkbox" />
+        反选
+        <input id="cancel" type="checkbox" />
+        取消 </td>
+      <td class="tb3_td2">已选商品
+<input id="shuliang"  name="pro_num" type="text" value="0" class="totprice"  />
+
+        </span>
+        件</td>
+      <td class="tb3_td3">合计(不含运费):<span>￥
+        <input id="zong1"  name="total_price" type="text" value="0" class="totprice" />
+        </span></td>
+
+    </tr>
+  </table>
+  </div>
