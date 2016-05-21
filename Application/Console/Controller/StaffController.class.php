@@ -12,7 +12,7 @@ class StaffController extends CommonController {
         $this->assign('roletype',$name);
     }
 
-//数据列表 这里的名称写错了
+//数据列表 
     public function Staff($name=''){
             
         // echo "string";
