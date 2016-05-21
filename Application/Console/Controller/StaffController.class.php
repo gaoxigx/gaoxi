@@ -14,13 +14,15 @@ class StaffController extends CommonController {
 
 //数据列表 
     public function Staff($name=''){
-            
-        // echo "string";
-        // $this->show('','utf-8');
+           
         $username = i('username');
         if($username){
             $where['nickname']  = array('like','%'.trim($username).'%');
             $where['username']  = array('like','%'.trim($username).'%');
+            $where['name']  = array('like','%'.trim($username).'%');
+            $where['section']  = array('like','%'.trim($username).'%');
+            $where['identity_card']  = array('like','%'.trim($username).'%');
+            $where['mobile']  = array('like','%'.trim($username).'%');              
             $where['_logic'] = 'or';
         }
         foreach( $map as $k=>$v){  
