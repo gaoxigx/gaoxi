@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
+
+
+</head>
+
+<body>
+
+    <div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    
+    <li><a href="#">首页</a></li>
+    <li><a href="#">组织结构</a></li>
+    <li><a href="#">添加分类</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    <div id="usual1" class="usual"> 
+    
+    <div class="itab">
+        <form name="form1" id="form1" method='post' action="__URL__/update">
+    <ul> 
+
+    <li><a href="#tab1" class="selected">添加分类</a></li> 
+   
+    </ul>
+    </div> 
+    
+    <div id="tab1" class="tabson">
+    
+    <div class="formtext">只能修改分类名称，不能转移到其它父类！</div>
+    <ul class="forminfo">
+    <input name="cate_id" type="hidden" class="dfinput" value="{$vo.cate_id}"  />
+    <li><label>分类名称<b>*</b></label><input name="cate_name" type="text" class="dfinput" value="{$vo.cate_name}"  /></li>
+
+    <li><label>传统名称<b>*</b></label><input name="cate_name2" type="text" class="dfinput" value="{$vo.cate_name2}"  /></li>
+
+
+ <li><label>是否显示<b>*</b></label><cite><input type="radio" checked="checked" value="1" <if condition="$vo.is_show eq '1'"> checked="checked" </if> name="is_show">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" <if condition="$vo.is_show eq '0'"> checked="checked" </if> name="is_show">否</cite></li>
+
+ <li><label>是否审核<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="status" <if condition="$vo.status eq '1'"> checked="checked" </if>>是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="status" <if condition="$vo.status eq '0'"> checked="checked" </if>>否</cite></li>
+    <li><label>备注<b>*</b></label>
+    <textarea class="textinput" rows="" cols="" name="cate_content">{$vo.cate_content}</textarea>
+    </li>
+
+    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改分类"/></li>
+
+    </ul>
+</form>    
+    </div> 
+    
+    
+   
+       
+    </div> 
+ 
+ 
+    
+    
+    
+    
+    
+    </div>
+
+
+</body>
+
+</html>
