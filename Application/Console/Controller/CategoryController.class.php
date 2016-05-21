@@ -45,9 +45,11 @@ public function insert(){
         $data['cate_haschild'] = 1;
 
         $roleList   =   D('category');
-        if($roleList->create()) {
-            $result =   $roleList->add();
-            $upresult =   $roleList->save($data); 
+        $data=$roleList->create();
+        if($data){
+            $data['addtime']=time();
+            $data['uptime']=time();
+            $result =   $roleList->add($data);
             if($result || $upresult) {
                 $this->success('数据添加成功！');
             }else{
@@ -70,8 +72,10 @@ public function edit($cate_id){
 }
  public function update(){
     $roleList   =   D('category');
-    if($roleList->create()) {
-        $result = $roleList->save();
+    $data=$roleList->create();
+    if($data) {
+        $data['addtime']=time();
+        $result = $roleList->save($data);
         if($result) {
             $this->success('操作成功！');
         }else{
