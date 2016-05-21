@@ -75,22 +75,26 @@
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li>        
 
-                            <li><label>岗位<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                    <select name="protype" class="uew-select-value">
-                                        <volist name="protype" id="voo">
-                                            <option value="{$voo.id}">{$voo.typename}</option>
-                                        </volist>
+                            <li><label>岗位<b>*</b></label>
+                                <div class="col-sm-9">
+                                    <select name="parent">
+                                        <option value="0">{$voo.category}</option>
+                                            <foreach name="category" item="cat">
+                                                <option value="{$cat.id}" <?php if((isset($brand['parent']) && $brand['parent']==$cat['id']) || (isset($_GET['parent_id']) && $_GET['parent_id']==$cat['id'])):?>
+                                                      selected="selected"
+                                                     <?php endif;?>>
+                                                    {$cat.name}
+                                                </option>
+                                            </foreach>
                                     </select>
                                 </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>      
+                            </li>  
 
-                            <li><label>姓名<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
+                            <li><label>姓名<b>*</b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
                             <li><label>性别<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="2" name="sex">女</cite></li>
-                            <li><label>身份证<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
+                            <li><label>身份证<b>*</b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
                             <li><label>出身日期<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>      
-                            <li><label>电话<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
+                            <li><label>电话<b>*</b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
                             <li><label>入职时间<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>  
 
                             <li><label>民族<b></b></label>
@@ -136,7 +140,13 @@
                                 <label class="pl10">银行账号<b></b></label>
                                 <input name="qqpass" type="text" class="dfinput_left" value=""  />
                             </li>                               
-                            <li><label>备注说明<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>      
+                            <li><label>备注说明<b></b></label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li> 
+                            
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
+                            </div>
                             
                         </ul>
 
