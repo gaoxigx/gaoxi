@@ -44,44 +44,34 @@ $(document).ready(function(){
     </div>
     
     <div class="rightinfo">
-    
-    <div class="tools">
-    
-    	<ul class="toolbar">
-        <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
-<!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
-        <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
-        <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
+            <div class="tools">
+                <ul class="toolbar">
+                    <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
+                    <!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
+                            <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
+                            <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
 
-        </ul>
-        
-        
-        <ul class="toolbar1">
-        <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
-        </ul>
-    <ul class="seachform">
-        <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">
-        <li><label>用户名</label><input type="text" class="scinput" name="accounts"></li>
-        <li><label>昵称</label><input type="text" class="scinput" name="nickname"></li>
-        <li><label>姓名</label><input type="text" class="scinput" name="username"></li>
-        <li><label>手机</label><input type="text" class="scinput" name="mobile"></li>
+                </ul>
 
-        <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
-        </li>
-
-        </form>
-    </ul>
+                <ul class="seachform">
+                    <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">            
+                        <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
+                        <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                    </form>
+                </ul>
+            </div>
     </div>
     
     
     <table class="tablelist">
     	<thead>
             <tr>
-                <th><input name="" type="checkbox" value="" checked="checked"/></th>
+<!--                <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>性别</th>               
                 <th>昵称</th>
+                <th>身份证</th>                
                 <th>部门</th>
                 <th>岗位</th>
                 <th>学历</th>
@@ -92,11 +82,12 @@ $(document).ready(function(){
         <tbody>
             <volist name="list" id="vo">
             <tr>
-            <td><input name="" type="checkbox" value="" /></td>
+<!--            <td><input name="" type="checkbox" value="" /></td>-->
             <td>{$vo.username}</td>
             <td>{$vo.name}</td>
             <td>{$vo.sex}</td>
             <td>{$vo.nickname}</td>
+            <td>{$vo.identity_card}</td>            
             <td>{$vo.section}</td>
             <td>{$vo.quarters}</td>
             <td>{$vo.education}</td>
