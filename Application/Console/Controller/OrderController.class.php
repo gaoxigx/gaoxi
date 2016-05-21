@@ -186,7 +186,7 @@ public function insert(){
                 'discount'=>$data["zhekou".$v],
                 'tollsprice'=>$data["total".$v],
                 'order_no'=>$data["order_no"],
-                'addtime'=>time()
+                'addtime'=>time(),                
                 );
             }
 // dump($dataList);
@@ -217,24 +217,22 @@ public function edit($id){
      $this->getpayment();
      $user = M('order_info');
      $orderinfolist = $user->where('id='.$id)->order('id')->find();
-      // dump($orderinfolist);
-     // exit;
+
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
      $list = $data->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
-// dump($list);
-// exit;
+
      $this->assign('prolist',$list);// 赋值数据集
     // $this->display();
     $controller   =   M('order_info');
-// 读取数据
-$data =   $controller->find($id);
-if($data) {
-    $this->assign('data',$data);// 模板变量赋值
-}else{
-    $this->error('数据错误');
-}
-$this->display();
+    // 读取数据
+    $data =   $controller->find($id);
+    if($data) {
+        $this->assign('data',$data);// 模板变量赋值
+    }else{
+        $this->error('数据错误');
+    }
+    $this->display();
 
 }
 

@@ -7,10 +7,9 @@ class StaffController extends CommonController {
     //员工组分类
     private function getprotype(){
         $data=D('role');
-        $name = $data->where('rolename<>""')->order('id')->select();
+        $name = $data->where('status=1')->order('id')->select();
         // dump($name);
         $this->assign('roletype',$name);
-
     }
 
 //数据列表 这里的名称写错了

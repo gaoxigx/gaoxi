@@ -145,16 +145,15 @@ setTotal();
 <tr>
 <td class="tb2_td1">
   <input type="checkbox" value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
-<input type="hidden" name="tolnums" id="tolnums{$i}" value="">
-<input type="hidden" name="id{$i}"  value="{$pvo.id}">
-<input type="hidden" name="protype{$i}"  value="{$pvo.protype}">
-<input type="hidden" name="pic{$i}"  value="{$pvo.pic}">
-<input type="hidden" name="pics{$i}"  value="{$pvo.pic1}">
+  <input type="hidden" name="tolnums" id="tolnums{$i}" value="">
+  <input type="hidden" name="id{$i}"  value="{$pvo.id}">
+  <input type="hidden" name="protype{$i}"  value="{$pvo.protype}">
+  <input type="hidden" name="pic{$i}"  value="{$pvo.pic}">
+  <input type="hidden" name="pics{$i}"  value="{$pvo.pic1}">
 </td>
-<td class="tb2_td2"><a href="#"><img src="/Uploads/{$pvo.pic1}"/></a></td>
+<td class="tb2_td2"><a href="#"><img src="{$pvo.pic1}"/></a></td>
 <td class="tb2_td3">
-<input   name="product{$i}" type="text" value="{$pvo.product}" class="totnum" style="width:200px;color:#666;" />
-  
+<input   name="product{$i}" type="text" value="{$pvo.product}" class="totnum" style="width:200px;color:#666;" />  
 </td>
 <td class="tb1_td4">
 ￥<input id="price{$i}"  name="price{$i}" type="text" value="{$pvo.price2}" class="totnum" />

@@ -67,8 +67,8 @@
                             <li><label>部门<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <select name="protype" class="uew-select-value">
-                                        <volist name="protype" id="voo">
-                                            <option value="{$voo.id}">{$voo.typename}</option>
+                                        <volist name="roletype" id="voo">
+                                            <option value="{$voo.id}">{$voo.rolename}</option>
                                         </volist>
                                     </select>
                                 </div>
@@ -111,11 +111,16 @@
 
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <select name="protype" class="uew-select-value">
-                                        <volist name="protype" id="voo">
-                                            <option value="{$voo.id}">{$voo.typename}</option>
-                                        </volist>
+                                <div class="col-sm-9">
+                                    <select name="education">
+                                        <option value="0">请选择</option>
+                                        <option value="1">大专</option>
+                                        <option value="2">本专</option>
+                                        <option value="3">研究生</option>                                        
+                                        <option value="4">在校大专</option>
+                                        <option value="5">在校本科</option>
                                     </select>
+                                </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li>      

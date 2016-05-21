@@ -77,8 +77,8 @@ class ProductController extends CommonController {
 
         $config = array(
         'maxSize'    =>    31457280,
-        'rootPath'   =>    './Uploads/',
-        'savePath'   =>    '',
+        'rootPath'   =>    '.',
+        'savePath'   =>    '/Uploads/',
         'saveName'   =>    array('uniqid',''),
         'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
         'autoSub'    =>    true,
@@ -88,24 +88,23 @@ class ProductController extends CommonController {
     // 上传文件 
 
     $info   =   $upload->upload();
+
     if(!$info) {// 上传错误提示错误信息
         // $this->error($upload->getError());
     }else
         {// 上传成功 获取上传文件信息
+           
             foreach($info as $file){
-            $data['pic'] = $file['savepath'].$file['savename'];
-            $image = new \Think\Image(); 
-            $image->open($config['rootPath'].$data['pic']);
-            //将图片裁剪为400x400并保存为corp.jpg
-            $image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
-            $data['pic1'] = $file['savepath'].'s'.$file['savename'];
+                $data['pic'] = $file['savepath'].$file['savename'];
+                $image = new \Think\Image(); 
+                $image->open($config['rootPath'].$data['pic']);
+                //将图片裁剪为400x400并保存为corp.jpg
+                $image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
+                $data['pic1'] = $file['savepath'].'s'.$file['savename'];
             }
-        }
-    
-   
+        }    
+ 
         $roleList   =   D('product');
-        // dump($roleList->create());
-        // exit;
         if($roleList->create()) {
             $result =   $roleList->add($data);
             if($result) {
@@ -145,8 +144,8 @@ class ProductController extends CommonController {
 
       $config = array(
         'maxSize'    =>    31457280,
-        'rootPath'   =>    './Uploads/',
-        'savePath'   =>    '',
+        'rootPath'   =>    '.',
+        'savePath'   =>    '/Uploads/',
         'saveName'   =>    array('uniqid',''),
         'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
         'autoSub'    =>    true,
