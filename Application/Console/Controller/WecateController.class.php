@@ -58,7 +58,7 @@ class WecateController extends CommonController {
     
     
 
-//插入数据
+//添加微信号
     public function insert(){
         $jumpUrl =U('Console/Wecate/Wecate');
         $roleList   =   D('Wecate');

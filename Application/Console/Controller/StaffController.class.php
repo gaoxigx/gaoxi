@@ -25,7 +25,7 @@ class StaffController extends CommonController {
         $this->display();
     }
 
-//数据列表 这里的名称写错了
+//数据列表
     public function Staff($name=''){
            
         $username = i('username');
@@ -81,16 +81,16 @@ class StaffController extends CommonController {
         $this->display();
     }
 
-//插入数据
+//插入员工数据
     public function insert(){
-
+        $jumpUrl =U('Console/Staff/Staff');
         $roleList   =   D('Staff');
         if($roleList->create()) {
             $result =   $roleList->add();
             if($result) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！', $jumpUrl);
             }else{
-                $this->error('数据添加错误！');
+                $this->error('数据添加错误！', $jumpUrl);
             }
         }else{
             $this->error($roleList->getError());
@@ -98,21 +98,37 @@ class StaffController extends CommonController {
        
     }
 
-//编辑
+//修改员工资料
     public function edit($id=0){
-    $this->getprotype();
-    $controller   =   M('Staff');
-    // 读取数据
-    $data =   $controller->find($id);
-    if($data) {
-        $this->assign('data',$data);// 模板变量赋值
-    }else{
-        $this->error('数据错误');
-    }
-    $this->display();
-
-
-     }
+        
+        $jumpUrl =U('Console/Staff/Staff'); 
+        $id = (int)$id;
+        $model = D('Staff');          
+        if (IS_POST) {
+            $id = I('post.id');
+           
+            if ($id > 0) {
+                $data=$model->create();
+//                var_dump($data);
+//                exit();
+                $map['id']=$id;
+                $result=$model->where($map)->save($data);
+                if ($result){
+                    $this->success('修改成功', $jumpUrl);
+                } else {                    
+                    $this->error('修改失败', $jumpUrl);
+                }          
+            } 
+        } else {            
+         if($id){
+             $user = $model->where(['id'=>$id])->find(); 
+         } 
+        
+         $this->assign('user',$user);
+         $this->assign('id',$id);
+         $this->display();
+        }
+    }     
 
 //更修改密码
 public function passupdate(){
