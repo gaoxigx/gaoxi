@@ -84,7 +84,7 @@ class StaffController extends CommonController {
         $this->assign('department',$data);
         $this->display();
     }
-
+  
 //插入员工数据
     public function insert(){
         $jumpUrl =U('Console/Staff/Staff');
