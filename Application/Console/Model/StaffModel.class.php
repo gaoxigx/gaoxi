@@ -9,7 +9,7 @@ class StaffModel extends Model {
         array('username','','用户已存在',self::MUST_VALIDATE,'unique',self::MODEL_INSERT),
         array('password','require','缺少密码'),
         array('password','5,12','密码必须长度是5-12位',self::MUST_VALIDATE,'length'),
-        array('password','password_confirm','两次密码不一致',self::MUST_VALIDATE,'confirm'),        
+        array('password','passwordConfirm','两次密码不一致',1,'confirm'),        
         array('nickname','','改昵称已被使用过',self::MUST_VALIDATE,'unique',self::MODEL_INSERT),
         array('name','require','姓名必须填写'),     
         array('identity_card','15,18','请填写有效的身份证号码',self::MUST_VALIDATE,'length'),
@@ -18,13 +18,13 @@ class StaffModel extends Model {
         );
     // 定义自动完成
     protected $_auto = array( 
-        array('password','autoPassword',self::MODEL_BOTH,'callback'),         
+       // array('password','autoPassword',self::MODEL_BOTH,'callback'),         
          array('addtime','time',1,'function'), // 对update_time字段在更新的时候写入当前时间戳
          array('create_time','time',self::MODEL_BOTH,'function'),        
          array('update_time','time',self::MODEL_BOTH,'function'),        
      );
-    protected  function autoPassword($value)
-    {
-        return password_hash($value,PASSWORD_BCRYPT);
-    }
+//    protected  function autoPassword($value)
+//    {
+//        return password_hash($value,PASSWORD_BCRYPT);
+//    }
  }
