@@ -68,7 +68,9 @@ class StaffController extends CommonController {
         $list = $User->where($where)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
 //        var_dump($list);
 //        exit();
-        //echo $User->getLastSql();
+        //echo $User->getLastSql();        
+        $catdata=D('Category')->categoryone();    
+        $this->assign('cat',$catdata);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
@@ -103,29 +105,28 @@ class StaffController extends CommonController {
     }
 
 //修改员工资料
-    public function edit($id=0){
-
-
-        
+    public function edit($id=0){        
         $jumpUrl =U('Console/Staff/Staff'); 
         $id = (int)$id;
         $model = D('Staff');          
         if (IS_POST) {
-            $id = I('post.id');
-           
-            if ($id > 0) {
-                $data=$model->create();
-//                var_dump($data);
-//                exit();
+            $id = I('post.id');           
+            if ($id > 0) {           
+                $data=$model->create($_POST);
                 $map['id']=$id;
-                $result=$model->where($map)->save($data);
-                if ($result){
-                    $this->success('修改成功', $jumpUrl);
-                } else {                    
-                    $this->error('修改失败', $jumpUrl);
-                }          
+                if($data){
+                    $result=$model->where($map)->save($data);           
+                    if ($result){
+                        $this->success('修改成功', $jumpUrl);
+                    } else {                    
+                        $this->error('修改失败', $jumpUrl);
+                    }
+                }else {                    
+                    $this->error('生成数据错误', $jumpUrl);
+                }
+
             } 
-        } else {            
+        }else {            
          if($id){
              $user = $model->where(['id'=>$id])->find(); 
          } 
