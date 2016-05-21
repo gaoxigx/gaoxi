@@ -88,8 +88,8 @@ $(document).ready(function(){
             <td>{$vo.sex}</td>
             <td>{$vo.nickname}</td>
             <td>{$vo.identity_card}</td>            
-            <td>{$vo.section}</td>
-            <td>{$vo.quarters}</td>
+            <td>{$cat[$vo['section']]}</td>
+            <td>{$cat[$vo['quarters']]}</td>
             <td>{$vo.education}</td>
             <td>{$vo.mobile}</td>
             <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
