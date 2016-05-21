@@ -104,6 +104,8 @@ class StaffController extends CommonController {
 
 //修改员工资料
     public function edit($id=0){
+
+
         
         $jumpUrl =U('Console/Staff/Staff'); 
         $id = (int)$id;
@@ -127,7 +129,8 @@ class StaffController extends CommonController {
          if($id){
              $user = $model->where(['id'=>$id])->find(); 
          } 
-        
+                
+         $this->assign('department',D('Category')->department());
          $this->assign('user',$user);
          $this->assign('id',$id);
          $this->display();

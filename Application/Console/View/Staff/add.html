@@ -182,9 +182,13 @@
 
         function department(){
             var id=$('#department').val();
-            var url="{:U('Console/Staff/department')}?id="+id;                        
+            var url="{:U('Console/Staff/department')}?catid="+id;                        
             $.get(url,function(data){
                 $("#post").html("");
+                if(data.length==0){
+                    $("#post").append("<option value='0'>请新建岗位</option>");
+                    return false;
+                }
                 for(i=0 ;i<data.length;i++){                                           
                     $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option')
                 }
