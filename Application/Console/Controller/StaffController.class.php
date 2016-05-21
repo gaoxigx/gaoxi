@@ -21,7 +21,10 @@ class StaffController extends CommonController {
     }
 
     public function deparlist(){
-        $data=D('Category')->department();
+        if(I('post.accounts')){
+            $map['cate_name']=array('like','%'.I('post.accounts').'%');
+        }
+        $data=D('Category')->department($map);
         $this->assign('data',$data);
         $this->display();
     }
