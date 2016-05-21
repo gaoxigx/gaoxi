@@ -75,8 +75,7 @@ $(document).ready(function(){
     	<thead>
     	<tr>
         <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-        <th>内部名称(传统名称)</th>
-        <th>父类ID</th>
+        <th>内部名称(传统名称)</th>        
         <th>是否有下级分类</th>
         <th>排序</th>
         <th>是否显示</th>
@@ -89,47 +88,19 @@ $(document).ready(function(){
         
        <tbody>
 
-
-    <if condition="!empty($cateRow)">
-    <php>
-    function showTree($data,$kongge) {
-       $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-        foreach ($data as $key => $vo) {
-        echo '<tr>';
-            if($vo['cate_haschild']==0 )
-            {
-            $kongge=$kongge.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-             }
-            echo '<td>'.$vo['cate_id'].'</td>';
-
-            echo '<td';
-            if($vo['cate_parent']==0)
-            {
-            echo ' class="bold"';
-        }
-            echo '>'.$kongge.''.$vo['cate_name'].'('.$vo['cate_name2'].')</td>';
-            echo '<td>'.$vo['cate_parent'].'</td>';
-            echo '<td>'.$vo['cate_haschild'].'</td>';
-            echo '<td>'.$vo['cate_sort'].'</td>';
-            echo '<td>'.$vo['is_show'].'</td>';
-            echo '<td>'.$vo['status'].'</td>';
-            echo '<td>'.$vo['addtime'].'</td>';
-            echo '<td>'.$vo['uptime'].'</td>';
-            echo '<td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a> ' ;
-            echo '<a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a> ' ;
-            echo '<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td></tr>';
-           
-            if (!empty($vo['childs'])) {
-                $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-                showTree($vo['childs'],$i);
-           }
-$i='';
-                  
-        }
-    }
-    showTree($cateRow,$i);
-    </php>
-    </if>
+      <volist name="data" id="vo">
+            <td>{$vo['cate_id']}</td>
+            <td>{$vo['cate_name']}</td>            
+            <td>{$vo['cate_haschild']}</td>
+            <td>{$vo['cate_sort']}</td>
+            <td>{$vo['is_show']}</td>
+            <td>{$vo['status']}</td>
+            <td>{$vo['addtime']}</td>
+            <td>{$vo['uptime']}</td>
+            <td><a href="{:U('Category/add',array('pid'=>$vo['cate_id']))}" class="tablelink">添加子类</a> '
+            <a href="{:U('Category/edit',array('cate_id'=>$vo['cate_id']))}" class="tablelink">修改</a> '
+            <a href="{:U('Category/delete',array('cate_id'=>$vo['cate_id']))}" class="tablelink" > 删除</a></td></tr>
+      </volist>
 
 
 </tbody>

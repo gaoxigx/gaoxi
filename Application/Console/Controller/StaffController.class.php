@@ -21,7 +21,8 @@ class StaffController extends CommonController {
     }
 
     public function deparlist(){
-        
+        $data=D('Category')->department();
+        $this->assign('data',$data);
         $this->display();
     }
 
