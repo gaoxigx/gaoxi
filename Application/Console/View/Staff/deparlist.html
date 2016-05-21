@@ -60,10 +60,8 @@ $(document).ready(function(){
         <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
         </ul>
     <ul class="seachform">
-    <form action="/index.php/Console/Personnel/PerList" method="post" id="form2" name="form2">
+    <form action="#" method="post" id="form2" name="form2">
     <li><label>名称</label><input type="text" class="scinput" name="accounts"></li>
-    <li><label>顶级</label><input type="text" class="scinput" name="nickname"></li>
-
     <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
     </li>
     
@@ -77,7 +75,7 @@ $(document).ready(function(){
         <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
         <th>内部名称(传统名称)</th>        
         <th>是否有下级分类</th>
-        <th>排序</th>
+        <!-- <th>排序</th> -->
         <th>是否显示</th>
         <th>是否审核</th>
         <th>添加日期</th>
@@ -91,12 +89,12 @@ $(document).ready(function(){
       <volist name="data" id="vo">
             <td>{$vo['cate_id']}</td>
             <td>{$vo['cate_name']}</td>            
-            <td>{$vo['cate_haschild']}</td>
-            <td>{$vo['cate_sort']}</td>
-            <td>{$vo['is_show']}</td>
-            <td>{$vo['status']}</td>
-            <td>{$vo['addtime']}</td>
-            <td>{$vo['uptime']}</td>
+            <td>{$vo['cate_haschild']==0?没有:$vo['cate_haschild']}</td>
+          <!--   <td>{$vo['cate_sort']}</td> -->
+            <td>{$vo['is_show']==1?显示:不显示}</td>
+            <td>{$vo['status']==1?审核:未审核}</td>
+            <td>{$vo['addtime']|date='Y-m-d H:i:s',###}</td>
+            <td>{$vo['uptime']|date='Y-m-d H:i:s',###}</td>
             <td><a href="{:U('Category/add',array('pid'=>$vo['cate_id']))}" class="tablelink">添加子类</a> '
             <a href="{:U('Category/edit',array('cate_id'=>$vo['cate_id']))}" class="tablelink">修改</a> '
             <a href="{:U('Category/delete',array('cate_id'=>$vo['cate_id']))}" class="tablelink" > 删除</a></td></tr>

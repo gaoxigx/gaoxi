@@ -133,10 +133,10 @@
                             </li>                                
 
                             <li><label>部门<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                    <select name="protype" class="uew-select-value">
-                                        <volist name="roletype" id="voo">
-                                            <option value="{$voo.cate_id}">{$voo.cate_content}</option>
+                                <div class="vocation uew-select">                 
+                                    <select id="department" name="deprotm" class="uew-select-value">
+                                        <volist name="department" id="voo">
+                                            <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
                                         </volist>
                                     </select>
                                 </div>
@@ -146,14 +146,8 @@
                             <li><label>岗位<b>*</b></label>  
                                 <div class="vocation uew-select">
                                 <div class="col-sm-9">
-                                    <select name="quarters" class="uew-select-value">
+                                    <select id="post" name="quarters" class="uew-select-value">
                                         <option value="0">请选择</option>
-                                        <option value="1">设计</option>
-                                        <option value="2">后台开发</option>
-                                        <option value="3">前端开发</option>                                        
-                                        <option value="4">美工</option>
-                                        <option value="5">人事</option>
-                                        <option value="6">会计</option>
                                     </select>
                                 </div>
                                 </div>
@@ -365,6 +359,36 @@
 
 
         </div>
+     <script type="text/javascript">
+        var post1="{$user.quarters}";
+        department();      
+        $('#department').change(function(){            
+            department();                        
+        });
+
+        function department(){
+            var id=$('#department').val();
+            var url="{:U('Console/Staff/department')}?catid="+id;                        
+            $.get(url,function(data){
+                $("#post").html("");
+                if(data.length==0){
+                    $("#post").append("<option value='0'>请新建岗位</option>");
+                    return false;
+                }
+                for(i=0 ;i<data.length;i++){  
+                    var post2=data[i].cate_id;                    
+                    if(post1==post2){
+                        $("#post").append('<option selected="selected" value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }else{
+                        $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }                                         
+                    
+                }
+                          
+            })            
+        }
+
+    </script>
 
 
     </body>
