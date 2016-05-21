@@ -20,6 +20,11 @@ class StaffController extends CommonController {
         $this->ajaxReturn($data);
     }
 
+    public function deparlist(){
+        
+        $this->display();
+    }
+
 //数据列表 这里的名称写错了
     public function Staff($name=''){
            
