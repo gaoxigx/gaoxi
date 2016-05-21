@@ -10,7 +10,11 @@ class StaffModel extends Model {
         array('password','require','缺少密码'),
         array('password','5,12','密码必须长度是5-12位',self::MUST_VALIDATE,'length'),
         array('password','passwordConfirm','两次密码不一致',0,'confirm'),        
-       
+        array('nickname','','改昵称已被使用过',self::MUST_VALIDATE,'unique',self::MODEL_INSERT),
+        array('name','require','姓名必须填写'),     
+        array('identity_card','15,18','请填写有效的身份证号码',self::MUST_VALIDATE,'length'),
+        array('mobile','require','联系方式必须填写'),
+        array('bank_account','16','银行卡号不正确',self::MUST_VALIDATE,'length'),
         );
     // 定义自动完成
     protected $_auto = array( 
