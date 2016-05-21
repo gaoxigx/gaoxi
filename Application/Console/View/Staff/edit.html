@@ -134,7 +134,7 @@
 
                             <li><label>部门<b>*</b></label>  
                                 <div class="vocation uew-select">                 
-                                    <select id="department" name="deprotm" class="uew-select-value">
+                                    <select id="department" name="section" class="uew-select-value">
                                         <volist name="department" id="voo">
                                             <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
                                         </volist>
