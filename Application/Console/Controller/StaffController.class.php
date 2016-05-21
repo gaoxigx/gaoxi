@@ -12,6 +12,14 @@ class StaffController extends CommonController {
         $this->assign('roletype',$name);
     }
 
+    /**
+     * 查找下级分类
+    **/
+    public function department(){
+        $data=D('Category')->department();
+        $this->ajaxReturn($data);
+    }
+
 //数据列表 这里的名称写错了
     public function Staff($name=''){
             
@@ -61,6 +69,8 @@ class StaffController extends CommonController {
     public function add($value='')
     {
         $this->getprotype();
+        $data=D('Category')->department();
+        $this->assign('department',$data);
         $this->display();
     }
 

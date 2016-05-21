@@ -42,7 +42,7 @@
                         <ul class="forminfo">
                             <li><label>用户名<b>*</b></label><input name="xinghao" type="text" class="dfinput" value=""  /></li>
 
-                            <li><label>密码<b>*</b></label><input name="bianhao" type="text" class="dfinput" value=""  /></li>
+                            <li><label>密码<b>*</b></label><input name="bianhao" type="password" class="dfinput" value=""  /></li>
                             <li><label>昵称<b>*</b></label><input name="daiyanren" type="text" class="dfinput" value=""  /></li>
                             <li><label>是否转正<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="sex">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="2" name="sex">否</cite></li>
 
@@ -66,9 +66,9 @@
 
                             <li><label>部门<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <select name="protype" class="uew-select-value">
-                                        <volist name="roletype" id="voo">
-                                            <option value="{$voo.id}">{$voo.rolename}</option>
+                                    <select id="department" name="protype" class="uew-select-value">
+                                        <volist name="department" id="voo">
+                                            <option value="{$voo.cate_id}">{$voo.cate_name}</option>
                                         </volist>
                                     </select>
                                 </div>
@@ -77,15 +77,8 @@
 
                             <li><label>岗位<b>*</b></label>
                                 <div class="col-sm-9">
-                                    <select name="parent">
-                                        <option value="0">{$voo.category}</option>
-                                            <foreach name="category" item="cat">
-                                                <option value="{$cat.id}" <?php if((isset($brand['parent']) && $brand['parent']==$cat['id']) || (isset($_GET['parent_id']) && $_GET['parent_id']==$cat['id'])):?>
-                                                      selected="selected"
-                                                     <?php endif;?>>
-                                                    {$cat.name}
-                                                </option>
-                                            </foreach>
+                                    <select id="post" name="parent">
+                                        <option>请选择部门</option>
                                     </select>
                                 </div>
                             </li>  
@@ -164,5 +157,26 @@
 
 
     </body>
+    
+    <script type="text/javascript">
+     
+
+        $('#department').change(function(){            
+            department();                        
+        });
+
+        function department(){
+            var id=$('#department').val();
+            var url="{:U('Console/Staff/department')}?id="+id;                        
+            $.get(url,function(data){
+                $("#post").html("");
+                for(i=0 ;i<data.length;i++){                                           
+                    $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option')
+                }
+                          
+            })            
+        }
+
+    </script>
 
 </html>
