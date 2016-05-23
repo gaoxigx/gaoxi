@@ -84,9 +84,8 @@
                         <tr>
 <!--                            <td><input name="" type="checkbox" value="" /></td>-->
                             <td>{$vo.wechat_id}</td>
-                            <td><a href="{:U('Staff/lookover')}">{$vo.username}</a></td>
-                            <td>{$vo.nickname}</td>
-                            
+                            <td>{$vo.username}</td>
+                            <td>{$vo.nickname}</td>                            
                             <td>{$vo.sex}<if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2"/>女<else/>未知</if></td>
                             <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>               
                             <td>{$vo.backup}</td>
