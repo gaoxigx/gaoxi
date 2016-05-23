@@ -241,14 +241,14 @@
 
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                <div class="col-sm-9">
+                                <div class="col-sm-9">                                
                                     <select name="education" class="uew-select-value">
-                                        <option <if condtion="$user.graduate eq 0" >selected=selected</if> value="0">请选择</option>
-                                        <option <if condtion="$user.graduate eq 1" >selected=selected</if> value="1">大专</option>
-                                        <option <if condtion="$user.graduate eq 2" >selected=selected</if> value="2">本专</option>
-                                        <option <if condtion="$user.graduate eq 3" >selected=selected</if> value="3">研究生</option>
-                                        <option <if condtion="$user.graduate eq 4" >selected=selected</if> value="4">在校大专</option>
-                                        <option <if condtion="$user.graduate eq 5" >selected=selected</if> value="5">在校本科</option>
+                                        <option <if condition="$user.education eq 0" >selected="selected"</if> value="0">请选择</option>
+                                        <option <if condition="$user.education eq 1" >selected="selected"</if> value="1">本专</option>
+                                        <option <if condition="$user.education eq 2" >selected="selected"</if> value="2">本专</option>
+                                        <option <if condition="$user.education eq 3" >selected="selected"</if> value="3">研究生</option>
+                                        <option <if condition="$user.education eq 4" >selected="selected"</if> value="4">在校大专</option>
+                                        <option <if condition="$user.education eq 5" >selected=selected</if> value="5">在校本科</option>
                                     </select>
                                 </div>
                                 </div>
