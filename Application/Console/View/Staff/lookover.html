@@ -24,7 +24,7 @@
 
         <div class="formbody">
             <div id="usual1" class="usual"> 
-                <form name="form1" id="form1" method='post' action="__URL__/edit">
+              <!--   <form name="form1" id="form1" method='post' action="__URL__/edit"> -->
                     <if condition="$id">
                        <input name="id" type="hidden"   value="{$id}"/>
                     </if> 
@@ -53,9 +53,9 @@
                             <li>
                                 <label>密码</label>                  
                                 <if condition="$id">
-                                    <input class="dfinput" name="password" type="password"  placeholder="password" value="{$user.password}"/>
+                                    <input class="dfinput" name="password" type="text"  placeholder="password" value="{$user.password}"/>
                                     <else/>
-                                    <input class="dfinput"  name="password" type="password"  placeholder="password" />
+                                    <input class="dfinput"  name="password" type="text"  placeholder="password" />
                                 </if>  
                             </li>
                                               
@@ -178,9 +178,9 @@
                             </li>                           
 
                             <li>
-                                <label>出生日期</label>                                   
+                                <label>出身日期</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="birth_date" onClick="WdatePicker()" type="text"  placeholder="birth_date" value="{$user.birth_date}"/>
+                                    <input class="dfinput" name="birth_date" type="text"  placeholder="birth_date" value="{$user.birth_date}"/>
                                     <else/>
                                     <input class="dfinput"  name="birth_date" type="text"  placeholder="birth_date" />
                                 </if>                                  
@@ -241,19 +241,18 @@
 
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                <div class="col-sm-9"> 
-                                    <select name="education1" class="uew-select-value">  
-                                        <option value="0" <if condition="$user.education eq 0" >selected="selected"</if>>请选择</option>
-                                        <option value="1" <if condition="$user.education eq 1" >selected="selected"</if>>本专</option>
-                                        <option value="2" <if condition="$user.education eq 2" >selected="selected"</if>>本专</option>
-                                        <option value="3" <if condition="$user.education eq 3" >selected="selected"</if>>研究生</option>
-                                        <option value="4" <if condition="$user.education eq 4" >selected="selected"</if>>在校大专</option>
-                                        <option value="5" <if condition="$user.education eq 5" >selected="selected"</if>>在校本科</option>
-                                        <option value="6" <if condition="$user.education eq 6" >selected="selected"</if>>高中</option>
-                                        <option value="7" <if condition="$user.education eq 7" >selected="selected"</if>>中专</option>
-                                        <option value="8" <if condition="$user.education eq 8" >selected="selected"</if>>初中</option>
-                                      
-                                    </select>  
+                                <div class="col-sm-9">                                
+                                    <select name="education" class="uew-select-value">
+                                        <option <if condition="$user.education eq 0" >selected="selected"</if> value="0">请选择</option>
+                                        <option <if condition="$user.education eq 1" >selected="selected"</if> value="1">本专</option>
+                                        <option <if condition="$user.education eq 2" >selected="selected"</if> value="2">本专</option>
+                                        <option <if condition="$user.education eq 3" >selected="selected"</if> value="3">研究生</option>
+                                        <option <if condition="$user.education eq 4" >selected="selected"</if> value="4">在校大专</option>
+                                        <option <if condition="$user.education eq 5" >selected=selected</if> value="5">在校本科</option>
+                                        <option <if condition="$user.education eq 6" >selected=selected</if> value="5">高中</option>
+                                        <option <if condition="$user.education eq 7" >selected=selected</if> value="5">中专</option>
+                                        <option <if condition="$user.education eq 8" >selected=selected</if> value="5">初中</option>
+                                    </select>
                                 </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
@@ -347,15 +346,16 @@
                             </li>                                
                                                     
                             <div class="col-md-offset-3 col-md-9">
-                                <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+                          <!--       <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
                                 &nbsp; &nbsp; &nbsp;
-                                <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
+                                <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button> -->
                             </div>
                             
                         </ul>
 
                     </div> 
-                </form>         
+           <!--      </form>   -->       
             </div> 
 
 

@@ -69,7 +69,10 @@ class StaffController extends CommonController {
 //        var_dump($list);
 //        exit();
         //echo $User->getLastSql();        
-        $catdata=D('Category')->categoryone();    
+
+        $catdata=D('Category')->categoryone();  
+        $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
+        $this->assign('education',$education);
         $this->assign('cat',$catdata);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -86,13 +89,31 @@ class StaffController extends CommonController {
         $this->assign('department',$data);
         $this->display();
     }
+
+    public function lookover(){
+        $id=I('get.id');        
+        $model = D('Staff');      
+        if($id){
+             $user = $model->where("id=".$id)->find(); 
+         } 
+                
+         $this->assign('department',D('Category')->department());
+         $this->assign('user',$user);
+         $this->assign('id',$id);
+         $this->display();
+
+    }
   
 //插入员工数据
     public function insert(){
         $jumpUrl =U('Console/Staff/Staff');
         $roleList   =   D('Staff');
-        if($roleList->create()) {
-            $result =   $roleList->add();
+        $data=$roleList->create();
+        if($data) {
+            $data['entry_time']=strtotime(I('post.entry_time'));
+            $data['graduation_date']=strtotime(I('post.graduation_date'));
+            $data['birth_date']=strtotime(I('post.birth_date'));
+            $result =   $roleList->add($data);
             if($result) {
                 $this->success('数据添加成功！', $jumpUrl);
             }else{
@@ -112,10 +133,14 @@ class StaffController extends CommonController {
         if (IS_POST) {
             $id = I('post.id');           
             if ($id > 0) {           
-                $data=$model->create($_POST);
+            $data=$_POST;
                 $map['id']=$id;
                 if($data){
-                    $result=$model->where($map)->save($data);           
+                    $data['entry_time']=strtotime(I('post.entry_time'));
+                    $data['graduation_date']=strtotime(I('post.graduation_date'));
+                    $data['birth_date']=strtotime(I('post.birth_date'));
+                    $data['education']=I('post.education1');
+                    $result=$model->where($map)->save($data);                       
                     if ($result){
                         $this->success('修改成功', $jumpUrl);
                     } else {                    
@@ -172,8 +197,12 @@ $id = I('session.userid',0);
 //更新数据
     public function update(){
     $roleList   =   D('Staff');
-    if($roleList->create()) {
-        $result = $roleList->save();
+    $data=$roleList->create();
+    if($data) {
+        $data['entry_time']=strtotime(I('post.entry_time'));
+        $data['graduation_date']=strtotime(I('post.graduation_date'));
+        $data['birth_date']=strtotime(I('post.birth_date')); 
+        $result = $roleList->save($data);
         if($result) {
             $this->success('操作成功！');
         }else{
