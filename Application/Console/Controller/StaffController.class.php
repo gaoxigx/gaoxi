@@ -133,6 +133,9 @@ class StaffController extends CommonController {
             $data=$_POST;
                 $map['id']=$id;
                 if($data){
+                    $data['entry_time']=strtotime(I('post.entry_time'));
+                    $data['graduation_date']=strtotime(I('post.graduation_date'));
+                    $data['birth_date']=strtotime(I('post.birth_date'));            
                     $result=$model->where($map)->save($data);           
                     if ($result){
                         $this->success('修改成功', $jumpUrl);
