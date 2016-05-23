@@ -85,7 +85,7 @@ $(document).ready(function(){
 <!--            <td><input name="" type="checkbox" value="" /></td>-->
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
-            <td>{$vo.sex}</td>
+            <td><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未填</if></td>
             <td>{$vo.nickname}</td>
             <td>{$vo.identity_card}</td>            
             <td>{$cat[$vo['section']]}</td>
