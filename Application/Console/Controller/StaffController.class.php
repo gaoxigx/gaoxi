@@ -136,7 +136,7 @@ class StaffController extends CommonController {
                     $data['entry_time']=strtotime(I('post.entry_time'));
                     $data['graduation_date']=strtotime(I('post.graduation_date'));
                     $data['birth_date']=strtotime(I('post.birth_date'));            
-                    $result=$model->where($map)->save($data);           
+                    $result=$model->where($map)->save($data);                       
                     if ($result){
                         $this->success('修改成功', $jumpUrl);
                     } else {                    
@@ -193,8 +193,12 @@ $id = I('session.userid',0);
 //更新数据
     public function update(){
     $roleList   =   D('Staff');
-    if($roleList->create()) {
-        $result = $roleList->save();
+    $data=$roleList->create();
+    if($data) {
+        $data['entry_time']=strtotime(I('post.entry_time'));
+        $data['graduation_date']=strtotime(I('post.graduation_date'));
+        $data['birth_date']=strtotime(I('post.birth_date')); 
+        $result = $roleList->save($data);
         if($result) {
             $this->success('操作成功！');
         }else{
