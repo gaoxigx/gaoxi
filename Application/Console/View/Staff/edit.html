@@ -9,9 +9,6 @@
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
         <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
-
-
-
     </head>
 
     <body>
@@ -201,9 +198,9 @@
                             <li>
                                 <label>入职时间</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="entry_time" type="text"  placeholder="entry_time" value="{$user.entry_time}"/>
+                                    <input class="dfinput" name="entry_time" type="text"  onClick="WdatePicker()" placeholder="entry_time" value="{$user.entry_time|date='Y-m-d',###}"/>
                                     <else/>
-                                    <input class="dfinput"  name="entry_time" type="text"  placeholder="entry_time" />
+                                    <input class="dfinput"  name="entry_time" type="text" onClick="WdatePicker()"  placeholder="entry_time" />
                                 </if>                                  
                             </li>
                             
@@ -236,9 +233,9 @@
                              <li>
                                 <label>毕业时间</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="graduation_date" type="text"  placeholder="graduation_date" value="{$user.graduation_date}"/>
+                                    <input class="dfinput" name="graduation_date" type="text" onClick="WdatePicker()"  placeholder="graduation_date" value="{$user.graduation_date|date='Y-m-d',###}"/>
                                     <else/>
-                                    <input class="dfinput"  name="graduation_date" type="text"  placeholder="graduation_date" />
+                                    <input class="dfinput"  name="graduation_date" type="text"  onClick="WdatePicker()" placeholder="graduation_date" />
                                 </if>                                      
                             </li>                               
 
@@ -246,12 +243,12 @@
                                 <div class="vocation uew-select">
                                 <div class="col-sm-9">
                                     <select name="education" class="uew-select-value">
-                                        <option value="0">请选择</option>
-                                        <option value="1">大专</option>
-                                        <option value="2">本专</option>
-                                        <option value="3">研究生</option>                                        
-                                        <option value="4">在校大专</option>
-                                        <option value="5">在校本科</option>
+                                        <option <if condtion="$user.graduate eq 0" >selected=selected</if> value="0">请选择</option>
+                                        <option <if condtion="$user.graduate eq 1" >selected=selected</if> value="1">大专</option>
+                                        <option <if condtion="$user.graduate eq 2" >selected=selected</if> value="2">本专</option>
+                                        <option <if condtion="$user.graduate eq 3" >selected=selected</if> value="3">研究生</option>
+                                        <option <if condtion="$user.graduate eq 4" >selected=selected</if> value="4">在校大专</option>
+                                        <option <if condtion="$user.graduate eq 5" >selected=selected</if> value="5">在校本科</option>
                                     </select>
                                 </div>
                                 </div>
