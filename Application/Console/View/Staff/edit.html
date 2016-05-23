@@ -329,7 +329,7 @@
                             
                             <li>
                                 <label>银行账号</label>                                   
-                                <if condition="$id">
+                                <if condition="$id gt 0">
                                     <input class="dfinput" name="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
                                     <else/>
                                     <input class="dfinput"  name="bank_account" type="text"  placeholder="bank_account" />
@@ -339,9 +339,9 @@
                             <li>
                                 <label>备注说明</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="Descr" type="text"  placeholder="Descr" value="{$user.descr}"/>
+                                    <input class="dfinput" name="comment" type="text"  placeholder="Descr" value="{$user.comment}"/>
                                     <else/>
-                                    <input class="dfinput"  name="Descr" type="text"  placeholder="Descr" />
+                                    <input class="dfinput"  name="comment" type="text"  placeholder="Descr" />
                                 </if>                                      
                             </li>                                
                                                     
