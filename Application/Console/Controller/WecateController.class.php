@@ -98,7 +98,7 @@ class WecateController extends CommonController {
             } 
         } else {            
          if($id){
-             $user = $model->where(['id'=>$id])->find(); 
+             $user = $model->where("id=>".$id)->find(); 
          } 
         
          $this->assign('user',$user);
