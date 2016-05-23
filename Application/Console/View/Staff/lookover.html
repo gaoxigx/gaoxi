@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+    </head>
+
+    <body>
+
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+
+                <li><a href="#">首页</a></li>
+                <li><a href="#">员工管理</a></li>
+            </ul>
+        </div>
+
+        <div class="formbody">
+            <div id="usual1" class="usual"> 
+              <!--   <form name="form1" id="form1" method='post' action="__URL__/edit"> -->
+                    <if condition="$id">
+                       <input name="id" type="hidden"   value="{$id}"/>
+                    </if> 
+                    
+                    <div class="itab">
+
+                        <ul> 
+                            <li><a href="#tab1" class="selected">修改信息</a></li> 
+                        </ul>
+                    </div> 
+
+                    <div id="tab1" class="tabson">
+
+                        <div class="formtext">请正确填写个人信息！</div>
+                        <ul class="forminfo">
+                            
+                            <li>
+                                <label>用户名</label>                  
+                                <if condition="$id">
+                                    <input class="dfinput" name="username" type="text"  placeholder="username" value="{$user.username}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="username" type="text"  placeholder="username" />
+                                </if>  
+                            </li>
+                            
+                            <li>
+                                <label>密码</label>                  
+                                <if condition="$id">
+                                    <input class="dfinput" name="password" type="text"  placeholder="password" value="{$user.password}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="password" type="text"  placeholder="password" />
+                                </if>  
+                            </li>
+                                              
+                            <li>
+                                <label>昵称<b>*</b></label>                  
+                                <if condition="$id">
+                                    <input class="dfinput" name="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="nickname" type="text"  placeholder="nickname" />
+                                </if>  
+                            </li>    
+                            
+                            <li>
+                                <label>是否转正</label>
+                                <cite><input type="radio" <if condition="$user.become == 1">checked="checked"</if> 
+                                        checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
+                                        <if condition="$user.become == 2">checked="checked"</if> value="2" name="become">否
+                                </cite>
+                            </li>                           
+                
+                            <li>
+                                <label>试用期工资</label>                  
+                                <if condition="$id">
+                                    <input class="dfinput" name="salaryss" type="text"  placeholder="salaryss" value="{$user.salaryss}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="salaryss" type="text"  placeholder="salaryss" />
+                                </if>
+                            </li>
+                            <li>
+                                <label>转正后工资</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="salaryzz" type="text"  placeholder="salaryzz" value="{$user.salaryzz}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="salaryzz" type="text"  placeholder="salaryzz" />
+                                </if>                                  
+                            </li>  
+                                
+                            <li>
+                                <label>住房津贴</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="housing" type="text"  placeholder="housing" value="{$user.housing}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="housing" type="text"  placeholder="housing" />
+                                </if>                                  
+                            </li>  
+                            
+                            <li>
+                                <label>交通津贴</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="traffic" type="text"  placeholder="traffic" value="{$user.traffic}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="traffic" type="text"  placeholder="traffic" />
+                                </if>                                  
+                            </li>                          
+                            
+                            <li>
+                                <label>餐饮津贴</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="catering" type="text"  placeholder="catering" value="{$user.catering}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="catering" type="text"  placeholder="catering" />
+                                </if>                                  
+                            </li> 
+                            
+                             <li>
+                                <label>通讯津贴</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="phone" type="text"  placeholder="phone" value="{$user.phone}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="phone" type="text"  placeholder="phone" />
+                                </if>                                  
+                            </li>                                
+
+                            <li><label>部门<b>*</b></label>  
+                                <div class="vocation uew-select">                 
+                                    <select id="department" name="section" class="uew-select-value">
+                                        <volist name="department" id="voo">
+                                            <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                            </li>        
+
+                            <li><label>岗位<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                <div class="col-sm-9">
+                                    <select id="post" name="quarters" class="uew-select-value">
+                                        <option value="0">请选择</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                            </li>  
+
+                             <li>
+                                <label>姓名</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="name" type="text"  placeholder="name" value="{$user.name}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="name" type="text"  placeholder="name" />
+                                </if>                                  
+                            </li>
+                            
+                            <li>
+                                <label>性别</label>
+                                <cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if> 
+                                        checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
+                                        <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女
+                                </cite>
+                            </li>   
+ 
+                            <li>
+                                <label>身份证</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="identity_card" type="text"  placeholder="identity_card" value="{$user.identity_card}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="identity_card" type="text"  placeholder="identity_card" />
+                                </if>                                  
+                            </li>                           
+
+                            <li>
+                                <label>出身日期</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="birth_date" type="text"  placeholder="birth_date" value="{$user.birth_date}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="birth_date" type="text"  placeholder="birth_date" />
+                                </if>                                  
+                            </li>                             
+ 
+                            <li>
+                                <label>电话</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="mobile" type="text"  placeholder="mobile" value="{$user.mobile}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="mobile" type="text"  placeholder="mobile" />
+                                </if>                                  
+                            </li>
+                            
+                            <li>
+                                <label>入职时间</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="entry_time" type="text"  onClick="WdatePicker()" placeholder="entry_time" value="{$user.entry_time|date='Y-m-d',###}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="entry_time" type="text" onClick="WdatePicker()"  placeholder="entry_time" />
+                                </if>                                  
+                            </li>
+                            
+                            <li>
+                                <label>名族</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="nationality" type="text"  placeholder="nationality" value="{$user.nationality}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="nationality" type="text"  placeholder="nationality" />
+                                </if>
+                            </li>   
+                            <li>
+                                <label>籍贯</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="native_place" type="text"  placeholder="native_place" value="{$user.native_place}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="native_place" type="text"  placeholder="native_place" />
+                                </if>                                      
+                            </li> 
+                            
+                             <li>
+                                <label>毕业院校</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="graduate" type="text"  placeholder="graduate" value="{$user.graduate}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="graduate" type="text"  placeholder="graduate" />
+                                </if>                                      
+                            </li>
+                            
+                             <li>
+                                <label>毕业时间</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="graduation_date" type="text" onClick="WdatePicker()"  placeholder="graduation_date" value="{$user.graduation_date|date='Y-m-d',###}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="graduation_date" type="text"  onClick="WdatePicker()" placeholder="graduation_date" />
+                                </if>                                      
+                            </li>                               
+
+                            <li><label>学历<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                <div class="col-sm-9">                                
+                                    <select name="education" class="uew-select-value">
+                                        <option <if condition="$user.education eq 0" >selected="selected"</if> value="0">请选择</option>
+                                        <option <if condition="$user.education eq 1" >selected="selected"</if> value="1">本专</option>
+                                        <option <if condition="$user.education eq 2" >selected="selected"</if> value="2">本专</option>
+                                        <option <if condition="$user.education eq 3" >selected="selected"</if> value="3">研究生</option>
+                                        <option <if condition="$user.education eq 4" >selected="selected"</if> value="4">在校大专</option>
+                                        <option <if condition="$user.education eq 5" >selected=selected</if> value="5">在校本科</option>
+                                        <option <if condition="$user.education eq 6" >selected=selected</if> value="5">高中</option>
+                                        <option <if condition="$user.education eq 7" >selected=selected</if> value="5">中专</option>
+                                        <option <if condition="$user.education eq 8" >selected=selected</if> value="5">初中</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                            </li>      
+
+                            
+                            <li>
+                                <label>专业</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="major" type="text"  placeholder="major" value="{$user.major}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="major" type="text"  placeholder="major" />
+                                </if>                                      
+                            </li>
+                            
+                            <li>
+                                <label>政治面貌</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="politics_status" type="text"  placeholder="politics_status" value="{$user.politics_status}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="politics_status" type="text"  placeholder="politics_status" />
+                                </if>                                      
+                            </li>                           
+                            
+                            <li>
+                                <label>家庭住址</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="homeadd" type="text"  placeholder="homeadd" value="{$user.homeadd}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="homeadd" type="text"  placeholder="homeadd" />
+                                </if>                                      
+                            </li> 
+                            
+                            <li>
+                                <label>现居住址</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="homenow" type="text"  placeholder="homenow" value="{$user.homenow}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="homenow" type="text"  placeholder="homenow" />
+                                </if>                                      
+                            </li>
+                            
+                             <li>
+                                <label>紧急联系人</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="urgency" type="text"  placeholder="urgency" value="{$user.urgency}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="urgency" type="text"  placeholder="urgency" />
+                                </if>                                      
+                            </li>
+                            
+                             <li>
+                                <label>电话</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="phone_ugy" type="text"  placeholder="phone_ugy" value="{$user.phone_ugy}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="phone_ugy" type="text"  placeholder="phone_ugy" />
+                                </if>                                      
+                            </li>                              
+                                    
+                            <li><label>开户行<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                    <div class="col-sm-9">
+                                        <select name="education" class="uew-select-value">
+                                            <option value="0">请选择</option>
+                                            <option value="1">中国工商银行</option>
+                                            <option value="2">中国银行</option>
+                                            <option value="3">中国建设银行</option>                                        
+                                            <option value="4">中国农业银行</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </li>   
+                            
+                            <li>
+                                <label>银行账号</label>                                   
+                                <if condition="$id gt 0">
+                                    <input class="dfinput" name="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="bank_account" type="text"  placeholder="bank_account" />
+                                </if>                                      
+                            </li>                               
+  
+                            <li>
+                                <label>备注说明</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="comment" type="text"  placeholder="Descr" value="{$user.comment}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="comment" type="text"  placeholder="Descr" />
+                                </if>                                      
+                            </li>                                
+                                                    
+                            <div class="col-md-offset-3 col-md-9">
+                                <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+                          <!--       <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                &nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button> -->
+                            </div>
+                            
+                        </ul>
+
+                    </div> 
+           <!--      </form>   -->       
+            </div> 
+
+
+        </div>
+     <script type="text/javascript">
+        var post1="{$user.quarters}";
+        department();      
+        $('#department').change(function(){            
+            department();                        
+        });
+
+        function department(){
+            var id=$('#department').val();
+            var url="{:U('Console/Staff/department')}?catid="+id;                        
+            $.get(url,function(data){
+                $("#post").html("");
+                if(data.length==0){
+                    $("#post").append("<option value='0'>请新建岗位</option>");
+                    return false;
+                }
+                for(i=0 ;i<data.length;i++){  
+                    var post2=data[i].cate_id;                    
+                    if(post1==post2){
+                        $("#post").append('<option selected="selected" value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }else{
+                        $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }                                         
+                    
+                }
+                          
+            })            
+        }
+
+    </script>
+
+
+    </body>
+
+</html>
