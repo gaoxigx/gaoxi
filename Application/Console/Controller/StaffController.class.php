@@ -69,7 +69,10 @@ class StaffController extends CommonController {
 //        var_dump($list);
 //        exit();
         //echo $User->getLastSql();        
-        $catdata=D('Category')->categoryone();    
+
+        $catdata=D('Category')->categoryone();  
+        $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
+        $this->assign('education',$education);
         $this->assign('cat',$catdata);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -135,7 +138,8 @@ class StaffController extends CommonController {
                 if($data){
                     $data['entry_time']=strtotime(I('post.entry_time'));
                     $data['graduation_date']=strtotime(I('post.graduation_date'));
-                    $data['birth_date']=strtotime(I('post.birth_date'));            
+                    $data['birth_date']=strtotime(I('post.birth_date'));
+                    $data['education']=I('post.education1');
                     $result=$model->where($map)->save($data);                       
                     if ($result){
                         $this->success('修改成功', $jumpUrl);
