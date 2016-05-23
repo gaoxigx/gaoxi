@@ -112,7 +112,7 @@ class StaffController extends CommonController {
         if (IS_POST) {
             $id = I('post.id');           
             if ($id > 0) {           
-                $data=$model->create($_POST);
+            $data=$_POST;
                 $map['id']=$id;
                 if($data){
                     $result=$model->where($map)->save($data);           
