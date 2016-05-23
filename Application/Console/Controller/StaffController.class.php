@@ -128,7 +128,7 @@ class StaffController extends CommonController {
             } 
         }else {            
          if($id){
-             $user = $model->where(['id'=>$id])->find(); 
+             $user = $model->where("id=".$id)->find(); 
          } 
                 
          $this->assign('department',D('Category')->department());
