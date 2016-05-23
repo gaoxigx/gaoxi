@@ -220,7 +220,7 @@ public function edit($id){
 
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
-     $list = $data->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
+     $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
 
      $this->assign('prolist',$list);// 赋值数据集
     // $this->display();
