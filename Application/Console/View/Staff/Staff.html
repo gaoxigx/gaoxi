@@ -83,8 +83,8 @@ $(document).ready(function(){
             <volist name="list" id="vo">
             <tr>
 <!--            <td><input name="" type="checkbox" value="" /></td>-->
-            <td>{$vo.username}</td>
-            <td>{$vo.name}</td>
+            <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
+            <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
             <td>{$vo.sex}</td>
             <td>{$vo.nickname}</td>
             <td>{$vo.identity_card}</td>            

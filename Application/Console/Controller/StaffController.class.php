@@ -86,13 +86,31 @@ class StaffController extends CommonController {
         $this->assign('department',$data);
         $this->display();
     }
+
+    public function lookover(){
+        $id=I('get.id');        
+        $model = D('Staff');      
+        if($id){
+             $user = $model->where("id=".$id)->find(); 
+         } 
+                
+         $this->assign('department',D('Category')->department());
+         $this->assign('user',$user);
+         $this->assign('id',$id);
+         $this->display();
+
+    }
   
 //插入员工数据
     public function insert(){
         $jumpUrl =U('Console/Staff/Staff');
         $roleList   =   D('Staff');
-        if($roleList->create()) {
-            $result =   $roleList->add();
+        $data=$roleList->create();
+        if($data) {
+            $data['entry_time']=strtotime(I('post.entry_time'));
+            $data['graduation_date']=strtotime(I('post.graduation_date'));
+            $data['birth_date']=strtotime(I('post.birth_date'));
+            $result =   $roleList->add($data);
             if($result) {
                 $this->success('数据添加成功！', $jumpUrl);
             }else{

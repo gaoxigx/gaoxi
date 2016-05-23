@@ -87,7 +87,7 @@
                             <li><label>姓名<b>*</b></label><input name="name" type="text" class="dfinput" value=""  /></li>
                             <li><label>性别<b>*</b></label><cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
                             <li><label>身份证<b>*</b></label><input name="identity_card" type="text" class="dfinput" value=""  /></li>
-                            <li><label>出身日期<b></b></label><input name="birth_date" type="text" class="dfinput" value=""  /></li>      
+                            <li><label>出身日期<b></b></label><input name="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
                             <li><label>电话<b>*</b></label><input name="mobile" type="text" class="dfinput" value=""  /></li>
                             <li><label>入职时间<b></b></label><input onClick="WdatePicker()" name="entry_time" type="text" class="dfinput" value=""  /></li>  
 
@@ -116,8 +116,6 @@
                                         <option value="6">高中</option>
                                         <option value="7">中专</option>
                                         <option value="8">初中</option>
-
-
                                     </select>
                                 </div>
                                 </div>
