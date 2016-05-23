@@ -178,7 +178,7 @@
                             </li>                           
 
                             <li>
-                                <label>出身日期</label>                                   
+                                <label>出生日期</label>                                   
                                 <if condition="$id">
                                     <input class="dfinput" name="birth_date" onClick="WdatePicker()" type="text"  placeholder="birth_date" value="{$user.birth_date}"/>
                                     <else/>
@@ -242,17 +242,18 @@
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
                                 <div class="col-sm-9"> 
-                                    <select name="education" class="uew-select-value">
-                                        <option <if condition="$user.education eq 0" >selected="selected"</if> value="0">请选择</option>
-                                        <option <if condition="$user.education eq 1" >selected="selected"</if> value="1">本专</option>
-                                        <option <if condition="$user.education eq 2" >selected="selected"</if> value="2">本专</option>
-                                        <option <if condition="$user.education eq 3" >selected="selected"</if> value="3">研究生</option>
-                                        <option <if condition="$user.education eq 4" >selected="selected"</if> value="4">在校大专</option>
-                                        <option <if condition="$user.education eq 5" >selected="selected"</if> value="5">在校本科</option>
-                                        <option <if condition="$user.education eq 6" >selected="selected"</if> value="6">高中</option>
-                                        <option <if condition="$user.education eq 7" >selected="selected"</if> value="7">中专</option>
-                                        <option <if condition="$user.education eq 8" >selected="selected"</if> value="8">初中</option>
-                                    </select>
+                                    <select name="education1" class="uew-select-value">  
+                                        <option value="0" <if condition="$user.education eq 0" >selected="selected"</if>>请选择</option>
+                                        <option value="1" <if condition="$user.education eq 1" >selected="selected"</if>>本专</option>
+                                        <option value="2" <if condition="$user.education eq 2" >selected="selected"</if>>本专</option>
+                                        <option value="3" <if condition="$user.education eq 3" >selected="selected"</if>>研究生</option>
+                                        <option value="4" <if condition="$user.education eq 4" >selected="selected"</if>>在校大专</option>
+                                        <option value="5" <if condition="$user.education eq 5" >selected="selected"</if>>在校本科</option>
+                                        <option value="6" <if condition="$user.education eq 6" >selected="selected"</if>>高中</option>
+                                        <option value="7" <if condition="$user.education eq 7" >selected="selected"</if>>中专</option>
+                                        <option value="8" <if condition="$user.education eq 8" >selected="selected"</if>>初中</option>
+                                      
+                                    </select>  
                                 </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">

@@ -90,7 +90,7 @@ $(document).ready(function(){
             <td>{$vo.identity_card}</td>            
             <td>{$cat[$vo['section']]}</td>
             <td>{$cat[$vo['quarters']]}</td>
-            <td>{$vo.education}</td>
+            <td>{$education[$vo['education']]}</td>
             <td>{$vo.mobile}</td>
             <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
             </tr> 
