@@ -180,7 +180,7 @@
                             <li>
                                 <label>出生日期</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="birth_date" onClick="WdatePicker()" type="text"  placeholder="birth_date" value="{$user.birth_date}"/>
+                                    <input class="dfinput" name="birth_date" onClick="WdatePicker()" type="text"  placeholder="birth_date" value="{$user.birth_date|date='Y-m-d',###}"/>
                                     <else/>
                                     <input class="dfinput"  name="birth_date" type="text"  placeholder="birth_date" />
                                 </if>                                  

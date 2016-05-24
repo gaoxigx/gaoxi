@@ -15,7 +15,6 @@ class productModel extends Model {
         array('sortnum','require','剩余库存必须填写'),
         array('salenum','require','销售数量必须填写'),
         array('purchaseper','require','采购负责人必须填写'),
-        array('product','','设备编号已经存在！',2,'unique',1),// 在新增的时候验证name字段是否唯一
         );
     // 定义自动完成
     protected $_auto = array( 

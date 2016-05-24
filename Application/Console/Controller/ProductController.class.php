@@ -75,8 +75,7 @@ class ProductController extends CommonController {
     
 
 //插入数据
-    public function insert(){
-
+public function insert(){
 
     // 上传文件 
     $data = I('');
@@ -110,14 +109,14 @@ class ProductController extends CommonController {
                 $data['pic1'] = $file['savepath'].'s'.$file['savename'];
             }
         }    
- 
+        $jumpUrl =U('Console/Product/Plist');
         $roleList   =   D('product');
         if($roleList->create()) {
             $result =   $roleList->add($data);
             if($result) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！',$jumpUrl);
             }else{
-                $this->error('数据添加错误！');
+                $this->error('数据添加错误！',$jumpUrl);
             }
         }else{
             $this->error($roleList->getError());
@@ -226,5 +225,18 @@ class ProductController extends CommonController {
 
     private function hello3(){
         echo '这是private方法!';
+    }
+    
+    public function examine(){
+        $this->getprotype();
+            $controller   =   M('Product');
+        // 读取数据
+        $data =   $controller->find($id);
+        if($data) {
+            $this->assign('user',$data);// 模板变量赋值
+        }else{
+            $this->error('数据错误');
+        }
+        $this->display();        
     }
 }
