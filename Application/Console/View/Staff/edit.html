@@ -317,13 +317,14 @@
                             <li><label>开户行<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <div class="col-sm-9">
-                                        <select name="education" class="uew-select-value">
-                                            <option value="0">请选择</option>
-                                            <option value="1">中国工商银行</option>
-                                            <option value="2">中国银行</option>
-                                            <option value="3">中国建设银行</option>                                        
-                                            <option value="4">中国农业银行</option>
+                                        <select id="bankaddress" name="bankaddress" class="uew-select-value">
+                                            <option <if condition="$user.bankaddress eq 0"> selected="selected" </if> value="0">请选择</option>
+                                            <option <if condition="$user.bankaddress eq 1"> selected="selected" </if> value="1">中国工商银行</option>
+                                            <option <if condition="$user.bankaddress eq 2"> selected="selected" </if> value="2">中国银行</option>
+                                            <option <if condition="$user.bankaddress eq 3"> selected="selected" </if> value="3">中国建设银行</option>
+                                            <option <if condition="$user.bankaddress eq 4"> selected="selected" </if> value="4">中国农业银行</option>
                                         </select>
+                                        <input type="hidden" id="banckaddresstext" name="bankaddresstext" value="{$user.bankaddresstext}" />
                                     </div>
                                 </div>
                             </li>   
@@ -361,6 +362,11 @@
 
         </div>
      <script type="text/javascript">
+
+        $('#bankaddress').change(function(){                                   
+            $('#banckaddresstext').val($(this).find("option:selected").text());
+        });
+
         var post1="{$user.quarters}";
         department();      
         $('#department').change(function(){            
