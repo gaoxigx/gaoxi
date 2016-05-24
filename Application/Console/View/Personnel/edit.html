@@ -39,7 +39,7 @@
     
     <div id="tab1" class="tabson">
     <form name="form1" id="form1" method='post' action="__URL__/update">
-    <div class="formtext">请正确填写发布信息！</div>
+    <div class="formtext">请正确填写信息！</div>
     <ul class="forminfo">
     <li><label>所属分组<b>*</b></label>  
     
@@ -55,11 +55,11 @@
     
     </li>
     <input type="hidden" name ="id"   value="{$data.id}">
-    <li><label>用户名<b>*</b></label><input name="" type="text" class="dfinput" value="{$data.accounts}"  /><b>用户不能为修改</b></li>
+    <li><label>用户名<b>*</b></label><input name="" type="text" class="dfinput" value="{$data.accounts}"  readonly="readonly"/><b>用户名不能为修改</b></li>
 
-    <li><label>密码<b>*</b></label><input name="password" type="text" class="dfinput" value=""  /><b>密码字段为空时不做修改</b></li>
+    <!--<li><label>密码<b>*</b></label><input name="password" type="text" class="dfinput" value=""  <if condition="$data.password == ''">readonly="readonly"</if> /><b>密码字段为空时不做修改</b></li>
    
-    <!-- <li><label>到期日期<b>*</b></label><input name="endtime" type="text" class="Wdate" value="{$endtime['add_time']|date='Y-m-d',###}"  onClick="WdatePicker()" style="width:187px;"/></li> -->
+     <li><label>到期日期<b>*</b></label><input name="endtime" type="text" class="Wdate" value="{$endtime['add_time']|date='Y-m-d',###}"  onClick="WdatePicker()" style="width:187px;"/></li> -->
       
     <li><label>昵称<b>*</b></label><input name="nickname" type="text" class="dfinput" value="{$data.nickname}" /></li>
    
@@ -70,11 +70,11 @@
     <li><label>手机<b>*</b></label><input name="mobile" type="text" class="dfinput" value="{$data.mobile}"  /></li>
    
 
-    <li><label>备注<b>*</b></label>
+    <li><label>备注<b></b></label>
     <textarea class="textinput" rows="" cols="" name="content">{$data.content}</textarea>
     </li>
     <li><label>是否审核</label><cite><input type="radio"  <if condition="$data.status eq 1"> checked="checked" </if> value="1" name="status">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" <if condition="$data.status eq 0"> checked="checked" </if> value="0" name="status">否</cite></li>
-    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
+    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="保&nbsp;&nbsp;存"/></li>
 
     </ul>
 </form>    

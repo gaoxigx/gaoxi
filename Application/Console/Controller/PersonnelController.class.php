@@ -19,19 +19,19 @@ class PersonnelController extends CommonController {
         // $this->show('','utf-8');
         $map = I('');
         
-    foreach( $map as $k=>$v){  
-        if( !$v )  
-            unset( $arr[$k] );  
-    }   
+		foreach( $map as $k=>$v){  
+			if( !$v )  
+				unset( $arr[$k] );  
+		}   
 
-    //分页跳转的时候保证查询条件
-    foreach($map as $key=>$val) {
-        if(!$val){
-            unset($map[$key]);
-        }else{
-        $Page->parameter[$key]   =   urlencode($val);
-    }
-    }
+		//分页跳转的时候保证查询条件
+		foreach($map as $key=>$val) {
+			if(!$val){
+				unset($map[$key]);
+			}else{
+				$Page->parameter[$key]   =   urlencode($val);
+			}
+		}
 // dump($map);
     $User = M('controller'); // 实例化User对象
     $count = $User->where($map)->count();// 查询满足要求的总记录数
@@ -86,13 +86,57 @@ class PersonnelController extends CommonController {
 
 
      }
+	
+	public function passadd(){
+		$id = I('get.id',0);
+		if($id >0){
+			$controller = M('controller');
+			$data = $controller ->where('id='.$id)->find();
+			$this->assign('data',$data);
+		}
+        
+		$this->display();
+	}
+	
+	/**
+	 *管理员列表-修改密码
+	 */
+public function passupdateall(){
+	if(I('post.id') > 0){
+		$id = I('post.id',0);
+	}
 
-//更修改密码
+    if(I('post.password')==''){
+        $this->error('新密码必须填写！');
+    }else{
+        $dataa["password"] = md5(I('post.password'));
+        
+        $controller = M('controller');
+        $data = $controller ->where('id='.$id)->find();
+        if($data) {
+                $result = $controller->where('id='.$id)->save($dataa);
+                // dump($result);
+                // exit();
+                if($result) {
+                    $this->success('密码重置成功！',U('Personnel/PerList'));
+                }else{
+                    $this->error('密码重置失败！');
+                }
+        }else{
+            $this->error('此用户不存在');
+        }
+
+    }
+
+ }
+	
+//更修改当前用户密码
 public function passupdate(){
-$id = I('session.userid',0);
+	$id = I('session.userid',0);
+	
 // echo getdate();
 // exit;
-    if(I('post.oldpassword')=='' && I('post.oldpassword')==''){
+    if(I('post.password')=='' && I('post.oldpassword')==''){
         $this->error('新旧密码必须填写！');
     }else{
         $oldpassword = md5(I('post.oldpassword'));

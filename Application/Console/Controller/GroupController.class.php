@@ -7,7 +7,8 @@ class GroupController extends CommonController {
         // $this->show('','utf-8');
         $groupname = I('rolename');
         if($groupname){
-            $condition['rolename'] = $groupname;
+          //  $condition['rolename'] = $groupname;
+			$condition['rolename']=array('like','%'.$groupname.'%');
         }
         $User = M('role');
         $list = $User->limit(100)->where($condition)->order('id')->select();
@@ -59,7 +60,7 @@ class GroupController extends CommonController {
     if($roleList->create()) {
         $result = $roleList->save();
         if($result) {
-            $this->success('操作成功！');
+            $this->success('操作成功！',U('Group/roleList'));
         }else{
             $this->error('写入错误！');
         }
@@ -67,6 +68,22 @@ class GroupController extends CommonController {
         $this->error($Form->getError());
     }
  }
+	/**
+	 *审核
+	 */
+	public function editstatus(){
+		$roleList   =   D('role');
+		$id=!empty($_POST['id'])?$_POST['id']:'';
+		$result = $roleList->where('id='.$id)->save(array('status'=>1));
+		
+		if($result) {
+			echo json_encode(array('result'=>'1','msg'=>'审核成功！'));
+		}else{
+			echo json_encode(array('result'=>'0','msg'=>'审核失败！'));
+		}
+		
+	}
+ 
     public function delete(){
         $id=i('id');
         // dump($id);
