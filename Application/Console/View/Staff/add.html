@@ -109,7 +109,7 @@
                                     <select name="education" class="uew-select-value">
                                         <option value="0">请选择</option>
                                         <option value="1">大专</option>
-                                        <option value="2">本专</option>
+                                        <option value="2">本科</option>
                                         <option value="3">研究生</option>                                        
                                         <option value="4">在校大专</option>
                                         <option value="5">在校本科</option>
@@ -141,13 +141,14 @@
                             <li><label>开户行<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <div class="col-sm-9">
-                                        <select name="education" class="uew-select-value">
+                                        <select id="bankaddress" name="banckaddress" class="uew-select-value">                                            
                                             <option value="0">请选择</option>
                                             <option value="1">中国工商银行</option>
                                             <option value="2">中国银行</option>
                                             <option value="3">中国建设银行</option>                                        
                                             <option value="4">中国农业银行</option>
                                         </select>
+                                        <input id="banckaddresstext" type="hidden" name="banckaddresstext" />
                                     </div>
                                 </div>
                             </li>   
@@ -173,8 +174,10 @@
     </body>
     
     <script type="text/javascript">
-     
-
+        
+        $('#bankaddress').change(function(){                        
+            $('#banckaddresstext').val($(this).find("option:selected").text());
+        });
         $('#department').change(function(){            
             department();                        
         });
