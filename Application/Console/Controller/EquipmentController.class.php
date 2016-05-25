@@ -58,7 +58,15 @@ class EquipmentController extends CommonController {
     }
 
     
-
+    public function add(){
+        //得到所有职员
+        $staff=D('staff')->select();
+        $this->assign('staff',$staff);
+        //得到所有部门
+        $department=D('Category')->department();
+        $this->assign('department',$department);
+        $this->display();
+    }
 //添加设备信息
     public function insert(){
         $jumpUrl =U('Console/Equipment/Equipment');
@@ -78,34 +86,33 @@ class EquipmentController extends CommonController {
 
 //编辑
     public function edit($id=0){
-    $controller   =   M('Equipment');
-    // 读取数据
-    $data =   $controller->find($id);
-    if($data) {
-        $this->assign('data',$data);// 模板变量赋值
-    }else{
-        $this->error('数据错误');
+        $controller   =   M('Equipment');
+        // 读取数据
+        $data =   $controller->find($id);
+        if($data) {
+            $this->assign('data',$data);// 模板变量赋值
+        }else{
+            $this->error('数据错误');
+        }
+        $this->display();
+
     }
-    $this->display();
-
-
-     }
 
 
 //更新数据
     public function update(){
-    $roleList   =   D('Equipment');
-    if($roleList->create()) {
-        $result = $roleList->save();
-        if($result) {
-            $this->success('操作成功！');
+        $roleList   =   D('Equipment');
+        if($roleList->create()) {
+            $result = $roleList->save();
+            if($result) {
+                $this->success('操作成功！');
+            }else{
+                $this->error('写入错误！');
+            }
         }else{
-            $this->error('写入错误！');
+            $this->error($roleList->getError());
         }
-    }else{
-        $this->error($roleList->getError());
-    }
- }
+     }
 
  //删除数据
     public function delete(){
