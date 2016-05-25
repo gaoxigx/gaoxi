@@ -10,8 +10,9 @@
 <script src="__PUBLIC__/Console/js/Calculation.js"></script>
 <!--<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.min.js"></script>-->
 <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
-	<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
-<!-- <script>
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+<script>
 	$(function(){		
 		$.validator.setDefaults({
 			submitHandler: function() {
@@ -33,10 +34,12 @@
 					required: "请输入买家微信号",
 					minlength: "不能少于2个字符",
 				}				
-			}
+			},
+			errorClass:'we'
+			
 		});
 	});
-</script> -->
+</script>
 </head>
 
 <body>
@@ -53,7 +56,7 @@
     
     <div class="formbody">
     <div id="usual1" class="usual"> 
-    <form name="form1" id="form1" method='post' action="__URL__/insert" >
+    <form name="form1" id="form1" method='get' action="__URL__/insert" >
     <div class="itab">      
 			<!--<form name="form1" id="form1" method='post' action="__URL__/insert" onsubmit="if(!checkdata()){return false;}">-->
 	    <ul> 
@@ -107,12 +110,12 @@
 
     <li>
 		<label>买家微信号<b>*</b></label>
-		<input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value="" required />
+		<input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value=""  />
 	</li>
-    <li><label>订单来源<b>*</b></label><input id="source" name="source" type="text" class="dfinput" value="" required /></li>
-    <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value="" required /></li>
-    <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" required /></li>
-    <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value="" required /></li>
+    <li><label>订单来源<b>*</b></label><input id="source" name="source" type="text" class="dfinput" value="" /></li>
+    <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value=""  /></li>
+    <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" /></li>
+    <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value=""  /></li>
     <li><label>订单备注<b></b></label><input name="note" type="text" class="dfinput" value=""  /></li>
     <li><label><b>购买商品</b></li>
     </ul>
