@@ -89,7 +89,7 @@
     <li><label>设备负责人<b>*</b></label>
         <select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
             <volist name="staff" id='vo'>
-                <option value="{$vo.id}">{$vo.name}</option>
+                <option value="{$vo.id}" <if condition="$vo['id'] eq $data['fuzerenid']"> selected="selected"</if>>{$vo.name}</option>
             </volist>
         </select>
         <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
@@ -98,7 +98,7 @@
     <li><label>设备使用人<b>*</b></label>
         <select id="shiyongrenid" name="staffid" type='text' class="sciselect">
             <volist name="staff" id='vo'>
-                <option value="{$vo.id}">{$vo.name}</option>
+                <option <if condition="$vo['id'] eq $data['staffid']">selected="selected"</if> value="{$vo.id}">{$vo.name}</option>
             </volist>
         </select>
         <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
