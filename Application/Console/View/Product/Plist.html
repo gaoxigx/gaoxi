@@ -55,7 +55,17 @@ $(document).ready(function(){
         </ul>
 
         <ul class="seachform">
-            <form action="__URL__/Plist" method="post" id="form2" name="form2">
+                <form action="/index.php/Console/Product/Plist" method="post" id="form2" name="form2">     
+                
+                <li><label>类别<b></b></label>  
+                    <select name="protype" class="sciselect">
+                    <option value="">全部</option>
+                    <volist name="protype" id="voo">
+                        <option value="{$voo.id}">{$voo.typename}</option>
+                    </volist>
+                    </select>
+                </li>
+                
                 <li><label>&nbsp;&nbsp;搜索</label><input type="text" class="scinpute" name="username" value=""></li>
                 <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
             </form>
@@ -69,16 +79,7 @@ $(document).ready(function(){
 <!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
         <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
 
-        <th><label>类别<b></b></label>      
-<!--            <li><label>类别<b></b></label>  
-                <select name="protype" class="sciselect">
-                <option value="">全部</option>
-                <volist name="protype" id="voo">
-                    <option value="{$voo.id}">{$voo.typename}</option>
-                </volist>
-                </select>
-            </li>-->
-        </th>
+        <th><label>类别<b></b></label> </th>
         <th>图片</th>
         <th>产品名称</th>
         <th>成本价格</th>
