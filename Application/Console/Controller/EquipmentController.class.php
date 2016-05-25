@@ -164,7 +164,7 @@ class EquipmentController extends CommonController {
             $data['status']=1;
             $data['type']=1;
             $result=$track->add($data);
-            $map['equipment_id']=$data['equipment_id'];
+            $map['id']=$data['equipment_id'];
             $update['shiyongren']=$data['staff_name'];
             $sul==D('Equipment')->where($map)->save($update);
             if($result){
