@@ -4,10 +4,19 @@ $(document).ready(function () {
     //jquery特效制作复选框全选反选取消(无插件)
     // 全选        
     $(".allselect").click(function () {
-        $(".gwc_tb2 input[aajq=newslist]").each(function () {
-            $(this).attr("checked", true);
-            $(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
-        });
+		if($(this).attr("checked")){
+			$(".gwc_tb2 input[aajq=newslist]").each(function () {
+				$(this).attr("checked", true);
+				$(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+			});
+		}else{
+			$(".gwc_tb2 input[aajq=newslist]").each(function () {
+				$(this).attr("checked", false);
+			});
+		}
+        
+		$("#invert").attr("checked", false);
+		$(".cancel").attr("checked", false);
         GetCount();
     });
 
@@ -22,6 +31,9 @@ $(document).ready(function () {
                 //$(this).next().css({ "background-color": "#3366cc", "color": "#000000" });
             } 
         });
+		
+		$(".allselect").attr("checked", false);
+		$("#cancel").attr("checked", false);
         GetCount();
     });
 
@@ -31,6 +43,8 @@ $(document).ready(function () {
             $(this).attr("checked", false);
             // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
         });
+		$(".allselect").attr("checked", false);
+		$("#invert").attr("checked", false);
         GetCount();
     });
 
