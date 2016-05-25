@@ -17,9 +17,9 @@ class WecateController extends CommonController {
         // $this->show('','utf-8');
         $username = i('username');
         if($username){
-            $where['wechat_id']  = array('like','%'.trim($username).'%');
-            $where['username']  = array('like','%'.trim($username).'%');
-            $where['_logic'] = 'or';
+            $map['wechat_id']  = array('like','%'.trim($username).'%');
+            $map['username']  = array('like','%'.trim($username).'%');
+            $map['_logic'] = 'or';
         }
         foreach( $map as $k=>$v){  
             if( !$v )  
@@ -39,12 +39,12 @@ class WecateController extends CommonController {
 //        var_dump($data);
 //        
 //        exit();
-        $count = $User->where($where)->count();// 查询满足要求的总记录数
+        $count = $User->where($map)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $User->where($where)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
 //        var_dump($list);
 //        exit();
         //echo $User->getLastSql();
