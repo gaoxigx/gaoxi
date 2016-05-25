@@ -136,6 +136,7 @@
                                             <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
                                         </volist>
                                     </select>
+                                     <input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li>        
@@ -146,6 +147,7 @@
                                     <select id="post" name="quarters" class="uew-select-value">
                                         <option value="0">请选择</option>
                                     </select>
+                                    <input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.posttext}" />
                                 </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
@@ -252,8 +254,8 @@
                                         <option value="6" <if condition="$user.education eq 6" >selected="selected"</if>>高中</option>
                                         <option value="7" <if condition="$user.education eq 7" >selected="selected"</if>>中专</option>
                                         <option value="8" <if condition="$user.education eq 8" >selected="selected"</if>>初中</option>
-                                      
                                     </select>  
+                                    <input name="educationtext" id="educationtext" type="hidden" value="{$user.educationtext}" />
                                 </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
@@ -363,13 +365,22 @@
         </div>
      <script type="text/javascript">
 
+         $('#education').change(function(){                        
+            $('#educationtext').val($(this).find("option:selected").text());
+        });
+        
+        $('#post').change(function(){                        
+            $('#posttext').val($(this).find("option:selected").text());
+        });
+
         $('#bankaddress').change(function(){                                   
             $('#banckaddresstext').val($(this).find("option:selected").text());
         });
 
         var post1="{$user.quarters}";
         department();      
-        $('#department').change(function(){            
+        $('#department').change(function(){  
+         $('#departmenttext').val($(this).find("option:selected").text());                   
             department();                        
         });
 

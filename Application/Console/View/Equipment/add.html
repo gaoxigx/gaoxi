@@ -75,24 +75,24 @@
 
 
     <li><label>设备负责人<b>*</b></label>
-        <select id="fuzernid" name="fuzeren" type='text' class="sciselect">
+        <select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
             <volist name="staff" id='vo'>
-                <option values="{$vo.id}">{$vo.name}</option>
+                <option value="{$vo.id}">{$vo.name}</option>
             </volist>
         </select>
         <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
     </li>
    
     <li><label>设备使用人<b>*</b></label>
-        <select id="shiyongrenid" name=name="fuzeren" type='text' class="sciselect">
+        <select id="shiyongrenid" name="staffid" type='text' class="sciselect">
             <volist name="staff" id='vo'>
-                <option values="{$vo.id}">{$vo.name}</option>
+                <option value="{$vo.id}">{$vo.name}</option>
             </volist>
         </select>
-        <input id="shiyongrentext" name="shiyongrentext" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+        <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
     </li>  
 
-
+<!-- 
     <li><label>所在部门<b>*</b></label>
     <select id="department" name="department" class="sciselect">
         <volist name="department" id="vo">
@@ -106,8 +106,8 @@
             <option value="0">请先选部门</option>        
         </select>
         <input name="gongwei" type="hidden" class="dfinput" value=""  />
-    </li> 
-    <li><label>登记日期<b>*</b></label><input name="addtime" type="text" class="Wdate" value="{:date('Y-m-d',time)}"  onClick="WdatePicker()" style="width:187px;"/></li>
+    </li> -->
+    <li><label>登记日期<b>*</b></label><input name="addtime" type="text" class="Wdate" value="{:date('Y-m-d',time)}"  onClick="WdatePicker()" style="width:187px;"/></li> 
    
 
     <li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>

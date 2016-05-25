@@ -15,7 +15,7 @@ class WecateController extends CommonController {
 
         // echo "string";
         // $this->show('','utf-8');
-        $username = i('username');
+        $username = I('post.username');
         if($username){
             $map['wechat_id']  = array('like','%'.trim($username).'%');
             $map['username']  = array('like','%'.trim($username).'%');
@@ -98,7 +98,7 @@ class WecateController extends CommonController {
             } 
         } else {            
          if($id){
-             $user = $model->where("id=>".$id)->find(); 
+             $user = $model->where("id=".$id)->find(); 
          } 
         
          $this->assign('user',$user);
