@@ -11,113 +11,32 @@
 <!--<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.min.js"></script>-->
 <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
 	<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
-<script>
-	/*
-	$.validator.setDefaults({
-		submitHandler: function() {
-			alert("submitted!");
-		}
-	});*/
-	$().ready(function() {
+<!-- <script>
+	$(function(){		
+		$.validator.setDefaults({
+			submitHandler: function() {
+				alert("submitted!");
+			}
+		});
+
+
 		$("#form1").validate({
-			rules:{
-				
+			rules:{				
 				buyer_wechat: {
 					required: true,
 					minlength: 2
-				},
-				
+				}				
 				
 			},
-			messages: {
-				
+			messages: {				
 				buyer_wechat: {
 					required: "请输入买家微信号",
 					minlength: "不能少于2个字符",
-				},
-				
+				}				
 			}
 		});
 	});
-	/*
-	function checkdata(){
-		var agent = $("select[name='agent']").val();
-		var assistant = $("select[name='assistant']").val();
-		var equipment = $("select[name='equipment']").val();
-		var Payment_method = $("select[name='Payment_method']").val();
-		var buyer_wechat = $("input[name='buyer_wechat']").val();
-		var source = $("input[name='source']").val();
-		var username = $("input[name='username']").val();
-		var mobile = $("input[name='mobile']").val();
-		var address = $("input[name='address']").val();
-		var pro_check = $(".gwc_tb2 input[aajq='newslist']:checked").length;
-		
-		if(agent == ''){
-			alert('请选择经纪人');
-			return false;
-		}
-		if(assistant == ''){
-			alert('请选择经纪助理编号');
-			return false;
-		}
-		if(equipment == ''){
-			alert('请选择设备编号');
-			return false;
-		}
-		if(Payment_method == ''){
-			alert('请选择支付方式');
-			return false;
-		}
-		if(buyer_wechat == ''){
-			alert('请输入买家微信号');
-			return false;
-		}
-		if(source == ''){
-			alert('请输入订单来源');
-			return false;
-		}
-		if(username == ''){
-			alert('请输入收件人姓名');
-			return false;
-		}
-		checklength(username);
-		if(mobile == ''){
-			alert('请输入收件人电话');
-			return false;
-		}
-		if(address == ''){
-			alert('请输入收件人地址');
-			return false;
-		}
-		if(pro_check == 0){
-			alert('请选择商品');
-			return false;
-		}
-		
-		return false;
-	}
-	
-	//姓名、地址长度验证
-	function checklength(str,len){
-		if(!str){
-			alert('内容为空');
-		}
-		if(!len){
-			var len = 10;
-		}
-		var str_len = str.length;
-		if(str_len > len){
-			
-		}
-		
-	}
-	
-	//手机验证
-	function checkphone(){
-		
-	}
-	*/
-</script>
+</script> -->
 </head>
 
 <body>
@@ -134,14 +53,13 @@
     
     <div class="formbody">
     <div id="usual1" class="usual"> 
-    <div class="itab">
-        <form name="form1" id="form1" method='post' action="__URL__/insert" >
-		<!--<form name="form1" id="form1" method='post' action="__URL__/insert" onsubmit="if(!checkdata()){return false;}">-->
-    <ul> 
-
-    <li><a href="#tab1" class="selected">添加订单</a></li> 
-   <input type="hidden" name="order_no"  value="2016051599535210">
-    </ul>
+    <form name="form1" id="form1" method='post' action="__URL__/insert" >
+    <div class="itab">      
+			<!--<form name="form1" id="form1" method='post' action="__URL__/insert" onsubmit="if(!checkdata()){return false;}">-->
+	    <ul> 
+		    <li><a href="#tab1" class="selected">添加订单</a></li> 
+		   <input type="hidden" name="order_no"  value="2016051599535210">
+	    </ul>
     </div> 
     
     <div id="tab1" class="tabson">
@@ -205,9 +123,9 @@
     <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="提交订单"/></li>
 
     
-</form>    
+
     </div> 
-      
+  </form>        
     </div> 
     </div>
 
