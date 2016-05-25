@@ -117,10 +117,11 @@ public function Plist($name=''){
     $username = i('username');
     if($username){
         $map['order_no']  = array('like','%'.trim($username).'%');
+        $map['product']  = array('like','%'.trim($username).'%');
+        $map['protype']  = array('like','%'.trim($username).'%');  
         $map['agent']  = array('like','%'.trim($username).'%');
         $map['buyer_wechat']  = array('like','%'.trim($username).'%');
-        $map['numberno']  = array('like','%'.trim($username).'%');
-        $map['mobile']  = array('like','%'.trim($username).'%');              
+        $map['numberno']  = array('like','%'.trim($username).'%');             
         $map['_logic'] = 'or';
     }
     foreach( $map as $k=>$v){  
