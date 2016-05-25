@@ -98,8 +98,8 @@ $(document).ready(function(){
         <td>{$vo.nickname}</td>
         <td>{$vo.username}</td>
         <td>{$vo.mobile}</td>
-        <td>{$vo.addtime|date='Y-m-d',###}</td>
         <td><if condition="$vo.status eq 1"> 已审核 <else /> <h5>未审核</h5></if></td>
+        <td>{$vo.addtime|date='Y-m-d',###}</td>
         <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/passadd/id/{$vo.id}" class="tablelink"> 修改密码</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
         </tr> 
         </volist>
