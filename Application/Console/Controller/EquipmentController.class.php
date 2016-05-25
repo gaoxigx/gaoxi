@@ -9,9 +9,6 @@ class EquipmentController extends CommonController {
 
 //数据列表
     public function Equipment($name=''){
-
-        // echo "string";
-        // $this->show('','utf-8');
         $username = i('username');
         if($username){
             $where['xinghao']  = array('like','%'.trim($username).'%');
@@ -44,7 +41,7 @@ class EquipmentController extends CommonController {
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $User->field('et.*,sf.section,sf.quarters')->alias('et')
+        $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
                 ->join('nico_staff as sf on sf.id=et.staffid','left')->where($where)
                 ->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
 
@@ -85,6 +82,11 @@ class EquipmentController extends CommonController {
         // 读取数据
         $data =   $controller->find($id);
         if($data) {
+             $staff=D('staff')->select();
+            $this->assign('staff',$staff);
+            //得到所有部门
+            $department=D('Category')->department();
+            $this->assign('department',$department);
             $this->assign('data',$data);// 模板变量赋值
         }else{
             $this->error('数据错误');
@@ -111,26 +113,16 @@ class EquipmentController extends CommonController {
 
  //删除数据
     public function delete(){
-    $id=i('id');
-        // dump($id);
-        // exit;
+        $id=i('id');
         $role = M('Equipment');
-         $set = $role->where("id = ".$id)->find();
-         // $set['oldid'] = $id;
-         // unset($set['id']);
-         dump($set);
-         // exit;
+        $set = $role->where("id = ".$id)->find();
         M('Equipment_copy')->add($set);
-        // M('Equipment_copy')->add($set);
-
         $result = $role->delete($id);
-
-         if($result) {
-                $this->success('数据删除成功！');
-            }else{
-                $this->error('数据删除错误！');
-            }
-        // $this->display();
+        if($result) {
+            $this->success('数据删除成功！');
+        }else{
+            $this->error('数据删除错误！');
+        }
     }
 
     protected function top(){
@@ -151,6 +143,16 @@ class EquipmentController extends CommonController {
         $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select(); 
         $this->assign('dataq',$trackeq);
         $this->assign('vo',$track);
+        $this->display();
+    }
+    public function staffequipment(){
+        if(!I('get.id')){
+            $this->error('请进入列表页，选择连接设备！');
+        }
+        $map['staffid']=I('get.id');
+        $track=D('Equipment')->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
+                ->join('nico_staff as sf on sf.id=et.staffid','left')->where($map)->select();
+        $this->assign('data',$track);
         $this->display();
     }
     public function trackadd(){    

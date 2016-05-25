@@ -69,6 +69,7 @@
                                             <option value="{$voo.cate_id}">{$voo.cate_name}</option>
                                         </volist>
                                     </select>
+                                    <input name='departmenttext' type="hidden" id="departmenttext" />
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li>        
@@ -80,6 +81,7 @@
                                         <option>请选择部门</option>
                                     </select>
                                 </div>
+                                <input name='posttext' type="hidden" id="posttext" />
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li>  
@@ -117,6 +119,7 @@
                                         <option value="7">中专</option>
                                         <option value="8">初中</option>
                                     </select>
+                                    <input name="educationtext" id="educationtext" type="hidden" value="未知" />
                                 </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
@@ -175,10 +178,21 @@
     
     <script type="text/javascript">
         
+        $('#education').change(function(){                        
+            $('#educationtext').val($(this).find("option:selected").text());
+        });
+        
+        $('#post').change(function(){                        
+            $('#posttext').val($(this).find("option:selected").text());
+        });
+
         $('#bankaddress').change(function(){                        
             $('#banckaddresstext').val($(this).find("option:selected").text());
         });
-        $('#department').change(function(){            
+       
+       
+        $('#department').change(function(){
+            $('#departmenttext').val($(this).find("option:selected").text());            
             department();                        
         });
 

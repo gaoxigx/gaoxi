@@ -123,7 +123,7 @@ $(document).ready(function(){
             <td>{$vo.qqhao}</td>
             <td>{$vo.weibohao}</td>
             <td>{$vo.fuzeren}</td>
-            <td>{$vo.shiyongren}</td>
+            <td><a href="{:U('Equipment/staffequipment'),array('id'=>$vo.staffid)}">{$vo.shiyongren}</a></td>
             <td>{$vo.bumen}</td>
             <td>{$vo.gongwei}</td>
             <td>{$vo.stauts|getstautsnum=###}</td>
