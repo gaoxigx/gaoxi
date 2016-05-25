@@ -61,29 +61,23 @@
 	
      <script type="text/javascript">
     $(document).ready(function(){
-    
+		$('#user_name').keydown(function(e,event){
+			EnterPress(e,event);
+		})
+		
+		$('#password').keydown(function(e,event){
+			EnterPress(e,event);
+		})
         //数字验证 
         // $("#getcode_num").click(function(){
         //     $(this).attr("src", 'verify.html?' + Math.random());
         // });
         
         $("#loginbtn").click(function(){
-
-            var user_name = $("#user_name").val();
-            var password = $("#password").val();
             // var code_num = $("#code_num").val();
-            if (user_name == '') {
-                alert('用户名不能为空');
-                $("#user_name").focus();
-                return false;
-            }
-            
-            if (password == '') {
-                alert("密码不能为空！");
-                $("#password").focus();
-                return false;
-            }
-            $("#login").attr("action", "dologin").submit();
+            if(checkform()){
+				$("#login").attr("action", "dologin").submit();
+			}
 
             // if (code_num == '') {
             //     alert("验证码不能为空！");
@@ -105,13 +99,29 @@
             // }
         });
     });
-    
+    //表单验证
+	function checkform(){
+		var user_name = $("#user_name").val();
+        var password = $("#password").val();
+		if (user_name == '') {
+			alert('用户名不能为空');
+			$("#user_name").focus();
+			return false;
+		}
+		if (password == '') {
+			alert("密码不能为空！");
+			$("#password").focus();
+			return false;
+		}
+		return true;
+	}
+	
     /*回车事件*/
-    function EnterPress(e){ //传入 event 
+    function EnterPress(e,event){ //传入 event 
         var e = e || window.event;
-        if (e.keyCode == 13) {
-            $("#login").attr("action", "dologin").submit();
-        }
+        if (e.keyCode == 13 && checkform()) {
+			$("#login").attr("action", "dologin").submit();
+		}
     }
 </script>
 </body>
