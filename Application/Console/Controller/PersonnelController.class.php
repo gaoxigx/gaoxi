@@ -13,25 +13,30 @@ class PersonnelController extends CommonController {
 
     }
 
-    //数据列表
+    //管理员列表
     public function PerList($name=''){
-        // echo "string";
-        // $this->show('','utf-8');
-        $map = I('');
+        $username = i('username');
+        if($username){
+            $map['nickname']  = array('like','%'.trim($username).'%');
+            $map['username']  = array('like','%'.trim($username).'%');
+            $map['accounts']  = array('like','%'.trim($username).'%');
+            $map['mobile']  = array('like','%'.trim($username).'%');              
+            $map['_logic'] = 'or';
+        }
         
-		foreach( $map as $k=>$v){  
-			if( !$v )  
-				unset( $arr[$k] );  
-		}   
+        foreach( $map as $k=>$v){  
+                if( !$v )  
+                        unset( $arr[$k] );  
+        }   
 
-		//分页跳转的时候保证查询条件
-		foreach($map as $key=>$val) {
-			if(!$val){
-				unset($map[$key]);
-			}else{
-				$Page->parameter[$key]   =   urlencode($val);
-			}
-		}
+        //分页跳转的时候保证查询条件
+        foreach($map as $key=>$val) {
+                if(!$val){
+                        unset($map[$key]);
+                }else{
+                        $Page->parameter[$key]   =   urlencode($val);
+                }
+        }
 // dump($map);
     $User = M('controller'); // 实例化User对象
     $count = $User->where($map)->count();// 查询满足要求的总记录数
