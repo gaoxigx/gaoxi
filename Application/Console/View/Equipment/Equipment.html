@@ -106,9 +106,9 @@ $(document).ready(function(){
         <td>{$vo.qqhao}</td>
         <td>{$vo.weibohao}</td>
         <td>{$vo.fuzeren}</td>
-        <td>{$vo.shiyongren}</td>
-        <td>{$vo.bumen}</td>
-        <td>{$vo.gongwei}</td>
+        <td><a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}">{$vo.shiyongren}</a></td>
+        <td>{$vo.departmenttext}</td>
+        <td>{$vo.posttext}</td>
         <td>{$vo.stauts|getstautsnum=###}</td>
         <td>{$vo.addtime|date='Y-m-d',###}</td>
         <td>

@@ -74,14 +74,40 @@
     </li>
 
 
-    <li><label>设备负责人<b>*</b></label><input name="fuzeren" type="text" class="dfinput" value=""  /></li>
+    <li><label>设备负责人<b>*</b></label>
+        <select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
+            <volist name="staff" id='vo'>
+                <option value="{$vo.id}">{$vo.name}</option>
+            </volist>
+        </select>
+        <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+    </li>
    
-    <li><label>设备使用人<b>*</b></label><input name="shiyongren" type="text" class="dfinput" value=""  /></li>  
+    <li><label>设备使用人<b>*</b></label>
+        <select id="shiyongrenid" name="staffid" type='text' class="sciselect">
+            <volist name="staff" id='vo'>
+                <option value="{$vo.id}">{$vo.name}</option>
+            </volist>
+        </select>
+        <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+    </li>  
 
-
-    <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value=""  /></li>    
-    <li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value=""  /></li> 
-    <li><label>登记日期<b>*</b></label><input name="addtime" type="text" class="Wdate" value="{:date('Y-m-d',time)}"  onClick="WdatePicker()" style="width:187px;"/></li>
+<!-- 
+    <li><label>所在部门<b>*</b></label>
+    <select id="department" name="department" class="sciselect">
+        <volist name="department" id="vo">
+            <option value="{$vo.cate_id}">{$vo.cate_name}</option>
+        </volist>
+    </select>
+    <input name="bumen" type="hidden" class="dfinput" value="$department[0].cate_name"  /></li>    
+    <li>
+        <label>所在工位<b>*</b></label>
+        <select id="post" name="department" class="sciselect">        
+            <option value="0">请先选部门</option>        
+        </select>
+        <input name="gongwei" type="hidden" class="dfinput" value=""  />
+    </li> -->
+    <li><label>登记日期<b>*</b></label><input name="addtime" type="text" class="Wdate" value="{:date('Y-m-d',time)}"  onClick="WdatePicker()" style="width:187px;"/></li> 
    
 
     <li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
@@ -90,20 +116,44 @@
     </ul>
 </form>    
     </div> 
-    
-    
-   
-       
-    </div> 
- 
- 
-    
-    
-    
-    
-    
-    </div>
+   </div> 
+</div>
+<script type="text/javascript">
+    $('#fuzernid').change(function(){
+        $('#fuzerntext').val($(this).find('option:selected').text());
+    });
+    $('#shiyongrenid').change(function(){
+        $('#shiyongrentext').val($(this).find('option:selected').text());
+    });
 
+    var post1="{$user.quarters}";
+        department();      
+        $('#department').change(function(){            
+            department();                        
+        });
+
+        function department(){
+            var id=$('#department').val();
+            var url="{:U('Console/Staff/department')}?catid="+id;                        
+            $.get(url,function(data){
+                $("#post").html("");
+                if(data.length==0){
+                    $("#post").append("<option value='0'>请新建岗位</option>");
+                    return false;
+                }
+                for(i=0 ;i<data.length;i++){  
+                    var post2=data[i].cate_id;                    
+                    if(post1==post2){
+                        $("#post").append('<option selected="selected" value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }else{
+                        $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
+                    }                                         
+                    
+                }
+                          
+            })            
+        }
+</script>
 
 </body>
 
