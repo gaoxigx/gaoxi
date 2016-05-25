@@ -56,64 +56,64 @@ $(document).ready(function(){
     
     <table class="tablelist">
     	<thead>
-    	<tr>
-        <th><input name="" type="checkbox" value="" checked="checked"/></th>
-        <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-        <th>订单编辑</th>
-        <th>下单时间</th>
-        <th style="width:150px;">产品</th>
-        <th style="width:50px;">价格</th>
-        <th style="width:50px;">折扣</th>
-        <th style="width:50px;">数量</th>
-        <th style="width:50px;">优惠价</th>
-        <th>订单金额</th>
-        <th>经纪人</th>
-        <th>纪经人助理</th>
-        <th>操作发货</th>
-        <th>确认收款</th>
-        <th>操作</th>
-        </tr>
+            <tr>
+    <!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
+                <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+                <th>订单编辑</th>
+                <th>下单时间</th>
+                <th style="width:150px;">产品</th>
+                <th style="width:50px;">价格</th>
+                <th style="width:50px;">折扣</th>
+                <th style="width:50px;">数量</th>
+                <th style="width:50px;">优惠价</th>
+                <th>订单金额</th>
+                <th>经纪人</th>
+                <th>纪经人助理</th>
+                <th>操作发货</th>
+                <th>确认收款</th>
+                <th>操作</th>
+            </tr>
         </thead>
         <tbody>
             <volist name="list" id="vo">
-        <tr>
-
-       <td><input name="" type="checkbox" value="" /></td>
-        <td >{$vo.id}</td>
-        <td>{$vo.order_no}</td>
-        <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
-        <td colspan="5">
-        <table class="tablelistpro" style="border:0px;">
-            {$vo.order_no|get_orderno_to_pro=###}
-        </table>
-        </td>
-        <td>{$vo.total_price}</td>
-        <td>{$vo.agent|get_id_to_perid=###}</td>
-        <td>{$vo.assistant|get_id_to_perid=###}</td>
-        <td>
-    <switch name="vo.payment_status">
-        <case value="0">已下单.</case>
-        <case value="1">
-            <switch name="vo.status">
-                <case value="1">已下单 
-                    <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
-                    <input  name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall3" value="发货" />
-                </case>
-                <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" />
-                </case>
-            </switch>
-        </case>
-        <default />已下单
-    </switch></td>
-        <td>
-<if condition="$vo.payment_status eq 0">
-    <input name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall" value="点击确认" />
-<else/>
-    <input  type="button"  class="suresmall2" value="已付款" />
-</if>
-        </td>
-        <td><!-- <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a> --><a href="__URL__/edit/id/{$vo.id}" class="tablelink">查看</a></td>
-        </tr> 
+            <tr>
+        <!--       <td><input name="" type="checkbox" value="" /></td>-->
+                <td >{$vo.id}</td>
+                <td>{$vo.order_no}</td>
+                <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                <td colspan="5">
+                <table class="tablelistpro" style="border:0px;">
+                    {$vo.order_no|get_orderno_to_pro=###}
+                </table>
+                </td>
+                <td>{$vo.total_price}</td>
+                <td>{$vo.agent|get_id_to_perid=###}</td>
+                <td>{$vo.assistant|get_id_to_perid=###}</td>
+                <td>
+                    <switch name="vo.payment_status">
+                        <case value="0">已下单.</case>
+                        <case value="1">
+                            <switch name="vo.status">
+                                <case value="1">已下单 
+                                    <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
+                                    <input  name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall3" value="发货" />
+                                </case>
+                                <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" />
+                                </case>
+                            </switch>
+                        </case>
+                        <default />已下单
+                    </switch>
+                </td>
+                <td>
+                    <if condition="$vo.payment_status eq 0">
+                        <input name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall" value="点击确认" />
+                        <else/>
+                        <input  type="button"  class="suresmall2" value="已付款" />
+                    </if>
+                </td>
+                <td><!-- <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a> --><a href="__URL__/edit/id/{$vo.id}" class="tablelink">查看</a></td>
+            </tr> 
         </volist>
         
         </tbody>
