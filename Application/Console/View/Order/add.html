@@ -16,7 +16,7 @@
 	$(function(){		
 		$.validator.setDefaults({
 			submitHandler: function() {
-				alert("submitted!");
+				$("#form1").submit();
 			}
 		});
 
@@ -99,7 +99,7 @@
     
     <div class="formbody">
     <div id="usual1" class="usual"> 
-    <form name="form1" id="form1" method='get' action="__URL__/insert" >
+    <form name="form1" id="form1" method='post' action="__URL__/insert" >
     <div class="itab">      
 			<!--<form name="form1" id="form1" method='post' action="__URL__/insert" onsubmit="if(!checkdata()){return false;}">-->
 	    <ul> 
@@ -115,7 +115,7 @@
     <li><label>经纪人<b>*</b></label>  
         <div class="vocation uew-select">
             <select name="agent" class="uew-select-value">
-				<volist name="agent" id="vo1">
+                <volist name="agent" id="vo1">
                 <option value="{$vo1.id}">{$vo1.username}({$vo1.accounts})</option>
                 </volist>
             </select>
