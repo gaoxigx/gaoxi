@@ -44,33 +44,15 @@ $(document).ready(function(){
     </div>
     
     <div class="rightinfo">
-    
-    <div class="tools">
-     
-        <ul class="toolbar1">
-        <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
-        </ul>
-
-    <ul class="seachform">
-    <form action="__URL__/Plist" method="post" id="form2" name="form2">
-    <li><label>类别<b>*</b></label>  
-            <select name="protype" class="sciselect">
-            <option value="">全部</option>
-            <volist name="protype" id="voo">
-            <option value="{$voo.id}">{$voo.typename}</option>
-            </volist>
-            </select>
-            </li>
-
-    <li><label>产品名称</label><input type="text" class="scinpute" name="product"></li>
-    <li><label>采购负责人</label><input type="text" class="scinpute" name="purchaseper"></li>
-
-    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
-    </li>
-    
-    </form></ul>
+        <div class="tools">
+            <ul class="seachform">
+                <form action="/index.php/Console/Order/Plist" method="post" id="form2" name="form2">            
+                    <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
+                    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                </form>
+            </ul>
+        </div>
     </div>
-    
     
     <table class="tablelist">
     	<thead>
