@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>手机设备</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+
+
+  
+<style>
+    .body{padding: 0px;margin: 0px;min-width:0px;}
+    .gettrack h2{font-size:18px; line-height: 32px;}
+    .gettrack ul{padding: 0px; margin-top:10px;}
+    .gettrack ul li{padding: 0px; border-bottom:1px solid 999; display:block;}
+
+    .trackincrease{ display:inline-block; float: left;}
+</style>
+
+
+</head>
+
+<body>
+<div class="trackincrease">
+    <form name="form1" id="formincrease" enctype="multipart/form-data"  method='post'   action="">        
+     <ul class="forminfo">                     
+        <li>
+            <label>领取人</label>    
+            <div class="vocation uew-select">                               
+                <select id="staffid" name="staff_id" class="uew-select-value">
+                <volist name="staff" id="vo">
+                    <option values="{$vo.id}">{$vo.name}</option>
+                </volist>
+                </select>
+                <input id="staffname" type="hidden" name="staff_name" value="{$vo[0].name}" />
+            </div>
+        </li>
+        <li>
+            <label>用途</label>    
+            <input class="dfinput" id="get" name="get" type="text" value="" />
+        </li>
+        <li>
+            <label>备注</label>    
+            <input class="dfinput" name="comment" type="text" value="" />
+        </li>        
+        <li>
+            <label>&nbsp;</label>    
+            <input type="hidden" name="equipment_id" value="{:I('get.id')}" />
+            <button class="btn btn-info" id="sbbutton" type="button">提交</button>  
+                &nbsp; &nbsp; &nbsp;
+            <button id="reset" class="btn" type="button"> 取消</button>
+            
+        </li>
+    </ul>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Console/js/layer/layer.js"></script>
+<script type="text/javascript">
+        $('#staffid').change(function(){
+            $('#staffname').val($(this).find('option:selected').text());
+        });
+
+        $('#sbbutton').click(function(){  
+            var getinfo=$("#get").val();
+            if(getinfo.length<=0){
+                layer.msg('请输入用途');
+                return false;
+            }
+
+            var url="{:U('Equipment/trackincrease')}"
+            $.post(url,$("#formincrease").serialize(),function(data){
+                if(data.status==1){
+                    layer.msg('领取成功',function(){
+                        layer.closeAll();
+                        var index = parent.layer.getFrameIndex(window.name); 
+                        parent.layer.close(index);
+
+                    });
+                }else{
+                    layer.msg('领取失败,'+data.msg,function(){
+                       layer.closeAll(); 
+                    });
+                }   
+            });  
+        }); 
+
+        $('#reset').click(function(){           
+            var index = parent.layer.getFrameIndex(window.name); 
+            parent.layer.close(index);
+        }) ;      
+
+</script>
+
+ 
+</body>
+
+</html>

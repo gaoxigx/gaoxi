@@ -138,4 +138,43 @@ class EquipmentController extends CommonController {
     private function hello3(){
         echo '这是private方法!';
     }
+
+    public function tracking(){
+        if(!I('get.id')){
+            $this->error('请进入列表页，选择连接设备！');
+        }
+        $map['id']=I('get.id');
+        $track=D('Equipment')->where($map)->find();
+        $mapq['equipment_id']=I('get.id');
+        $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select(); 
+        $this->assign('dataq',$trackeq);
+        $this->assign('vo',$track);
+        $this->display();
+    }
+    public function trackadd(){    
+        $stall=D('staff')->field('id,name')->select();   
+        $this->assign('staff',$stall);
+        $this->display();
+    }
+    public function trackincrease(){
+        $track=D('Eqtracking');
+        $data=$track->create();  
+        if($data){
+            $data['gettime']=time();
+            $data['status']=1;
+            $data['type']=1;
+            $result=$track->add($data);
+            $map['equipment_id']=$data['equipment_id'];
+            $update['shiyongren']=$data['staff_name'];
+            $sul==D('Equipment')->where($map)->save($update);
+            if($result){
+                $this->ajaxreturn(array('status'=>1,'msg'=>'添加成功'));
+            }else{
+                $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));                
+            }            
+        }else{
+            $this->ajaxreturn(array('status'=>2,'msg'=>'数据有误,请再操作一次'.$track->geterror()));
+        }
+        
+    }
 }
