@@ -10,68 +10,78 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
 <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
 
-
+<script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
 
 </head>
+<script type="text/javascript">
+	$(function(){	
+		$.validator.setDefaults({
+			submitHandler:function() {
+				$('#form1').submit();
+			}
+		});
 
+		$("#form1").validate({
+			rules:{
+				cate_name:'required',
+				cate_name2:'required',
+				is_show:'required',
+				status:'required'
+			},
+			messages:{				
+				cate_name:'请输入分类名称',		
+				cate_name2:'请输入传统名称',	
+				is_show:'请选择显示状态',	
+				status:'请选择审核状态',	
+			},
+			errorClass:'cerror',
+			
+		});
+		
+	});
+
+</script>
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    
-    <li><a href="#">首页</a></li>
-    <li><a href="#">组织结构</a></li>
-    <li><a href="#">添加分类</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+		
+			<li><a href="#">首页</a></li>
+			<li><a href="#">组织结构</a></li>
+			<li><a href="#">修改分类</a></li>
+		</ul>
     </div>
     
     <div class="formbody">
-    <div id="usual1" class="usual"> 
+		<div id="usual1" class="usual"> 
+		<form name="form1" id="form1" method='post' action="__URL__/update">
+			<div class="itab">
+				<ul> 
+					<li><a href="#tab1" class="selected">修改分类</a></li> 
+				</ul>
+			</div> 
     
-    <div class="itab">
-        <form name="form1" id="form1" method='post' action="__URL__/update">
-    <ul> 
-
-    <li><a href="#tab1" class="selected">添加分类</a></li> 
-   
-    </ul>
-    </div> 
-    
-    <div id="tab1" class="tabson">
-    
-    <div class="formtext">只能修改分类名称，不能转移到其它父类！</div>
-    <ul class="forminfo">
-    <input name="cate_id" type="hidden" class="dfinput" value="{$vo.cate_id}"  />
-    <li><label>分类名称<b>*</b></label><input name="cate_name" type="text" class="dfinput" value="{$vo.cate_name}"  /></li>
-
-    <li><label>传统名称<b>*</b></label><input name="cate_name2" type="text" class="dfinput" value="{$vo.cate_name2}"  /></li>
-
-
- <li><label>是否显示<b>*</b></label><cite><input type="radio" checked="checked" value="1" <if condition="$vo.is_show eq '1'"> checked="checked" </if> name="is_show">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" <if condition="$vo.is_show eq '0'"> checked="checked" </if> name="is_show">否</cite></li>
-
- <li><label>是否审核<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="status" <if condition="$vo.status eq '1'"> checked="checked" </if>>是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="status" <if condition="$vo.status eq '0'"> checked="checked" </if>>否</cite></li>
-    <li><label>备注<b>*</b></label>
-    <textarea class="textinput" rows="" cols="" name="cate_content">{$vo.cate_content}</textarea>
-    </li>
-
-    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改分类"/></li>
-
-    </ul>
-</form>    
-    </div> 
-    
-    
-   
-       
-    </div> 
- 
- 
-    
-    
-    
-    
-    
+			<div id="tab1" class="tabson">
+			
+				<div class="formtext">只能修改分类名称，不能转移到其它父类！</div>
+				<ul class="forminfo">
+					<input name="cate_id" type="hidden" class="dfinput" value="{$vo.cate_id}"  />
+					<li><label>分类名称<b>*</b></label><input name="cate_name" id="cate_name" type="text" class="dfinput" value="{$vo.cate_name}"  /></li>
+					<li><label>传统名称<b>*</b></label><input name="cate_name2" id="cate_name2" type="text" class="dfinput" value="{$vo.cate_name2}"  /></li>
+					<li><label>是否显示<b>*</b></label><cite><input type="radio" id="is_show" checked="checked" value="1" <if condition="$vo.is_show eq '1'"> checked="checked" </if> name="is_show">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" <if condition="$vo.is_show eq '0'"> checked="checked" </if> name="is_show">否</cite></li>
+					<li><label>是否审核<b>*</b></label><cite><input type="radio" id="status" checked="checked" value="1" name="status" <if condition="$vo.status eq '1'"> checked="checked" </if>>是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="status" <if condition="$vo.status eq '0'"> checked="checked" </if>>否</cite></li>
+					<li>
+						<label>备注<b></b></label>
+						<textarea class="textinput" rows="" cols="" name="cate_content">{$vo.cate_content}</textarea>
+					</li>
+					<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改分类"/></li>
+				</ul>
+			</div> 
+		</form>
+		</div> 
     </div>
 
 

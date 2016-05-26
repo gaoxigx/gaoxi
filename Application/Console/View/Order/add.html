@@ -8,7 +8,7 @@
 <link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
 <script src="__PUBLIC__/Console/js/jquery.1.4.2-min.js"></script>
 <script src="__PUBLIC__/Console/js/Calculation.js"></script>
-<!--<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.min.js"></script>-->
+
 <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
@@ -16,26 +16,69 @@
 	$(function(){		
 		$.validator.setDefaults({
 			submitHandler: function() {
-				alert("submitted!");
+				$("#form1").submit();
 			}
 		});
 
-
 		$("#form1").validate({
-			rules:{				
+			rules:{
+				agent:'required',
+				assistant:'required',
+				equipment:'required',
+				Payment_method:'required',
 				buyer_wechat: {
 					required: true,
 					minlength: 2
-				}				
+				},
+				source: {
+					required: true,
+					minlength: 2
+				},	
+				username: {
+					required: true,
+					minlength: 2
+				},	
+				mobile: {
+					required: true,
+					number:true,
+					minlength: 11,
+					maxlength: 11
+				},	
+				address: {
+					required: true,
+					minlength: 10
+				}	
 				
 			},
 			messages: {				
+				agent: "请选择经纪人",
+				assistant: "请选择经纪助理编号",
+				equipment: "请选择设备编号",
+				Payment_method: "请选择支付方式",
 				buyer_wechat: {
 					required: "请输入买家微信号",
 					minlength: "不能少于2个字符",
-				}				
+				},
+				source: {
+					required: "请输入订单来源",
+					minlength: "不能少于2个字符",
+				},	
+				username: {
+					required: "请输入收件人姓名",
+					minlength: "不能少于2个字符",
+				},	
+				mobile: {
+					required: "请输入收件人电话",
+					minlength: "11位手机号",
+					maxlength: "11位手机号",
+					number: "电话格式错误"
+				},
+				address: {
+					required: "请输入收件人地址",
+					minlength: "不能少于10个字符",
+				}					
 			},
-			errorClass:'we'
+			errorClass:'cerror',
 			
 		});
 	});
@@ -56,7 +99,7 @@
     
     <div class="formbody">
     <div id="usual1" class="usual"> 
-    <form name="form1" id="form1" method='get' action="__URL__/insert" >
+    <form name="form1" id="form1" method='post' action="__URL__/insert" >
     <div class="itab">      
 			<!--<form name="form1" id="form1" method='post' action="__URL__/insert" onsubmit="if(!checkdata()){return false;}">-->
 	    <ul> 
