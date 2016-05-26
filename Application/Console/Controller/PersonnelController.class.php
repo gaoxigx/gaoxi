@@ -97,7 +97,11 @@ class PersonnelController extends CommonController {
 		if($id >0){
 			$controller = M('controller');
 			$data = $controller ->where('id='.$id)->find();
-			$this->assign('data',$data);
+			
+			if($id != I('session.userid')){
+				$this->assign('data',$data);
+			}
+			
 		}
         
 		$this->display();
