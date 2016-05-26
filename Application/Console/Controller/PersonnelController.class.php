@@ -66,7 +66,7 @@ class PersonnelController extends CommonController {
         if($roleList->create()) {
             $result =   $roleList->add();
             if($result) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！',U('Personnel/PerList'));
             }else{
                 $this->error('数据添加错误！');
             }
@@ -177,7 +177,7 @@ public function passupdate(){
     if($roleList->create()) {
         $result = $roleList->save();
         if($result) {
-            $this->success('操作成功！');
+            $this->success('修改成功！',U('Personnel/PerList'));
         }else{
             $this->error('写入错误！');
         }
