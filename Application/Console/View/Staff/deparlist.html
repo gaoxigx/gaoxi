@@ -89,7 +89,7 @@ $(document).ready(function(){
       <volist name="data" id="vo">
             <td>{$vo['cate_id']}</td>
             <td>{$vo['cate_name']}</td>            
-            <td>{$vo['cate_haschild']==0?没有:$vo['cate_haschild']}</td>
+            <td>{$vo['cate_haschild']==1?有:没有}</td>
           <!--   <td>{$vo['cate_sort']}</td> -->
             <td>{$vo['is_show']==1?显示:不显示}</td>
             <td>{$vo['status']==1?审核:未审核}</td>
