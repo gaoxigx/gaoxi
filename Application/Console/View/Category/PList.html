@@ -109,12 +109,24 @@ $(document).ready(function(){
         }
             echo '>'.$kongge.''.$vo['cate_name'].'('.$vo['cate_name2'].')</td>';
             echo '<td>'.$vo['cate_parent'].'</td>';
-            echo '<td>'.$vo['cate_haschild'].'</td>';
+			if($vo['cate_haschild'] == 1){
+				echo '<td>有</td>';
+			}else{
+				echo '<td>没有</td>';
+			}
             echo '<td>'.$vo['cate_sort'].'</td>';
-            echo '<td>'.$vo['is_show'].'</td>';
-            echo '<td>'.$vo['status'].'</td>';
-            echo '<td>'.$vo['addtime'].'</td>';
-            echo '<td>'.$vo['uptime'].'</td>';
+			if($vo['is_show'] == 1){
+				echo '<td>显示</td>';
+			}else{
+				echo '<td>不显示</td>';
+			}
+			if($vo['status'] == 1){
+				echo '<td>已审核</td>';
+			}else{
+				echo '<td>未审核</td>';
+			}
+            echo '<td>'.date('Y-m-d H:i:s',$vo['addtime']).'</td>';
+            echo '<td>'.date('Y-m-d H:i:s',$vo['uptime']).'</td>';
             echo '<td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a> ' ;
             echo '<a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a> ' ;
             echo '<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td></tr>';
