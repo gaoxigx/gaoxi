@@ -27,25 +27,25 @@
 			rules:{
 				oldpassword: {
 					required: true,
-					minlength: 4,
-					maxlength: 26
+					minlength: 5,
+					maxlength: 12
 				},
 				password: {
 					required: true,
-					minlength: 4,
-					maxlength: 26
+					minlength: 5,
+					maxlength: 12
 				},
 			},
 			messages: {				
 				oldpassword: {
 					required: "请输入原密码",
-					minlength: "不能少于4位字符",
-					maxlength: "不能多于26位字符"
+					minlength: "密码长度5-12位",
+					maxlength: "密码长度5-12位"
 				},
 				password: {
 					required: "请输入新密码",
-					minlength: "不能少于4位字符",
-					maxlength: "不能多于26位字符"
+					minlength: "密码长度5-12位",
+					maxlength: "密码长度5-12位"
 				},			
 			},
 			errorClass:'cerror',
