@@ -67,6 +67,7 @@ $(document).ready(function(){
     	<thead>
             <tr>
 <!--                <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
+                <th>序号</th>
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>性别</th>               
@@ -81,7 +82,9 @@ $(document).ready(function(){
         </thead>
         <tbody>
             <volist name="list" id="vo">
+
             <tr>
+            <td>{$i}</td>
 <!--            <td><input name="" type="checkbox" value="" /></td>-->
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
