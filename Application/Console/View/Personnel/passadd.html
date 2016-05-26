@@ -10,71 +10,85 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
 <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
 
-<script>
-function checkdata(){
-	var id = $("input[name='id']").val();
-	var oldpassword = $("input[name='oldpassword']").val();
-	var password = $("input[name='password']").val();
-	if(!id && !oldpassword){
-		alert('请输入原密码');
-		return false;
-	}
-	if(!password){
-		alert('请输入新密码');
-		return false;
-	}
-	return true;
-}
-
-
-</script>
+<!--<script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>-->
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
 
 </head>
+<script>
+	$(function(){		
+		$.validator.setDefaults({
+			submitHandler: function() {
+				$("#form1").submit();
+			}
+		});
 
+		$("#form1").validate({
+			rules:{
+				oldpassword: {
+					required: true,
+					minlength: 4,
+					maxlength: 26
+				},
+				password: {
+					required: true,
+					minlength: 4,
+					maxlength: 26
+				},
+			},
+			messages: {				
+				oldpassword: {
+					required: "请输入原密码",
+					minlength: "不能少于4位字符",
+					maxlength: "不能多于26位字符"
+				},
+				password: {
+					required: "请输入新密码",
+					minlength: "不能少于4位字符",
+					maxlength: "不能多于26位字符"
+				},			
+			},
+			errorClass:'cerror',
+			
+		});
+	});
+</script>
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    
-    <li><a href="#">首页</a></li>
-    <li><a href="#">管理员管理</a></li>
-    <li><a href="#">修改密码</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">管理员管理</a></li>
+			<li><a href="#">修改密码</a></li>
+		</ul>
     </div>
     
     <div class="formbody">
-    <div id="usual1" class="usual"> 
-    
-    <div class="itab">
-        <form name="form1" id="form1" method='post' <if condition="$data.id gt 0">action="__URL__/passupdateall"<else/>action="__URL__/passupdate"</if> onsubmit="if(!checkdata()){return false;}">
-			<ul> 
-
-			<li><a href="#tab1" class="selected">修改密码</a></li> 
-		   
-			</ul>
-			</div> 
-			
-			<div id="tab1" class="tabson">
-			
-			<div class="formtext">请正确填写原密码及更改密码 ！</div>
-			<ul class="forminfo">
-		   <input name="id" type="hidden" <if condition="$data.id gt 0">value="{$data.id}" </if> />
-			<li><label>用户名<b>*</b></label><if condition="$data.id gt 0">{$data.accounts}<else />{$Think.session.username}</if></li>
-			<if condition="$data.id gt 0">
-			<li><label>新密码<b>*</b></label><input name="password" type="password" class="dfinput" value=""  /></li>
-		   <else />
-		   <li><label>原密码<b>*</b></label><input name="oldpassword" type="password" class="dfinput" value=""  /></li>
-			<li><label>新密码<b>*</b></label><input name="password" type="password" class="dfinput" value=""  /></li>
-		   </if>
-
-			<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改密码"/></li>
-
-			</ul>
-		</form>    
-    </div> 
-    </div> 
-    
+		<div id="usual1" class="usual"> 
+			<form name="form1" id="form1" method='post' <if condition="$data.id gt 0">action="__URL__/passupdateall"<else/>action="__URL__/passupdate"</if> >
+				<div class="itab">
+					<ul>
+						<li><a href="#tab1" class="selected">修改密码</a></li> 
+					</ul>
+				</div> 
+				
+				<div id="tab1" class="tabson">
+					<div class="formtext">请正确填写原密码及更改密码 ！</div>
+					<ul class="forminfo">
+						<input name="id" type="hidden" <if condition="$data.id gt 0">value="{$data.id}" </if> />
+						<li><label>用户名<b>*</b></label><if condition="$data.id gt 0">{$data.accounts}<else />{$Think.session.username}</if></li>
+						<if condition="$data.id gt 0">
+						<li><label>新密码<b>*</b></label><input name="password" id="password" type="password" class="dfinput" value=""  /></li>
+						<else />
+						<li><label>原密码<b>*</b></label><input name="oldpassword" id="oldpassword" type="password" class="dfinput" value=""  /></li>
+						<li><label>新密码<b>*</b></label><input name="password" id="password" type="password" class="dfinput" value=""  /></li>
+						</if>
+						<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改密码"/></li>
+					</ul>
+				</div> 
+			</form> 	
+		</div> 
     </div>
 </body>
 
