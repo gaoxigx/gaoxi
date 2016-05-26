@@ -51,7 +51,7 @@ public function insert(){
             $data['uptime']=time();
             $result =   $roleList->add($data);
             if($result || $upresult) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！',U('Category/PList'));
             }else{
                 $this->error('数据添加错误！');
             }
@@ -77,7 +77,7 @@ public function edit($cate_id){
         $data['addtime']=time();
         $result = $roleList->save($data);
         if($result) {
-            $this->success('操作成功！');
+            $this->success('修改成功！',U('Category/PList'));
         }else{
             $this->error('写入错误！');
         }
