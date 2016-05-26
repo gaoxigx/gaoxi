@@ -28,19 +28,28 @@ class LoginController extends Controller {
 		$password = md5 ( $data ['password'] );
 
 		$table = D ('controller');
-		$result = $table->where ("accounts='" . $user_name . "' and password='" . $password . "'" )->find ();
+		$result = $table->where ("accounts='" . $user_name . "' and password='" . $password . "'" )->find();
 
-		// dump($result);
-		// exit;
 		if ($result) {
 			session ( 'userid', $result ['id'] );
 			session ( 'username', $user_name );
 			session ( 'roleid', $result ['roleid'] );
-		$this->success ( '登陆成功！', "/Console/Index/main" );
-
-		}else {
-			$this->success ( '用户名或密码不正确！' );
+			$this->success ( '登陆成功！', "/Console/Index/main" );
+			exit();
 		}
+
+		$resultStaff=D('staff')->where("username='".$user_name."' and password='".$password."'")->find();
+		if($resultStaff){
+			session ( 'userid', $resultStaff ['id'] );
+			session ( 'username', $user_name );
+			session ( 'roleid', $resultStaff ['section'] );
+			$this->success ( '登陆成功！', "/Console/Index/main" );
+			exit();
+		}
+
+		
+		$this->success ( '用户名或密码不正确！' );
+		
 	}
 	// 退出
 	public function logout() {
