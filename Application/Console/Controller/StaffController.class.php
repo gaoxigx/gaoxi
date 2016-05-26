@@ -110,6 +110,7 @@ class StaffController extends CommonController {
         $roleList   =   D('Staff');
         $data=$roleList->create();
         if($data) {
+            $data['password']=md5(I('post.password'));
             $data['entry_time']=strtotime(I('post.entry_time'));
             $data['graduation_date']=strtotime(I('post.graduation_date'));
             $data['birth_date']=strtotime(I('post.birth_date'));
