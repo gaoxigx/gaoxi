@@ -9,13 +9,16 @@
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
         <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+		
+		<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+		<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+		<script type="text/javascript" src="__PUBLIC__/Console/js/staff_add.js"></script>
     </head>
-
+	
     <body>
         <div class="place">
             <span>位置：</span>
             <ul class="placeul">
-
                 <li><a href="#">首页</a></li>
                 <li><a href="#">组织管理</a></li>
                 <li><a href="#">员工管理</a></li>
@@ -26,42 +29,35 @@
             <div id="usual1" class="usual"> 
                 <form name="form1" id="form1" method='post' action="__URL__/insert">
                     <div class="itab">
-
                         <ul> 
                             <li><a href="#tab1" class="selected">员工信息</a></li> 
                         </ul>
                     </div> 
 
                     <div id="tab1" class="tabson">
-
-                        <div class="formtext">请正确填写个人信息！</div>
+						<div class="formtext">请正确填写个人信息！</div>
                         <ul class="forminfo">
-                            <li><label>用户名<b>*</b></label><input name="username" type="text" class="dfinput" value=""  /></li>
-
-                            <li><label>密码<b>*</b></label><input name="password" type="password" class="dfinput"  value="" /></li>
-                            <li><label>确认密码<b>*</b></label><input name="passwordConfirm" type="password" class="dfinput" value=""  /></li>                            
-                            <li><label>昵称<b>*</b></label><input name="nickname" type="text" class="dfinput" value=""  /></li>
-                            <li><label>是否转正<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="2" name="become">否</cite></li>
-
-                            <li>
+                            <li><label>用户名<b>*</b></label><input name="username" id="username" type="text" class="dfinput" value=""  /></li>
+							<li><label>密码<b>*</b></label><input name="password" id="password" type="password" class="dfinput"  value="" /></li>
+                            <li><label>确认密码<b>*</b></label><input name="passwordConfirm" id="passwordConfirm" type="password" class="dfinput" value=""  /></li>                            
+                            <li><label>昵称<b>*</b></label><input name="nickname" id="nickname" type="text" class="dfinput" value=""  /></li>
+                            <li><label>是否转正<b>*</b></label><cite><input id="become" type="radio" checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="2" name="become">否</cite></li>
+							<li>
                                 <label>试用期工资<b></b></label>
-                                <input name="salaryss" type="text" class="dfinput_left" value=""  />
+                                <input name="salaryss" id="salaryss" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">转正后工资<b></b></label>
-                                <input name="salaryzz" type="text" class="dfinput_left" value=""  />
+                                <input name="salaryzz" id="salaryzz" type="text" class="dfinput_left" value=""  />
                             </li>
-
                             <li><label>住房津贴<b></b></label>
-                                <input name="housing" type="text" class="dfinput_left" value=""  />
+                                <input name="housing" id="housing" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">交通津贴<b></b></label>
-                                <input name="traffic" type="text" class="dfinput_left" value=""  />
-                            </li>                        
-
+                                <input name="traffic" id="traffic" type="text" class="dfinput_left" value=""  />
+                            </li>  
                             <li><label>餐饮津贴<b></b></label>
-                                <input name="catering" type="text" class="dfinput_left" value=""  />
+                                <input name="catering" id="catering" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">通讯津贴<b></b></label>
-                                <input name="phone" type="text" class="dfinput_left" value=""  />
+                                <input name="phone" id="phone" type="text" class="dfinput_left" value=""  />
                             </li>
-
                             <li><label>部门<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <select id="department" name="section" class="uew-select-value">
@@ -71,81 +67,76 @@
                                     </select>
                                     <input name='departmenttext' type="hidden" id="departmenttext" />
                                 </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>        
-
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
+                            </li>    
                             <li><label>岗位<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                <div class="col-sm-9">
-                                    <select id="post" name="quarters">
-                                        <option>请选择部门</option>
-                                    </select>
-                                </div>
+									<div class="col-sm-9">
+										<select id="post" name="quarters">
+											<option>请选择部门</option>
+										</select>
+									</div>
                                 <input name='posttext' type="hidden" id="posttext" />
                                 </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>  
-
-                            <li><label>姓名<b>*</b></label><input name="name" type="text" class="dfinput" value=""  /></li>
-                            <li><label>性别<b>*</b></label><cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
-                            <li><label>身份证<b>*</b></label><input name="identity_card" type="text" class="dfinput" value=""  /></li>
-                            <li><label>出身日期<b></b></label><input name="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
-                            <li><label>电话<b>*</b></label><input name="mobile" type="text" class="dfinput" value=""  /></li>
-                            <li><label>入职时间<b></b></label><input onClick="WdatePicker()" name="entry_time" type="text" class="dfinput" value=""  /></li>  
-
-                            <li><label>民族<b></b></label>
-                                <input name="nationality" type="text" class="dfinput_left" value=""  />
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line"></div>
+                            </li> 
+                            <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
+                            <li><label>性别<b>*</b></label><cite><input id="sex" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
+                            <li><label>身份证<b>*</b></label><input name="identity_card" id="identity_card" type="text" class="dfinput" value=""  /></li>
+                            <li><label>出身日期<b></b></label><input name="birth_date" id="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
+                            <li><label>电话<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>
+                            <li><label>入职时间<b></b></label><input onClick="WdatePicker()" name="entry_time" id="entry_time" type="text" class="dfinput" value=""  /></li>  
+							<li><label>民族<b></b></label>
+                                <input name="nationality"id="nationality"  type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">籍贯<b></b></label>
-                                <input name="native_place" type="text" class="dfinput_left" value=""  />
-                            </li>    
-
+                                <input name="native_place" id="native_place" type="text" class="dfinput_left" value=""  />
+                            </li>   
                             <li><label>毕业院校<b></b></label>
-                                <input name="graduate" type="text" class="dfinput_left" value=""  />
+                                <input name="graduate" id="graduate" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">毕业时间<b></b></label>
-                                <input name="graduation_date" onClick="WdatePicker()" type="text" class="dfinput_left" value=""  />
+                                <input name="graduation_date" id="graduation_date" onClick="WdatePicker()" type="text" class="dfinput_left" value=""  />
                             </li>
-
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                <div class="col-sm-9">
-                                    <select name="education" class="uew-select-value">
-                                        <option value="0">请选择</option>
-                                        <option value="1">大专</option>
-                                        <option value="2">本科</option>
-                                        <option value="3">研究生</option>                                        
-                                        <option value="4">在校大专</option>
-                                        <option value="5">在校本科</option>
-                                        <option value="6">高中</option>
-                                        <option value="7">中专</option>
-                                        <option value="8">初中</option>
-                                    </select>
-                                    <input name="educationtext" id="educationtext" type="hidden" value="未知" />
+									<div class="col-sm-9">
+										<select name="education" id="education" class="uew-select-value">
+											<option value="0">请选择</option>
+											<option value="1">大专</option>
+											<option value="2">本科</option>
+											<option value="3">研究生</option>                                        
+											<option value="4">在校大专</option>
+											<option value="5">在校本科</option>
+											<option value="6">高中</option>
+											<option value="7">中专</option>
+											<option value="8">初中</option>
+										</select>
+										<input name="educationtext" id="educationtext" type="hidden" value="未知" />
+									</div>
                                 </div>
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
                             </li>      
 
                             <li>
                                 <label>专业<b></b></label>
-                                <input name="major" type="text" class="dfinput_left" value=""  />
+                                <input name="major" id="major" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">政治面貌<b></b></label>
-                                <input name="politics_status" type="text" class="dfinput_left" value=""  />
+                                <input name="politics_status" id="politics_status" type="text" class="dfinput_left" value=""  />
                             </li>      
 
-                            <li><label>家庭住址<b></b></label><input name="homeadd" type="text" class="dfinput" value=""  /></li>     
-                            <li><label>现居住址<b></b></label><input name="homenow" type="text" class="dfinput" value=""  /></li>   
+                            <li><label>家庭住址<b></b></label><input name="homeadd" id="homeadd" type="text" class="dfinput" value=""  /></li>     
+                            <li><label>现居住址<b></b></label><input name="homenow" id="homenow" type="text" class="dfinput" value=""  /></li>   
 
                             <li><label>紧急联系人<b></b></label>
-                                <input name="urgency" type="text" class="dfinput_left" value=""  />
+                                <input name="urgency" id="urgency" type="text" class="dfinput_left" value=""  />
                                 <label class="pl10">电话<b></b></label>
-                                <input name="phone_ugy" type="text" class="dfinput_left" value=""  />
+                                <input name="phone_ugy" id="phone_ugy" type="text" class="dfinput_left" value=""  />
                             </li>                   
                             
                             <li><label>开户行<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <div class="col-sm-9">
                                         <select id="bankaddress" name="banckaddress" class="uew-select-value">                                            
-                                            <option value="0">请选择</option>
+                                            <option >请选择</option>
                                             <option value="1">中国工商银行</option>
                                             <option value="2">中国银行</option>
                                             <option value="3">中国建设银行</option>                                        
@@ -155,15 +146,14 @@
                                     </div>
                                 </div>
                             </li>   
-                            <li><label>银行账号<b>*</b></label><input name="bank_account" type="text" class="dfinput" value=""  /></li>                             
-                            <li><label>备注说明<b></b></label><input name="comment" type="text" class="dfinput" value=""/></li> 
+                            <li><label>银行账号<b>*</b></label><input name="bank_account" id="bank_account" type="text" class="dfinput" value=""  /></li>                             
+                            <li><label>备注说明<b></b></label><input name="comment" id="comment" type="text" class="dfinput" value=""/></li> 
                             
                             <div class="col-md-offset-3 col-md-9">
                                 <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
                             </div>
-                            
                         </ul>
 
                     </div> 
