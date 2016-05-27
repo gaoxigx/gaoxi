@@ -38,6 +38,7 @@ class CommonController extends Controller{
  		if(!$map['role_id']){
  			return true;
  		} 		
+ 		echo __LINE__;
  		// $result=D('access')->where($map)->getField('module',true);
  		// if($result){
  		// 	if(in_array($page,$result)){
