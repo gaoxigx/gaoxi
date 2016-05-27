@@ -34,7 +34,7 @@ class CommonController extends Controller{
  			return true;
  		} 		
  		
- 		$map['role_id']=47;//session('roleidstaff');
+ 		$map['role_id']=session('roleidstaff');
  		if(!$map['role_id']){
  			return true;
  		} 		
