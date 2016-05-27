@@ -9,6 +9,7 @@ class EquipmentController extends CommonController {
 
 //数据列表
     public function Equipment($name=''){
+
         $username = i('username');
         if($username){
             $where['xinghao']  = array('like','%'.trim($username).'%');
@@ -48,6 +49,10 @@ class EquipmentController extends CommonController {
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
+    }
+    public function img(){
+        $Verify = new \Think\Verify();
+        $Verify->entry(1);
     }
     
     public function add(){

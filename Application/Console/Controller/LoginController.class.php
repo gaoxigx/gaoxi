@@ -43,6 +43,7 @@ class LoginController extends Controller {
 			session ( 'userid', $resultStaff ['id'] );
 			session ( 'username', $user_name );
 			session ( 'roleid', $resultStaff ['section'] );
+			session ( 'roleidstaff', $resultStaff ['section'] );
 			$this->success ( '登陆成功！', "/Console/Index/main" );
 			exit();
 		}

@@ -64,26 +64,47 @@ public function insert(){
 
 public function edit($cate_id){
     $roleList   =   M('category');
+    $nodeModel=D('node');
+    $node=$nodeModel->field('id,title,name')->select();        
     $this->assign('vo',$roleList->find($cate_id));
-
-
+    $this->assign("node",$node);
     $this->display();
 
 }
  public function update(){
-    $roleList   =   D('category');
-    $data=$roleList->create();
-    if($data) {
+    $roleList   =   D('category');    
+    $data['cate_name']=I('cate_name');
+    $data['cate_name2']=I('cate_name2');
+    $data['cate_haschild']=I('cate_haschild');
+    $data['cate_sort']=I('cate_sort');
+    $data['is_show']=I('post.is_show');
+    $data['status']=I('post.status');
+    $data['uptime']=time();        
+    $data['__hash__']=I('__hash__');   
+
+    $uid=I('cate_id');
+    $data=$roleList->create($data);        
+    if($data) {        
         $data['addtime']=time();
-        $result = $roleList->save($data);
-        if($result) {
+        unset($data['__hash__']);                   
+        $result = $roleList->where('cate_id='.$uid)->save($data); 
+
+        if($result) {      
+            $accessModel=D('Access');
+            
+            $node=I('node');
+            $result=$accessModel->where('role_id='.$uid)->delete();
+            $map['id']=array('in',implode(',',$node));
+            $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();         
+            $result=D('Access')->addAll($result);   
             $this->success('操作成功！');
         }else{
             $this->error('写入错误！');
         }
     }else{
-        $this->error($Form->getError());
+        $this->error($roleList->getError());
     }
+    
  }
 
     public function delete($cate_id){
