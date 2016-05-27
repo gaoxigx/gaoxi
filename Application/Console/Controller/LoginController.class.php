@@ -78,11 +78,11 @@ class LoginController extends Controller {
                 $this->success('登录成功',  U('/Console/Index/main'));
                 exit(); 
             }                
-            $staff_list = $StaffUser->field('username,id')->where("username = '$username' and  password = '".md5($password)."'")->find(); 
+            $staff_list = $StaffUser->field('username,id,section')->where("username = '$username' and  password = '".md5($password)."'")->find(); 
             if (!empty($staff_list)){            
-                session ( 'username', $username );
-                session ( 'section', $staff_list ['section'] );  
-                //session('username', $staff_list);  
+                session ( 'username', $username );                
+                session ('roleidstaff', $staff_list ['section'] );  
+                session($username, $staff_list);  
                 $this->success('登录成功',  U('/Console/Index/main'));
                 exit();  
             }         
