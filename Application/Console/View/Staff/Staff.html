@@ -26,6 +26,22 @@ $(document).ready(function(){
 });
 
 });
+
+//密码重置
+function reset_pass(id){
+	if(confirm('确定要重置密码吗？')){
+		$.post('__URL__/resetpass/',{id:id},function(data){
+			var data = eval('('+data+')');
+			if(data.result == 1){
+				alert('密码重置成功');
+				window.location.href='__URL__/staff';
+			}else{
+				alert(data.msg);
+			}
+		})
+	}
+	
+}
 </script>
 
 
@@ -67,6 +83,7 @@ $(document).ready(function(){
     	<thead>
             <tr>
 <!--                <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
+                <th>序号</th>
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>性别</th>               
@@ -81,7 +98,9 @@ $(document).ready(function(){
         </thead>
         <tbody>
             <volist name="list" id="vo">
+
             <tr>
+            <td>{$i}</td>
 <!--            <td><input name="" type="checkbox" value="" /></td>-->
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
@@ -92,7 +111,7 @@ $(document).ready(function(){
             <td>{$cat[$vo['quarters']]}</td>
             <td>{$education[$vo['education']]}</td>
             <td>{$vo.mobile}</td>
-            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
+            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
             </tr> 
             </volist>
         

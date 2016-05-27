@@ -14,7 +14,7 @@ namespace Behavior;
  */
 class TokenBuildBehavior {
 
-    public function run(&$content){
+    public function run(&$content){     
         if(C('TOKEN_ON')) {
             list($tokenName,$tokenKey,$tokenValue)=$this->getToken();
             $input_token = '<input type="hidden" name="'.$tokenName.'" value="'.$tokenKey.'_'.$tokenValue.'" />';

@@ -48,7 +48,7 @@ $(document).ready(function(){
     <div class="tools">
     
     	<ul class="toolbar">
-        <li><a href="{:U('Console/Category/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加一级分类</a></li>
+        <li><a href="{:U('Console/Access/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>节点添加</a></li>
 <!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
         <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
         <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
@@ -70,81 +70,32 @@ $(document).ready(function(){
     </form></ul>
     </div>
     
-    
     <table class="tablelist">
     	<thead>
-    	<tr>
-        <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-        <th>内部名称(传统名称)</th>
-        <th>父类ID</th>
-        <th>是否有下级分类</th>
-        <th>排序</th>
-        <th>是否显示</th>
-        <th>是否审核</th>
-        <th>添加日期</th>
-        <th>更新日期</th>
-        <th>操作</th>
-        </tr>
+        	<tr>
+                <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+                <th>名称</th>
+                <th>标题</th>
+                <th>状态</th>
+                <th>简介</th>
+                <th>排序</th>
+                <th>层次</th>
+
+            </tr>
         </thead>
-        
-       <tbody>
-
-
-    <if condition="!empty($cateRow)">
-    <php>
-    function showTree($data,$kongge) {
-       $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-        foreach ($data as $key => $vo) {
-        echo '<tr>';
-            if($vo['cate_haschild']==0 )
-            {
-            $kongge=$kongge.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-             }
-            echo '<td>'.$vo['cate_id'].'</td>';
-
-            echo '<td';
-            if($vo['cate_parent']==0)
-            {
-            echo ' class="bold"';
-        }
-            echo '>'.$kongge.''.$vo['cate_name'].'('.$vo['cate_name2'].')</td>';
-            echo '<td>'.$vo['cate_parent'].'</td>';
-			if($vo['cate_haschild'] == 1){
-				echo '<td>有</td>';
-			}else{
-				echo '<td>没有</td>';
-			}
-            echo '<td>'.$vo['cate_sort'].'</td>';
-			if($vo['is_show'] == 1){
-				echo '<td>显示</td>';
-			}else{
-				echo '<td>不显示</td>';
-			}
-			if($vo['status'] == 1){
-				echo '<td>已审核</td>';
-			}else{
-				echo '<td>未审核</td>';
-			}
-            echo '<td>'.date('Y-m-d H:i:s',$vo['addtime']).'</td>';
-            echo '<td>'.date('Y-m-d H:i:s',$vo['uptime']).'</td>';
-            echo '<td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a> ' ;
-            echo '<a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a> ' ;
-            echo '<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td></tr>';
-           
-            if (!empty($vo['childs'])) {
-                $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-                showTree($vo['childs'],$i);
-           }
-$i='';
-                  
-        }
-    }
-    showTree($cateRow,$i);
-    </php>
-    </if>
-
-
-</tbody>
+        <tbody>
+            <volist name="data" id="vo">
+            <tr>            
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.status}</td>
+                <td>{$vo.remark}</td>
+                <td>{$vo.pid}</td>
+                <td>{$vo.level}</td>                
+            </tr>
+            </volist>
+        </tbody>
     </table>
     
    
@@ -182,3 +133,4 @@ $i='';
 </body>
 
 </html>
+

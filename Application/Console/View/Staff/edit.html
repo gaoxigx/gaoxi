@@ -9,6 +9,10 @@
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
         <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+		
+		<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+		<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+		<script type="text/javascript" src="__PUBLIC__/Console/js/staff_edit.js"></script>
     </head>
 
     <body>
@@ -42,14 +46,14 @@
                         <ul class="forminfo">
                             
                             <li>
-                                <label>用户名</label>                  
+                                <label>用户名<b>*</b></label>                  
                                 <if condition="$id">
-                                    <input class="dfinput" name="username" type="text"  placeholder="username" value="{$user.username}"/>
+                                    <input class="dfinput" name="username" id="username" type="text"  placeholder="username" value="{$user.username}"/>
                                     <else/>
-                                    <input class="dfinput"  name="username" type="text"  placeholder="username" />
+                                    <input class="dfinput"  name="username" id="username" type="text"  placeholder="username" />
                                 </if>  
                             </li>
-                            
+                            <!--
                             <li>
                                 <label>密码</label>                  
                                 <if condition="$id">
@@ -58,19 +62,19 @@
                                     <input class="dfinput"  name="password" type="password"  placeholder="password" />
                                 </if>  
                             </li>
-                                              
+                                -->              
                             <li>
                                 <label>昵称<b>*</b></label>                  
                                 <if condition="$id">
-                                    <input class="dfinput" name="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
+                                    <input class="dfinput" name="nickname" id="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
                                     <else/>
-                                    <input class="dfinput"  name="nickname" type="text"  placeholder="nickname" />
+                                    <input class="dfinput"  name="nickname" id="nickname" type="text"  placeholder="nickname" />
                                 </if>  
                             </li>    
                             
                             <li>
-                                <label>是否转正</label>
-                                <cite><input type="radio" <if condition="$user.become == 1">checked="checked"</if> 
+                                <label>是否转正<b>*</b></label>
+                                <cite><input type="radio" id="become"  <if condition="$user.become == 1">checked="checked"</if> 
                                         checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
                                         <if condition="$user.become == 2">checked="checked"</if> value="2" name="become">否
                                 </cite>
@@ -79,53 +83,53 @@
                             <li>
                                 <label>试用期工资</label>                  
                                 <if condition="$id">
-                                    <input class="dfinput" name="salaryss" type="text"  placeholder="salaryss" value="{$user.salaryss}"/>
+                                    <input class="dfinput" name="salaryss" id="salaryss" type="text"  placeholder="salaryss" value="{$user.salaryss}"/>
                                     <else/>
-                                    <input class="dfinput"  name="salaryss" type="text"  placeholder="salaryss" />
+                                    <input class="dfinput"  name="salaryss" id="salaryss" type="text"  placeholder="salaryss" />
                                 </if>
                             </li>
                             <li>
                                 <label>转正后工资</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="salaryzz" type="text"  placeholder="salaryzz" value="{$user.salaryzz}"/>
+                                    <input class="dfinput" name="salaryzz" id="salaryzz" type="text"  placeholder="salaryzz" value="{$user.salaryzz}"/>
                                     <else/>
-                                    <input class="dfinput"  name="salaryzz" type="text"  placeholder="salaryzz" />
+                                    <input class="dfinput"  name="salaryzz" id="salaryzz" type="text"  placeholder="salaryzz" />
                                 </if>                                  
                             </li>  
                                 
                             <li>
                                 <label>住房津贴</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="housing" type="text"  placeholder="housing" value="{$user.housing}"/>
+                                    <input class="dfinput" name="housing" id="housing" type="text"  placeholder="housing" value="{$user.housing}"/>
                                     <else/>
-                                    <input class="dfinput"  name="housing" type="text"  placeholder="housing" />
+                                    <input class="dfinput"  name="housing" id="housing" type="text"  placeholder="housing" />
                                 </if>                                  
                             </li>  
                             
                             <li>
                                 <label>交通津贴</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="traffic" type="text"  placeholder="traffic" value="{$user.traffic}"/>
+                                    <input class="dfinput" name="traffic" id="traffic" type="text"  placeholder="traffic" value="{$user.traffic}"/>
                                     <else/>
-                                    <input class="dfinput"  name="traffic" type="text"  placeholder="traffic" />
+                                    <input class="dfinput"  name="traffic" id="traffic" type="text"  placeholder="traffic" />
                                 </if>                                  
                             </li>                          
                             
                             <li>
                                 <label>餐饮津贴</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="catering" type="text"  placeholder="catering" value="{$user.catering}"/>
+                                    <input class="dfinput" name="catering" id="catering" type="text"  placeholder="catering" value="{$user.catering}"/>
                                     <else/>
-                                    <input class="dfinput"  name="catering" type="text"  placeholder="catering" />
+                                    <input class="dfinput"  name="catering" id="catering" type="text"  placeholder="catering" />
                                 </if>                                  
                             </li> 
                             
                              <li>
                                 <label>通讯津贴</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="phone" type="text"  placeholder="phone" value="{$user.phone}"/>
+                                    <input class="dfinput" name="phone" id="phone" type="text"  placeholder="phone" value="{$user.phone}"/>
                                     <else/>
-                                    <input class="dfinput"  name="phone" type="text"  placeholder="phone" />
+                                    <input class="dfinput"  name="phone" id="phone" type="text"  placeholder="phone" />
                                 </if>                                  
                             </li>                                
 
@@ -154,28 +158,28 @@
                             </li>  
 
                              <li>
-                                <label>姓名</label>                                   
+                                <label>姓名<b>*</b></label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="name" type="text"  placeholder="name" value="{$user.name}"/>
+                                    <input class="dfinput" name="name" id="name" type="text"  placeholder="name" value="{$user.name}"/>
                                     <else/>
-                                    <input class="dfinput"  name="name" type="text"  placeholder="name" />
+                                    <input class="dfinput"  name="name" id="name" type="text"  placeholder="name" />
                                 </if>                                  
                             </li>
                             
                             <li>
-                                <label>性别</label>
-                                <cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if> 
+                                <label>性别<b>*</b></label>
+                                <cite><input type="radio" id="sex" <if condition="$user.sex == 1">checked="checked"</if> 
                                         checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
                                         <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女
                                 </cite>
                             </li>   
  
                             <li>
-                                <label>身份证</label>                                   
+                                <label>身份证<b>*</b></label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="identity_card" type="text"  placeholder="identity_card" value="{$user.identity_card}"/>
+                                    <input class="dfinput" name="identity_card" id="identity_card" type="text"  placeholder="identity_card" value="{$user.identity_card}"/>
                                     <else/>
-                                    <input class="dfinput"  name="identity_card" type="text"  placeholder="identity_card" />
+                                    <input class="dfinput"  name="identity_card" id="identity_card" type="text"  placeholder="identity_card" />
                                 </if>                                  
                             </li>                           
 
@@ -189,11 +193,11 @@
                             </li>                             
  
                             <li>
-                                <label>电话</label>                                   
+                                <label>电话<b>*</b></label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="mobile" type="text"  placeholder="mobile" value="{$user.mobile}"/>
+                                    <input class="dfinput" name="mobile" id="mobile" type="text"  placeholder="mobile" value="{$user.mobile}"/>
                                     <else/>
-                                    <input class="dfinput"  name="mobile" type="text"  placeholder="mobile" />
+                                    <input class="dfinput"  name="mobile" id="mobile" type="text"  placeholder="mobile" />
                                 </if>                                  
                             </li>
                             
@@ -244,7 +248,7 @@
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
                                 <div class="col-sm-9"> 
-                                    <select name="education1" class="uew-select-value">  
+                                    <select name="education1" id="education1" class="uew-select-value">  
                                         <option value="0" <if condition="$user.education eq 0" >selected="selected"</if>>请选择</option>
                                         <option value="1" <if condition="$user.education eq 1" >selected="selected"</if>>大专</option>
                                         <option value="2" <if condition="$user.education eq 2" >selected="selected"</if>>本科</option>
@@ -310,9 +314,9 @@
                              <li>
                                 <label>电话</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="phone_ugy" type="text"  placeholder="phone_ugy" value="{$user.phone_ugy}"/>
+                                    <input class="dfinput" name="phone_ugy" id="phone_ugy" type="text"  placeholder="phone_ugy" value="{$user.phone_ugy}"/>
                                     <else/>
-                                    <input class="dfinput"  name="phone_ugy" type="text"  placeholder="phone_ugy" />
+                                    <input class="dfinput"  name="phone_ugy" id="phone_ugy" type="text"  placeholder="phone_ugy" />
                                 </if>                                      
                             </li>                              
                                     
@@ -332,11 +336,11 @@
                             </li>   
                             
                             <li>
-                                <label>银行账号</label>                                   
+                                <label>银行账号<b>*</b></label>                                   
                                 <if condition="$id gt 0">
-                                    <input class="dfinput" name="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
+                                    <input class="dfinput" name="bank_account" id="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
                                     <else/>
-                                    <input class="dfinput"  name="bank_account" type="text"  placeholder="bank_account" />
+                                    <input class="dfinput"  name="bank_account" id="bank_account" type="text"  placeholder="bank_account" />
                                 </if>                                      
                             </li>                               
   
