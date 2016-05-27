@@ -30,7 +30,7 @@ class CommonController extends Controller{
  	private function access(){
  		$page=CONTROLLER_NAME."/".ACTION_NAME; 
  		echo $page;
- 		if(in_array(strtoupper($page),explode(',',strtoupper(C('NOT_AUTH_MODULE'))))){
+ 		if(in_array($page,explode(',',C('NOT_AUTH_MODULE')))){
  			echo __LINE__;
  			return true;
  		} 		
