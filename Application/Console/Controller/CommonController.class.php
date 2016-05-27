@@ -12,9 +12,9 @@ class CommonController extends Controller{
 			$this->error('您还没有登录！','/Console/Login/login.html');
 		}
 
-		if(!$this->access()){			
-			$this->error('您无权操作该控制器');
-		}
+		// if(!$this->access()){			
+		// 	$this->error('您无权操作该控制器');
+		// }
 
 
 	}
