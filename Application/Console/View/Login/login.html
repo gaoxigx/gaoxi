@@ -8,9 +8,9 @@
 <script src="__PUBLIC__/Console/js/cloud.js" type="text/javascript"></script>
 
 <script language="javascript">
-	$(function(){
+    $(function(){
     $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
-	$(window).resize(function(){  
+    $(window).resize(function(){  
     $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
     })  
 });  
@@ -69,16 +69,16 @@
     
     
     <div class="loginbm">版权所有  2016  &copy NICO·中国</div>
-	
+    
      <script type="text/javascript">
     $(document).ready(function(){
-		$('#user_name').keydown(function(e,event){
-			EnterPress(e,event);
-		})
-		
-		$('#password').keydown(function(e,event){
-			EnterPress(e,event);
-		})
+        $('#user_name').keydown(function(e,event){
+            EnterPress(e,event);
+        })
+        
+        $('#password').keydown(function(e,event){
+            EnterPress(e,event);
+        })
         //数字验证 
         // $("#getcode_num").click(function(){
         //     $(this).attr("src", 'verify.html?' + Math.random());
@@ -87,8 +87,8 @@
         $("#loginbtn").click(function(){
             // var code_num = $("#code_num").val();
             if(checkform()){
-				$("#login").attr("action", "dologin").submit();
-			}
+                $("#login").attr("action", "dologin").submit();
+            }
 
             // if (code_num == '') {
             //     alert("验证码不能为空！");
@@ -111,28 +111,28 @@
         });
     });
     //表单验证
-	function checkform(){
-		var user_name = $("#user_name").val();
+    function checkform(){
+        var user_name = $("#user_name").val();
         var password = $("#password").val();
-		if (user_name == '') {
-			alert('用户名不能为空');
-			$("#user_name").focus();
-			return false;
-		}
-		if (password == '') {
-			alert("密码不能为空！");
-			$("#password").focus();
-			return false;
-		}
-		return true;
-	}
-	
+        if (user_name == '') {
+            alert('用户名不能为空');
+            $("#user_name").focus();
+            return false;
+        }
+        if (password == '') {
+            alert("密码不能为空！");
+            $("#password").focus();
+            return false;
+        }
+        return true;
+    }
+    
     /*回车事件*/
     function EnterPress(e,event){ //传入 event 
         var e = e || window.event;
         if (e.keyCode == 13 && checkform()) {
-			$("#login").attr("action", "dologin").submit();
-		}
+            $("#login").attr("action", "dologin").submit();
+        }
     }
 </script>
 </body>
