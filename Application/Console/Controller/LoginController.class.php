@@ -15,8 +15,8 @@ class LoginController extends Controller {
     public function captcha() {
         ob_clean();
         $Verify = new \Think\Verify();
-        $Verify->imageW = 150;
-        $Verify->imageH = 40;
+        $Verify->imageW = 140;
+        $Verify->imageH = 38;
         $Verify->fontSize = 18;
         $Verify->useNoise = tuer;
         $Verify->entry();        
@@ -51,45 +51,37 @@ class LoginController extends Controller {
         
         if(!empty($_POST)){
             $model = D('controller');//实例化一个(对象),每个对象对应着一张数据表
+            $StaffUser = D('staff');
             $username = I('post.username'); 
             $password = I('post.password');
             
             //验证用户名密码 (没有数据的时候:select返回空数组,find返回null);
             $admin_list = $model->field('username,id')->where("accounts = '$username' and  password = '".md5($password)."'")->find();    
 
-            if (!empty($admin_list)) {            
+            if (!empty($admin_list)) {    
+                //写入session
                 session ( 'userid', $admin_list ['id'] );
                 session ( 'username', $username );
                 session ( 'roleid', $admin_list ['roleid'] );
-                 
-                //记住密码
-                if (isset($_POST['remember'])) {
-                    $remeber = json_encode([
-                        'username' => $username,
-                        'password' => $this->authcode($_POST['password'], 'ENCODE'),
-                    ]);
-                    cookie('remember', $remeber);
-                }                      
-                //写入session
-                session('username', $admin_list);            
-      
-                //更新登录信息
-                $update = [
-                   'id'=>$admin['id'],
-                   'last_login_time'=>time(),
-                   'last_login_ip'=>  get_client_ip(),
-                ];        
-                $model->save($update);          
-
+               // session('username', $admin_list); 
                 $this->success('登录成功',  U('/Console/Index/main'));
-                exit();                  
-            } 
+                exit(); 
+            } else {
+                
+                    $staff_list = $StaffUser->field('username,id')->where("username = '$username' and  password = '".md5($password)."'")->find();    
 
-
-            $this->error('用户名或密码不正确！');
-            exit();
-            
-        } else {
+                    if (!empty($staff_list)){            
+                        session ( 'username', $username );
+                        session ( 'section', $staff_list ['section'] );  
+                        //session('username', $staff_list);  
+                        $this->success('登录成功',  U('/Console/Index/main'));
+                        exit();  
+                    } else {
+                        $this->error('用户名或密码不正确！');
+                        exit();
+                    }
+                }
+            } else {
                 //显示模板
                 $data = [];
                 if ($r = cookie('remember')) {
@@ -102,48 +94,18 @@ class LoginController extends Controller {
                 }
                 $this->assign($data);
                 $this->display();
-        }
-         
+            }
     }       
+          
         
-        
-        
-//	// 登陆验证
-//	public function dologin() {
-//		$data = I ( 'post.' );
-//		$user_name = $data ['username'];
-//		$password = md5 ( $data ['password'] );
-//
-//		$table = D ('controller');
-//		$result = $table->where ("accounts='" . $user_name . "' and password='" . $password . "'" )->find ();
-//
-//		// dump($result);
-//		// exit;
-//		if ($result) {
-//			session ( 'userid', $result ['id'] );
-//			session ( 'username', $user_name );
-//			session ( 'roleid', $result ['roleid'] );
-//		$this->success ( '登陆成功！', "/Console/Index/main" );
-//
-//		}else {
-//			$this->success ( '用户名或密码不正确！' );
-//		}
-//	}
+    // 退出登录
+    public function logout() {
+            session ('username', null );
+            session ('userid', null );
+            session ('soleid', null );
+            session_destroy (); // 清除服务器的sesion文件
+            $this->success ( '退出成功', '/Console/Login/login.html' );
+    }
 
-
-        
-        
-        
-        
-        
-        // 退出登录
-	public function logout() {
-		session ('username', null );
-		session ('userid', null );
-		session ('soleid', null );
-		session_destroy (); // 清除服务器的sesion文件
-		$this->success ( '退出成功', '/Console/Login/login.html' );
-	}
-        
     
 }
