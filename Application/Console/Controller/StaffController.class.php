@@ -163,7 +163,35 @@ class StaffController extends CommonController {
          $this->display();
         }
     }     
-
+	
+	/**
+	 *密码重置-123456
+	 */
+	 public function resetpass(){
+		$id = I('post.id',0);
+		$data=array('password'=>md5('123456'));
+		
+		$controller = M('Staff');
+		$staff_info = $controller->where('id='.$id)->find();
+		if($data['password'] == $staff_info['password']){
+			$result = 0;
+			$msg = '已是默认密码';
+		}else{
+			$result = $controller->where('id='.$id)->save($data);
+		}
+		
+		if(!$msg){
+			$msg = '密码重置失败';
+		}
+		
+		if($result > 0){
+			echo json_encode(array('result'=>1));
+		}else{
+			echo json_encode(array('result'=>0,'msg'=>$msg));
+		}
+		
+	}
+	
 //更修改密码
 public function passupdate(){
 $id = I('session.userid',0);

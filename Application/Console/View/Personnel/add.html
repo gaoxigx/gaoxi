@@ -10,6 +10,7 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
 <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
 
+<script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
 <script type="text/javascript">
@@ -29,8 +30,8 @@
 				},
 				password: {
 					required: true,
-					minlength: 4,
-					maxlength: 26
+					minlength: 5,
+					maxlength: 12
 				},	
 				nickname: {
 					required: true,
@@ -57,8 +58,8 @@
 				},
 				password: {
 					required: "请输入密码",
-					minlength: "不能少于4个字符",
-					maxlength: "不能多于26个字符",
+					minlength: "密码长度5-12位字符",
+					maxlength: "密码长度5-12位字符",
 				},	
 				nickname: {
 					required: "请输入昵称",
