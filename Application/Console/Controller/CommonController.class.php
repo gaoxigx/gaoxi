@@ -5,7 +5,7 @@ class CommonController extends Controller{
 	public function __construct(){
 		header("Content-Type: text/html; charset=utf-8");
 		parent::__construct();
-		if(session('?username')){
+		if(session('username')){
 			$this->assign('leftmenu',CONTROLLER_NAME);
 			$this->assign('lml',ACTION_NAME);
 		}else{
@@ -13,7 +13,7 @@ class CommonController extends Controller{
 		}
 
 		if(!$this->access()){			
-			$this->error('您无权限操作底该控制器');
+			$this->error('您无权操作该控制器');
 		}
 
 
@@ -28,20 +28,19 @@ class CommonController extends Controller{
 
 
  	private function access(){
- 		$map['role_id']=session('roleidstaff');
- 		if(!$map['role_id']){
- 			return true;
- 		}
-
- 		$page=ACTION_NAME."/".MODULE_NAME;
- 		
- 		if(in_array($page,explode(',',strtoupper(C('NOT_AUTH_MODULE'))))){
+ 		$page=CONTROLLER_NAME."/".ACTION_NAME; 
+ 	     
+ 		if(in_array(strtoupper($page),explode(',',strtoupper(C('NOT_AUTH_MODULE'))))){
  			return true;
  		} 		
-
- 		$result=D('access')->where($map)->getField('module');
+ 		
+ 		$map['role_id']=47;//session('roleidstaff');
+ 		if(!$map['role_id']){
+ 			return true;
+ 		} 		
+ 		$result=D('access')->where($map)->getField('module',true);
  		if($result){
- 			if(!in_array($page,$result)){
+ 			if(in_array($page,$result)){
  				return true;
  			}
  		}
