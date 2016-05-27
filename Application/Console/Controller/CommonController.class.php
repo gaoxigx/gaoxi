@@ -12,9 +12,9 @@ class CommonController extends Controller{
 			$this->error('您还没有登录！','/Console/Login/login.html');
 		}
 
-		// if(!$this->access()){			
-		// 	$this->error('您无权操作该控制器');
-		// }
+		if(!$this->access()){			
+			$this->error('您无权操作该控制器');
+		}
 
 
 	}
@@ -38,12 +38,12 @@ class CommonController extends Controller{
  		if(!$map['role_id']){
  			return true;
  		} 		
- 		$result=D('access')->where($map)->getField('module',true);
- 		if($result){
- 			if(in_array($page,$result)){
- 				return true;
- 			}
- 		}
+ 		// $result=D('access')->where($map)->getField('module',true);
+ 		// if($result){
+ 		// 	if(in_array($page,$result)){
+ 		// 		return true;
+ 		// 	}
+ 		// }
  		return false;
  	}
 
