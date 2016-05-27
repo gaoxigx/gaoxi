@@ -9,7 +9,7 @@ class CommonController extends Controller{
 			$this->assign('leftmenu',CONTROLLER_NAME);
 			$this->assign('lml',ACTION_NAME);
 		}else{
-			$this->error('您还没有登录！',{:U('Console/Login/login')});
+			$this->error('您还没有登录！',U('Console/Login/login'));
 		}
 
 		if(!$this->access()){			
