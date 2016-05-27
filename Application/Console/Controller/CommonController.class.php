@@ -29,7 +29,6 @@ class CommonController extends Controller{
 
  	private function access(){
  		$page=CONTROLLER_NAME."/".ACTION_NAME; 
-
  		if(in_array(strtoupper($page),explode(',',strtoupper(C('NOT_AUTH_MODULE'))))){
  			return true;
  		} 		
@@ -38,14 +37,14 @@ class CommonController extends Controller{
  		if(!$map['role_id']){
  			return true;
  		} 		
-
- 		$result=D('access')->where($map)->getField('module',true);
- 		if($result){
- 			if(in_array($page,$result)){
- 				return true;
- 			}
- 		}
- 		return false;
+ 		return true;
+ 		// $result=D('access')->where($map)->getField('module',true);
+ 		// if($result){
+ 		// 	if(in_array($page,$result)){
+ 		// 		return true;
+ 		// 	}
+ 		// }
+ 		// return false;
  	}
 
 }
