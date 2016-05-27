@@ -26,6 +26,24 @@ $(document).ready(function(){
 });
 
 });
+
+//删除一条数据
+function delete_one(id){
+	if(confirm('确定要删除此条数据吗？')){
+		if(!id){
+			alert('此数据不存在');
+		}
+		$.post('__URL__/delete',{id:id},function(data){
+			var data = eval('('+data+')');
+			if(data.result == 1){
+				alert('删除成功');
+				window.location.href='__URL__/node';
+			}else{
+				alert('删除失败');
+			}
+		})
+	}
+}
 </script>
 
 
@@ -39,7 +57,7 @@ $(document).ready(function(){
     <ul class="placeul">
     <li><a href="#">首页</a></li>
     <li><a href="#">组织结构</a></li>
-    <li><a href="#">分类管理</a></li>
+    <li><a href="#">节点管理</a></li>
     </ul>
     </div>
     
@@ -60,14 +78,16 @@ $(document).ready(function(){
         <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
         </ul>
     <ul class="seachform">
-    <form action="/index.php/Console/Personnel/PerList" method="post" id="form2" name="form2">
-    <li><label>名称</label><input type="text" class="scinput" name="accounts"></li>
-    <li><label>顶级</label><input type="text" class="scinput" name="nickname"></li>
+		<form action="/index.php/Console/Access/node" method="post" id="form2" name="form2">
+			<li><label>名称</label><input type="text" class="scinput" name="name"></li>
+			<li><label>简介</label><input type="text" class="scinput" name="remark"></li>
+			<!--<li><label>顶级</label><input type="text" class="scinput" name="nickname"></li>-->
 
-    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
-    </li>
-    
-    </form></ul>
+			<li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
+			</li>
+		
+		</form>
+	</ul>
     </div>
     
     <table class="tablelist">
@@ -80,7 +100,7 @@ $(document).ready(function(){
                 <th>简介</th>
                 <th>排序</th>
                 <th>层次</th>
-
+				<th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -89,10 +109,18 @@ $(document).ready(function(){
                 <td>{$vo.id}</td>
                 <td>{$vo.name}</td>
                 <td>{$vo.title}</td>
-                <td>{$vo.status}</td>
+                <td>
+					<if condition="$vo.status eq 1">
+					显示
+					<else/>
+					隐藏
+					</if>
+				</td>
                 <td>{$vo.remark}</td>
-                <td>{$vo.pid}</td>
-                <td>{$vo.level}</td>                
+				<td>{$vo.sort}</td>
+                <!--<td>{$vo.pid}</td>-->
+                <td>{$vo.level}</td>  
+				<td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="delete_one({$vo.id});"> 删除</a></td>
             </tr>
             </volist>
         </tbody>
