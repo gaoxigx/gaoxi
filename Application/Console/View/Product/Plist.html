@@ -38,24 +38,17 @@ $(document).ready(function(){
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">产品管理</a></li>
-        <li><a href="#">产品列表</a></li>
-    </ul>
-    </div>
-    
-    <div class="rightinfo">
-    
-    <div class="tools">
-     
-        <ul class="toolbar1">
-        <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">产品管理</a></li>
+            <li><a href="#">产品列表</a></li>
         </ul>
-
+    </div>
+ 
+    <div class="tools">
         <ul class="seachform">
-                <form action="/index.php/Console/Product/Plist" method="post" id="form2" name="form2">     
+            <form action="/index.php/Console/Product/Plist" method="post" id="form2" name="form2">     
                 
                 <li><label>类别<b></b></label>  
                     <select name="protype" class="sciselect">
@@ -75,58 +68,53 @@ $(document).ready(function(){
     
     <table class="tablelist">
     	<thead>
-    	<tr>
-<!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
-        <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+            <tr>
+        <!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
+                <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
 
-        <th><label>类别<b></b></label> </th>
-        <th>图片</th>
-        <th>产品名称</th>
-        <th>成本价格</th>
-        <th>标准价格</th>
-        <th>最高价格</th>
-        <th>最低折扣</th>
-        <th>进货数量</th>
-        <th>剩余库存</th>
-        <th>销售数量</th>
-        <th>采购负责人</th>
-        <th>添加日期</th>
-        <th>操作</th>
-        </tr>
+                <th><label>类别<b></b></label> </th>
+                <th>图片</th>
+                <th>产品名称</th>
+                <th>成本价格</th>
+                <th>标准价格</th>
+                <th>最高价格</th>
+                <th>最低折扣</th>
+                <th>进货数量</th>
+                <th>剩余库存</th>
+                <th>销售数量</th>
+                <th>采购负责人</th>
+                <th>添加日期</th>
+                <th>操作</th>
+            </tr>
         </thead>
         <tbody>
             <volist name="list" id="vo">
-        <tr>
-
-<!--       <td><input name="" type="checkbox" value="" /></td>-->
-        <td>{$vo.id}</td>
-        <td>{$vo.protype|Getprotypename=###}</td>
-        <td >
-            <div class="click"  style="float: left;" data="{$vo.pic}">
-                <span> <img src="{$vo.pic1}" height=100></span>
-            </div>
-        </td>
-        <td><a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a></td>
-        <td>{$vo.price1}</td>
-        <td>{$vo.price2}</td>
-        <td>{$vo.price3}</td>
-        <td>{$vo.discount}</td>
-        <td>{$vo.inputnum}</td>
-        <td>{$vo.sortnum}</td>
-        <td>{$vo.salenum}</td>
-        <td>{$vo.purchaseper}</td>
-        <td>{$vo.addtime|date='Y-m-d',###}</td>
-        <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a></td>
-        </tr> 
-        </volist>
-        
+                <tr>
+            <!--       <td><input name="" type="checkbox" value="" /></td>-->
+                    <td>{$vo.id}</td>
+                    <td>{$vo.protype|Getprotypename=###}</td>
+                    <td >
+                        <div class="click"  style="float: left;" data="{$vo.pic}">
+                            <span> <img src="{$vo.pic1}" height=100></span>
+                        </div>
+                    </td>
+                    <td><a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a></td>
+                    <td>{$vo.price1}</td>
+                    <td>{$vo.price2}</td>
+                    <td>{$vo.price3}</td>
+                    <td>{$vo.discount}</td>
+                    <td>{$vo.inputnum}</td>
+                    <td>{$vo.sortnum}</td>
+                    <td>{$vo.salenum}</td>
+                    <td>{$vo.purchaseper}</td>
+                    <td>{$vo.addtime|date='Y-m-d',###}</td>
+                    <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a></td>
+                </tr> 
+            </volist>
         </tbody>
     </table>
     
-   
-   <div id="page" class="pagination">
-　　{$page}
-</div>
+   <div id="page" class="pagination">{$page}</div>
 
     
     <script type="text/javascript">
