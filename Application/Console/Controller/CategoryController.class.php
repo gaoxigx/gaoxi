@@ -32,8 +32,11 @@ class CategoryController extends CommonController {
 
 public function add($pid=0){
 //添加时把父级分类的“cate_haschild”字段更新为1
-$this->assign('pid',$pid);
-$this->display();
+    $nodeModel=D('node');
+    $node=$nodeModel->field('id,title,name')->select();        
+    $this->assign("node",$node);
+    $this->assign('pid',$pid);
+    $this->display();
 
 }
 
@@ -44,13 +47,31 @@ public function insert(){
         $data['cate_id'] = $_POST['cate_parent'];//必须是主键
         $data['cate_haschild'] = 1;
 
+        $data['cate_name']=I('cate_name');
+        $data['cate_name2']=I('cate_name2');
+        $data['cate_haschild']=I('cate_haschild');        
+        $data['is_show']=I('post.is_show');
+        $data['status']=I('post.status');
+        $data['cate_content']=I('post.cate_content');
+
+
+        $data['uptime']=time();        
+        $data['addtime']=time();    
+        $data['__hash__']=I('__hash__');   
+
         $roleList   =   D('category');
         $data=$roleList->create();
         if($data){
             $data['addtime']=time();
             $data['uptime']=time();
+            unset($data['__hash__']);        
             $result =   $roleList->add($data);
             if($result || $upresult) {
+                $uid=$result;
+                $node=I('node');                
+                $map['id']=array('in',implode(',',$node));
+                $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();         
+                $result=D('Access')->addAll($result);   
 
                 $this->success('数据添加成功！',U('Category/PList'));
             }else{
@@ -59,6 +80,7 @@ public function insert(){
         }else{
             $this->error($roleList->getError());
         }
+
        
     }
 
@@ -66,9 +88,11 @@ public function insert(){
 public function edit($cate_id){
     $roleList   =   M('category');
     $nodeModel=D('node');
-    $node=$nodeModel->field('id,title,name')->select();        
+    $node=$nodeModel->field('id,title,name')->select();    
+    $selectNode=D('Access')->where('role_id='.$cate_id)->getfield('node_id,module',true);        
     $this->assign('vo',$roleList->find($cate_id));
     $this->assign("node",$node);
+    $this->assign('selectNode',$selectNode);
     $this->display();
 
 }
