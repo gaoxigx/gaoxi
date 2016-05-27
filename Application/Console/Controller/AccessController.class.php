@@ -89,10 +89,26 @@ class AccessController extends CommonController {
     }
 
     public function node(){
-        $result=D('node')->select();
-        $this->assign("data",$result);
-        $this->display();
-    }
+		$name = I('name');
+		$remark = I('remark');
+		if($name){
+			$map['name']  = array('like','%'.trim($name).'%');
+			
+		}
+		if($remark){
+			$map['remark']  = array('like','%'.trim($remark).'%');
+		}
+		
+		foreach( $map as $k=>$v){ 
+			if( !$v )  
+				unset( $arr[$k] );  
+		}  
+		
+		$result=D('node')->where($map)->select();
+		
+		$this->assign("data",$result);
+		$this->display();
+	}
 
 
 
