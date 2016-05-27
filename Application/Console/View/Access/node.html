@@ -26,6 +26,24 @@ $(document).ready(function(){
 });
 
 });
+
+//删除一条数据
+function delete_one(id){
+	if(confirm('确定要删除此条数据吗？')){
+		if(!id){
+			alert('此数据不存在');
+		}
+		$.post('__URL__/delete',{id:id},function(data){
+			var data = eval('('+data+')');
+			if(data.result == 1){
+				alert('删除成功');
+				window.location.href='__URL__/node';
+			}else{
+				alert('删除失败');
+			}
+		})
+	}
+}
 </script>
 
 
@@ -80,7 +98,7 @@ $(document).ready(function(){
                 <th>简介</th>
                 <th>排序</th>
                 <th>层次</th>
-
+				<th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -91,8 +109,10 @@ $(document).ready(function(){
                 <td>{$vo.title}</td>
                 <td>{$vo.status}</td>
                 <td>{$vo.remark}</td>
-                <td>{$vo.pid}</td>
-                <td>{$vo.level}</td>                
+				<td>{$vo.sort}</td>
+                <!--<td>{$vo.pid}</td>-->
+                <td>{$vo.level}</td>  
+				<td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="delete_one({$vo.id});"> 删除</a></td>
             </tr>
             </volist>
         </tbody>
