@@ -67,8 +67,6 @@ $(function(){
 					minlength:11,
 					maxlength:11
 				},
-				bankaddress:'required',
-				bank_account:'required'
 			},
 			messages:{				
 				username:{
@@ -130,9 +128,7 @@ $(function(){
 					number:'手机号码格式错误',
 					minlength:'11位手机号码',
 					maxlength:'11位手机号码'
-				},
-				bankaddress:'请选择开户行',
-				bank_account:'请输入银行账号'
+				}
 			},
 			errorClass:'cerror',
 			
