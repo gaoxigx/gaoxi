@@ -29,15 +29,23 @@ class CommonController extends Controller{
 
  	private function access(){
  		$page=CONTROLLER_NAME."/".ACTION_NAME; 
- 	     
- 		if(in_array(strtoupper($page),explode(',',strtoupper(C('NOT_AUTH_MODULE'))))){
- 			return true;
- 		} 		
- 		
+ 
+ 		$t=explode(',',C('NOT_AUTH_MODULE'));
+ 		foreach ($t as $key => $value) {
+ 			if($value==$page){
+ 				return true;
+ 			}
+ 		}
+ 		// if(in_array($page,explode(',',C('NOT_AUTH_MODULE')))){
+ 		// 	echo __LINE__;
+ 		// 	return true;
+ 		// } 		
+ 		// echo __LINE__;
  		$map['role_id']=session('roleidstaff');
  		if(!$map['role_id']){
  			return true;
  		} 		
+ 		return true;
  		$result=D('access')->where($map)->getField('module',true);
  		if($result){
  			if(in_array($page,$result)){

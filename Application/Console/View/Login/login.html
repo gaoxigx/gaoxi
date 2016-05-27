@@ -48,7 +48,7 @@
             <li><input id="password" name="password" type="password" class="loginpwd" value="" onclick="JavaScript:this.value=''"/></li>
             <li>
                 <span class="codesp">
-                    <input id="captcha"  name="cpatcha" type="text" class="imgcode" value="" size="8" />
+                    <input id="captcha" name="cpatcha" type="text" class="imgcode" value="" size="8" />
                 </span>
                 <span class="codesp">
                     <img src="{:U('Console/Login/captcha')}" onclick="this.src=this.src+'?'">
@@ -79,41 +79,26 @@
         $('#password').keydown(function(e,event){
             EnterPress(e,event);
         })
+		
+		$('#captcha').keydown(function(e,event){
+            EnterPress(e,event);
+        })
         //数字验证 
         // $("#getcode_num").click(function(){
         //     $(this).attr("src", 'verify.html?' + Math.random());
         // });
         
         $("#loginbtn").click(function(){
-            // var code_num = $("#code_num").val();
             if(checkform()){
                 $("#login").attr("action", "dologin").submit();
             }
-
-            // if (code_num == '') {
-            //     alert("验证码不能为空！");
-            //     $("#code_num").focus();
-            //     return false;
-            // }
-            // else {
-            //     $.post("chk_code.html?code=code_num'", {
-            //         code: code_num
-            //     }, function(msg){
-            //         if (msg) {
-            //             $("#login").attr("action", "dologin").submit();
-            //         }
-            //         else {
-            //             alert("验证码错误！");
-            //             return false;
-            //         }
-            //     });
-            // }
         });
     });
     //表单验证
     function checkform(){
         var user_name = $("#user_name").val();
         var password = $("#password").val();
+		var captcha = $("#captcha").val();
         if (user_name == '') {
             alert('用户名不能为空');
             $("#user_name").focus();
@@ -122,6 +107,11 @@
         if (password == '') {
             alert("密码不能为空！");
             $("#password").focus();
+            return false;
+        }
+		 if (captcha == '') {
+            alert("验证码不能为空！");
+            $("#captcha").focus();
             return false;
         }
         return true;
