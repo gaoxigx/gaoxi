@@ -64,12 +64,12 @@ $(document).ready(function(){
     
     <div class="formtext">请正确填写发布信息！</div>
     <ul class="forminfo">
-    <li><label>类别<b>*</b></label>  
+    <li><label>类别{$data.protype}<b>*</b></label>  
         <div class="vocation uew-select">
             <select name="protype" class="uew-select-value" autocomplete="off">
             <volist name="protype" id="voo">
-                <option value="{$voo.id}" <if condition="$voo.id == $data.protype"> selected="selected" <else /> 未审核</if>>{$voo.typename}</option>
-            </volist>
+				<option value="{$voo.id}" <if condition="$voo.id == $data['protype']">selected="selected"</if>>{$voo.typename}</option>
+			</volist>
             </select>
         </div>
     <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
