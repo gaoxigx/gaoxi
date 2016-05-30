@@ -9,7 +9,7 @@ class CommonController extends Controller{
 			$this->assign('leftmenu',CONTROLLER_NAME);
 			$this->assign('lml',ACTION_NAME);
 		}else{
-			$this->error('您还没有登录！','/Console/Login/login.html');
+			$this->error('您还没有登录！',U('Console/Login/login'));
 		}
 
 		if(!$this->access()){			
@@ -36,23 +36,19 @@ class CommonController extends Controller{
  				return true;
  			}
  		}
- 		// if(in_array($page,explode(',',C('NOT_AUTH_MODULE')))){
- 		// 	echo __LINE__;
- 		// 	return true;
- 		// } 		
- 		// echo __LINE__;
+
  		$map['role_id']=session('roleidstaff');
  		if(!$map['role_id']){
  			return true;
  		} 		
  		return true;
- 		$result=D('access')->where($map)->getField('module',true);
- 		if($result){
- 			if(in_array($page,$result)){
- 				return true;
- 			}
- 		}
- 		return false;
+ 		// $result=D('access')->where($map)->getField('module',true);
+ 		// if($result){
+ 		// 	if(in_array($page,$result)){
+ 		// 		return true;
+ 		// 	}
+ 		// }
+ 		// return false;
  	}
 
 }
