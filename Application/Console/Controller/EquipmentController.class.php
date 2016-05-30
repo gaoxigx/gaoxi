@@ -9,6 +9,8 @@ class EquipmentController extends CommonController {
 
 //数据列表
     public function Equipment($name=''){
+         $staff=D('staff')->getField('id,name',true);
+        $this->assign('staff',$staff);
 
         $username = i('username');
         if($username){
