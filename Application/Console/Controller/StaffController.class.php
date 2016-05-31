@@ -96,8 +96,21 @@ class StaffController extends CommonController {
         if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
-                
+		
+		$section_map['cate_id']=$user['quarters'];
+		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
+		
+		$map['cate_parent']=$user['quarters'];
+		$subordinates = D('Category')->categoryone($map);
+		
+		$Equipment = D('Equipment')->where('staffid='.$id)->select();
+		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+		
          $this->assign('department',D('Category')->department());
+		 $this->assign('quarters',$quarters);
+		 $this->assign('subordinates',$subordinates);
+		 $this->assign('Equipment',$Equipment);
+		 $this->assign('order_nums',$order_nums);
          $this->assign('user',$user);
          $this->assign('id',$id);
          $this->display();

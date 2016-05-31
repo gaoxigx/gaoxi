@@ -95,7 +95,10 @@
                     <li><label>绑定银行卡<b>*</b></label><input name="eqbank" type="text" class="dfinput" value="{$data.eqbank}"  /></li>
                    <!--  <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value="{$data.bumen}"  /></li>    
                     <li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value="{$data.gongwei}"  /></li>  -->
-                    <li><label>登记日期<b>*</b></label><input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime("+3 month"))}"  onClick="WdatePicker()" style="width:187px;"/></li>                   
+                    <li>
+						<label>登记日期<b>*</b></label>
+						<input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime("+3 month"))}"  onClick="WdatePicker()" style="width:187px;"/>
+					</li>                   
                     <li><label>设备负责人<b>*</b></label>
                         <select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
                             <volist name="staff" id='vo'>
@@ -104,7 +107,13 @@
                         </select>
                         <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
                     </li>
-                    <li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+                    <li>
+						<label>是否使用</label>
+						<cite>
+							<input type="radio" <if condition="$data.stauts eq 1">checked="checked"</if> value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
+						</cite>
+					</li>
                     <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="确认修改"/></li>
 
                     </ul>

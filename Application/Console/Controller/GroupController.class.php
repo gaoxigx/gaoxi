@@ -60,7 +60,7 @@ class GroupController extends CommonController {
     if($roleList->create()) {
         $result = $roleList->save();
         if($result) {
-            $this->success('操作成功！',U('Group/roleList'));
+            $this->success('操作成功！',U('Group/rolelist'));
         }else{
             $this->error('写入错误！');
         }

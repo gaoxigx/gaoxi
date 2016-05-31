@@ -5,12 +5,17 @@
         <title>无标题文档</title>
         <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
         <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+		<link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
         <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
     </head>
-
+<script>
+	$(function(){
+		$("#subordinates .dish:last").remove();
+	})
+</script>
     <body>
 
         <div class="place">
@@ -23,8 +28,7 @@
         </div>
 
         <div class="formbody">
-            <div id="usual1" class="usual"> 
-              <!--   <form name="form1" id="form1" method='post' action="__URL__/edit"> -->
+            <div id="usual1" class="usual">
                     <if condition="$id">
                        <input name="id" type="hidden"   value="{$id}"/>
                     </if> 
@@ -32,366 +36,311 @@
                     <div class="itab">
 
                         <ul> 
-                            <li><a href="#tab1" class="selected">修改信息</a></li> 
+                            <li><a href="#tab1" class="selected">查看信息</a></li> 
                         </ul>
                     </div> 
 
                     <div id="tab1" class="tabson">
 
-                        <div class="formtext">请正确填写个人信息！</div>
-                        <ul class="forminfo">
-                            
-                            <li>
-                                <label>用户名</label>                  
-                                <if condition="$id">
-                                    <input class="dfinput" name="username" type="text"  placeholder="username" value="{$user.username}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="username" type="text"  placeholder="username" />
-                                </if>  
-                            </li>
-                            
-                            <li>
-                                <label>密码</label>                  
-                                <if condition="$id">
-                                    <input class="dfinput" name="password" type="text"  placeholder="password" value="{$user.password}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="password" type="text"  placeholder="password" />
-                                </if>  
-                            </li>
-                                              
-                            <li>
-                                <label>昵称<b>*</b></label>                  
-                                <if condition="$id">
-                                    <input class="dfinput" name="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="nickname" type="text"  placeholder="nickname" />
-                                </if>  
-                            </li>    
-                            
-                            <li>
-                                <label>是否转正</label>
-                                <cite><input type="radio" <if condition="$user.become == 1">checked="checked"</if> 
-                                        checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
-                                        <if condition="$user.become == 2">checked="checked"</if> value="2" name="become">否
-                                </cite>
-                            </li>                           
-                
-                            <li>
-                                <label>试用期工资</label>                  
-                                <if condition="$id">
-                                    <input class="dfinput" name="salaryss" type="text"  placeholder="salaryss" value="{$user.salaryss}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="salaryss" type="text"  placeholder="salaryss" />
-                                </if>
-                            </li>
-                            <li>
-                                <label>转正后工资</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="salaryzz" type="text"  placeholder="salaryzz" value="{$user.salaryzz}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="salaryzz" type="text"  placeholder="salaryzz" />
-                                </if>                                  
-                            </li>  
-                                
-                            <li>
-                                <label>住房津贴</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="housing" type="text"  placeholder="housing" value="{$user.housing}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="housing" type="text"  placeholder="housing" />
-                                </if>                                  
-                            </li>  
-                            
-                            <li>
-                                <label>交通津贴</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="traffic" type="text"  placeholder="traffic" value="{$user.traffic}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="traffic" type="text"  placeholder="traffic" />
-                                </if>                                  
-                            </li>                          
-                            
-                            <li>
-                                <label>餐饮津贴</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="catering" type="text"  placeholder="catering" value="{$user.catering}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="catering" type="text"  placeholder="catering" />
-                                </if>                                  
-                            </li> 
-                            
-                             <li>
-                                <label>通讯津贴</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="phone" type="text"  placeholder="phone" value="{$user.phone}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="phone" type="text"  placeholder="phone" />
-                                </if>                                  
-                            </li>                                
-
-                            <li><label>部门<b>*</b></label>  
-                                <div class="vocation uew-select">                 
-                                    <select id="department" name="section" class="uew-select-value">
-                                        <volist name="department" id="voo">
-                                            <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
-                                        </volist>
-                                    </select>
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>        
-
-                            <li><label>岗位<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                <div class="col-sm-9">
-                                    <select id="post" name="quarters" class="uew-select-value">
-                                        <option value="0">请选择</option>
-                                    </select>
-                                </div>
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>  
-
-                             <li>
-                                <label>姓名</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="name" type="text"  placeholder="name" value="{$user.name}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="name" type="text"  placeholder="name" />
-                                </if>                                  
-                            </li>
-                            
-                            <li>
-                                <label>性别</label>
-                                <cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if> 
-                                        checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
-                                        <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女
-                                </cite>
-                            </li>   
- 
-                            <li>
-                                <label>身份证</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="identity_card" type="text"  placeholder="identity_card" value="{$user.identity_card}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="identity_card" type="text"  placeholder="identity_card" />
-                                </if>                                  
-                            </li>                           
-
-                            <li>
-                                <label>出身日期</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="birth_date" type="text" onclick="WdatePicker()"  placeholder="birth_date" value="{$user.birth_date|date='Y-m-d',###}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="birth_date" type="text"  placeholder="birth_date" />
-                                </if>                                  
-                            </li>                             
- 
-                            <li>
-                                <label>电话</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="mobile" type="text"  placeholder="mobile" value="{$user.mobile}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="mobile" type="text"  placeholder="mobile" />
-                                </if>                                  
-                            </li>
-                            
-                            <li>
-                                <label>入职时间</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="entry_time" type="text"  onClick="WdatePicker()" placeholder="entry_time" value="{$user.entry_time|date='Y-m-d',###}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="entry_time" type="text" onClick="WdatePicker()"  placeholder="entry_time" />
-                                </if>                                  
-                            </li>
-                            
-                            <li>
-                                <label>名族</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="nationality" type="text"  placeholder="nationality" value="{$user.nationality}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="nationality" type="text"  placeholder="nationality" />
-                                </if>
-                            </li>   
-                            <li>
-                                <label>籍贯</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="native_place" type="text"  placeholder="native_place" value="{$user.native_place}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="native_place" type="text"  placeholder="native_place" />
-                                </if>                                      
-                            </li> 
-                            
-                             <li>
-                                <label>毕业院校</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="graduate" type="text"  placeholder="graduate" value="{$user.graduate}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="graduate" type="text"  placeholder="graduate" />
-                                </if>                                      
-                            </li>
-                            
-                             <li>
-                                <label>毕业时间</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="graduation_date" type="text" onClick="WdatePicker()"  placeholder="graduation_date" value="{$user.graduation_date|date='Y-m-d',###}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="graduation_date" type="text"  onClick="WdatePicker()" placeholder="graduation_date" />
-                                </if>                                      
-                            </li>                               
-
-                            <li><label>学历<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                <div class="col-sm-9">                                
-                                    <select name="education" class="uew-select-value">
-                                        <option <if condition="$user.education eq 0" >selected="selected"</if> value="0">请选择</option>
-                                        <option <if condition="$user.education eq 1" >selected="selected"</if> value="1">本专</option>
-                                        <option <if condition="$user.education eq 2" >selected="selected"</if> value="2">本专</option>
-                                        <option <if condition="$user.education eq 3" >selected="selected"</if> value="3">研究生</option>
-                                        <option <if condition="$user.education eq 4" >selected="selected"</if> value="4">在校大专</option>
-                                        <option <if condition="$user.education eq 5" >selected=selected</if> value="5">在校本科</option>
-                                        <option <if condition="$user.education eq 6" >selected=selected</if> value="5">高中</option>
-                                        <option <if condition="$user.education eq 7" >selected=selected</if> value="5">中专</option>
-                                        <option <if condition="$user.education eq 8" >selected=selected</if> value="5">初中</option>
-                                    </select>
-                                </div>
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>      
-
-                            
-                            <li>
-                                <label>专业</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="major" type="text"  placeholder="major" value="{$user.major}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="major" type="text"  placeholder="major" />
-                                </if>                                      
-                            </li>
-                            
-                            <li>
-                                <label>政治面貌</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="politics_status" type="text"  placeholder="politics_status" value="{$user.politics_status}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="politics_status" type="text"  placeholder="politics_status" />
-                                </if>                                      
-                            </li>                           
-                            
-                            <li>
-                                <label>家庭住址</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="homeadd" type="text"  placeholder="homeadd" value="{$user.homeadd}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="homeadd" type="text"  placeholder="homeadd" />
-                                </if>                                      
-                            </li> 
-                            
-                            <li>
-                                <label>现居住址</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="homenow" type="text"  placeholder="homenow" value="{$user.homenow}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="homenow" type="text"  placeholder="homenow" />
-                                </if>                                      
-                            </li>
-                            
-                             <li>
-                                <label>紧急联系人</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="urgency" type="text"  placeholder="urgency" value="{$user.urgency}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="urgency" type="text"  placeholder="urgency" />
-                                </if>                                      
-                            </li>
-                            
-                             <li>
-                                <label>电话</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="phone_ugy" type="text"  placeholder="phone_ugy" value="{$user.phone_ugy}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="phone_ugy" type="text"  placeholder="phone_ugy" />
-                                </if>                                      
-                            </li>                              
-                                    
-                            <li><label>开户行<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                    <div class="col-sm-9">
-                                        <select name="education" class="uew-select-value">
-                                            <option value="0">请选择</option>
-                                            <option value="1">中国工商银行</option>
-                                            <option value="2">中国银行</option>
-                                            <option value="3">中国建设银行</option>                                        
-                                            <option value="4">中国农业银行</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </li>   
-                            
-                            <li>
-                                <label>银行账号</label>                                   
-                                <if condition="$id gt 0">
-                                    <input class="dfinput" name="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="bank_account" type="text"  placeholder="bank_account" />
-                                </if>                                      
-                            </li>                               
-  
-                            <li>
-                                <label>备注说明</label>                                   
-                                <if condition="$id">
-                                    <input class="dfinput" name="comment" type="text"  placeholder="Descr" value="{$user.comment}"/>
-                                    <else/>
-                                    <input class="dfinput"  name="comment" type="text"  placeholder="Descr" />
-                                </if>                                      
-                            </li>                                
-                                                    
-                            <div class="col-md-offset-3 col-md-9">
-                                <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
-                          <!--       <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
-                                &nbsp; &nbsp; &nbsp;
-                                <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button> -->
-                            </div>
-                            
-                        </ul>
-
-                    </div> 
-           <!--      </form>   -->       
+                        <div class="formtext">个人信息</div>
+						<table style="margin-left:25px">
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>用户名：</label>  
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.username}
+								</td>
+								<!--
+								<td style="height:20px;padding:5px;">
+									<label>密码：</label> 
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.password}
+								</td>-->
+								<td style="height:20px;padding:5px;">
+									<label>昵称：</label>   
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.nickname} 
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>入职时间：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.entry_time|date='Y-m-d',###}
+								</td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>是否转正：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									<if condition="$user.become == 1">
+										是
+									<else/>
+										否
+									</if>
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>试用期工资：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.salaryss}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>转正后工资：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.salaryzz}
+								</td>
+								
+							</tr>
+							<tr> 
+								<td style="height:20px;padding:5px;">
+									<label>住房津贴：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.housing}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>交通津贴：</label>
+								</td>
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.traffic}
+								</td> 
+								<td style="height:20px;padding:5px;">
+									<label>餐饮津贴：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.catering}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>通讯津贴：</label>
+								</td>
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$user.phone}
+								</td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>部门：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									<volist name="department" id="voo">
+										<if condition="$voo['cate_id'] eq $user['section']" >{$voo.cate_name}</if>
+									</volist>
+								</td>  
+								<td style="height:20px;padding:5px;">
+									<label>岗位：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$quarters.cate_name}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>下级部门：</label>
+								</td>	
+								<td colspan="2" style="height:20px;padding:5px 50px 5px 5px;" id="subordinates">
+								   <foreach name="subordinates" item="val">
+								   {$val}<span class="dish" style="display:inline">、</span>
+								   </foreach>
+								</td>
+								
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>姓名：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$user.name} 
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>性别：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   <if condition="$user.sex == 2">
+									女
+									<else/>
+									男
+								   </if>
+								</td>  
+								<td style="height:20px;padding:5px;">
+									<label>名族：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$user.nationality}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>籍贯：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.native_place}
+								</td>  
+								
+							</tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>身份证：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$user.identity_card}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>出身日期：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+								   {$user.birth_date|date='Y-m-d',###}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>电话：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.mobile}
+								</td>  
+								
+							</tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>政治面貌：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.politics_status} 
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>家庭住址：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.homeadd}
+								</td>  
+								<td style="height:20px;padding:5px;">
+									<label>现居住址：</label>
+								</td>	
+								<td colspan="2" style="padding:5px 50px 5px 5px;">
+									{$user.homenow}
+								</td>
+								
+							</tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>紧急联系人：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.urgency}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>紧急联系电话：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.phone_ugy}
+								</td>  
+								<td style="padding:5px;">
+									<label>开户行：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									<if condition="$user.education eq 1" >中国工商银行
+									<elseif condition="$user.education eq 2" />中国银行
+									<elseif condition="$user.education eq 3" />中国建设银行
+									<elseif condition="$user.education eq 4" />中国农业银行</if> 
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>银行账号：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.bank_account}
+								</td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							
+							<tr>
+								<td style="padding:5px;">
+									<label>学历：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									<if condition="$user.education eq 1" >大专
+									<elseif condition="$user.education eq 2" />本科
+									<elseif condition="$user.education eq 3" />研究生
+									<elseif condition="$user.education eq 4" />在校大专
+									<elseif condition="$user.education eq 5" />在校本科
+									<elseif condition="$user.education eq 6" />高中
+									<elseif condition="$user.education eq 7" />中专
+									<elseif condition="$user.education eq 8" />初中</if>
+								</td>  
+								<td style="height:20px;padding:5px;">
+									<label>毕业院校：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.graduate}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>专业：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.major}
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>毕业时间：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.graduation_date|date='Y-m-d',###}
+								</td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>备注说明：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$user.comment}
+								</td>  
+								
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>订单总数：</label>
+								</td>
+								<td style="height:20px;padding:5px 50px 5px 5px;">{$order_nums}</td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						</table>
+						
+						<div class="formtext" style="line-height:76px;">设备信息</div>
+						<div class="gwc" style=" margin:auto;">
+							<table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+								<tr style="background:#d0e7fa;">
+									<td class="tb1_td1" style="height:35px;">型号</td>
+									<td class="tb1_td1" style="height:35px;">编号</td>
+									<td class="tb1_td1" style="height:35px;">代言人</td>
+									<td class="tb1_td1" style="height:35px;">负责人</td>
+									<td class="tb1_td1" style="height:35px;">所在部门</td>
+									<td class="tb1_td1" style="height:35px;">所在工位</td>
+									<td class="tb1_td1" style="height:35px;">设备维护</td>
+									<td class="tb1_td1" style="height:35px;"> 添加日期</td>
+								</tr>
+								<foreach name="Equipment" item="val">
+								<tr>
+									<td class="tb2_td1" style="height:35px;">{$val.xinghao}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.bianhao}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.daiyanren}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.fuzeren}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.bumen}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.gongwei}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.stauts|getstautsnum=###}</td>
+									<td class="tb2_td1" style="height:35px;">{$val.addtime|date='Y-m-d',###}</td>
+								</tr>
+								</foreach>
+							</table>
+						</div>
+						  
+						<div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
+							<a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+						</div>
+                    </div>      
             </div> 
-
-
         </div>
-     <script type="text/javascript">
-        var post1="{$user.quarters}";
-        department();      
-        $('#department').change(function(){            
-            department();                        
-        });
-
-        function department(){
-            var id=$('#department').val();
-            var url="{:U('Console/Staff/department')}?catid="+id;                        
-            $.get(url,function(data){
-                $("#post").html("");
-                if(data.length==0){
-                    $("#post").append("<option value='0'>请新建岗位</option>");
-                    return false;
-                }
-                for(i=0 ;i<data.length;i++){  
-                    var post2=data[i].cate_id;                    
-                    if(post1==post2){
-                        $("#post").append('<option selected="selected" value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
-                    }else{
-                        $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
-                    }                                         
-                    
-                }
-                          
-            })            
-        }
-
-    </script>
-
-
     </body>
 
 </html>

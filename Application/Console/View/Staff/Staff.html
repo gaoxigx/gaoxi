@@ -31,10 +31,14 @@ $(document).ready(function(){
 function reset_pass(id){
 	if(confirm('确定要重置密码吗？')){
 		$.post('__URL__/resetpass/',{id:id},function(data){
+			if(data.info){
+				alert(data.info);
+				return false;
+			}
 			var data = eval('('+data+')');
 			if(data.result == 1){
 				alert('密码重置成功');
-				window.location.href='__URL__/staff';
+				window.location.href='__URL__/Staff';
 			}else{
 				alert(data.msg);
 			}
