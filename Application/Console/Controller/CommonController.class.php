@@ -35,14 +35,6 @@ class CommonController extends Controller{
  			return true;
  		}
 
- 		// foreach ($t as $key => $value) {
- 		// 	if($value==strtoupper($page)){
- 		// 		return true;
- 		// 	}
- 		// }
-
- 		//in_array(strtoupper(CONTROLLER_NAME),$_module['no']))
-
  		$map['role_id']=session('roleidstaff');
  		if(!$map['role_id']){
  			return true;
