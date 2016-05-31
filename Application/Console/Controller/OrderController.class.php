@@ -19,8 +19,8 @@ public function build_order_no()
 
 //管理员组类别
 private function getrolename($rolename,$roleid){
-    $data=D('controller');
-    $name = $data->where('roleid='.$roleid)->order('id')->select();
+    $data=D('staff');
+    $name = $data->where('quarters='.$roleid)->order('id')->select();
     // dump($name);
     $this->assign($rolename,$name);
 
@@ -114,18 +114,25 @@ $data["status"] = 2;
 
 //数据列表
 public function Plist($name=''){
+    
     $username = i('username');
     if($username){
         $map['order_no']  = array('like','%'.trim($username).'%');
         $map['product']  = array('like','%'.trim($username).'%');
         $map['protype']  = array('like','%'.trim($username).'%');  
         $map['username']  = array('like','%'.trim($username).'%');
-        $map['agent']  = array('like','%'.trim($username).'%');
+        //$map['agent']  = array('like','%'.trim($username).'%');
         $map['mobile']  = array('like','%'.trim($username).'%');       
         $map['buyer_wechat']  = array('like','%'.trim($username).'%');
         $map['numberno']  = array('like','%'.trim($username).'%');             
         $map['_logic'] = 'or';
     }
+
+    $user_id = session("user_id");
+    if($user_id > 0){
+        $map['agent']  = intval($user_id);
+   }
+    
     foreach( $map as $k=>$v){  
         if( !$v )  
             unset( $arr[$k] );  
@@ -155,8 +162,8 @@ public function Plist($name=''){
 }
 //添加页面
 public function add(){
-     $this->getrolename('agent',2);
-     $this->getrolename('assistant',4);
+     $this->getrolename('agent',38);
+     $this->getrolename('assistant',46);
      $this->getequipment_name();
      $this->getpayment();
     $data = M('product'); // 实例化User对象

@@ -151,5 +151,13 @@ public function edit($cate_id){
         }
        
     }
+    
+    //员工分类
+    private function getrolename($rolename,$roleid){
+        $data=D('category');
+        $name = $data->where('roleid='.$roleid)->order('id')->select();
+        // dump($name);
+        $this->assign($rolename,$name);
 
+    }
 }
