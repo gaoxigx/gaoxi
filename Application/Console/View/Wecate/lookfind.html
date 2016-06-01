@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+		<link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+    </head>
+<script>
+	$(function(){
+		$("#subordinates .dish:last").remove();
+	})
+</script>
+    <body>
+
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+
+                <li><a href="#">首页</a></li>
+                <li><a href="#">员工管理</a></li>
+            </ul>
+        </div>
+
+        <div class="formbody">
+            <div id="usual1" class="usual">
+                    <if condition="$id">
+                       <input name="id" type="hidden"   value="{$id}"/>
+                    </if> 
+                    
+                    <div class="itab">
+
+                        <ul> 
+                            <li><a href="#tab1" class="selected">查看信息</a></li> 
+                        </ul>
+                    </div> 
+
+                    <div id="tab1" class="tabson">
+                        <div class="formtext">个人信息</div>
+						<table style="margin-left:25px">
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>微信名：</label>  
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$data.wechat_id}
+								</td>			
+								<td style="height:20px;padding:5px;">
+									<label>昵称：</label>   
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$data.nickname} 
+								</td>
+									<td style="height:20px;padding:5px;">
+									<label>性别：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									<if condition="$data.sex == 1">
+										男
+									<else/>
+										女
+									</if>
+								</td>
+								<td style="height:20px;padding:5px;">
+									<label>创建时间：</label>
+								</td>	
+								<td style="height:20px;padding:5px 50px 5px 5px;">
+									{$data.create_time|date="Y-m-d H:i:s",###}
+								</td>
+							</tr>							
+			
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+							<tr>
+								<td style="height:20px;padding:5px;">
+									<label>订单总数：</label>
+								</td>
+								<td style="height:20px;padding:5px 50px 5px 5px;"><?php echo count($order) ?></td>
+							</tr>
+							<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						</table>
+						
+						<div class="formtext" style="line-height:76px;">前10订单<a  style="margin-left:50px;" href="" />查看所有订单</a></div>						
+						<div class="gwc" style=" margin:auto;">
+							<table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+								<tr style="background:#d0e7fa;">
+									<th class="tb1_td1" style="height:35px;">ID</th>
+                                    <th>订单编号</th>
+                                    <th>销售终端编号</th>
+                                    <th>支付方式</th>
+                                    <th>订单总价格</th>
+                                    <th>收件人姓名</th>
+                                    <th>收件人电话</th>
+                                    <th>下单时间</th>
+                                    <th>订单状态</th>
+                                    <th>物流单号</th>
+								</tr>
+								<foreach name="order" item="val" key="i">
+								<tr>
+    								<td>{$i}</td>
+                                    <td><a href="{:U('Order/edit',array('id'=>$val['id']))}">{$val.order_no}</a></td>
+                                    <td>{$val.equipment}</td>
+                                    <td>{$val.payment_method}</td>                            
+                                    <td>{$val.total_price}</td>
+                                    <td>{$val.username}</td>  
+                                    <td></td>             
+                                    <td>{$val.addtime|date="Y-m-d H:i:s",###}</td>
+                                    <td>{$val.status}</td>
+                                    <td>{$val.numberno}</td>
+								</tr>
+								</foreach>
+							</table>
+
+							
+						</div>
+						  
+						<div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
+							<a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+						</div>
+                    </div>      
+            </div> 
+        </div>
+    </body>
+
+</html>
