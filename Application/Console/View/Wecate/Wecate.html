@@ -6,6 +6,7 @@
         <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
         <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -50,7 +51,7 @@
 
                 <ul class="seachform" style="float:right">
                     <form name="form1" id="form1" method='post' action="{:U('Wecate/insert')}">
-                    <li><label>微信号<b>*</b></label><input name="wechat_id" type="text" class="scinpute" value=""  /></li>
+                    <li><label>微信号<b>*</b></label><input id="wechat_id" name="wechat_id" type="text" class="scinpute" value=""  /></li>
                     <li><label>昵称<b>*</b></label><input name="nickname" type="text" class="scinpute" value=""  /></li>
                     <li><label>姓名<b>*</b></label><input name="username" type="text" class="scinpute" value=""  /></li>
                     <li><label>性别<b>*</b></label><cite><input style="height:32px;vertical-align: middle;" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input style="height:32px;vertical-align: middle;"  type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
@@ -138,9 +139,41 @@
 
 
         </div>
+       
 
         <script type="text/javascript">
             $('.tablelist tbody tr:odd').addClass('odd');
+            $(function(){
+                $('#form1').validate({
+                    submitHandler:function(){
+                        ajaxsbmit();
+                    },
+                    rules: {  
+                        wechat_id:"required"
+                    },
+                    messages:{
+                        wechat_id:"请填写微信号"
+                    },
+                    showErrors: function(errorMap, errorList) {  
+                        var msg = "";  
+                        $.each( errorList, function(i,v){  
+                          msg += (v.message+"\r\n");  
+                        });  
+                        if(msg!="") alert(msg);  
+                    },  
+                });
+            });
+            function ajaxsbmit(){
+                var url=$("#form1").attr('action');
+                var param=$("#form1").serialize();
+                $.post(url,param,function(data){
+                    if(data.status=="1"){
+                        alert("添加成功");
+                    }else{
+                        alert(data.msg);
+                    }
+                })
+            }
         </script>
 
     </body>
