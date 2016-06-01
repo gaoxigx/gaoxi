@@ -112,6 +112,7 @@ class Rbac {
                 //无需认证的模块
                 $_module['no'] = explode(',',strtoupper(C('NOT_AUTH_MODULE')));
             }
+     
             //检查当前模块是否需要认证
             if((!empty($_module['no']) && !in_array(strtoupper(CONTROLLER_NAME),$_module['no'])) || (!empty($_module['yes']) && in_array(strtoupper(CONTROLLER_NAME),$_module['yes']))) {
 				if("" != C('REQUIRE_AUTH_ACTION')) {

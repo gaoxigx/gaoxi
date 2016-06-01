@@ -4,10 +4,7 @@ use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class EquipmentController extends CommonController {
 
-
-
-
-//数据列表
+    //数据列表
     public function Equipment($name=''){
          $staff=D('staff')->getField('id,name',true);
         $this->assign('staff',$staff);
@@ -187,5 +184,9 @@ class EquipmentController extends CommonController {
             $this->ajaxreturn(array('status'=>2,'msg'=>'数据有误,请再操作一次'.$track->geterror()));
         }
         
+    }
+
+    public function lookfind(){
+        $this->display();
     }
 }

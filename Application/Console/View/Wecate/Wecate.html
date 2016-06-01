@@ -83,6 +83,7 @@
                 <thead>
                     <tr>
 <!--                        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
+                        <th>ID</th>
                         <th>微信号</th>
                         <th>名称</th>
                         <th>昵称</th>
@@ -96,7 +97,8 @@
                     <volist name="list" id="vo">         
                         <tr>
 <!--                            <td><input name="" type="checkbox" value="" /></td>-->
-                            <td>{$vo.wechat_id}</td>
+                            <td>{$i}</td>
+                            <td><a href="{:U('Wecate/lookfind',array('id'=>$vo['id']))}">{$vo.wechat_id}</a></td>
                             <td>{$vo.username}</td>
                             <td>{$vo.nickname}</td>                            
                             <td>{$vo.sex}<if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2"/>女<else/>未知</if></td>
