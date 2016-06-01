@@ -167,7 +167,7 @@ class WecateController extends CommonController {
         if(!$data){
             $this->success('请生新选择微信号查看');
         }
-        $data['wechat_id']="weixin";
+        
         $order=D('Order_info')->where("buyer_wechat='%s'",array($data['wechat_id']))->limit(10)->select();
         $this->assign('order',$order);
 
