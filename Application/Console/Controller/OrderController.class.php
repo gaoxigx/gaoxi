@@ -286,18 +286,19 @@ public function insert(){
 
 //更新数据
 public function update(){
-$roleList   =   D('order_info');
-$data=$roleList->create();
-if($data) {
-    $result = $roleList->save($data);
-    if($result) {
-        $this->success('操作成功！');
+    $roleList   =   D('order_info');
+    $data=$roleList->create();
+    if($data) {
+        uset($data['order_no']);
+        $result = $roleList->where('order_no=%s',array($data['order_no']))->save($data);
+        if($result) {
+            $this->success('操作成功！');
+        }else{
+            $this->error('写入错误！');
+        }
     }else{
-        $this->error('写入错误！');
+        $this->error($roleList->getError());
     }
-}else{
-    $this->error($roleList->getError());
-}
 }
 
 //删除数据
