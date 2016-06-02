@@ -48,7 +48,7 @@
                                 <label><b>经纪人:</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.salaryss}
+                                {$staff[$info[agent]]}
                             </td>
                         </tr>   
 
@@ -57,7 +57,7 @@
                                 <label><b>组长:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.salaryss}
+                                {$staff[$info[assistant]]}
                             </td>
                         </tr>
 
@@ -66,22 +66,16 @@
                                 <label><b>设备编号:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <volist name="equipment" id="vo3">
-                                <option value="{$vo3.id}"
-                                <if condition="$vo3['id'] eq $info['equipment']"> selected="selected" </if>>{$vo3.xinghao}({$vo3.bianhao})</option>
-                                </volist>
+                                {$info.equipment}
                             </td> 
                         </tr>
                         
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label><b>设备编号:</b></label>  
+                                <label><b>支付方式:</b></label>  
                             </td>   
-                            <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <volist name="payment" id="vo4">
-                                    <option value="{$vo4.id}"
-                                    <if condition="$vo4['id'] eq $info['payment_method']"> selected="selected" </if>>{$vo4.payment}</option>
-                               </volist>
+                            <td style="height:20px;padding:5px 50px 5px 5px;">                                
+                                {$payment[$info[payment_method]]}
                             </td> 
                         </tr>
                         

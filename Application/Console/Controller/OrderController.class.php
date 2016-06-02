@@ -182,6 +182,7 @@ public function edit($id){
      $user = M('order_info');
      $orderinfolist = $user->where('id='.$id)->order('id')->find();
 
+
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
      $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
@@ -205,11 +206,12 @@ public function edit($id){
     public function look(){
         $id=I('get.id');        
         $model = D('order_info');      
-        if($id){
-             $user = $model->where("id=".$id)->find(); 
-//            echo M()->getLastSql();exit;
-         } 
-		
+        if(empty($id)){            
+            $this->error('请选择查看订单');
+        } 
+		$user = $model->where("id=%d",array($id))->find(); 
+
+
 		$section_map['cate_id']=$user['quarters'];
 		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
 		
@@ -218,13 +220,17 @@ public function edit($id){
 		
 		$Equipment = D('Equipment')->where('staffid='.$id)->select();
 		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+        $payment=D('payment')->where('')->getfield('id,payment',true);
+        $staff=D('staff')->getfield('id,name',true);
 		
          $this->assign('department',D('Category')->department());
 		 $this->assign('quarters',$quarters);
 		 $this->assign('subordinates',$subordinates);
 		 $this->assign('Equipment',$Equipment);
 		 $this->assign('order_nums',$order_nums);
-         $this->assign('user',$user);
+         $this->assign('payment',$payment);
+         $this->assign('staff',$staff);
+         $this->assign('info',$user);
          $this->assign('id',$id);
          $this->display();
 
@@ -281,8 +287,9 @@ public function insert(){
 //更新数据
 public function update(){
 $roleList   =   D('order_info');
-if($roleList->create()) {
-    $result = $roleList->save();
+$data=$roleList->create();
+if($data) {
+    $result = $roleList->save($data);
     if($result) {
         $this->success('操作成功！');
     }else{
