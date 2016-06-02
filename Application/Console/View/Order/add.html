@@ -141,7 +141,7 @@
                                 <div class="vocation uew-select">
                                     <select name="Payment_method" class="uew-select-value">
                                         <volist name="payment" id="vo4">
-                                            <option value="{$vo4.id}">{$vo4.d}</option>
+                                            <option value="{$vo4.id}">{$vo4.payment}</option>
                                         </volist>
                                     </select>
                                 </div>
@@ -184,8 +184,7 @@
                 var url="{:U('Order/getagent')}"+"?id="+id;
                 $.get(url,function(data){
                     $("#agent").html("");                    
-                    var option="";
-                     console.log(data);
+                    var option="";           
                     if(data!="0" && data!="null" ){                       
                         for( i in data){                         
                             option+="<option value=1"+i+"1>"+data[i]+"</option>"
@@ -194,8 +193,6 @@
                     }else{
                         option="<option value=0>请选择</option>"
                         $("#agent").html(option);
-                        console.log(data);
-                       
                     }   
                 })
             }
