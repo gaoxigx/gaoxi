@@ -58,3 +58,15 @@ function getprotype(){
         echo '</tr><tr>';
         }
     }
+    //隐藏字段方法
+    function hiddenstr($str){
+        if(strlen($str)>6&&strlen($str)<10){      
+            return substr_replace($str,'**',3,strlen($str)-6);
+        }
+        if(strlen($str)<=6){
+            return substr_replace($str,'**',0,strlen($str)-3);
+        }
+        return substr_replace($str,'***',3,strlen($str)-6);
+
+    }
+?>

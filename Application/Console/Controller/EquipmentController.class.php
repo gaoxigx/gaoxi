@@ -4,10 +4,7 @@ use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class EquipmentController extends CommonController {
 
-
-
-
-//数据列表
+    //数据列表
     public function Equipment($name=''){
          $staff=D('staff')->getField('id,name',true);
         $this->assign('staff',$staff);
@@ -17,7 +14,7 @@ class EquipmentController extends CommonController {
             $where['xinghao']  = array('like','%'.trim($username).'%');
             $where['bianhao']  = array('like','%'.trim($username).'%');
             $where['daiyanren']  = array('like','%'.trim($username).'%');
-            $where['mobile']  = array('like','%'.trim($username).'%');
+            $where['et.mobile']  = array('like','%'.trim($username).'%');
             $where['weixinhao']  = array('like','%'.trim($username).'%');
             $where['fuzeren']  = array('like','%'.trim($username).'%');            
             $where['shiyongren']  = array('like','%'.trim($username).'%');                    
@@ -38,8 +35,12 @@ class EquipmentController extends CommonController {
         }
         $User = M('Equipment'); // 实例化User对象
         $data=$User->select();
+        if(session('roleidstaff')){            
+            $where['posid']=session('roleidstaff');
+        }
+        
 
-        $count = $User->where($where)->count();// 查询满足要求的总记录数
+        $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
@@ -187,5 +188,9 @@ class EquipmentController extends CommonController {
             $this->ajaxreturn(array('status'=>2,'msg'=>'数据有误,请再操作一次'.$track->geterror()));
         }
         
+    }
+
+    public function lookfind(){
+        $this->display();
     }
 }

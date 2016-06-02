@@ -54,25 +54,41 @@ class WecateController extends CommonController {
 
 
     }
-
-    
     
 
 //添加粉丝号
     public function insert(){
         $jumpUrl =U('Console/Wecate/Wecate');
         $roleList   =   D('Wecate');
-        if($roleList->create()) {
+        $count=$roleList->where(array('wechat_id'=>I('wechat_id')))->count();
+        if($count>0){
+                $data['status']=0;
+                $data['msg']="已存在";
+                $this->ajaxreturn($data);
+                exit();
+        }
+        $wecatedate=$roleList->create();
+        if($wecatedate){
+            $wecatedate['staff_id']=session('userid');
+            $wecatedate['staff_name']=session('username');
             $result =   $roleList->add();
             if($result) {
-                $this->success('数据添加成功！', $jumpUrl);
+                $data['status']=1;
+                $data['msg']="数据添加成功！";
+                $this->ajaxreturn($data);
+          
             }else{
-                $this->error('数据添加错误！', $jumpUrl);
+                $data['status']=0;
+                $data['msg']="数据失败！";
+                $this->ajaxreturn($data);
+
             }
         }else{
-            $this->error($roleList->getError());
+            $data['status']=0;
+            $data['msg']=$this->error($roleList->getError());
+            $this->ajaxreturn($data);
+      
         }
-       
     }
 
 //修改粉丝信息
@@ -142,9 +158,24 @@ class WecateController extends CommonController {
         // $this->display();
     }
 
-    private function hello3(){
-        echo '这是private方法!';
+    public function lookfind(){
+        $id=I('id');
+        if(empty($id)){
+            $this->success('请生新选择微信号查看');
+        }  
+        $data=D('Wecate')->where('id=%d',array($id))->find();
+        if(!$data){
+            $this->success('请生新选择微信号查看');
+        }
+        $payment=D('payment')->getfield('id,payment',true);
+        $order=D('Order_info')->where("buyer_wechat='%s'",array($data['wechat_id']))->limit(10)->select();
+        $this->assign('order',$order);
+        $this->assign('payment',$payment);
+
+        $this->assign('data',$data);
+        $this->display();
     }
+    
 }
 
 

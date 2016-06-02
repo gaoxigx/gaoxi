@@ -68,7 +68,7 @@ class LoginController extends Controller {
             $password = I('post.password');
             
             //验证用户名密码 (没有数据的时候:select返回空数组,find返回null);
-            $admin_list = $model->field('username,id')->where("accounts = '$username' and  password = '".md5($password)."'")->find();  
+            $admin_list = $model->field('username,id')->where("accounts ='%s' and  password = '%s'",array($username,md5($password)))->find();  
             if (!empty($admin_list)) {    
                 //写入session
                 session ( 'userid', $admin_list ['id'] );
@@ -78,7 +78,7 @@ class LoginController extends Controller {
                 $this->success('登录成功',  U('/Console/Index/main'));
                 exit(); 
             }                
-            $staff_list = $StaffUser->field('username,id,quarters')->where("username = '$username' and  password = '".md5($password)."'")->find(); 
+            $staff_list = $StaffUser->field('username,id,quarters')->where("username = '%s' and  password = '%s'",array($username,md5($password)))->find(); 
             if (!empty($staff_list)){            
                 session ( 'username', $username );                
                 session ('roleidstaff', $staff_list ['quarters'] );  

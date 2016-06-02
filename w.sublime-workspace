@@ -3,50 +3,206 @@
 	{
 		"selected_items":
 		[
+			[
+				"fro",
+				"form1"
+			],
+			[
+				"err",
+				"errorList"
+			],
+			[
+				"role",
+				"roleList"
+			],
+			[
+				"stta",
+				"status"
+			],
+			[
+				"nu",
+				"numbpage"
+			],
+			[
+				"st",
+				"statics	(config.php)"
+			],
+			[
+				"save",
+				"savepath"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"ver",
+				"vertical-align"
+			],
+			[
+				"sele",
+				"selectNode"
+			],
+			[
+				"ca",
+				"cate_id"
+			],
+			[
+				"_",
+				"_POST"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"de",
+				"departmenttext"
+			],
+			[
+				"fi",
+				"field"
+			],
+			[
+				"fu",
+				"fuzerntext"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"le",
+				"length	(jquery.js)"
+			],
+			[
+				"get",
+				"getinfo"
+			],
+			[
+				"la",
+				"layer	(tracking.html)"
+			],
+			[
+				"sta",
+				"status"
+			],
+			[
+				"cha",
+				"change	(jquery.js)"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"lin",
+				"line-height"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"tr",
+				"track"
+			],
+			[
+				"ch",
+				"change"
+			],
+			[
+				"strto",
+				"strtotime	(Model.class.php)"
+			],
+			[
+				"b",
+				"both"
+			],
+			[
+				"cl",
+				"clear"
+			],
+			[
+				"cat",
+				"catdata"
+			],
+			[
+				"p",
+				"post2"
+			],
+			[
+				"che",
+				"checked=\"checked"
+			],
+			[
+				"post",
+				"post1"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "<?php\nreturn array(\n	//'配置项'=>'配置值'\n	'DEFAULT_MODULE'        =>  'Console',  // 默认模块\n	'DEFAULT_CONTROLLER'    =>  'Index', // 默认控制器名称\n	'DEFAULT_ACTION'        =>  'main', // 默认操作名称\n	'SESSION_AUTO_START' => true, //是否开启SESSION\n	// 添加数据库配置信息\n	'DB_TYPE'=>'mysql',// 数据库类型\n	'DB_HOST'=>'127.0.0.1',// 服务器地址\n	'DB_NAME'=>'nicoproduct',// 数据库名\n	'DB_USER'=>'root',// 用户名\n	'DB_PWD'=>'root',// 密码\n	'DB_PORT'=>3306,// 端口\n	'DB_PREFIX'=>'nico_',// 数据库表前缀\n	'DB_CHARSET'=>'utf8',// 数据库字符集\n);",
-			"file": "Application/Common/Conf/config.php",
-			"file_size": 620,
-			"file_write_time": 131081897948664189,
+			"contents": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n        <title>无标题文档</title>\n        <link href=\"__PUBLIC__/Console/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n        <link href=\"__PUBLIC__/Console/css/select.css\" rel=\"stylesheet\" type=\"text/css\" />\n		<link href=\"__PUBLIC__/Console/css/lanrenzhijia.css\" rel=\"stylesheet\" type=\"text/css\" />\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/jquery.js\"></script>\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/jquery.idTabs.min.js\"></script>\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/select-ui.min.js\"></script>\n        <script language=\"javascript\" type=\"text/javascript\" src=\"__PUBLIC__/My97DatePicker/WdatePicker.js\"></script>\n    </head>\n<script>\n	$(function(){\n		$(\"#subordinates .dish:last\").remove();\n	})\n</script>\n    <body>\n\n        <div class=\"place\">\n            <span>位置：</span>\n            <ul class=\"placeul\">\n\n                <li><a href=\"#\">首页</a></li>\n                <li><a href=\"#\">员工管理</a></li>\n            </ul>\n        </div>\n\n        <div class=\"formbody\">\n            <div id=\"usual1\" class=\"usual\">\n                    <if condition=\"$id\">\n                       <input name=\"id\" type=\"hidden\"   value=\"{$id}\"/>\n                    </if> \n                    \n                    <div class=\"itab\">\n\n                        <ul> \n                            <li><a href=\"#tab1\" class=\"selected\">查看信息</a></li> \n                        </ul>\n                    </div> \n\n                    <div id=\"tab1\" class=\"tabson\">\n                        <div class=\"formtext\">个人信息</div>\n						<table style=\"margin-left:25px\">\n							<tr>\n								<td style=\"height:20px;padding:5px;\">\n									<label>微信名：</label>  \n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.wecate_id}\n								</td>			\n								<td style=\"height:20px;padding:5px;\">\n									<label>昵称：</label>   \n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.nickname} \n								</td>\n									<td style=\"height:20px;padding:5px;\">\n									<label>性别：</label>\n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									<if condition=\"$data.sex == 1\">\n										男\n									<else/>\n										女\n									</if>\n								</td>\n								<td style=\"height:20px;padding:5px;\">\n									<label>创建时间：</label>\n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.create_time|date=\"Y-m-d H:i:s\",###}\n								</td>\n							</tr>							\n			\n							<tr><td colspan=\"8\" style=\"padding:10px 0;\"><hr style=\"width:100%;height:1px;border-top:1px #d0e7fa solid;\"/></td></tr>\n							<tr>\n								<td style=\"height:20px;padding:5px;\">\n									<label>订单总数：</label>\n								</td>\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">{$order_nums}</td>\n							</tr>\n							<tr><td colspan=\"8\" style=\"padding:10px 0;\"><hr style=\"width:100%;height:1px;border-top:1px #d0e7fa solid;\"/></td></tr>\n						</table>\n						\n						<div class=\"formtext\" style=\"line-height:76px;\">前10订单<a  style=\"margin-left:50px;\" href=\"\" />查看所有订单</a></div>						\n						<div class=\"gwc\" style=\" margin:auto;\">\n							<table cellpadding=\"0\" cellspacing=\"0\" class=\"gwc_tb1\" style=\"width:60%;background:#eef6ff;\">\n								<tr style=\"background:#d0e7fa;\">\n									 <th>ID</th>\n                                    <th>订单编号</th>\n                                    <th>销售终端编号</th>\n                                    <th>支付方式</th>\n                                    <th>订单总价格</th>\n                                    <th>收件人姓名</th>\n                                    <th>收件人电话</th>\n                                    <th>下单时间</th>\n                                    <th>订单状态</th>\n                                    <th>物流单号<th>\n								</tr>\n								<foreach name=\"order\" item=\"val\">\n								<tr>\n								<td>{$i}</td>\n                            <td><a href=\"{:U('Wecate/lookfind',array('id'=>$vo['id']))}\">{$vo.order_no}</a></td>\n                            <td>{$vo.equipment}</td>\n                            <td>{$vo.payment_method}</td>                            \n                            <td>{$vo.total_price}</td>\n                            <td>{$vo.username}</td>               \n                            <td>{$vo.addtime|date=\"Y-m-d H:i:s\",###}</td>\n                            <td>{$vo.status}</td>\n                            <td></td>\n								</tr>\n								</foreach>\n							</table>\n\n							\n						</div>\n						  \n						<div class=\"col-md-offset-3 col-md-9\" style=\"margin-top:30px;\">\n							<a style=\"width:137px; height:35px; display:block; text-align:center; line-height:35px\" class=\"btn btn-info\" href=\"javascript:history.back(-1);\">返回</a>\n						</div>\n                    </div>      \n            </div> \n        </div>\n    </body>\n\n</html>\n",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+			"file_size": 5267,
+			"file_write_time": 131092268096361845,
 			"settings":
 			{
-				"buffer_size": 475,
+				"buffer_size": 5055,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
+			"settings":
+			{
+				"buffer_size": 7924,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
+			"settings":
+			{
+				"buffer_size": 4787,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+			"settings":
+			{
+				"buffer_size": 4947,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
+			"settings":
+			{
+				"buffer_size": 1020,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Application/Console/Controller/IndexController.class.php",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
 			"settings":
 			{
-				"buffer_size": 663,
+				"buffer_size": 12724,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Application/Console/View/Index/main.html",
+			"file": "/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
 			"settings":
 			{
-				"buffer_size": 835,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Program Files (x86)/ICW/sshd-stdout.log",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Application/Console/View/Index/index.html",
-			"settings":
-			{
-				"buffer_size": 2726,
+				"buffer_size": 7254,
 				"line_ending": "Windows"
 			}
 		}
@@ -128,25 +284,134 @@
 	},
 	"expanded_folders":
 	[
-		"/D/WWW/GAOXI",
-		"/D/WWW/GAOXI/Application",
-		"/D/WWW/GAOXI/Application/Common",
-		"/D/WWW/GAOXI/Application/Common/Conf",
-		"/D/WWW/GAOXI/Application/Console",
-		"/D/WWW/GAOXI/Application/Console/Controller",
-		"/D/WWW/GAOXI/Application/Console/View",
-		"/D/WWW/GAOXI/Application/Console/View/Index",
-		"/D/WWW/GAOXI/Application/Home",
-		"/D/WWW/GAOXI/Application/Home/Common",
-		"/D/WWW/GAOXI/Application/Home/Conf",
-		"/D/WWW/GAOXI/Application/Home/Controller",
-		"/D/WWW/GAOXI/Application/Home/Model",
-		"/D/WWW/GAOXI/Application/Home/View",
-		"/D/WWW/GAOXI/doc",
-		"/D/WWW/GAOXI/Uploads"
+		"/D/WWW/gaoxi",
+		"/D/WWW/gaoxi/Application",
+		"/D/WWW/gaoxi/Application/Console",
+		"/D/WWW/gaoxi/Application/Console/View",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate",
+		"/D/WWW/gaoxi/Public",
+		"/D/WWW/gaoxi/Public/Console",
+		"/D/WWW/gaoxi/Public/Console/js",
+		"/D/WWW/gaoxi/Public/Console/js/validation/demo",
+		"/D/WWW/gaoxi/Uploads"
 	],
 	"file_history":
 	[
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/boot/index.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/EquipmentController.class.php",
+		"/D/WWW/mobile/application/User/Controller/LoginController.class.php",
+		"/D/WWW/mobile/application/Admin/Controller/PublicController.class.php",
+		"/D/WWW/mobile/application/Common/Lang/zh-cn.php",
+		"/D/WWW/gaoxi/Application/Console/View/Login/login.html",
+		"/D/WWW/mobile/themes/simplebootx/User/login.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/login.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
+		"/D/WWW/mobile/application/Admin/Controller/MobileController.class.php",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Mobile/index.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Public/assets/css/admin_login.css",
+		"/D/WWW/mobile/index.php",
+		"/D/WWW/mobile/public/simpleboot/themes/bluesky/theme.min.css",
+		"/D/WWW/mobile/application/Common/Conf/config.php",
+		"/D/WWW/gaoxi/ThinkPHP/Library/Org/Util/Rbac.class.php",
+		"/D/WWW/mobile/simplewind/Core/Library/Org/Util/Rbac.class.php",
+		"/D/WWW/mobile/application/Admin/Controller/RbacController.class.php",
+		"/D/WWW/mobile/data/conf/db.php",
+		"/D/WWW/gaoxi/ThinkPHP/Library/Think/Upload.class.php",
+		"/D/WWW/mobile/simplewind/Core/Library/Think/Upload.class.php",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Navcat/index.html",
+		"/D/WWW/mobile/application/Admin/Controller/NavController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/User/userinfo.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/header.html",
+		"/G/wewew.sql",
+		"/D/WWW/GAOXI/Application/Console/View/Equipment/add.html",
+		"/D/WWW/GAOXI/Application/Console/View/Index/main.html",
+		"/D/WWW/GAOXI/Application/Common/Conf/config.php",
+		"/D/WWW/GAOXI/Application/Console/View/Equipment/Equipment.html",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/D/WWW/GAOXI/Application/Console/Controller/EquipmentController.class.php",
+		"/D/WWW/GAOXI/Application/Console/View/Index/left.html",
+		"/D/WWW/GAOXI/Public/Console/css/style.css",
+		"/C/Users/chen9/Desktop/config.php",
+		"/D/WWW/GAOXI/Application/Console/Controller/AccessController.class.php",
+		"/D/WWW/GAOXI/Application/Console/Controller/CommonController.class.php",
+		"/D/WWW/GAOXI/Application/Console/View/Login/login.html",
+		"/D/WWW/gaoxi/.htaccess",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Org/Util/Rbac.class.php",
+		"/D/WWW/GAOXI/Application/Console/Controller/LoginController.class.php",
+		"/D/WWW/GAOXI/Application/Console/View/Order/add.html",
+		"/D/WWW/GAOXI/Application/Console/View/Equipment/edit.html",
+		"/D/WWW/GAOXI/Application/Home/index.html",
+		"/D/WWW/GAOXI/Application/Console/View/Category/edit.html",
+		"/D/WWW/GAOXI/Application/Console/View/Category/add.html",
+		"/D/WWW/GAOXI/Application/Console/Controller/CategoryController.class.php",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Vendor/Smarty/plugins/modifiercompiler.string_format.php",
+		"/D/WWW/gaoxi/Application/Console/View/Access/add.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/AccessController.class.php",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Model.class.php",
+		"/D/WWW/GAOXI/Application/Console/View/Staff/Staff.html",
+		"/D/WWW/GAOXI/Application/Console/View/Staff/lookover.html",
+		"/D/WWW/GAOXI/Application/Console/View/Staff/add.html",
+		"/D/WWW/GAOXI/Application/Console/Controller/StaffController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Model/AccessModel.class.php",
+		"/D/WWW/GAOXI/Application/Console/Model/ProductModel.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Access/node.html",
+		"/D/WWW/GAOXI/Application/Common/Conf/tags.php",
+		"/C/Users/chen9/Desktop/dataword.txt",
+		"/D/WWW/gaoxi/Application/Common/Conf/tags.php",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Vendor/TemplateLite/internal/template.build_dir.php",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Behavior/TokenBuildBehavior.class.php",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Template/TagLib.class.php",
+		"/D/WWW/GAOXI/doc/vendor/composer/ClassLoader.php",
+		"/D/WWW/gaoxi/Application/Console/View/Equipment/staffequipment.html",
+		"/D/WWW/GAOXI/Application/Console/View/Equipment/tracking.html",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Verify.class.php",
+		"/C/Users/chen9/Desktop/sql.txt",
+		"/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+		"/D/WWW/gaoxi/Application/Console/Model/EqtrackingModel.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Equipment/trackadd.html",
+		"/D/WWW/GAOXI/composer.json",
+		"/C/Users/chen9/Downloads/layer-v2.3/layer-v2.3/demo.html",
+		"/D/WWW/GAOXI/Application/Console/View/Staff/edit.html",
+		"/D/WWW/GAOXI/Application/Console/View/Group/roleList.html",
+		"/D/WWW/GAOXI/Application/Console/View/Wecate/edit.html",
+		"/D/WWW/GAOXI/Application/Console/Controller/WecateController.class.php",
+		"/D/WWW/GAOXI/Public/Console/css/select.css",
+		"/D/WWW/gaoxi/Public/Console/css/select1.css",
+		"/D/WWW/GAOXI/Public/Console/js/jquery.js",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/lookover.html",
+		"/D/WWW/gaoxi/Application/Console/View/Order/shopping.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
+		"/D/WWW/gaoxi/ThinkPHP/Library/Think/Model.class.php",
+		"/D/WWW/gaoxi/Application/Console/Model/StaffModel.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate/add.html",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/Staff.html",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/edit.html",
+		"/D/WWW/GAOXI/Application/Console/View/Category/PList.html",
+		"/D/WWW/GAOXI/Application/Console/View/Index/top.html",
+		"/D/WWW/gaoxi/Public/Console/css/style.css",
+		"/D/WWW/GAOXI/Application/Console/View/Order/edit.html",
+		"/D/WWW/GAOXI/Application/Console/Controller/OrderController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/deparlist.html",
+		"/D/WWW/gaoxi/Application/Common/Conf/config.php",
+		"/D/WWW/GAOXI/Application/Console/Model/StaffModel.class.php",
+		"/D/WWW/gaoxi/Application/Console/Model/CategoryModel.class.php",
+		"/D/WWW/GAOXI/Public/My97DatePicker/WdatePicker.js",
+		"/D/WWW/gaoxi/Application/Console/View/Index/main.html",
+		"/D/WWW/gaoxi/Application/Console/View/Index/left.html",
+		"/D/WWW/gaoxi/Application/Console/View/Order/add.html",
+		"/D/WWW/GAOXI/Application/Console/View/Order/shopping.html",
+		"/D/WWW/GAOXI/Application/Console/Controller/ProductController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Product/Plist.html",
+		"/D/WWW/gaoxi/Application/Console/View/Product/edit.html",
+		"/D/WWW/GAOXI/Application/Console/View/Product/add.html",
+		"/D/WWW/gaoxi/Public/My97DatePicker/开发包/readme.txt",
+		"/D/WWW/gaoxi/Application/Console/View/Category/droparlist.html",
+		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Controller.class.php",
+		"/D/WWW/GAOXI/Application/Console/Controller/IndexController.class.php",
+		"/D/Program Files (x86)/ICW/sshd-stdout.log",
 		"/D/Program Files (x86)/ICW/var/log/wtmp",
 		"/D/Program Files (x86)/ICW/var/log/lastlog",
 		"/D/phpStudy/nginx/conf/nginx.conf",
@@ -155,13 +420,14 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 96.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -169,6 +435,40 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"th",
+			"$user",
+			"form1",
+			"firstname",
+			"verifycode-wrapper",
+			"CAPTCHA_REQUIRED",
+			"验证码不能为空！",
+			"CAPTCHA_REQUIRED",
+			"验证码不能为空！",
+			"fileinfo",
+			"nav simplewind-nav pull-right",
+			"<div class=\"navbar-inner\">",
+			"navbar",
+			"NOT_AUTH_MODULE",
+			"nav_wraper",
+			"SAE_MYSQL_HOST_M",
+			"imgcode",
+			"USER_AUTH_ON",
+			"content7",
+			"bankaddress",
+			"trackincrease",
+			"<option value=\"",
+			"name",
+			"nickname",
+			"autoValidation",
+			"value",
+			"leftfrmeat",
+			"department",
+			"'.",
+			"$vo[",
+			"$vo",
+			"echo '",
+			"department",
+			"getprotype"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -186,24 +486,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Application/Common/Conf/config.php",
+					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 475,
+						"buffer_size": 5055,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								66,
-								73
+								3551,
+								3555
 							]
 						],
 						"settings":
@@ -216,16 +516,16 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -241,33 +541,392 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1363.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7924,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4851,
+								4851
+							],
+							[
+								4937,
+								4937
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1023.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4787,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4570,
+								4570
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2820.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4535,
+								3982
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1703.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1020,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								449,
+								457
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -278,20 +937,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "Application/Console/Controller/IndexController.class.php",
+					"buffer": 5,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 663,
+						"buffer_size": 12724,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								268,
-								268
+								1040,
+								950
 							]
 						],
 						"settings":
@@ -304,329 +963,154 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
-							],
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Application/Console/View/Index/main.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 835,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								343,
-								343
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/Program Files (x86)/ICW/sshd-stdout.log",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Application/Console/View/Index/index.html",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 2726,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 414.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7254,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								993,
+								993
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -634,11 +1118,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 28.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 36.0
 	},
 	"layout":
 	{
@@ -668,10 +1152,10 @@
 		"height": 0.0
 	},
 	"pinned_build_system": "",
-	"project": "gaoxi.sublime-project",
+	"project": "/D/WWW/gaoxistudio.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -680,6 +1164,490 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"staff/lookover",
+				"Application\\Console\\View\\Staff\\lookover.html"
+			],
+			[
+				"wecate",
+				"Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"weca",
+				"Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"messages_zh",
+				"Public\\Console\\js\\validation\\dist\\localization\\messages_zh.js"
+			],
+			[
+				"staff/add",
+				"Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"equipment",
+				"gaoxi\\Application\\Console\\Controller\\EquipmentController.class.php"
+			],
+			[
+				"logincon",
+				"mobile\\application\\User\\Controller\\LoginController.class.php"
+			],
+			[
+				"admin_login",
+				"mobile\\admin\\themes\\simplebootx\\Public\\assets\\css\\admin_login.css"
+			],
+			[
+				"adminlogin.html",
+				"mobile\\admin\\themes\\simplebootx\\Admin\\login.html"
+			],
+			[
+				"log",
+				"mobile\\themes\\simplebootx\\User\\login.html"
+			],
+			[
+				"login",
+				"mobile\\application\\User\\Controller\\LoginController.class.php"
+			],
+			[
+				"mobile/index.",
+				"mobile\\admin\\themes\\simplebootx\\Admin\\Mobile\\index.html"
+			],
+			[
+				"mobile/index",
+				"mobile\\index.php"
+			],
+			[
+				"wecate/wecate.html",
+				"Application\\Console\\View\\Wecate\\Wecate.html"
+			],
+			[
+				"wecatecon",
+				"gaoxi\\Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"wecate/wecat",
+				"gaoxi\\Application\\Console\\View\\Wecate\\Wecate.html"
+			],
+			[
+				"userinfo",
+				"mobile\\admin\\themes\\simplebootx\\Admin\\User\\userinfo.html"
+			],
+			[
+				"rbacc",
+				"mobile\\application\\Admin\\Controller\\RbacController.class.php"
+			],
+			[
+				"mobilerbac",
+				"mobile\\simplewind\\Core\\Library\\Org\\Util\\Rbac.class.php"
+			],
+			[
+				"rrabc",
+				"gaoxi\\ThinkPHP\\Library\\Org\\Util\\Rbac.class.php"
+			],
+			[
+				"them",
+				"mobile\\public\\simpleboot\\themes\\bluesky\\theme.min.css"
+			],
+			[
+				"header.html",
+				"mobile\\admin\\themes\\simplebootx\\Admin\\header.html"
+			],
+			[
+				"header",
+				"mobile\\admin\\themes\\simplebootx\\Admin\\header.html"
+			],
+			[
+				"up",
+				"gaoxi\\ThinkPHP\\Library\\Think\\Upload.class.php"
+			],
+			[
+				"upload",
+				"gaoxi\\ThinkPHP\\Library\\Think\\Upload.class.php"
+			],
+			[
+				"navcon",
+				"application\\Admin\\Controller\\NavController.class.php"
+			],
+			[
+				"equipmentc",
+				"Application\\Console\\Controller\\EquipmentController.class.php"
+			],
+			[
+				"equipment/equipment",
+				"Application\\Console\\View\\Equipment\\Equipment.html"
+			],
+			[
+				"config",
+				"Application\\Common\\Conf\\config.php"
+			],
+			[
+				"login.html",
+				"Application\\Console\\View\\Login\\login.html"
+			],
+			[
+				"style",
+				"Public\\Console\\css\\style.css"
+			],
+			[
+				"login/login",
+				"Application\\Console\\View\\Login\\login.html"
+			],
+			[
+				"commonc",
+				"Application\\Console\\Controller\\CommonController.class.php"
+			],
+			[
+				"rbac",
+				"ThinkPHP\\Library\\Org\\Util\\Rbac.class.php"
+			],
+			[
+				"left",
+				"Application\\Console\\View\\Index\\left.html"
+			],
+			[
+				"order/add",
+				"Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"index/main",
+				"Application\\Console\\View\\Index\\main.html"
+			],
+			[
+				"index.html",
+				"Application\\Home\\index.html"
+			],
+			[
+				"con",
+				"Application\\Common\\Conf\\config.php"
+			],
+			[
+				"ccco",
+				"Application\\Console\\Controller\\CommonController.class.php"
+			],
+			[
+				"equipment/add.html",
+				"Application\\Console\\View\\Equipment\\add.html"
+			],
+			[
+				"equipment/add",
+				"Application\\Console\\View\\Equipment\\add.html"
+			],
+			[
+				"forminfo",
+				"ThinkPHP\\Library\\Vendor\\Smarty\\plugins\\modifiercompiler.string_format.php"
+			],
+			[
+				"equipment/edit",
+				"Application\\Console\\View\\Equipment\\edit.html"
+			],
+			[
+				"categoryc",
+				"Application\\Console\\Controller\\CategoryController.class.php"
+			],
+			[
+				"category/add",
+				"Application\\Console\\View\\Category\\add.html"
+			],
+			[
+				"category/e",
+				"Application\\Console\\View\\Category\\edit.html"
+			],
+			[
+				"accessmodel",
+				"Application\\Console\\Model\\AccessModel.class.php"
+			],
+			[
+				"staff/staff",
+				"Application\\Console\\View\\Staff\\Staff.html"
+			],
+			[
+				"/staff/lookover",
+				"Application\\Console\\View\\Staff\\lookover.html"
+			],
+			[
+				"ta",
+				"Application\\Common\\Conf\\tags.php"
+			],
+			[
+				"category",
+				"Application\\Console\\Controller\\CategoryController.class.php"
+			],
+			[
+				"category/edit",
+				"Application\\Console\\View\\Category\\edit.html"
+			],
+			[
+				"tokenbuild",
+				"ThinkPHP\\Library\\Behavior\\TokenBuildBehavior.class.php"
+			],
+			[
+				"tokenbuildbehavior",
+				"ThinkPHP\\Library\\Behavior\\TokenBuildBehavior.class.php"
+			],
+			[
+				"model",
+				"ThinkPHP\\Library\\Think\\Model.class.php"
+			],
+			[
+				"cla",
+				"doc\\vendor\\composer\\ClassLoader.php"
+			],
+			[
+				"staffcon",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"/staff/add",
+				"Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"mode",
+				"ThinkPHP\\Library\\Think\\Model.class.php"
+			],
+			[
+				"tags",
+				"ThinkPHP\\Library\\Think\\Template\\TagLib.class.php"
+			],
+			[
+				"behavior/tokenbuild",
+				"ThinkPHP\\Library\\Behavior\\TokenBuildBehavior.class.php"
+			],
+			[
+				"deparlist",
+				"Application\\Console\\View\\Category\\deparlist.html"
+			],
+			[
+				"verify",
+				"ThinkPHP\\Library\\Think\\Verify.class.php"
+			],
+			[
+				"rbac.class.php",
+				"ThinkPHP\\Library\\Org\\Util\\Rbac.class.php"
+			],
+			[
+				"index/left",
+				"Application\\Console\\View\\Index\\left.html"
+			],
+			[
+				"order/add.",
+				"Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"trackin",
+				"Application\\Console\\View\\Equipment\\tracking.html"
+			],
+			[
+				"equipmentcon",
+				"Application\\Console\\Controller\\EquipmentController.class.php"
+			],
+			[
+				"wecatec",
+				"Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"wecate/edit",
+				"Application\\Console\\View\\Wecate\\edit.html"
+			],
+			[
+				"console/css/select.css",
+				"Public\\Console\\css\\select.css"
+			],
+			[
+				"rolelist",
+				"Application\\Console\\View\\Group\\roleList.html"
+			],
+			[
+				"satff/e",
+				"Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"staff/add.html",
+				"Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"/staff/edit",
+				"Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"/equipmentcon",
+				"Application\\Console\\Controller\\EquipmentController.class.php"
+			],
+			[
+				"/equipment/add",
+				"Application\\Console\\View\\Equipment\\add.html"
+			],
+			[
+				"equipment/tracking",
+				"Application\\Console\\View\\Equipment\\tracking.html"
+			],
+			[
+				"em",
+				"Application\\Console\\Model\\EquipmentModel.class.php"
+			],
+			[
+				"tracking",
+				"Application\\Console\\View\\Equipment\\tracking.html"
+			],
+			[
+				"jquery.js",
+				"Public\\Console\\js\\jquery.js"
+			],
+			[
+				"staff/e",
+				"Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"product/edit",
+				"Application\\Console\\View\\Product\\edit.html"
+			],
+			[
+				"pli",
+				"Application\\Console\\View\\Category\\PList.html"
+			],
+			[
+				"staff/edit",
+				"Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"/staffcon",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"top.html",
+				"Application\\Console\\View\\Index\\top.html"
+			],
+			[
+				"plist",
+				"Application\\Console\\View\\Category\\PList.html"
+			],
+			[
+				"wecate/add",
+				"Application\\Console\\View\\Wecate\\add.html"
+			],
+			[
+				"/wecate/wecate",
+				"Application\\Console\\View\\Wecate\\Wecate.html"
+			],
+			[
+				"lookover",
+				"Application\\Console\\View\\Staff\\lookover.html"
+			],
+			[
+				"staff",
+				"Application\\Console\\View\\Staff\\Staff.html"
+			],
+			[
+				"staffm",
+				"Application\\Console\\Model\\StaffModel.class.php"
+			],
+			[
+				"staffc",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"order",
+				"Application\\Console\\Controller\\OrderController.class.php"
+			],
+			[
+				"view/order/shopping",
+				"Application\\Console\\View\\Order\\shopping.html"
+			],
+			[
+				"order/edit",
+				"Application\\Console\\View\\Order\\edit.html"
+			],
+			[
+				"wecatecontroller.class.php",
+				"Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"staffcontroller",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"wdatepicker",
+				"Public\\My97DatePicker\\WdatePicker.js"
+			],
+			[
+				"index/top",
+				"Application\\Console\\View\\Index\\top.html"
+			],
+			[
+				"sta",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"console/staff/staff",
+				"Application\\Console\\View\\Staff\\Staff.html"
+			],
+			[
+				"staffmo",
+				"Application\\Console\\Model\\StaffModel.class.php"
+			],
+			[
+				"console/staff/add",
+				"Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"console/staff/edit",
+				"Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"console/staffcon",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"staff/deparlist",
+				"Application\\Console\\View\\Staff\\deparlist.html"
+			],
+			[
+				"categorycon",
+				"Application\\Console\\Controller\\CategoryController.class.php"
+			],
+			[
+				"console/category/plist",
+				"Application\\Console\\View\\Category\\PList.html"
+			],
+			[
+				"staffco",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"add",
+				"Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"ordercontroller.",
+				"Application\\Console\\Controller\\OrderController.class.php"
+			],
+			[
+				"productcon",
+				"Application\\Console\\Controller\\ProductController.class.php"
+			],
+			[
+				"product/plist",
+				"Application\\Console\\View\\Product\\Plist.html"
+			],
+			[
+				"product",
+				"Application\\Console\\Controller\\ProductController.class.php"
+			],
+			[
+				"product/add",
+				"Application\\Console\\View\\Product\\add.html"
+			],
+			[
+				"order/e",
+				"Application\\Console\\View\\Order\\edit.html"
+			],
+			[
+				"controller",
+				"ThinkPHP\\Library\\Think\\Controller.class.php"
+			],
+			[
+				"categorycontroller",
+				"Application\\Console\\Controller\\CategoryController.class.php"
+			]
 		],
 		"width": 0.0
 	},
@@ -709,7 +1677,7 @@
 	"show_open_files": true,
 	"show_tabs": false,
 	"side_bar_visible": true,
-	"side_bar_width": 461.0,
+	"side_bar_width": 273.0,
 	"status_bar_visible": false,
 	"template_settings":
 	{
