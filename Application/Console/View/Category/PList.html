@@ -129,7 +129,7 @@ $(document).ready(function(){
             echo '<td>'.date('Y-m-d H:i:s',$vo['uptime']).'</td>';
             echo '<td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a> ' ;
             echo '<a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a> ' ;
-            echo '<!--<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a>--></td></tr>';
+            echo '<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td></tr>';
            
             if (!empty($vo['childs'])) {
                 $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
