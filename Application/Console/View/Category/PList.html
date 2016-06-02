@@ -105,8 +105,8 @@ $(document).ready(function(){
             echo '<td';
             if($vo['cate_parent']==0)
             {
-            echo ' class="bold"';
-        }
+           
+            }
             echo '>'.$kongge.''.$vo['cate_name'].'('.$vo['cate_name2'].')</td>';
             echo '<td>'.$vo['cate_parent'].'</td>';
 			if($vo['cate_haschild'] == 1){
@@ -135,7 +135,7 @@ $(document).ready(function(){
                 $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
                 showTree($vo['childs'],$i);
            }
-$i='';
+            $i='';
                   
         }
     }
@@ -168,10 +168,7 @@ $i='';
         <input name="" type="button"  class="cancel" value="取消" />
         </div>
     
-    </div>
-    
-    
-    
+    </div>   
     
     </div>
     
