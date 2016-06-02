@@ -86,7 +86,7 @@
 						
 						<div class="formtext" style="line-height:76px;">前10订单<a  style="margin-left:50px;" href="" />查看所有订单</a></div>						
 						<div class="gwc" style=" margin:auto;">
-							<table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+							<table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:80%;background:#eef6ff;">
 								<tr style="background:#d0e7fa;">
 									<th class="tb1_td1" style="height:35px;">ID</th>
                                     <th>订单编号</th>
@@ -101,16 +101,16 @@
 								</tr>
 								<foreach name="order" item="val" key="i">
 								<tr>
-    								<td>{$i}</td>
-                                    <td><a href="{:U('Order/edit',array('id'=>$val['id']))}">{$val.order_no}</a></td>
-                                    <td>{$val.equipment}</td>
-                                    <td>{$val.payment_method}</td>                            
-                                    <td>{$val.total_price}</td>
-                                    <td>{$val.username}</td>  
-                                    <td>{$val.mobile}</td>             
-                                    <td>{$val.addtime|date="Y-m-d H:i:s",###}</td>
-                                    <td>{$val.status}</td>
-                                    <td>{$val.numberno}</td>
+    								<td class="tb2_td1" style="height:35px;">{$i}</td>
+                                    <td class="tb2_td1" style="height:35px;"><a href="{:U('Order/edit',array('id'=>$val['id']))}">{$val.order_no}</a></td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.equipment}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$payment[$val[payment_method]]}</td>                            
+                                    <td class="tb2_td1" style="height:35px;">{$val.total_price}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.username|hiddenstr=###}</td>  
+                                    <td class="tb2_td1" style="height:35px;">{$val.mobile|hiddenstr=###}</td>             
+                                    <td class="tb2_td1" style="height:35px;">{$val.addtime|date="Y-m-d H:i:s",###}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.status}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.numberno}</td>
 								</tr>
 								</foreach>
 							</table>

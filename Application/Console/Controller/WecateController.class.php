@@ -162,14 +162,15 @@ class WecateController extends CommonController {
         $id=I('id');
         if(empty($id)){
             $this->success('请生新选择微信号查看');
-        }
+        }  
         $data=D('Wecate')->where('id=%d',array($id))->find();
         if(!$data){
             $this->success('请生新选择微信号查看');
         }
-        
+        $payment=D('payment')->getfield('id,payment',true);
         $order=D('Order_info')->where("buyer_wechat='%s'",array($data['wechat_id']))->limit(10)->select();
         $this->assign('order',$order);
+        $this->assign('payment',$payment);
 
         $this->assign('data',$data);
         $this->display();
