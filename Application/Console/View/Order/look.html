@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+    </head>
+    <script>
+        $(function () {
+            $("#subordinates .dish:last").remove();
+        })
+    </script>
+    <body>
+
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+
+                <li><a href="#">首页</a></li>
+                <li><a href="#">订单管理</a></li>
+            </ul>
+        </div>
+
+        <div class="formbody">
+            <div id="usual1" class="usual">
+                <if condition="$id">
+                    <input name="id" type="hidden"   value="{$id}"/>
+                </if> 
+
+                <div class="itab">
+                    <ul> 
+                        <li><a href="#tab1" class="selected">查看信息</a></li> 
+                    </ul>
+                </div> 
+
+                <div id="tab1" class="tabson">
+
+                    <div class="formtext">订单信息</div>
+                    <table style="margin-left:25px">
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>经纪人:</b></label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.salaryss}
+                            </td>
+                        </tr>   
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>组长:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.salaryss}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>设备编号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                <volist name="equipment" id="vo3">
+                                <option value="{$vo3.id}"
+                                <if condition="$vo3['id'] eq $info['equipment']"> selected="selected" </if>>{$vo3.xinghao}({$vo3.bianhao})</option>
+                                </volist>
+                            </td> 
+                        </tr>
+                        
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>设备编号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                <volist name="payment" id="vo4">
+                                    <option value="{$vo4.id}"
+                                    <if condition="$vo4['id'] eq $info['payment_method']"> selected="selected" </if>>{$vo4.payment}</option>
+                               </volist>
+                            </td> 
+                        </tr>
+                        
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>买家微信号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.buyer_wechat}
+                            </td>   
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单来源:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.source}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人姓名:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.username}
+                            </td> 
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人电话:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.mobile}
+                            </td>       
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人地址:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.address}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单备注:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.note}
+                            </td>
+                        </tr>
+
+                        <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+
+                    </table>
+
+                    <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
+                        <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+                    </div>
+                </div>      
+            </div> 
+        </div>
+    </body>
+
+</html>

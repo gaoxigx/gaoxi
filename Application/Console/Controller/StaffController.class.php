@@ -90,6 +90,7 @@ class StaffController extends CommonController {
         $this->display();
     }
 
+ //查看页面
     public function lookover(){
         $id=I('get.id');        
         $model = D('Staff');      

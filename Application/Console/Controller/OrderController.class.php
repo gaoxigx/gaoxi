@@ -160,7 +160,7 @@ public function Plist($name=''){
 
 
 }
-//添加页面
+//提交订单
 public function add(){
      $this->getrolename('agent',38);
      $this->getrolename('assistant',46);
@@ -172,6 +172,63 @@ public function add(){
     $this->display();
 }
 
+//修改订单
+public function edit($id){
+    // $this->getprotype();
+     $this->getrolename('agent',38);
+     $this->getrolename('assistant',46);
+     $this->getequipment_name();
+     $this->getpayment();
+     $user = M('order_info');
+     $orderinfolist = $user->where('id='.$id)->order('id')->find();
+
+     $this->assign('info',$orderinfolist);// 赋值数据集
+     $data = M('order_goods'); // 实例化User对象
+     $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
+
+     $this->assign('prolist',$list);// 赋值数据集
+    // $this->display();
+    $controller   =   M('order_info');
+    // 读取数据
+    $data =   $controller->find($id);
+    if($data) {
+        $this->assign('data',$data);// 模板变量赋值
+    }else{
+        $this->error('数据错误');
+    }
+    $this->display();
+
+}
+
+
+//查看页面
+    public function look(){
+        $id=I('get.id');        
+        $model = D('order_info');      
+        if($id){
+             $user = $model->where("id=".$id)->find(); 
+//            echo M()->getLastSql();exit;
+         } 
+		
+		$section_map['cate_id']=$user['quarters'];
+		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
+		
+		$map['cate_parent']=$user['quarters'];
+		$subordinates = D('Category')->categoryone($map);
+		
+		$Equipment = D('Equipment')->where('staffid='.$id)->select();
+		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+		
+         $this->assign('department',D('Category')->department());
+		 $this->assign('quarters',$quarters);
+		 $this->assign('subordinates',$subordinates);
+		 $this->assign('Equipment',$Equipment);
+		 $this->assign('order_nums',$order_nums);
+         $this->assign('user',$user);
+         $this->assign('id',$id);
+         $this->display();
+
+    }
 
 //插入数据
 public function insert(){
@@ -220,35 +277,6 @@ public function insert(){
    
 }
 
-
-
-//编辑
-public function edit($id){
-    // $this->getprotype();
-     $this->getrolename('agent',2);
-     $this->getrolename('assistant',4);
-     $this->getequipment_name();
-     $this->getpayment();
-     $user = M('order_info');
-     $orderinfolist = $user->where('id='.$id)->order('id')->find();
-
-     $this->assign('info',$orderinfolist);// 赋值数据集
-     $data = M('order_goods'); // 实例化User对象
-     $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
-
-     $this->assign('prolist',$list);// 赋值数据集
-    // $this->display();
-    $controller   =   M('order_info');
-    // 读取数据
-    $data =   $controller->find($id);
-    if($data) {
-        $this->assign('data',$data);// 模板变量赋值
-    }else{
-        $this->error('数据错误');
-    }
-    $this->display();
-
-}
 
 //更新数据
 public function update(){
