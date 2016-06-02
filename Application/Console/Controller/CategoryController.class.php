@@ -136,10 +136,10 @@ public function edit($cate_id){
 
         $user = M('category');
         $data = $user->find($cate_id);
-        if ($data['cate_haschild']) {
-            $this->error('存在下级分类，不能删除！');
+        // if ($data['cate_haschild']) {
+        //     $this->error('存在下级分类，不能删除！');
             
-        }else{
+        // }else{
 // $this->success('测试删除成功！');
             $result = $user->delete($cate_id);
             
@@ -148,7 +148,7 @@ public function edit($cate_id){
             }else{
                 $this->error('数据删除错误！');
             }
-        }
+        //}
        
     }
     
