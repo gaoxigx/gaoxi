@@ -68,7 +68,7 @@ $(document).ready(function(){
                 <th style="width:50px;">优惠价</th>
                 <th>订单金额</th>
                 <th>经纪人</th>
-                <th>纪经人助理</th>
+                <th>组长</th>
                 <th>操作发货</th>
                 <th>确认收款</th>
                 <th>操作</th>
@@ -87,8 +87,8 @@ $(document).ready(function(){
                 </table>
                 </td>
                 <td>{$vo.total_price}</td>
-                <td>{$vo.agent|get_id_to_perid=###}</td>
-                <td>{$vo.assistant|get_id_to_perid=###}</td>
+                <td>{$vo.username}</td>
+                <td>{$vo.username}</td>
                 <td>
                     <switch name="vo.payment_status">
                         <case value="0">已下单.</case>
@@ -112,7 +112,7 @@ $(document).ready(function(){
                         <input  type="button"  class="suresmall2" value="已付款" />
                     </if>
                 </td>
-                <td><!-- <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a> --><a href="__URL__/edit/id/{$vo.id}" class="tablelink">查看</a></td>
+                <td> <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a> <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a></td>
             </tr> 
         </volist>
         
