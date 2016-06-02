@@ -328,4 +328,19 @@ protected function top(){
 private function hello3(){
     echo '这是private方法!';
 }
+
+//查找下级经济人 ajax请求
+public function getagent(){
+    $id=I('id');
+    if(empty($id)){        
+        $this->ajaxreturn(0);
+    }     
+    $data=D('staff')->where('nibs=%d',array($id))->getfield('id,name',true);
+    if($data){
+        $this->ajaxreturn($data);    
+    }else{
+        $this->ajaxreturn(0);
+    }
+    
+}
 }

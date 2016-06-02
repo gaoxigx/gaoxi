@@ -110,22 +110,20 @@
 
                         <div class="formtext">请正确填写订单信息！</div>
                         <ul class="forminfo">
-                            <li><label>经纪人<b>*</b></label>  
+                            <li><label>经纪人组长<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <select name="agent" class="uew-select-value">
-                                        <volist name="agent" id="vo1">
+                                    <select id="assistant" name="assistant" class="uew-select-value">
+                                        <volist name="assistant" id="vo1">
                                             <option value="{$vo1.id}">{$vo1.username}</option>
                                         </volist>
                                     </select>
                                 </div>
                             </li>
 
-                            <li><label>组长<b>*</b></label>  
+                            <li><label>经纪人<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <select name="assistant" class="uew-select-value">
-                                        <volist name="assistant" id="vo2">
-                                            <option value="{$vo2.id}">{$vo2.username}</option>
-                                        </volist>
+                                    <select id="agent" name="agent" class="uew-select-value">                                      
+                                            <option value="0">没有参数</option>
                                     </select>
                                 </div>
                             </li>
@@ -143,7 +141,7 @@
                                 <div class="vocation uew-select">
                                     <select name="Payment_method" class="uew-select-value">
                                         <volist name="payment" id="vo4">
-                                            <option value="{$vo4.id}">{$vo4.payment}</option>
+                                            <option value="{$vo4.id}">{$vo4.d}</option>
                                         </volist>
                                     </select>
                                 </div>
@@ -174,6 +172,34 @@
         </div>
 
         </div>
+        <script>
+            jingjiren($("#assistant").val());
+            $(function(){
+                $("#assistant").change(function(){
+
+                    jingjiren($(this).val());      
+                });
+            })
+            function jingjiren(id){            
+                var url="{:U('Order/getagent')}"+"?id="+id;
+                $.get(url,function(data){
+                    $("#agent").html("");                    
+                    var option="";
+                     console.log(data);
+                    if(data!="0" && data!="null" ){                       
+                        for( i in data){                         
+                            option+="<option value=1"+i+"1>"+data[i]+"</option>"
+                        }                       
+                        $("#agent").html(option);                       
+                    }else{
+                        option="<option value=0>请选择</option>"
+                        $("#agent").html(option);
+                        console.log(data);
+                       
+                    }   
+                })
+            }
+        </script>
     </body>
 
 </html>
