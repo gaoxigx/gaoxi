@@ -103,7 +103,7 @@
                                 <label><b>收件人姓名:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$info.username}
+                                {$info.username|hiddenstr=###}
                             </td> 
                         </tr>
 
@@ -112,7 +112,7 @@
                                 <label><b>收件人电话:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$info.mobile}
+                                {$info.mobile|hiddenstr=###}
                             </td>       
                         </tr>
 
@@ -121,7 +121,7 @@
                                 <label><b>收件人地址:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$info.address}
+                                {$info.address|hiddenstr=###}
                             </td>
                         </tr>
 
