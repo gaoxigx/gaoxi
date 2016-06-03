@@ -523,12 +523,14 @@
 					$(this).remove();
 				}
 			})
+			subordinates(obj,id);
+			/*
 			if($(obj).find("option:selected").attr('cate_haschild') == 1){
 				subordinates(obj,id);
 			}else{
 				$(obj).next('select').remove();
 				
-			}	
+			}	*/
 			
 		};
 		
