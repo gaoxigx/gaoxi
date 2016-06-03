@@ -124,7 +124,7 @@ public function edit($cate_id){
 
             $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();   
             //$result=>M()->query('select id as node_id,title as module,'.$uid.' as role_id where exists() );     
-             
+
             $result=D('Access')->addAll($result);   
             $this->success('修改成功！',U('Category/PList'));
         }else{
@@ -137,21 +137,18 @@ public function edit($cate_id){
  }
 
     public function delete($cate_id){
-
         $user = M('category');
         $data = $user->find($cate_id);
         // if ($data['cate_haschild']) {
-        //     $this->error('存在下级分类，不能删除！');
-            
+        //     $this->error('存在下级分类，不能删除！');            
         // }else{
-// $this->success('测试删除成功！');
-            $result = $user->delete($cate_id);
-            
-            if($result) {
-                $this->success('数据删除成功！');
-            }else{
-                $this->error('数据删除错误！');
-            }
+        // $this->success('测试删除成功！');
+        $result = $user->delete($cate_id);        
+        if($result) {
+            $this->success('数据删除成功！');
+        }else{
+            $this->error('数据删除错误！');
+        }
         //}
        
     }
@@ -163,5 +160,12 @@ public function edit($cate_id){
         // dump($name);
         $this->assign($rolename,$name);
 
+    }
+
+    public function getroleninfo(){
+        $roleid=I("id");
+         $data=D('category');
+         $name = $data->where("cate_parent=%d",array($roleid))->order('cate_id')->select();    
+         $this->ajaxreturn($name);
     }
 }

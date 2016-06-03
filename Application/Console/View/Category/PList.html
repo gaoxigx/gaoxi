@@ -81,8 +81,8 @@ $(document).ready(function(){
         <th>排序</th>
         <th>是否显示</th>
         <th>是否审核</th>
-        <th>添加日期</th>
-        <th>更新日期</th>
+<!--         <th>添加日期</th>
+        <th>更新日期</th> -->
         <th>操作</th>
         </tr>
         </thead>
@@ -97,8 +97,8 @@ $(document).ready(function(){
                     <td>{$vo['cate_sort']}</td>
                     <td>{$vo['is_show']}</td>
                     <td>{$vo['is_show']}</td>
-                    <td>{$vo['addtime']}</td>
-                    <td>{$vo['uptime']}</td>
+         <!--            <td>{$vo['addtime']}</td>
+                    <td>{$vo['uptime']}</td> -->
                     <td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a>
                     <a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a>
                     <a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td>
@@ -156,7 +156,7 @@ $(document).ready(function(){
                 if(data!='undefined' && data!='' && data!='0'){                       
                     cs++;
                     for(i in data){         
-                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>"+data[i].addtime+"</td><td>"+data[i].uptime+"</td><td>";
+                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>";
                         string+="<a href='__URL__/add/pid/"+data[i].cate_id+"' class='tablelink'>添加子类</a>";
                         string+="<a href='__URL__/edit/cate_id/"+data[i].cate_id+"' class='tablelink'>修改</a>";
                         string+="<a href='__URL__/delete/cate_id/"+data[i].cate_id+"' class='tablelink' > 删除</a></td></tr>";

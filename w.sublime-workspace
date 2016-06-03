@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"C",
+				"Category"
+			],
+			[
+				"order",
+				"order_no"
+			],
+			[
+				"or",
+				"order_no"
+			],
+			[
+				"from",
+				"form1"
+			],
+			[
 				"fro",
 				"form1"
 			],
@@ -148,61 +164,53 @@
 	"buffers":
 	[
 		{
-			"contents": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n        <title>无标题文档</title>\n        <link href=\"__PUBLIC__/Console/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n        <link href=\"__PUBLIC__/Console/css/select.css\" rel=\"stylesheet\" type=\"text/css\" />\n		<link href=\"__PUBLIC__/Console/css/lanrenzhijia.css\" rel=\"stylesheet\" type=\"text/css\" />\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/jquery.js\"></script>\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/jquery.idTabs.min.js\"></script>\n        <script type=\"text/javascript\" src=\"__PUBLIC__/Console/js/select-ui.min.js\"></script>\n        <script language=\"javascript\" type=\"text/javascript\" src=\"__PUBLIC__/My97DatePicker/WdatePicker.js\"></script>\n    </head>\n<script>\n	$(function(){\n		$(\"#subordinates .dish:last\").remove();\n	})\n</script>\n    <body>\n\n        <div class=\"place\">\n            <span>位置：</span>\n            <ul class=\"placeul\">\n\n                <li><a href=\"#\">首页</a></li>\n                <li><a href=\"#\">员工管理</a></li>\n            </ul>\n        </div>\n\n        <div class=\"formbody\">\n            <div id=\"usual1\" class=\"usual\">\n                    <if condition=\"$id\">\n                       <input name=\"id\" type=\"hidden\"   value=\"{$id}\"/>\n                    </if> \n                    \n                    <div class=\"itab\">\n\n                        <ul> \n                            <li><a href=\"#tab1\" class=\"selected\">查看信息</a></li> \n                        </ul>\n                    </div> \n\n                    <div id=\"tab1\" class=\"tabson\">\n                        <div class=\"formtext\">个人信息</div>\n						<table style=\"margin-left:25px\">\n							<tr>\n								<td style=\"height:20px;padding:5px;\">\n									<label>微信名：</label>  \n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.wecate_id}\n								</td>			\n								<td style=\"height:20px;padding:5px;\">\n									<label>昵称：</label>   \n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.nickname} \n								</td>\n									<td style=\"height:20px;padding:5px;\">\n									<label>性别：</label>\n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									<if condition=\"$data.sex == 1\">\n										男\n									<else/>\n										女\n									</if>\n								</td>\n								<td style=\"height:20px;padding:5px;\">\n									<label>创建时间：</label>\n								</td>	\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">\n									{$data.create_time|date=\"Y-m-d H:i:s\",###}\n								</td>\n							</tr>							\n			\n							<tr><td colspan=\"8\" style=\"padding:10px 0;\"><hr style=\"width:100%;height:1px;border-top:1px #d0e7fa solid;\"/></td></tr>\n							<tr>\n								<td style=\"height:20px;padding:5px;\">\n									<label>订单总数：</label>\n								</td>\n								<td style=\"height:20px;padding:5px 50px 5px 5px;\">{$order_nums}</td>\n							</tr>\n							<tr><td colspan=\"8\" style=\"padding:10px 0;\"><hr style=\"width:100%;height:1px;border-top:1px #d0e7fa solid;\"/></td></tr>\n						</table>\n						\n						<div class=\"formtext\" style=\"line-height:76px;\">前10订单<a  style=\"margin-left:50px;\" href=\"\" />查看所有订单</a></div>						\n						<div class=\"gwc\" style=\" margin:auto;\">\n							<table cellpadding=\"0\" cellspacing=\"0\" class=\"gwc_tb1\" style=\"width:60%;background:#eef6ff;\">\n								<tr style=\"background:#d0e7fa;\">\n									 <th>ID</th>\n                                    <th>订单编号</th>\n                                    <th>销售终端编号</th>\n                                    <th>支付方式</th>\n                                    <th>订单总价格</th>\n                                    <th>收件人姓名</th>\n                                    <th>收件人电话</th>\n                                    <th>下单时间</th>\n                                    <th>订单状态</th>\n                                    <th>物流单号<th>\n								</tr>\n								<foreach name=\"order\" item=\"val\">\n								<tr>\n								<td>{$i}</td>\n                            <td><a href=\"{:U('Wecate/lookfind',array('id'=>$vo['id']))}\">{$vo.order_no}</a></td>\n                            <td>{$vo.equipment}</td>\n                            <td>{$vo.payment_method}</td>                            \n                            <td>{$vo.total_price}</td>\n                            <td>{$vo.username}</td>               \n                            <td>{$vo.addtime|date=\"Y-m-d H:i:s\",###}</td>\n                            <td>{$vo.status}</td>\n                            <td></td>\n								</tr>\n								</foreach>\n							</table>\n\n							\n						</div>\n						  \n						<div class=\"col-md-offset-3 col-md-9\" style=\"margin-top:30px;\">\n							<a style=\"width:137px; height:35px; display:block; text-align:center; line-height:35px\" class=\"btn btn-info\" href=\"javascript:history.back(-1);\">返回</a>\n						</div>\n                    </div>      \n            </div> \n        </div>\n    </body>\n\n</html>\n",
-			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
-			"file_size": 5267,
-			"file_write_time": 131092268096361845,
+			"contents": "<?php\nnamespace Console\\Controller;\nuse Think\\Controller;\nheader(\"Content-type:text/html;charset=utf-8\");\n\nclass OrderController extends CommonController {\n /**\n * 生成唯一订单号\n */\npublic function build_order_no()\n{\n    $no = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);\n    //检测是否存在\n    $db = M('order_info');\n    $info = $db->where(array('order_no'=>$no))->find();\n    (!empty($info)) && $no = $this->build_order_no();\n    return $no;\n}\n\n//管理员组类别\nprivate function getrolename($rolename,$roleid){\n    $data=D('staff');\n    $name = $data->where('quarters='.$roleid)->order('id')->select();\n    // dump($name);\n    $this->assign($rolename,$name);\n\n}\n\n\n//设备编号获取\nprivate function getequipment_name(){\n    $data=D('equipment');\n    $name = $data->where('bianhao<>\"\"')->order('id desc')->select();\n    // dump($name);\n    $this->assign('equipment',$name);\n\n}\n\n//通过产品id获取类别id,图片地址\npublic function get_proid_to_typeid($id='',$typeid=''){\n    $data=D('product');\n    $name = $data-> field('protype,pic,pic1')->where('id='.$id)->order('id desc')->find();\n    \n    $pro = $name['protype'];\n    $pic = $name['pic'];\n    $pic1 = $name['pic1'];\n    switch ($typeid) {\n        case 1:\n            return $pro;\n            break;\n        case 2:\n            return $pic;\n            break;\n        case 3:\n            return $pic1;\n            break;\n        \n        default:\n            # code...\n            break;\n    }    \n\n}\n\n\n\n//支付方式获取\nprivate function getpayment(){\n    $data=D('payment');\n    $name = $data->where('payment<>\"\"')->order('id')->select();\n    // dump($name);\n    $this->assign('payment',$name);\n\n}\n//处理付款状态（确认和取消）\n//\npublic function Payment_status($id,$status){\n    $order_info = D('order_info');\n    $data['payment_status'] = 1; \n    if($status==0){\n        $tip=\"确认付款成功！\";\n    }else{\n        $tip=\"取消确认付款！\";\n    }\n    $name = $order_info->where('id='.$id)->save($data);\n    if($name){\n        $this->success($tip);\n    }else{\n        $this->error('更新数据出错');\n    }\n}\n//物流单号查询\n public function numberno($no){\n    echo \"物流信息查询：\".$no;\n    // $this->$this->display(??)\n    // $this->display('plist');\n }\n\n //插入物流单号到订单表\n //\npublic function updatenumberno($id,$numberno){\n$data[\"numberno\"] = $numberno;\n$data[\"status\"] = 2;\n    $order_info = D('order_info');\n     $name = $order_info->where('id='.$id)->save($data);\n     if($name){\n        $this->success(\"物流单号更新成功\");\n    }else{\n        $this->error('更新数据出错');\n    }\n}\n\n\n\n//数据列表\npublic function Plist($name=''){\n    \n    $username = i('username');\n    if($username){\n        $map['order_no']  = array('like','%'.trim($username).'%');\n        $map['product']  = array('like','%'.trim($username).'%');\n        $map['protype']  = array('like','%'.trim($username).'%');  \n        $map['username']  = array('like','%'.trim($username).'%');\n        //$map['agent']  = array('like','%'.trim($username).'%');\n        $map['mobile']  = array('like','%'.trim($username).'%');       \n        $map['buyer_wechat']  = array('like','%'.trim($username).'%');\n        $map['numberno']  = array('like','%'.trim($username).'%');             \n        $map['_logic'] = 'or';\n    }\n\n    $user_id = session(\"user_id\");\n    if($user_id > 0){\n        $map['agent']  = intval($user_id);\n   }\n    \n    foreach( $map as $k=>$v){  \n        if( !$v )  \n            unset( $arr[$k] );  \n    }   \n\n    //分页跳转的时候保证查询条件\n    foreach($map as $key=>$val) {\n        if(!$val){\n            unset($map[$key]);\n        }else{\n        $Page->parameter[$key]   =   urlencode($val);\n          }\n    }\n    $User = M('order_info'); // 实例化User对象\n    $count = $User->where($map)->count();// 查询满足要求的总记录数\n    $Page = new \\Think\\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)\n    $Page->setConfig('header','个会员');\n    $show = $Page->show();// 分页显示输出\n    // 进行分页数据查询 注意limit方法的参数要使用Page类的属性\n    $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();\n\n    $this->assign('list',$list);// 赋值数据集\n    $this->assign('page',$show);// 赋值分页输出\n    $this->display(); // 输出模板\n\n\n}\n//提交订单\npublic function add(){\n     $this->getrolename('agent',38);\n     $this->getrolename('assistant',46);\n     $this->getequipment_name();\n     $this->getpayment();\n    $data = M('product'); // 实例化User对象\n    $list = $data->where('1=1')->order('id')->select();\n    $this->assign('prolist',$list);// 赋值数据集\n    $this->display();\n}\n\n//修改订单\npublic function edit($id){\n    // $this->getprotype();\n     $this->getrolename('agent',38);\n     $this->getrolename('assistant',46);\n     $this->getequipment_name();\n     $this->getpayment();\n     $user = M('order_info');\n     $orderinfolist = $user->where('id='.$id)->order('id')->find();\n\n\n     $this->assign('info',$orderinfolist);// 赋值数据集\n     $data = M('order_goods'); // 实例化User对象\n     $list = $data->field('*,propic as pic1')->where(\"order_no='\".$orderinfolist['order_no'].\"'\")->order('id')->select();\n\n     $this->assign('prolist',$list);// 赋值数据集\n    // $this->display();\n    $controller   =   M('order_info');\n    // 读取数据\n    $data =   $controller->find($id);\n    if($data) {\n        $this->assign('data',$data);// 模板变量赋值\n    }else{\n        $this->error('数据错误');\n    }\n    $this->display();\n\n}\n\n\n//查看页面\n    public function look(){\n        $id=I('get.id');        \n        $model = D('order_info');      \n        if(empty($id)){            \n            $this->error('请选择查看订单');\n        } \n		$user = $model->where(\"id=%d\",array($id))->find(); \n\n\n		$section_map['cate_id']=$user['quarters'];\n		$quarters = D('Category')->field('cate_name')->where($section_map)->find();\n		\n		$map['cate_parent']=$user['quarters'];\n		$subordinates = D('Category')->categoryone($map);\n		\n		$Equipment = D('Equipment')->where('staffid='.$id)->select();\n		$order_nums = D('OrderInfo')->where('agent='.$id)->count();\n        $payment=D('payment')->where('')->getfield('id,payment',true);\n        $staff=D('staff')->getfield('id,name',true);\n		\n         $this->assign('department',D('Category')->department());\n		 $this->assign('quarters',$quarters);\n		 $this->assign('subordinates',$subordinates);\n		 $this->assign('Equipment',$Equipment);\n		 $this->assign('order_nums',$order_nums);\n         $this->assign('payment',$payment);\n         $this->assign('staff',$staff);\n         $this->assign('info',$user);\n         $this->assign('id',$id);\n         $this->display();\n\n    }\n\n//插入数据\npublic function insert(){\n\n    $data = I('');\n    $data['order_no'] = $this->build_order_no();\n    $data['addtime'] = time();\n    $data['status'] = 1;\n    $data['payment_status'] = 0;\n    // $dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@g.com');\n    $roleList   =   D('order_info');\n    // $set = $roleList->create($data);\n\n    if($roleList->create()) {\n        $result =   $roleList->add($data);\n        if($result) {\n            foreach( $data['newslist'] as $k=>$v){  \n                $dataList[] = array(\n                'proid'=>$data[\"id\".$v],\n                'protype'=>$data[\"protype\".$v],\n                'pic'=>$data[\"pic\".$v],\n                'pic1'=>$data[\"pics\".$v],\n                'product'=>$data[\"product\".$v],\n                'price2'=>$data[\"price\".$v],\n                'buynum'=>$data[\"text_box\".$v],\n                'discount'=>$data[\"zhekou\".$v],\n                'tollsprice'=>$data[\"total\".$v],\n                'order_no'=>$data[\"order_no\"],\n                'addtime'=>time(),                \n                );\n            }\n// dump($dataList);\n// exit;\n            $user=M('order_goods');\n            $user->addAll($dataList);\n            // $sset = $User->addAll($dataList);\n\n            $this->success('订单表数据添加成功！');\n        }else{\n            $this->error('订单商表数据添加错误！');\n        }\n\n    }else{\n        $this->error($roleList->getError());\n    }\n   \n}\n\n\n//更新数据\npublic function update(){\n    $roleList   =   D('order_info');\n    $data=$roleList->create();\n    if($data) {\n        order_no=\n        uset($data['order_no']);\n        $result = $roleList->where('order_no=%s',array($data['order_no']))->save($data);\n        if($result) {\n            $this->success('操作成功！');\n        }else{\n            $this->error('写入错误！');\n        }\n    }else{\n        $this->error($roleList->getError());\n    }\n}\n\n//删除数据\npublic function delete(){\n$id=i('id');\n    // dump($id);\n    // exit;\n    $role = M('order_info');\n     $set = $role->where(\"id = \".$id)->find();\n     // $set['oldid'] = $id;\n     // unset($set['id']);\n     // $set['addtime']=strtotime($set['addtime']);\n     $set['price1']= floatval($set['price1']);\n     $set['price2']= floatval($set['price2']);\n     $set['price3']= floatval($set['price3']);\n     // dump($set);\n     // exit;\n    D('product_copy')->add($set);\n    // M('Equipment_copy')->add($set);\n\n    $result = $role->delete($id);\n\n     if($result) {\n            $this->success('数据删除成功！');\n        }else{\n            $this->error('数据删除错误！');\n        }\n    // $this->display();\n}\n\nprotected function top(){\n    // $this->display();\n}\n\nprivate function hello3(){\n    echo '这是private方法!';\n}\n\n//查找下级经济人 ajax请求\npublic function getagent(){\n    $id=I('id');\n    if(empty($id)){        \n        $this->ajaxreturn(0);\n    }     \n    $data=D('staff')->where('nibs=%d',array($id))->getfield('id,name',true);\n    if($data){\n        $this->ajaxreturn($data);    \n    }else{\n        $this->ajaxreturn(0);\n    }\n    \n}\n}\n",
+			"file": "/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
+			"file_size": 10332,
+			"file_write_time": 131093249538402641,
 			"settings":
 			{
-				"buffer_size": 5055,
+				"buffer_size": 9314,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
 			"settings":
 			{
-				"buffer_size": 7924,
+				"buffer_size": 4110,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Access/add.html",
 			"settings":
 			{
-				"buffer_size": 4787,
+				"buffer_size": 3154,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
 			"settings":
 			{
-				"buffer_size": 4947,
+				"buffer_size": 4684,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
+			"file": "/D/WWW/gaoxi/Application/Console/Controller/CategoryController.class.php",
 			"settings":
 			{
-				"buffer_size": 1020,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
-			"settings":
-			{
-				"buffer_size": 12724,
+				"buffer_size": 5588,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+			"file": "/D/WWW/gaoxi/Application/Console/Model/AccessModel.class.php",
 			"settings":
 			{
-				"buffer_size": 7254,
+				"buffer_size": 149,
 				"line_ending": "Windows"
 			}
 		}
@@ -266,6 +274,7 @@
 		"height": 126.0,
 		"history":
 		[
+			"exit",
 			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
 			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())",
 			"import  urllib.request,os;pf='Package Control.sublime-package';ipp=sublime.installed_packages_path();urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler()));open(os.path.join(ipp,pf),'wb').write(urllib.request.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read())",
@@ -286,28 +295,49 @@
 	[
 		"/D/WWW/gaoxi",
 		"/D/WWW/gaoxi/Application",
+		"/D/WWW/gaoxi/Application/Common",
+		"/D/WWW/gaoxi/Application/Common/Common",
+		"/D/WWW/gaoxi/Application/Common/Conf",
 		"/D/WWW/gaoxi/Application/Console",
+		"/D/WWW/gaoxi/Application/Console/Conf",
+		"/D/WWW/gaoxi/Application/Console/Model",
 		"/D/WWW/gaoxi/Application/Console/View",
+		"/D/WWW/gaoxi/Application/Console/View/Order",
+		"/D/WWW/gaoxi/Application/Console/View/Staff",
 		"/D/WWW/gaoxi/Application/Console/View/Wecate",
-		"/D/WWW/gaoxi/Public",
 		"/D/WWW/gaoxi/Public/Console",
 		"/D/WWW/gaoxi/Public/Console/js",
-		"/D/WWW/gaoxi/Public/Console/js/validation/demo",
 		"/D/WWW/gaoxi/Uploads"
 	],
 	"file_history":
 	[
-		"/D/WWW/mobile/admin/themes/simplebootx/Admin/boot/index.html",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Mobile/index.html",
+		"/D/WWW/gaoxi/Application/Console/Common/function.php",
+		"/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
+		"/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
+		"/D/WWW/gaoxi/Application/Console/View/Order/look.html",
+		"/D/WWW/gaoxi/Application/Common/Conf/config.php",
+		"/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Equipment/Equipment.html",
 		"/D/WWW/gaoxi/Application/Console/Controller/EquipmentController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Controller/LoginController.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Index/left.html",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/lookover.html",
+		"/D/WWW/gaoxi/Application/Console/View/Order/add.html",
+		"/D/WWW/gaoxi/Application/Common/Common/function.php",
+		"/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
+		"/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/boot/index.html",
 		"/D/WWW/mobile/application/User/Controller/LoginController.class.php",
 		"/D/WWW/mobile/application/Admin/Controller/PublicController.class.php",
 		"/D/WWW/mobile/application/Common/Lang/zh-cn.php",
 		"/D/WWW/gaoxi/Application/Console/View/Login/login.html",
 		"/D/WWW/mobile/themes/simplebootx/User/login.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/login.html",
-		"/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
 		"/D/WWW/mobile/application/Admin/Controller/MobileController.class.php",
-		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Mobile/index.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Public/assets/css/admin_login.css",
 		"/D/WWW/mobile/index.php",
 		"/D/WWW/mobile/public/simpleboot/themes/bluesky/theme.min.css",
@@ -320,7 +350,6 @@
 		"/D/WWW/mobile/simplewind/Core/Library/Think/Upload.class.php",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Navcat/index.html",
 		"/D/WWW/mobile/application/Admin/Controller/NavController.class.php",
-		"/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/User/userinfo.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/header.html",
 		"/G/wewew.sql",
@@ -367,7 +396,6 @@
 		"/D/WWW/GAOXI/Application/Console/View/Equipment/tracking.html",
 		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Verify.class.php",
 		"/C/Users/chen9/Desktop/sql.txt",
-		"/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
 		"/D/WWW/gaoxi/Application/Console/Model/EqtrackingModel.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Equipment/trackadd.html",
 		"/D/WWW/GAOXI/composer.json",
@@ -379,11 +407,9 @@
 		"/D/WWW/GAOXI/Public/Console/css/select.css",
 		"/D/WWW/gaoxi/Public/Console/css/select1.css",
 		"/D/WWW/GAOXI/Public/Console/js/jquery.js",
-		"/D/WWW/gaoxi/Application/Console/View/Staff/lookover.html",
 		"/D/WWW/gaoxi/Application/Console/View/Order/shopping.html",
 		"/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
 		"/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
-		"/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
 		"/D/WWW/gaoxi/ThinkPHP/Library/Think/Model.class.php",
 		"/D/WWW/gaoxi/Application/Console/Model/StaffModel.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Wecate/add.html",
@@ -395,13 +421,10 @@
 		"/D/WWW/GAOXI/Application/Console/View/Order/edit.html",
 		"/D/WWW/GAOXI/Application/Console/Controller/OrderController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Staff/deparlist.html",
-		"/D/WWW/gaoxi/Application/Common/Conf/config.php",
 		"/D/WWW/GAOXI/Application/Console/Model/StaffModel.class.php",
 		"/D/WWW/gaoxi/Application/Console/Model/CategoryModel.class.php",
 		"/D/WWW/GAOXI/Public/My97DatePicker/WdatePicker.js",
 		"/D/WWW/gaoxi/Application/Console/View/Index/main.html",
-		"/D/WWW/gaoxi/Application/Console/View/Index/left.html",
-		"/D/WWW/gaoxi/Application/Console/View/Order/add.html",
 		"/D/WWW/GAOXI/Application/Console/View/Order/shopping.html",
 		"/D/WWW/GAOXI/Application/Console/Controller/ProductController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Product/Plist.html",
@@ -415,8 +438,7 @@
 		"/D/Program Files (x86)/ICW/var/log/wtmp",
 		"/D/Program Files (x86)/ICW/var/log/lastlog",
 		"/D/phpStudy/nginx/conf/nginx.conf",
-		"/D/phpStudy/nginx/conf/vhosts.conf",
-		"/C/Users/chen9/Desktop/hosts"
+		"/D/phpStudy/nginx/conf/vhosts.conf"
 	],
 	"find":
 	{
@@ -435,6 +457,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"getpayment",
+			"getrolename",
+			"$vo",
+			"<th>",
 			"th",
 			"$user",
 			"form1",
@@ -486,24 +512,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+					"file": "/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5055,
+						"buffer_size": 9314,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3551,
-								3555
+								7888,
+								7888
 							]
 						],
 						"settings":
@@ -516,31 +542,36 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -551,318 +582,43 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1363.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7924,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4851,
-								4851
-							],
-							[
-								4937,
-								4937
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1023.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4787,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4570,
-								4570
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_default_content"
 							],
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2820.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4947,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4535,
-								3982
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1703.0,
+						"translation.y": 5051.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
+					"buffer": 1,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1020,
+						"buffer_size": 4110,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								449,
-								457
+								1030,
+								1030
 							]
 						],
 						"settings":
@@ -875,31 +631,36 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -910,24 +671,109 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Access/add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3154,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -937,20 +783,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
+					"buffer": 3,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12724,
+						"buffer_size": 4684,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1040,
-								950
+								4567,
+								4567
 							]
 						],
 						"settings":
@@ -963,31 +809,36 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -998,48 +849,43 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2240.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+					"buffer": 4,
+					"file": "/D/WWW/gaoxi/Application/Console/Controller/CategoryController.class.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7254,
+						"buffer_size": 5588,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								993,
-								993
+								5478,
+								5484
 							]
 						],
 						"settings":
@@ -1052,31 +898,36 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -1087,30 +938,113 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2711.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/WWW/gaoxi/Application/Console/Model/AccessModel.class.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 149,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
 							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1165,12 +1099,92 @@
 		"selected_items":
 		[
 			[
-				"staff/lookover",
-				"Application\\Console\\View\\Staff\\lookover.html"
+				"category/plist",
+				"Application\\Console\\View\\Category\\PList.html"
+			],
+			[
+				"categoryc",
+				"Application\\Console\\Controller\\CategoryController.class.php"
+			],
+			[
+				"order/e",
+				"Application\\Console\\View\\Order\\edit.html"
+			],
+			[
+				"add.html",
+				"Application\\Console\\View\\Access\\add.html"
+			],
+			[
+				"add",
+				"gaoxi\\Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"order",
+				"gaoxi\\Application\\Console\\Controller\\OrderController.class.php"
+			],
+			[
+				"order/edit",
+				"gaoxi\\Application\\Console\\View\\Order\\edit.html"
+			],
+			[
+				"ordercon",
+				"gaoxi\\Application\\Console\\Controller\\OrderController.class.php"
+			],
+			[
+				"order/add",
+				"gaoxi\\Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"order/a",
+				"Application\\Console\\View\\Order\\add.html"
+			],
+			[
+				"logincon",
+				"Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"login",
+				"Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"equipmentcon",
+				"Application\\Console\\Controller\\EquipmentController.class.php"
+			],
+			[
+				"equipment/equipment",
+				"Application\\Console\\View\\Equipment\\Equipment.html"
 			],
 			[
 				"wecate",
+				"Application\\Console\\View\\Wecate\\Wecate.html"
+			],
+			[
+				"loginc",
+				"Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"left",
+				"Application\\Console\\View\\Index\\left.html"
+			],
+			[
+				"wecate.html",
+				"Application\\Console\\View\\Wecate\\Wecate.html"
+			],
+			[
+				"wecatecon",
 				"Application\\Console\\Controller\\WecateController.class.php"
+			],
+			[
+				"lookover",
+				"Application\\Console\\View\\Staff\\lookover.html"
+			],
+			[
+				"staff/add",
+				"Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"staff/lookover",
+				"Application\\Console\\View\\Staff\\lookover.html"
 			],
 			[
 				"weca",
@@ -1181,16 +1195,8 @@
 				"Public\\Console\\js\\validation\\dist\\localization\\messages_zh.js"
 			],
 			[
-				"staff/add",
-				"Application\\Console\\View\\Staff\\add.html"
-			],
-			[
 				"equipment",
 				"gaoxi\\Application\\Console\\Controller\\EquipmentController.class.php"
-			],
-			[
-				"logincon",
-				"mobile\\application\\User\\Controller\\LoginController.class.php"
 			],
 			[
 				"admin_login",
@@ -1205,10 +1211,6 @@
 				"mobile\\themes\\simplebootx\\User\\login.html"
 			],
 			[
-				"login",
-				"mobile\\application\\User\\Controller\\LoginController.class.php"
-			],
-			[
 				"mobile/index.",
 				"mobile\\admin\\themes\\simplebootx\\Admin\\Mobile\\index.html"
 			],
@@ -1219,10 +1221,6 @@
 			[
 				"wecate/wecate.html",
 				"Application\\Console\\View\\Wecate\\Wecate.html"
-			],
-			[
-				"wecatecon",
-				"gaoxi\\Application\\Console\\Controller\\WecateController.class.php"
 			],
 			[
 				"wecate/wecat",
@@ -1273,10 +1271,6 @@
 				"Application\\Console\\Controller\\EquipmentController.class.php"
 			],
 			[
-				"equipment/equipment",
-				"Application\\Console\\View\\Equipment\\Equipment.html"
-			],
-			[
 				"config",
 				"Application\\Common\\Conf\\config.php"
 			],
@@ -1299,14 +1293,6 @@
 			[
 				"rbac",
 				"ThinkPHP\\Library\\Org\\Util\\Rbac.class.php"
-			],
-			[
-				"left",
-				"Application\\Console\\View\\Index\\left.html"
-			],
-			[
-				"order/add",
-				"Application\\Console\\View\\Order\\add.html"
 			],
 			[
 				"index/main",
@@ -1339,10 +1325,6 @@
 			[
 				"equipment/edit",
 				"Application\\Console\\View\\Equipment\\edit.html"
-			],
-			[
-				"categoryc",
-				"Application\\Console\\Controller\\CategoryController.class.php"
 			],
 			[
 				"category/add",
@@ -1437,10 +1419,6 @@
 				"Application\\Console\\View\\Equipment\\tracking.html"
 			],
 			[
-				"equipmentcon",
-				"Application\\Console\\Controller\\EquipmentController.class.php"
-			],
-			[
 				"wecatec",
 				"Application\\Console\\Controller\\WecateController.class.php"
 			],
@@ -1529,10 +1507,6 @@
 				"Application\\Console\\View\\Wecate\\Wecate.html"
 			],
 			[
-				"lookover",
-				"Application\\Console\\View\\Staff\\lookover.html"
-			],
-			[
 				"staff",
 				"Application\\Console\\View\\Staff\\Staff.html"
 			],
@@ -1545,16 +1519,8 @@
 				"Application\\Console\\Controller\\StaffController.class.php"
 			],
 			[
-				"order",
-				"Application\\Console\\Controller\\OrderController.class.php"
-			],
-			[
 				"view/order/shopping",
 				"Application\\Console\\View\\Order\\shopping.html"
-			],
-			[
-				"order/edit",
-				"Application\\Console\\View\\Order\\edit.html"
 			],
 			[
 				"wecatecontroller.class.php",
@@ -1613,10 +1579,6 @@
 				"Application\\Console\\Controller\\StaffController.class.php"
 			],
 			[
-				"add",
-				"Application\\Console\\View\\Order\\add.html"
-			],
-			[
 				"ordercontroller.",
 				"Application\\Console\\Controller\\OrderController.class.php"
 			],
@@ -1635,10 +1597,6 @@
 			[
 				"product/add",
 				"Application\\Console\\View\\Product\\add.html"
-			],
-			[
-				"order/e",
-				"Application\\Console\\View\\Order\\edit.html"
 			],
 			[
 				"controller",
