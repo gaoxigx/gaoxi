@@ -166,6 +166,9 @@ class StaffController extends CommonController {
 	public function GetSupervisor(){
 		$cate_id = I('post.cate_id');
 		$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
+		if(empty($user)){
+			$user = D('Staff')->getfield('id,name',true);	
+		}
 		$this->ajaxReturn($user);
 	}
 	
