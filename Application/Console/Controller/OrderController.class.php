@@ -289,8 +289,9 @@ public function update(){
     $roleList   =   D('order_info');
     $data=$roleList->create();
     if($data) {
-        uset($data['order_no']);
-        $result = $roleList->where('order_no=%s',array($data['order_no']))->save($data);
+        $order_no=$data['order_no'];
+        unset($data['order_no']);
+        $result = $roleList->where('order_no=%s',array($order_no))->save($data);
         if($result) {
             $this->success('操作成功！');
         }else{

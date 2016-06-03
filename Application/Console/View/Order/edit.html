@@ -74,10 +74,9 @@
 
     <li><label>支付方式<b>*</b></label>  
         <div class="vocation uew-select">
-            <select name="Payment_method" class="uew-select-value">
+            <select name="payment_method" class="uew-select-value">
                 <volist name="payment" id="vo4">
-                <option value="{$vo4.id}"
-                <if condition="$vo4['id'] eq $info['payment_method']"> selected="selected" </if>>{$vo4.payment}</option>
+                    <option value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> selected="selected" </if>>{$vo4.payment}</option>
                 </volist>
             </select>
         </div>

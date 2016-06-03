@@ -24,5 +24,17 @@ class CategoryModel extends Model {
        $data=D('Category')->where($map)->getfield('cate_id,cate_name',true);                    
        return $data; 
     }
+    public function postleave($id){
+      $map['cate_parent']=I('get.id');
+      $map['status']=1;
+      $data[]=D('Category')->where($map)->getfield('cate_id,cate_name',true);                    
+      if($data){
+        foreach ($data as $k => $v) {
+          $this->postleave($k);
+        }        
+      }else{
+        return $data;
+      }
+    }
 
  }
