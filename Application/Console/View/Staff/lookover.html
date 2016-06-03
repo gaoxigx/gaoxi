@@ -129,16 +129,25 @@
                                 <label>部门：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <volist name="department" id="voo">
+                                <if condition="$user.sectionname != ''">
+								{$user.sectionname}
+								<else/>
+								<volist name="department" id="voo">
                                     <if condition="$voo['cate_id'] eq $user['section']" >{$voo.cate_name}</if>
                                 </volist>
+								</if>
                             </td>  
                             <td style="height:20px;padding:5px;">
                                 <label>岗位：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$quarters.cate_name}
+                                <if condition="$user.quartersname != ''">
+								{$user.quartersname}
+								<else/>
+								{$quarters.cate_name}
+								</if>
                             </td>
+							<if condition="$subordinates">
                             <td style="height:20px;padding:5px;">
                                 <label>下级部门：</label>
                             </td>	
@@ -147,7 +156,7 @@
                                     {$val}<span class="dish" style="display:inline">、</span>
                                 </foreach>
                             </td>
-
+							</if>
                         </tr>
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
@@ -155,7 +164,7 @@
                                 <label>姓名：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.name} 
+                                {$user.name|hiddenstr=###} 
                             </td>
                             <td style="height:20px;padding:5px;">
                                 <label>性别：</label>
@@ -186,7 +195,7 @@
                                 <label>身份证：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.identity_card}
+                                {$user.identity_card|hiddenstr=###}
                             </td>
                             <td style="height:20px;padding:5px;">
                                 <label>出身日期：</label>
@@ -198,7 +207,7 @@
                                 <label>电话：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.mobile}
+                                {$user.mobile|hiddenstr=###}
                             </td>  
 
                         </tr>
@@ -213,13 +222,13 @@
                                 <label>家庭住址：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.homeadd}
+                                {$user.homeadd|hiddenstr=###}
                             </td>  
                             <td style="height:20px;padding:5px;">
                                 <label>现居住址：</label>
                             </td>	
                             <td colspan="2" style="padding:5px 50px 5px 5px;">
-                                {$user.homenow}
+                                {$user.homenow|hiddenstr=###}
                             </td>
 
                         </tr>
@@ -228,13 +237,13 @@
                                 <label>紧急联系人：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.urgency}
+                                {$user.urgency|hiddenstr=###}
                             </td>
                             <td style="height:20px;padding:5px;">
                                 <label>紧急联系电话：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.phone_ugy}
+                                {$user.phone_ugy|hiddenstr=###}
                             </td>  
                             <td style="padding:5px;">
                                 <label>开户行：</label>
@@ -249,7 +258,7 @@
                                 <label>银行账号：</label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$user.bank_account}
+                                {$user.bank_account|hiddenstr=###}
                             </td>
                         </tr>
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
@@ -334,7 +343,46 @@
                             </foreach>
                         </table>
                     </div>
-
+					<div class="formtext" style="line-height:76px;">下级人员信息</div>
+					<div class="gwc" style=" margin:auto;">
+						<table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+							<tr style="background:#d0e7fa;">
+								<td class="tb1_td1" style="height:35px;">用户名</td>
+								<td class="tb1_td1" style="height:35px;">姓名</td>
+								<td class="tb1_td1" style="height:35px;">性别</td>
+								<td class="tb1_td1" style="height:35px;">昵称</td>
+								<td class="tb1_td1" style="height:35px;">部门</td>
+								<td class="tb1_td1" style="height:35px;">岗位</td>
+								<td class="tb1_td1" style="height:35px;">学历</td>
+								<td class="tb1_td1" style="height:35px;"> 电话</td>
+							</tr>
+							<foreach name="subordinatesUsers" item="val">
+							<tr>
+								<td class="tb2_td1" style="height:35px;">{$val.username}</td>
+								<td class="tb2_td1" style="height:35px;">{$val.name}</td>
+								<td class="tb2_td1" style="height:35px;">
+									<if condition="$val.sex eq 1">男
+									<elseif condition="$val.sex eq 2" />女
+									<else />未填
+									</if>
+								</td>
+								<td class="tb2_td1" style="height:35px;">{$val.nickname}</td>
+								<td class="tb2_td1" style="height:35px;">
+									{$cat[$val['section']]}
+								</td>
+								<td class="tb2_td1" style="height:35px;">
+									<if condition="$val.subordinates gt 0">
+									{$cat[$val['subordinates']]}
+									<else/>
+									{$cat[$val['quarters']]}
+									</if>
+								</td>
+								<td class="tb2_td1" style="height:35px;">{$education[$val['education']]}</td>
+								<td class="tb2_td1" style="height:35px;">{$val.mobile|hiddenstr=###}</td>
+							</tr>
+							</foreach>
+						</table>
+					</div>
                     <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
                         <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
                     </div>

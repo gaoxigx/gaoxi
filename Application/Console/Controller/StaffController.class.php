@@ -66,10 +66,14 @@ class StaffController extends CommonController {
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
-//        var_dump($list);
-//        exit();
-        //echo $User->getLastSql();        
-
+		foreach($list as $k=>$v){
+			if($v['subordinates'] != 0 && $v['subordinates'] != ''){
+				$subordinatetexts = explode(',',$v['subordinatetexts']);
+				$list[$k]['sectionname'] = $subordinatetexts[0];
+				$list[$k]['quartersname'] = array_pop($subordinatetexts);
+			}
+		}
+		
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $this->assign('education',$education);
@@ -98,26 +102,73 @@ class StaffController extends CommonController {
              $user = $model->where("id=".$id)->find(); 
          } 
 		
-		$section_map['cate_id']=$user['quarters'];
-		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
-		
-		$map['cate_parent']=$user['quarters'];
-		$subordinates = D('Category')->categoryone($map);
-		
 		$Equipment = D('Equipment')->where('staffid='.$id)->select();
 		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+		
+		if($user['subordinates'] == 0){
+			if($user['quarters'] > 0){
+				$section_map['cate_id']=$user['quarters'];
+				$quarters = D('Category')->field('cate_name')->where($section_map)->find();
+				
+				$map['cate_parent']=$user['quarters'];
+				$subordinates = D('Category')->categoryone($map);
+				
+				$subordinatesUsers = D('Staff')->where('id != '.$id.' && quarters='.$user['quarters'])->select();
+			}
+			
+		}else{
+			$user['subordinates'] = explode(',',$user['subordinates']);
+			$user['subordinatetexts'] = explode(',',$user['subordinatetexts']);
+			$subordinatesids = $user['subordinates'];
+			$subordinatetexts = $user['subordinatetexts'];
+			$user['sectionname'] = $user['subordinatetexts'][0];
+			$user['quartersid'] = array_pop($subordinatesids);
+			$user['quartersname'] = array_pop($subordinatetexts);
+			$map['cate_parent']=$user['quartersid'];
+			$subordinates = D('Category')->categoryone($map);
+		}
+		
+		
+		$this->GetCateName();
+		$this->GetEducationName();
 		
          $this->assign('department',D('Category')->department());
 		 $this->assign('quarters',$quarters);
 		 $this->assign('subordinates',$subordinates);
 		 $this->assign('Equipment',$Equipment);
 		 $this->assign('order_nums',$order_nums);
+		 $this->assign('subordinatesUsers',$subordinatesUsers);
          $this->assign('user',$user);
          $this->assign('id',$id);
          $this->display();
 
     }
-  
+	
+	/**
+	 *所有类别名称，根据分类ID获取名称，键值为分类ID
+	 */
+	public function GetCateName(){
+		$catdata=D('Category')->categoryone();  
+		$this->assign('cat',$catdata);
+	}
+	
+	/**
+	 *所有学历名称，根据键值获取名称
+	 */
+	public function GetEducationName(){
+		$education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
+        $this->assign('education',$education);
+	}
+	
+	/**
+	 *根据类id查找人员
+	 */
+	public function GetSupervisor(){
+		$cate_id = I('post.cate_id');
+		$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
+		$this->ajaxReturn($user);
+	}
+	
 //插入员工数据
     public function insert(){
         $jumpUrl =U('Console/Staff/Staff');
@@ -128,14 +179,31 @@ class StaffController extends CommonController {
             $data['entry_time']=strtotime(I('post.entry_time'));
             $data['graduation_date']=strtotime(I('post.graduation_date'));
             $data['birth_date']=strtotime(I('post.birth_date'));
+			
+			$catdata=D('Category')->categoryone();
+			foreach($data['subordinates'] as $k=>$v){
+				if($v == 0){
+					unset($data['subordinates'][$k]);
+				}else{	
+					$data['subordinatetexts'] .= $catdata[$v].',';
+				}
+			}
+			
+			$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
+			$data['subordinates'] = implode(',',$data['subordinates']);
+			
             $result =   $roleList->add($data);
+			
             if($result) {
+				//echo json_encode(array('result'=>1));
                 $this->success('数据添加成功！', $jumpUrl);
             }else{
-                $this->error('数据添加错误！', $jumpUrl);
+              //  echo json_encode(array('result'=>0));
+			   $this->error('数据添加错误！', $jumpUrl);
             }
         }else{
-            $this->error($roleList->getError());
+           // echo json_encode(array('result'=>-1));
+			$this->error($roleList->getError());
         }
        
     }
@@ -155,6 +223,19 @@ class StaffController extends CommonController {
                     $data['graduation_date']=strtotime(I('post.graduation_date'));
                     $data['birth_date']=strtotime(I('post.birth_date'));
                     $data['education']=I('post.education1');
+					
+					$catedata=D('Category')->categoryone();
+					foreach($data['subordinates'] as $k=>$v){
+						if($v == 0){
+							unset($data['subordinates'][$k]);
+						}else{	
+							$data['subordinatetexts'] .= $catedata[$v].',';
+						}
+					}
+					
+					$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
+					$data['subordinates'] = implode(',',$data['subordinates']);
+					
                     $result=$model->where($map)->save($data);                       
                     if ($result){
                         $this->success('修改成功', $jumpUrl);
@@ -170,11 +251,47 @@ class StaffController extends CommonController {
          if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
-                
-         $this->assign('department',D('Category')->department());
-         $this->assign('user',$user);
-         $this->assign('id',$id);
-         $this->display();
+			$str = strpos($user['subordinates'],',');
+			if($str<0){
+				$user['subordinates'] = $user['section'];
+				$user['subordinatestexts'] = $user['departmenttext'];
+				
+				if($user['quarters'] != 0){
+					$user['subordinates'] .= ','.$user['quarters'];
+					$user['subordinatestexts'] .= ','.$user['posttext'];
+				}
+				
+				if($user['subordinates'] != 0){
+					$user['subordinates'] .= ','.$user['subordinates'];
+					$user['subordinatestexts'] .= ','.$user['subordinatestexts'];
+				}
+				 
+				//$user['subordinates'] = explode(',',$user['subordinates']);
+				//$user['subordinatestexts'] = explode(',',$user['subordinatestexts']);
+				
+				//$user['subordinates'] = json_encode($user['subordinates']);
+				//$user['subordinatestexts'] = json_encode($user['subordinatestexts']);
+			}
+			
+			
+			/*
+			 $cate_id = array_pop($user['subordinates']);
+			 $top_cate = D('Category')->where('cate_id='.$cate_id)->find();
+			 $top_cates = D('Category')->where('cate_id='.$top_cate['cate_parent'])->find();
+			 $users = $model->select();
+			 foreach($users as $k=>$v){
+				 $users[$k]['subordinates'] = explode(',',$v['subordinates']);
+				 if(array_pop($users[$k]['subordinates']) != $top_cate['cate_parent']){
+					 unset($users[$k]);
+				 }
+			 }
+			 
+			 print_r($top_cates);exit;*/
+			 
+			$this->assign('department',D('Category')->department());
+			$this->assign('user',$user);
+			$this->assign('id',$id);
+			$this->display();
         }
     }     
 	
