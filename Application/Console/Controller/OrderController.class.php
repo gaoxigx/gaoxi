@@ -202,37 +202,27 @@ public function edit($id){
 }
 
 
-//查看页面
+//查看订单页面
     public function look(){
         $id=I('get.id');        
         $model = D('order_info');      
         if(empty($id)){            
-            $this->error('请选择查看订单');
+            $this->error('请选择对应的订单');
         } 
-		$user = $model->where("id=%d",array($id))->find(); 
-
-
-		$section_map['cate_id']=$user['quarters'];
-		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
-		
-		$map['cate_parent']=$user['quarters'];
-		$subordinates = D('Category')->categoryone($map);
-		
-		$Equipment = D('Equipment')->where('staffid='.$id)->select();
-		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+        
+        $info = $model->where("id=%d",array($id))->find(); 
+        
+        $Equipment = D('Equipment')->where('staffid='.$info['agent'])->select();
+        
         $payment=D('payment')->where('')->getfield('id,payment',true);
         $staff=D('staff')->getfield('id,name',true);
-		
-         $this->assign('department',D('Category')->department());
-		 $this->assign('quarters',$quarters);
-		 $this->assign('subordinates',$subordinates);
-		 $this->assign('Equipment',$Equipment);
-		 $this->assign('order_nums',$order_nums);
-         $this->assign('payment',$payment);
-         $this->assign('staff',$staff);
-         $this->assign('info',$user);
-         $this->assign('id',$id);
-         $this->display();
+
+        $this->assign('Equipment',$Equipment);
+        $this->assign('payment',$payment);
+        $this->assign('staff',$staff);
+        $this->assign('info',$info);
+        $this->assign('id',$id);
+        $this->display();
 
     }
 
@@ -286,19 +276,18 @@ public function insert(){
 
 //更新数据
 public function update(){
-    $roleList   =   D('order_info');
-    $data=$roleList->create();
-    if($data) {
-        uset($data['order_no']);
-        $result = $roleList->where('order_no=%s',array($data['order_no']))->save($data);
-        if($result) {
-            $this->success('操作成功！');
-        }else{
-            $this->error('写入错误！');
-        }
+$roleList   =   D('order_info');
+$data=$roleList->create();
+if($data) {
+    $result = $roleList->save($data);
+    if($result) {
+        $this->success('操作成功！');
     }else{
-        $this->error($roleList->getError());
+        $this->error('写入错误！');
     }
+}else{
+    $this->error($roleList->getError());
+}
 }
 
 //删除数据
