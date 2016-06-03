@@ -46,16 +46,16 @@ $(document).ready(function(){
     <div class="rightinfo">
     
     <div class="tools">
-    
+    <!--
     	<ul class="toolbar">
         <li><a href="{:U('Console/Category/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加一级分类</a></li>
-<!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
+         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
         <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
-        <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
+        <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> 
 
         </ul>
         
-        
+        -->
         <ul class="toolbar1">
         <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
         </ul>
@@ -88,61 +88,22 @@ $(document).ready(function(){
         </thead>
         
        <tbody>
-
-
-    <if condition="!empty($cateRow)">
-    <php>
-    function showTree($data,$kongge) {
-       $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-        foreach ($data as $key => $vo) {
-        echo '<tr>';
-            if($vo['cate_haschild']==0 )
-            {
-            $kongge=$kongge.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-             }
-            echo '<td>'.$vo['cate_id'].'</td>';
-
-            echo '<td';
-            if($vo['cate_parent']==0)
-            {
-           
-            }
-            echo '>'.$kongge.''.$vo['cate_name'].'('.$vo['cate_name2'].')</td>';
-            echo '<td>'.$vo['cate_parent'].'</td>';
-			if($vo['cate_haschild'] == 1){
-				echo '<td>有</td>';
-			}else{
-				echo '<td>没有</td>';
-			}
-            echo '<td>'.$vo['cate_sort'].'</td>';
-			if($vo['is_show'] == 1){
-				echo '<td>显示</td>';
-			}else{
-				echo '<td>不显示</td>';
-			}
-			if($vo['status'] == 1){
-				echo '<td>已审核</td>';
-			}else{
-				echo '<td>未审核</td>';
-			}
-            echo '<td>'.date('Y-m-d H:i:s',$vo['addtime']).'</td>';
-            echo '<td>'.date('Y-m-d H:i:s',$vo['uptime']).'</td>';
-            echo '<td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a> ' ;
-            echo '<a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a> ' ;
-            echo '<a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td></tr>';
-           
-            if (!empty($vo['childs'])) {
-                $i=$i.'&nbsp;&nbsp;&nbsp;&nbsp;'; 
-                showTree($vo['childs'],$i);
-           }
-            $i='';
-                  
-        }
-    }
-    showTree($cateRow,$i);
-    </php>
-    </if>
-
+        <volist name="cateRow" id="vo">
+                <tr class="addinfo" id="tr{$vo['cate_id']}" >                
+                    <td class="cate_id">{$vo['cate_id']}</td>
+                    <td>{$vo['cate_name']}</td> 
+                    <td>{$vo['cate_haschild']}</td>              
+                    <td>{$vo['cate_parent']}</td>
+                    <td>{$vo['cate_sort']}</td>
+                    <td>{$vo['is_show']}</td>
+                    <td>{$vo['is_show']}</td>
+                    <td>{$vo['addtime']}</td>
+                    <td>{$vo['uptime']}</td>
+                    <td><a href="__URL__/add/pid/'.$vo['cate_id'].'" class="tablelink">添加子类</a>
+                    <a href="__URL__/edit/cate_id/'.$vo['cate_id'].'" class="tablelink">修改</a>
+                    <a href="__URL__/delete/cate_id/'.$vo['cate_id'].'" class="tablelink" > 删除</a></td>
+                </tr>
+            </volist>
 
 </tbody>
     </table>
@@ -170,11 +131,50 @@ $(document).ready(function(){
     
     </div>   
     
-    </div>
-    
+    </div>    
     <script type="text/javascript">
-	$('.tablelist tbody tr:odd').addClass('odd');
+	   $('.tablelist tbody tr:odd').addClass('odd');
+       
+       var ui="";
+       var cs=0;
+       $('.addinfo').find('.cate_id').each(function(){
+            var t=0;
+            ui=""; 
+            var id=$(this).html();        
+            cateinfo(id,t);
+       })       
+        function cateinfo(id,t){             
+            var url="{:U('Category/getroleninfo')}"+"?id="+id;
+            $.get(url,function(data){
+                console.log(data);
+                if(t==0){
+                    ui="┣━ ━ ";      
+                }else{   
+                    ui=$('.td'+id).html()+"━ ━ ";                     
+                }
+              
+                if(data!='undefined' && data!='' && data!='0'){                       
+                    cs++;
+                    for(i in data){         
+                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>"+data[i].addtime+"</td><td>"+data[i].uptime+"</td><td>";
+                        string+="<a href='__URL__/add/pid/"+data[i].cate_id+"' class='tablelink'>添加子类</a>";
+                        string+="<a href='__URL__/edit/cate_id/"+data[i].cate_id+"' class='tablelink'>修改</a>";
+                        string+="<a href='__URL__/delete/cate_id/"+data[i].cate_id+"' class='tablelink' > 删除</a></td></tr>";
+
+                        $("#tr"+id).after(string); 
+                        cateinfo(data[i].cate_id,cs);
+                    }
+
+                }else{
+                    cs=1;
+                }
+
+                
+            })
+        }
 	</script>
+
+
 
 </body>
 
