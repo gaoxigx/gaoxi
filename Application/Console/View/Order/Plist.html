@@ -86,9 +86,10 @@ $(document).ready(function(){
                     {$vo.order_no|get_orderno_to_pro=###}
                 </table>
                 </td>
-                <td>{$vo.total_price}</td>
-                <td>{$vo.username}</td>
-                <td>{$vo.username}</td>
+                <td>{$vo.total_price}</td> 
+                <td>{$staff[$vo['assistant']]}</td>
+                <td>{$staff[$vo['agent']]}</td>
+
                 <td>
                     <switch name="vo.payment_status">
                         <case value="0">已下单.</case>
