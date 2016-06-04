@@ -58,29 +58,30 @@
                                 <label class="pl10">通讯津贴<b></b></label>
                                 <input name="phone" id="phone" type="text" class="dfinput_left" value=""  />
                             </li>
-                            <li><label>部门<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                    <select id="department" name="section" class="uew-select-value">
+                            <li><label>岗位<b>*</b></label>  
+                                <div class="vocation uew-select" id="quarters_div">                 
+                                    <select id="department" name="subordinates[]" class="uew-select-value">
+										<option>请选择部门</option>
                                         <volist name="department" id="voo">
-                                            <option value="{$voo.cate_id}">{$voo.cate_name}</option>
+                                            <option value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}">{$voo.cate_name}</option>
                                         </volist>
                                     </select>
-                                    <input name='departmenttext' type="hidden" id="departmenttext" />
                                 </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
-                            </li>    
-                            <li><label>岗位<b>*</b></label>  
-                                <div class="vocation uew-select">
-									<div class="col-sm-9">
-										<select id="post" name="quarters">
-											<option>请选择部门</option>
-										</select>
-									</div>
-                                <input name='posttext' type="hidden" id="posttext" />
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line"></div>
+								
+								<div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                            </li>
+							
+							<li><label>上司<b>*</b></label>  
+								<div class="vocation uew-select" >
+									<select id="supervisor" name="nibs" class="uew-select-value">
+										<option>请选择上司</option>
+                                       
+                                    </select>
+								</div>
+								<input type="hidden" id="supervisortext" name="nibstext"  />
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 
-                            <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
+							<li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
                             <li><label>性别<b>*</b></label><cite><input id="sex" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
                             <li><label>身份证<b>*</b></label><input name="identity_card" id="identity_card" type="text" class="dfinput" value=""  /></li>
                             <li><label>出身日期<b></b></label><input name="birth_date" id="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
@@ -150,8 +151,12 @@
                             <li><label>备注说明<b></b></label><input name="comment" id="comment" type="text" class="dfinput" value=""/></li> 
                             
                             <div class="col-md-offset-3 col-md-9">
-                                <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
-                                &nbsp; &nbsp; &nbsp;
+                                <!--
+								<button class="btn btn-info" type="submit" ><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                -->
+								<button class="btn btn-info" type="submit"  ><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                
+								&nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
                             </div>
                         </ul>
@@ -174,34 +179,103 @@
         
         $('#post').change(function(){                        
             $('#posttext').val($(this).find("option:selected").text());
+			if($(this).find("option:selected").attr('cate_haschild') == 1){
+				subordinates($(this).find("option:selected").val());
+			}else{
+				$('#subordinates').remove();
+			}
         });
 
         $('#bankaddress').change(function(){                        
             $('#banckaddresstext').val($(this).find("option:selected").text());
         });
        
-       
-        $('#department').change(function(){
-            $('#departmenttext').val($(this).find("option:selected").text());            
-            department();                        
-        });
-
-        function department(){
-            var id=$('#department').val();
-            var url="{:U('Console/Staff/department')}?catid="+id;                        
+		$(function(){
+			$('#department').change(function(){
+				nextselect(this);
+			});
+			$('#supervisor').change(function(){
+				var supervisortext = $(this).find('option:selected').text();
+				$('#supervisortext').val(supervisortext);
+			});
+		})
+		//获取上级
+		function getsupervisor(pid){
+			var u_url="{:U('Console/Staff/GetSupervisor')}";
+			$.post(u_url,{cate_id:pid},function(data){
+				//console.log(data);
+				
+				if(data != 0 && data != '' && data != null){
+					var html = '';
+					$('#supervisor').html('<option value="0">请选择上司</option>');
+					for(i in data){
+						
+						html += '<option value="'+i+'">'+data[i]+'</option>';
+					}
+					$('#supervisor').append(html);
+				}else{
+					$('#supervisor').html('<option value="0">请选择上司</option>');
+				}
+				
+			})
+			
+		}
+		
+		function nextselect(obj){
+			var id = $(obj).val();
+			var select_length = $('#quarters_div').find('select').length;
+			
+			var supervisorid = $(obj).prev('select').val();
+			if(!supervisorid){
+				supervisorid =0;
+			}
+			getsupervisor(supervisorid);
+			
+			$.each($('#quarters_div select'),function(){
+				if($(this).index() > $(obj).index()+1){
+					$(this).remove();
+				}
+			})
+			subordinates(obj,id);
+			/*
+			if($(obj).find("option:selected").attr('cate_haschild') == 1){
+				subordinates(obj,id);
+			}else{
+				$(obj).next('select').remove();
+				
+			}	
+			*/
+		};
+		
+        function subordinates(obj,id){
+            var url="{:U('Console/Staff/department')}?catid="+id;
+			
             $.get(url,function(data){
-                $("#post").html("");
-                if(data.length==0){
-                    $("#post").append("<option value='0'>请新建岗位</option>");
-                    return false;
+				var subordinates_html = '<select id="subordinates_'+id+'" name="subordinates[]" onchange="nextselect(this)" class="subordinates uew-select-value" style="margin-left:5px;">\
+											<option value="0">请选择</option>\
+										</select>';
+				
+				if(data.length == 0){
+					return false;
+				}
+				if(!$(obj).next('select').html() && data.length > 0){
+					$("#quarters_div").append(subordinates_html);
+				}
+				
+				$(obj).next('select').html('');
+				$(obj).next('select').attr('id','subordinates_'+id);
+				$(obj).next('select').attr('name','subordinates[]');
+				$(obj).next('select').append('<option value="0">请选择</option'); 
+				
+                for(i=0 ;i<data.length;i++){
+					$(obj).next('select').append('<option value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
                 }
-                for(i=0 ;i<data.length;i++){                                           
-                    $("#post").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option')
-                }
-                          
+				if($('#subordinates_'+id).val() == 0){
+					$('#subordinates_'+id).next('select').remove();
+				}         
             })            
         }
-
+		
     </script>
 
 </html>
