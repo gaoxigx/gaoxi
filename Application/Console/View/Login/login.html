@@ -48,7 +48,7 @@
                     <input id="captcha" maxlength="5" name="cpatcha" type="text" class="imgcode" value="" size="8" />
                 </span>
                 <span class="codesp">
-                    <img src="{:U('Console/Login/captcha')}" onclick="this.src=this.src+'?'">
+                    <img src="{:U('Console/Login/captcha',array('time'=>time()))}" onclick="this.src=this.src+'?'">
                 </span>
             </li>
             <li>
