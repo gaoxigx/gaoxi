@@ -257,29 +257,11 @@ class StaffController extends CommonController {
          if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
-			$str = strpos($user['subordinates'],',');
-			if($str<0){
-				$user['subordinates'] = $user['section'];
-				$user['subordinatestexts'] = $user['departmenttext'];
-				
-				if($user['quarters'] != 0){
-					$user['subordinates'] .= ','.$user['quarters'];
-					$user['subordinatestexts'] .= ','.$user['posttext'];
-				}
-				
-				if($user['subordinates'] != 0){
-					$user['subordinates'] .= ','.$user['subordinates'];
-					$user['subordinatestexts'] .= ','.$user['subordinatestexts'];
-				}				 
-
-			}
-            If($user['subordinates']){        
-
+            If($user['subordinates']){      
                 $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,strrpos($user['subordinates'],','))))->select();//getfield('cate_id,cate_name',true);
                 foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
                 }
-                var_dump($potview);
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
