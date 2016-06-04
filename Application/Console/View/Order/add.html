@@ -110,7 +110,7 @@
 
                         <div class="formtext">请正确填写订单信息！</div>
                         <ul class="forminfo">
-                            <li><label>经纪人组长<b>*</b></label>  
+                            <li><label>经纪人(组长)<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <select id="assistant" name="assistant" class="uew-select-value">
                                         <volist name="assistant" id="vo1">
@@ -162,10 +162,11 @@
                         <include file="./Application/Console/View/order/shopping.html" />
 
 
-                        <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="提交订单"/></li>
-
-
-
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn btn-info" type="reset" onclick="javascript:history.back(-1);"><i class="ace-icon fa fa-undo bigger-110"></i>返回</button>
+                        </div>
                     </div> 
                 </form>        
             </div> 
