@@ -139,7 +139,17 @@
                                         <volist name="department" id="voo">
                                             <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}">{$voo.cate_name}</option>
                                         </volist>
-                                    </select>
+                                    </select>                                    
+
+                                    <foreach name="post" item="vo"> 
+                                         <select  name="subordinates[]" class="uew-select-value">                                         
+                                                <foreach name="vo" item="v">   
+                                                    <option value="{$v.cate_id}" <in name="v['cate_id']" value="$user['subordinates']" >selected="selected"</in>  >{$v.cate_name}</option>
+                                                </foreach>
+                                          </select>
+                                    </foreach>
+<!-- 
+                                     <in name="$v['cate_id']" value="$voo.subordinates" >selected="selected"</in> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}" -->
                                 </div>
 								<input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
 								<div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
@@ -392,6 +402,9 @@
 	<input type="hidden" id="subordinatesids" value='{$user.subordinates}' />
     <script type="text/javascript">
 		
+        
+
+
         $('#education').change(function(){                        
             $('#educationtext').val($(this).find("option:selected").text());
         });
@@ -416,7 +429,7 @@
 		$(function(){
 			//defaul_cate('#department');
 			$('#department').change(function(){
-				nextselect(this);
+				nextselect(this,0);
 			});
 			$('#supervisor').change(function(){
 				var supervisortext = $(this).find('option:selected').text();
@@ -426,64 +439,13 @@
 		
 		function defaul_cate(obj){
 			var subordinatesids = $('#subordinatesids').val().split(',');
-			$('#department').val(subordinatesids['0']);
+			//$('#department').val(subordinatesids['0']);
 			
-			for(j = 0;j<subordinatesids.length;j++){                                                                                                                                                                                                      
+			for(j = 0;j<subordinatesids.length;j++){ 
+                nextselect(subordinatesids[j],1);                                                                   
 				//subordinates(obj,subordinatesids[j]);
-				var url="{:U('Console/Staff/department')}?catid="+subordinatesids[j];
-				
-				$.get(url,function(data){
-				
-					var subordinates_html = '<select id="subordinates_'+subordinatesids[j]+'" name="subordinates[]" onchange="nextselect(this)" class="subordinates uew-select-value" style="margin-left:5px;">\
-												<option value="0">请选择</option>\
-											</select>';
-					
-					if(data.length == 0){
-						return false;
-					}
-					$("#quarters_div").append(subordinates_html);
-					var selindex = $(obj).next('select').index();
-					
-					$("#quarters_div select").each(function(){
-						for(i=0 ;i<data.length;i++){
-							$(this).append('<option value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
-							
-							/*
-							var post2=data[i].cate_id; 
-							
-							if(subordinatesids[selindex] == post2){
-								$('subordinates_'+subordinatesids[j]).append('<option selected="selected" value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
-							}else{
-								$('subordinates_'+subordinatesids[j]).append('<option value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
-							}*/
-							
-						}
-					})
-						
-					
-					
-					
-					/*
-					if(!$(obj).next('select').html() && data.length > 0){
-						$("#quarters_div").append(subordinates_html);
-					}*/
-					
-					
-					//$(obj).next('select').attr('id','subordinates_'+subordinatesids[j]);
-					//$(obj).next('select').attr('name','subordinates[]');
-					//$(obj).next('select').append('<option value="0">请选择</option'); 
-					
-					
-					
-					
-					
-
-							
-				}) 
-			}
-			
-			
-			
+				//var url="{:U('Console/Staff/department')}?catid="+subordinatesids[j];
+			}	
 		}
 		
 		//获取上级
@@ -508,11 +470,15 @@
 			
 		}
 		
-		function nextselect(obj){ 
+		function nextselect(obj,idload){ 
 			var id = $(obj).val();
 			var select_length = $('#quarters_div').find('select').length;
+			if(idload>0){
+                var supervisorid = $(obj).prev('select').val();    
+            }else{
+                var supervisorid =idload
+            }
 			
-			var supervisorid = $(obj).prev('select').val();
 			if(!supervisorid){
 				supervisorid =0;
 			}
@@ -540,7 +506,7 @@
 			
             $.get(url,function(data){
 				
-				var subordinates_html = '<select id="subordinates_'+id+'" name="subordinates[]" onchange="nextselect(this)" class="subordinates uew-select-value" style="margin-left:5px;">\
+				var subordinates_html = '<select id="subordinates_'+id+'" name="subordinates[]" onchange="nextselect(this,0)" class="subordinates uew-select-value" style="margin-left:5px;">\
 											<option value="0">请选择</option>\
 										</select>';
 				
