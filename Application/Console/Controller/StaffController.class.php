@@ -259,7 +259,7 @@ class StaffController extends CommonController {
 			if($user['subordinates']){      
                 $str = strrpos($user['subordinates'],',');
 				/*if($str){
-					$index = substr($user['subordinates'],0,$str);
+					$index = $str;
 				}else{
 					$index = strlen($user['subordinates']);
 				}
