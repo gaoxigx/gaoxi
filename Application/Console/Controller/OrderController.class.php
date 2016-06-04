@@ -146,7 +146,10 @@ public function Plist($name=''){
         $Page->parameter[$key]   =   urlencode($val);
           }
     }
-    $User = M('order_info'); // 实例化User对象
+    $User = M('order_info'); // 实例化User对象 
+    $data=$User->select();    
+
+    
     $count = $User->where($map)->count();// 查询满足要求的总记录数
     $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
     $Page->setConfig('header','个会员');
@@ -154,6 +157,11 @@ public function Plist($name=''){
     // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
     $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
 
+    $staff=D('staff')->getfield('id,name',true);
+    $catdata=D('Category')->categoryone();      
+    
+    $this->assign('staff',$staff);
+    $this->assign('cat',$catdata);
     $this->assign('list',$list);// 赋值数据集
     $this->assign('page',$show);// 赋值分页输出
     $this->display(); // 输出模板
@@ -209,31 +217,31 @@ public function edit($id){
         if(empty($id)){            
             $this->error('请选择查看订单');
         } 
-		$user = $model->where("id=%d",array($id))->find(); 
-
-
-		$section_map['cate_id']=$user['quarters'];
-		$quarters = D('Category')->field('cate_name')->where($section_map)->find();
+		$info = $model->where("id=%d",array($id))->find(); 
+                $Equipment = D('Equipment')->where('staffid='.$info['agent'])->select();
 		
-		$map['cate_parent']=$user['quarters'];
-		$subordinates = D('Category')->categoryone($map);
-		
-		$Equipment = D('Equipment')->where('staffid='.$id)->select();
-		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
-        $payment=D('payment')->where('')->getfield('id,payment',true);
-        $staff=D('staff')->getfield('id,name',true);
-		
-         $this->assign('department',D('Category')->department());
-		 $this->assign('quarters',$quarters);
-		 $this->assign('subordinates',$subordinates);
-		 $this->assign('Equipment',$Equipment);
-		 $this->assign('order_nums',$order_nums);
-         $this->assign('payment',$payment);
-         $this->assign('staff',$staff);
-         $this->assign('info',$user);
-         $this->assign('id',$id);
-         $this->display();
+                $payment=D('payment')->where('')->getfield('id,payment',true);
+                $staff=D('staff')->getfield('id,name',true);
+                   
+                $this->GetProdect($info['order_no']);
+                
+                $this->assign('department',D('Category')->department());
+                $this->assign('quarters',$quarters);
+                $this->assign('subordinates',$subordinates);
+                $this->assign('Equipment',$Equipment);
+                $this->assign('order_nums',$order_nums);
+                $this->assign('payment',$payment);
+                $this->assign('staff',$staff);
+                $this->assign('info',$info);
+                $this->assign('id',$id);
+                $this->display();
 
+    }
+    //根据订单号查找产品
+    public function GetProdect($order_no){
+            $datagoods = D('order_goods');
+            $products = $datagoods-> field('product,price2,buynum')->where('order_no="'.$order_no.'"')->order('id desc')->select();
+            $this->assign('products',$products);
     }
 
 //插入数据
