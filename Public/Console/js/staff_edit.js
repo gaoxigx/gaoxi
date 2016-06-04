@@ -2,7 +2,7 @@ $(function(){
 
 		$("#form1").validate({
 			submitHandler:function(form) {
-				$(form).submit();
+				form.submit();
 			},
 			rules:{
 				username:{
