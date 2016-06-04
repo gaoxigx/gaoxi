@@ -167,9 +167,10 @@
 								<div class="vocation uew-select" >
 									<select id="supervisor" name="nibs" class="uew-select-value">
 										<option>请选择上司</option>
-                                       
+										
                                     </select>
 								</div>
+								<input type="hidden" id="old_nibs" value="{$user.nibs}">
 								<input type="hidden" id="supervisortext" name="nibstext"  />
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 	
@@ -436,6 +437,7 @@
 		//获取上级
 		function getsupervisor(pid){
 			var u_url="{:U('Console/Staff/GetSupervisor')}";
+			var old_nibs = $('#old_nibs').val();
 			$.post(u_url,{cate_id:pid},function(data){
 				//console.log(data);
 				
@@ -443,8 +445,12 @@
 					var html = '';
 					$('#supervisor').html('<option value="0">请选择上司</option>');
 					for(i in data){
+						if(old_nibs == i){
+							html += '<option value="'+i+'" selected="selected" >'+data[i]+'</option>';
+						}else{
+							html += '<option value="'+i+'">'+data[i]+'</option>';
+						}
 						
-						html += '<option value="'+i+'">'+data[i]+'</option>';
 					}
 					$('#supervisor').append(html);
 				}else{
