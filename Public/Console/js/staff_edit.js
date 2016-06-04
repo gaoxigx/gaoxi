@@ -1,11 +1,9 @@
 $(function(){	
-		$.validator.setDefaults({
-			submitHandler:function() {
-				$('#form1').submit();
-			}
-		});
 
 		$("#form1").validate({
+			submitHandler:function(form) {
+				$(form).submit();
+			},
 			rules:{
 				username:{
 					required:true,
@@ -108,7 +106,15 @@ $(function(){
 					maxlength:'11位手机号码'
 				}
 			},
-			errorClass:'cerror',
+			showErrors: function(errorMap, errorList) {   
+	            var msg = "";   
+	            $.each( errorList, function(i,v){   
+	              msg += (v.message+"\r\n");   
+	            });   
+	            if(msg!="") alert(msg);   
+	        },   
+ 
+			
 			
 		});
 		

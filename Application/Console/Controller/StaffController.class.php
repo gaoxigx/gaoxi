@@ -269,6 +269,7 @@ class StaffController extends CommonController {
 				foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
                 }
+
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
