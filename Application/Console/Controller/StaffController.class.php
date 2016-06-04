@@ -258,7 +258,7 @@ class StaffController extends CommonController {
            
 			if($user['subordinates']){      
                 $str = strrpos($user['subordinates'],',');
-				if($str){
+				/*if($str){
 					$index = substr($user['subordinates'],0,$str);
 				}else{
 					$index = strlen($user['subordinates']);
@@ -268,8 +268,17 @@ class StaffController extends CommonController {
                
 				foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
-                }
-
+                }*/
+				
+if($str > 0){
+	$post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,$str)))->select();//getfield('cate_id,cate_name',true);
+               
+	foreach ($post as $k => $v) {
+	   $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
+	}
+}else{
+	$potview=array();
+}
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
