@@ -290,11 +290,13 @@ class StaffController extends CommonController {
 			 }			 
 			 print_r($top_cates);exit;*/            
 
-            If($user['subordinates']){
-                $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array($user['subordinates']))->select();//getfield('cate_id,cate_name',true);
+            If($user['subordinates']){        
+
+                $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,strrpos($user['subordinates'],','))))->select();//getfield('cate_id,cate_name',true);
                 foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
                 }
+                var_dump($potview);
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
