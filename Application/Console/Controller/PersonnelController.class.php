@@ -127,9 +127,9 @@ public function passupdateall(){
                 // dump($result);
                 // exit();
                 if($result) {
-                    $this->success('密码重置成功！',U('Personnel/PerList'));
+                    $this->success('密码修改成功！',U('Personnel/PerList'));
                 }else{
-                    $this->error('密码重置失败！');
+                    $this->error('密码修改失败！');
                 }
         }else{
             $this->error('此用户不存在');
@@ -150,23 +150,25 @@ public function passupdate(){
     }else{
         $oldpassword = md5(I('post.oldpassword'));
         $dataa["password"] = md5(I('post.password'));
-        // dump(md5(I('post.password')));
-        // exit();
-
-        $controller = M('controller');
+        
+        $controller = D('controller');
         $data = $controller ->where('id='.$id.' and password="'.$oldpassword.'"')->find();
+		if(empty($data)){
+			$controller = D('Staff');
+			$data = D('Staff') ->where('id='.$id.' and password="'.$oldpassword.'"')->find();
+		}
+		
         if($data) {
-                $result = $controller->where('id='.$id)->save($dataa);
-                // dump($result);
-                // exit();
+                $result = $controller->where('id='.$id.' and password="'.$oldpassword.'"')->save($dataa);
+                
                 if($result) {
                     $this->success('密码更新成功！');
                 }else{
                     $this->error('写入错误！');
                 }
-            }else{
-            $this->error('原密码错误');
-            }
+        }else{
+            $this->error('此用户不存在');
+        }
 
     }
 

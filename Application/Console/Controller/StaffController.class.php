@@ -66,13 +66,6 @@ class StaffController extends CommonController {
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
-		foreach($list as $k=>$v){
-			if($v['subordinates'] != 0 && $v['subordinates'] != ''){
-				$subordinatetexts = explode(',',$v['subordinatetexts']);
-				$list[$k]['sectionname'] = $subordinatetexts[0];
-				$list[$k]['quartersname'] = array_pop($subordinatetexts);
-			}
-		}
 		
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
@@ -105,29 +98,15 @@ class StaffController extends CommonController {
 		$Equipment = D('Equipment')->where('staffid='.$id)->select();
 		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
 		
-		if($user['subordinates'] == 0){
-			if($user['quarters'] > 0){
-				$section_map['cate_id']=$user['quarters'];
-				$quarters = D('Category')->field('cate_name')->where($section_map)->find();
-				
-				$map['cate_parent']=$user['quarters'];
-				$subordinates = D('Category')->categoryone($map);
-				
-				$subordinatesUsers = D('Staff')->where('id != '.$id.' && quarters='.$user['quarters'])->select();
-			}
+		if($user['quarters'] > 0){
+			$section_map['cate_id']=$user['quarters'];
+			$quarters = D('Category')->field('cate_name')->where($section_map)->find();
 			
-		}else{
-			$user['subordinates'] = explode(',',$user['subordinates']);
-			$user['subordinatetexts'] = explode(',',$user['subordinatetexts']);
-			$subordinatesids = $user['subordinates'];
-			$subordinatetexts = $user['subordinatetexts'];
-			$user['sectionname'] = $user['subordinatetexts'][0];
-			$user['quartersid'] = array_pop($subordinatesids);
-			$user['quartersname'] = array_pop($subordinatetexts);
-			$map['cate_parent']=$user['quartersid'];
+			$map['cate_parent']=$user['quarters'];
 			$subordinates = D('Category')->categoryone($map);
+			
+			$subordinatesUsers = D('Staff')->where('id != '.$id.' && quarters='.$user['quarters'])->select();
 		}
-		
 		
 		$this->GetCateName();
 		$this->GetEducationName();
@@ -184,13 +163,20 @@ class StaffController extends CommonController {
             $data['birth_date']=strtotime(I('post.birth_date'));
 			
 			$catdata=D('Category')->categoryone();
+			$subordinates_data = array();
 			foreach($data['subordinates'] as $k=>$v){
 				if($v == 0){
 					unset($data['subordinates'][$k]);
 				}else{	
+					$subordinates_data[] = $v;
 					$data['subordinatetexts'] .= $catdata[$v].',';
 				}
 			}
+			
+			$data['section'] = array_shift($subordinates_data);
+			$data['departmenttext'] = $catdata[$data['section']];
+			$data['quarters'] = array_pop($subordinates_data);
+			$data['posttext'] = $catdata[$data['quarters']];
 			
 			$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
 			$data['subordinates'] = implode(',',$data['subordinates']);
@@ -228,13 +214,21 @@ class StaffController extends CommonController {
                     $data['education']=I('post.education1');
 					
 					$catedata=D('Category')->categoryone();
+					
+					$subordinates_data = array();
 					foreach($data['subordinates'] as $k=>$v){
 						if($v == 0){
 							unset($data['subordinates'][$k]);
 						}else{	
+							$subordinates_data[] = $v;
 							$data['subordinatetexts'] .= $catedata[$v].',';
 						}
 					}
+					
+					$data['section'] = array_shift($subordinates_data);
+					$data['departmenttext'] = $catedata[$data['section']];
+					$data['quarters'] = array_pop($subordinates_data);
+					$data['posttext'] = $catedata[$data['quarters']];
 					
 					$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
 					$data['subordinates'] = implode(',',$data['subordinates']);
@@ -287,11 +281,20 @@ class StaffController extends CommonController {
 				 if(array_pop($users[$k]['subordinates']) != $top_cate['cate_parent']){
 					 unset($users[$k]);
 				 }
-			 }
-			 
-			 print_r($top_cates);exit;*/
-			 
+			 }			 
+			 print_r($top_cates);exit;*/            
+
+            If($user['subordinates']){
+                $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array($user['subordinates']))->select();//getfield('cate_id,cate_name',true);
+                foreach ($post as $k => $v) {
+                   $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
+                }
+                $this->assign("post",$potview);
+            }
+            //$postview=array_combine(array_column($post,"cate_parent"),$post);
+
 			$this->assign('department',D('Category')->department());
+            
 			$this->assign('user',$user);
 			$this->assign('id',$id);
 			$this->display();
