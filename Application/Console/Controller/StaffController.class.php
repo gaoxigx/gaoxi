@@ -270,29 +270,9 @@ class StaffController extends CommonController {
 				if($user['subordinates'] != 0){
 					$user['subordinates'] .= ','.$user['subordinates'];
 					$user['subordinatestexts'] .= ','.$user['subordinatestexts'];
-				}
-				 
-				//$user['subordinates'] = explode(',',$user['subordinates']);
-				//$user['subordinatestexts'] = explode(',',$user['subordinatestexts']);
-				
-				//$user['subordinates'] = json_encode($user['subordinates']);
-				//$user['subordinatestexts'] = json_encode($user['subordinatestexts']);
-			}
-			
-			
-			/*
-			 $cate_id = array_pop($user['subordinates']);
-			 $top_cate = D('Category')->where('cate_id='.$cate_id)->find();
-			 $top_cates = D('Category')->where('cate_id='.$top_cate['cate_parent'])->find();
-			 $users = $model->select();
-			 foreach($users as $k=>$v){
-				 $users[$k]['subordinates'] = explode(',',$v['subordinates']);
-				 if(array_pop($users[$k]['subordinates']) != $top_cate['cate_parent']){
-					 unset($users[$k]);
-				 }
-			 }			 
-			 print_r($top_cates);exit;*/            
+				}				 
 
+			}
             If($user['subordinates']){        
 
                 $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,strrpos($user['subordinates'],','))))->select();//getfield('cate_id,cate_name',true);
