@@ -38,8 +38,12 @@ class CommonController extends Controller{
  		$map['role_id']=session('roleidstaff');
  		if(!$map['role_id']){
  			return true;
- 		} 		
- 
+ 		}
+
+ 		$role=D('node')->where($map)->getField('title',true); 		
+ 		if(!in_array($page,$role)){
+ 			return true;
+ 		}
  		$result=D('access')->where($map)->getField('module',true);
  		if($result){
  			if(in_array($page,$result)){
