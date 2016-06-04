@@ -142,7 +142,7 @@
                                     </select>                                    
 
                                     <foreach name="post" item="vo"> 
-                                         <select  name="subordinates[]" class="uew-select-value">                                         
+                                         <select  name="subordinates[]" onchange="nextselect(this,0)" class="uew-select-value">                                         
                                                 <foreach name="vo" item="v">   
                                                     <option value="{$v.cate_id}" <in name="v['cate_id']" value="$user['subordinates']" >selected="selected"</in>  >{$v.cate_name}</option>
                                                 </foreach>
