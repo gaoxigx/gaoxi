@@ -300,7 +300,7 @@ class StaffController extends CommonController {
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
 
 			$this->assign('department',D('Category')->department());
-            var_dump($user);
+            
 			$this->assign('user',$user);
 			$this->assign('id',$id);
 			$this->display();
