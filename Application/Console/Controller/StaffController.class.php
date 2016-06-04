@@ -98,7 +98,6 @@ class StaffController extends CommonController {
 		$Equipment = D('Equipment')->where('staffid='.$id)->select();
 		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
 		
-		
 		if($user['quarters'] > 0){
 			$section_map['cate_id']=$user['quarters'];
 			$quarters = D('Category')->field('cate_name')->where($section_map)->find();
@@ -108,8 +107,6 @@ class StaffController extends CommonController {
 			
 			$subordinatesUsers = D('Staff')->where('id != '.$id.' && quarters='.$user['quarters'])->select();
 		}
-		
-		
 		
 		$this->GetCateName();
 		$this->GetEducationName();
