@@ -81,7 +81,8 @@ class LoginController extends Controller {
                 exit(); 
             }                
             $staff_list = $StaffUser->field('username,id,quarters')->where("username = '%s' and  password = '%s'",array($username,md5($password)))->find(); 
-            if (!empty($staff_list)){            
+            if (!empty($staff_list)){  
+				session ( 'userid', $staff_list ['id'] );
                 session ( 'username', $username );                
                 session ('roleidstaff', $staff_list ['quarters'] );  
                 session($username, $staff_list);  
