@@ -189,6 +189,7 @@ public function edit($id){
      $this->getpayment();
      $user = M('order_info');
      $orderinfolist = $user->where('id='.$id)->order('id')->find();
+//     var_dump($orderinfolist);exit;
 
 
      $this->assign('info',$orderinfolist);// 赋值数据集
@@ -219,7 +220,6 @@ public function edit($id){
         } 
 		$info = $model->where("id=%d",array($id))->find(); 
                 $Equipment = D('Equipment')->where('staffid='.$info['agent'])->select();
-		
                 $payment=D('payment')->where('')->getfield('id,payment',true);
                 $staff=D('staff')->getfield('id,name',true);
                    
@@ -237,11 +237,36 @@ public function edit($id){
                 $this->display();
 
     }
+    public function printlook(){
+         $id=I('get.id');        
+        $model = D('order_info');      
+        if(empty($id)){            
+            $this->error('请选择查看订单');
+        } 
+		$info = $model->where("id=%d",array($id))->find(); 
+                $Equipment = D('Equipment')->where('staffid='.$info['agent'])->select();
+                $payment=D('payment')->where('')->getfield('id,payment',true);
+                $staff=D('staff')->getfield('id,name',true);
+                
+                $products=$this->GetProdect($info['order_no']);
+                $this->assign('products',$products);
+                
+                $this->assign('department',D('Category')->department());
+                $this->assign('quarters',$quarters);
+                $this->assign('subordinates',$subordinates);
+                $this->assign('Equipment',$Equipment);
+                $this->assign('order_nums',$order_nums);
+                $this->assign('payment',$payment);
+                $this->assign('staff',$staff);
+                $this->assign('info',$info);
+                $this->assign('id',$id);
+                $this->display();
+    }
     //根据订单号查找产品
-    public function GetProdect($order_no){
+    private function GetProdect($order_no){
             $datagoods = D('order_goods');
             $products = $datagoods-> field('product,price2,buynum')->where('order_no="'.$order_no.'"')->order('id desc')->select();
-            $this->assign('products',$products);
+            return $products;            
     }
 
 //插入数据
@@ -360,4 +385,35 @@ public function getagent(){
     }
     
 }
+
+
+//print打印页面
+public function weixin_orders_print() {
+        $id = I ( 'id' );
+        $this->assign ( 'id', $id );
+        
+        $model = new WeixinApipayOrdersModel ();
+        $orderArray = $model->get_info_byid ( $id );
+        
+        // dump($orderArray);
+        
+        // 打印测试===========================================
+        // 设置报表标题
+        $orderArray ['reportTitle'] = '这是用户基本表';
+        
+        // 报表中要得到的数据格式
+        $xmlReportData = get_reports_xml_byarray ( $orderArray );
+        $this->assign ( 'xmlReportData', $xmlReportData );
+        // 要打印的报表文件
+        $reportName = 'kdd_shentong.grf';
+        $this->assign ( 'reportName', $reportName );
+        
+        // ===========================================
+        
+        // put_log($xmlReportData);
+        
+        // 显示模板
+        $this->display ( 'Weixin:weixin_orders_print' );
+    }
+
 }
