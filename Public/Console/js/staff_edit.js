@@ -106,16 +106,7 @@ $(function(){
 					maxlength:'11位手机号码'
 				}
 			},
-			showErrors: function(errorMap, errorList) {   
-	            var msg = "";   
-	            $.each( errorList, function(i,v){   
-	              msg += (v.message+"\r\n");   
-	            });   
-	            if(msg!="") alert(msg);   
-	        },   
- 
-			
-			
+			errorClass:'cerror',
 		});
 		
 });
