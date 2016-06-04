@@ -481,12 +481,12 @@
 		function nextselect(obj,idload){ 
 			var id = $(obj).val();
 			var select_length = $('#quarters_div').find('select').length;
-			if(idload>0){
+			/*if(idload>0){
                 var supervisorid = $(obj).prev('select').val();    
             }else{
                 var supervisorid =idload
-            }
-			
+            }*/
+			var supervisorid = $(obj).prev('select').val();   
 			if(!supervisorid){
 				supervisorid =0;
 			}
