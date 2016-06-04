@@ -57,7 +57,11 @@ class LoginController extends Controller {
         //校对验证码
         $verify = new \Think\Verify();    
         if(!$verify->check($_POST['cpatcha'])){ 
-            $this->error('验证码错误');
+<<<<<<< HEAD
+            $this->success('验证码错误');
+=======
+            $this->error('验证码错误',U('/Console/Login/login'));
+>>>>>>> 26f57cad4a738caf208e675c57585d696cd72ca4
             exit;  
         }
         
@@ -87,7 +91,7 @@ class LoginController extends Controller {
                 exit();  
             }         
             
-            $this->error('用户名或密码不正确！');
+            $this->error('用户名或密码不正确！',U('/Console/Login/login'));
     }       
           
         

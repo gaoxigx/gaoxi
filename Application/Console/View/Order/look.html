@@ -84,10 +84,23 @@
 
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label><b>产品名称:</b></label>  
+                                <label><b>产品列表:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$info.product}
+                                <table>
+                                    <tr>
+                                        <th style="width:100px;text-align:center;padding:5px;">名称</th>
+                                        <th style="width:100px;text-align:center;padding:5px;">价格</th>
+                                        <th style="width:100px;text-align:center;padding:5px;">数量</th>
+                                    </tr>
+                                    <foreach name="products" item="val">
+                                    <tr>
+                                        <td style="text-align:center;padding:5px;">{$val.product}</td>
+                                        <td style="text-align:center;padding:5px;">{$val.price2}</td>
+                                        <td style="text-align:center;padding:5px;">{$val.buynum}</td>
+                                    </tr> 
+                                    </foreach>
+                                </table>
                             </td>
                         </tr>
 
