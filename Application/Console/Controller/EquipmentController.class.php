@@ -35,10 +35,10 @@ class EquipmentController extends CommonController {
         }
         $User = M('Equipment'); // 实例化User对象
         $data=$User->select();
-        if(session('roleidstaff')){            
+        /*if(session('roleidstaff')){            
             $where['posid']=session('roleidstaff');
         }
-        
+        */
 
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)

@@ -118,14 +118,13 @@ public function edit($cate_id){
             $accessModel=D('Access');
             
             $node=I('node');
-            $result=$accessModel->where('role_id='.$uid)->delete();
-
-            $map['id']=array('in',implode(',',$node));
-
-            $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();   
-            //$result=>M()->query('select id as node_id,title as module,'.$uid.' as role_id where exists() );     
-
-            $result=D('Access')->addAll($result);   
+            if(!empty($node)&&isset($node)){
+                $result=$accessModel->where('role_id='.$uid)->delete();
+                $map['id']=array('in',implode(',',$node));
+                $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();   
+                //$result=>M()->query('select id as node_id,title as module,'.$uid.' as role_id where exists() );     
+                $result=D('Access')->addAll($result);   
+            }
             $this->success('修改成功！',U('Category/PList'));
         }else{
             $this->error('写入错误！');

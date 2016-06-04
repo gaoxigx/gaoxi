@@ -16,31 +16,31 @@
 
 </head>
 <script type="text/javascript">
-	// $(function(){	
-	// 	$.validator.setDefaults({
-	// 		submitHandler:function() {
-	// 			$('#form1').submit();
-	// 		}
-	// 	});
+	$(function(){	
+		$.validator.setDefaults({
+			submitHandler:function(from) {
+						from.submit();
+			}
+		});
 
-	// 	$("#form1").validate({
-	// 		rules:{
-	// 			cate_name:'required',
-	// 			cate_name2:'required',
-	// 			is_show:'required',
-	// 			status:'required'
-	// 		},
-	// 		messages:{				
-	// 			cate_name:'请输入分类名称',		
-	// 			cate_name2:'请输入传统名称',	
-	// 			is_show:'请选择显示状态',	
-	// 			status:'请选择审核状态',	
-	// 		},
-	// 		errorClass:'cerror',
+		$("#form1").validate({
+			rules:{
+				cate_name:'required',
+				cate_name2:'required',
+				is_show:'required',
+				status:'required'
+			},
+			messages:{				
+				cate_name:'请输入分类名称',		
+				cate_name2:'请输入传统名称',	
+				is_show:'请选择显示状态',	
+				status:'请选择审核状态',	
+			},
+			errorClass:'cerror',
 			
-	// 	});
+		});
 		
-	// });
+	});
 
 </script>
 <body>

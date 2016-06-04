@@ -95,8 +95,8 @@ function reset_pass(id){
                 <!--<th>身份证</th>   -->             
                 <th>部门</th>
                 <th>岗位</th>
-				<!--<th>上班状态（正常上班、休假、请假、离职）</th>
-				<th>岗位状态（实习、试用、转正）</th>-->
+				<th>上班状态</th>
+				<th>岗位状态</th>
                 <th>学历</th>
                 <!--<th>电话</th>--> 
                 <th>操作</th>
@@ -119,9 +119,28 @@ function reset_pass(id){
             <td>
 				{$cat[$vo['quarters']]}
 			</td>
-			<!--
-			<td></td>
-			<td></td>-->
+			<td>
+				<if condition="$vo.become eq 1">
+				转正
+				<elseif condition="$vo.become eq 2"/>
+				试用
+				<elseif condition="$vo.become eq 3"/>
+				实习
+				<else/>
+				未知
+				</if>
+			</td>
+			<td>
+				<if condition="$vo.iswork eq 2">
+				休假
+				<elseif condition="$vo.iswork eq 3"/>
+				请假
+				<elseif condition="$vo.iswork eq 4"/>
+				离职
+				<else/>
+				正常上班
+				</if>
+			</td>
             <td>{$education[$vo['education']]}</td>
             <!--<td>{$vo.mobile}</td>-->
             <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a><!----></td>

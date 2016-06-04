@@ -15,14 +15,25 @@ class PersonnelController extends CommonController {
 
     //管理员列表
     public function PerList($name=''){
-        $username = i('username');
-        if($username){
-            $map['nickname']  = array('like','%'.trim($username).'%');
-            $map['username']  = array('like','%'.trim($username).'%');
-            $map['accounts']  = array('like','%'.trim($username).'%');
-            $map['mobile']  = array('like','%'.trim($username).'%');              
-            $map['_logic'] = 'or';
-        }
+        $nickname = I('nickname');
+		$username = I('username');
+		$accounts = I('accounts');
+		$mobile = I('mobile');
+		
+        if($nickname){
+            $map['nickname']  = array('like','%'.trim($nickname).'%');
+		}
+		if($username){
+			$map['username']  = array('like','%'.trim($username).'%');
+		}
+		if($accounts){
+            $map['accounts']  = array('like','%'.trim($accounts).'%');
+		}
+		if($mobile){        
+			$map['mobile']  = array('like','%'.trim($mobile).'%');              
+        }   
+		//$map['_logic'] = 'or';
+       
         
         foreach( $map as $k=>$v){  
                 if( !$v )  

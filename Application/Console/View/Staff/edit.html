@@ -8,8 +8,7 @@
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
-        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
-		
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>		
 		<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 		<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
 		<script type="text/javascript" src="__PUBLIC__/Console/js/staff_edit.js"></script>
@@ -142,7 +141,7 @@
                                     </select>                                    
 
                                     <foreach name="post" item="vo"> 
-                                         <select  name="subordinates[]" class="uew-select-value">                                         
+                                         <select  name="subordinates[]" onchange="nextselect(this,0)" class="uew-select-value">                                         
                                                 <foreach name="vo" item="v">   
                                                     <option value="{$v.cate_id}" <in name="v['cate_id']" value="$user['subordinates']" >selected="selected"</in>  >{$v.cate_name}</option>
                                                 </foreach>
@@ -159,9 +158,10 @@
 								<div class="vocation uew-select" >
 									<select id="supervisor" name="nibs" class="uew-select-value">
 										<option>请选择上司</option>
-                                       
+										
                                     </select>
 								</div>
+								<input type="hidden" id="old_nibs" value="{$user.nibs}">
 								<input type="hidden" id="supervisortext" name="nibstext"  />
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 		
@@ -435,6 +435,7 @@
 				var supervisortext = $(this).find('option:selected').text();
 				$('#supervisortext').val(supervisortext);
 			});
+			getsupervisor();
 		})
 		
 		function defaul_cate(obj){
@@ -451,6 +452,7 @@
 		//获取上级
 		function getsupervisor(pid){
 			var u_url="{:U('Console/Staff/GetSupervisor')}";
+			var old_nibs = $('#old_nibs').val();
 			$.post(u_url,{cate_id:pid},function(data){
 				//console.log(data);
 				
@@ -458,8 +460,12 @@
 					var html = '';
 					$('#supervisor').html('<option value="0">请选择上司</option>');
 					for(i in data){
+						if(old_nibs == i){
+							html += '<option value="'+i+'" selected="selected" >'+data[i]+'</option>';
+						}else{
+							html += '<option value="'+i+'">'+data[i]+'</option>';
+						}
 						
-						html += '<option value="'+i+'">'+data[i]+'</option>';
 					}
 					$('#supervisor').append(html);
 				}else{

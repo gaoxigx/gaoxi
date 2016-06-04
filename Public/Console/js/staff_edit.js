@@ -1,11 +1,9 @@
 $(function(){	
-		$.validator.setDefaults({
-			submitHandler:function() {
-				$('#form1').submit();
-			}
-		});
 
 		$("#form1").validate({
+			submitHandler:function(form) {
+				form.submit();
+			},
 			rules:{
 				username:{
 					required:true,
@@ -109,7 +107,6 @@ $(function(){
 				}
 			},
 			errorClass:'cerror',
-			
 		});
 		
 });

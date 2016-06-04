@@ -105,7 +105,15 @@ class StaffController extends CommonController {
 			$map['cate_parent']=$user['quarters'];
 			$subordinates = D('Category')->categoryone($map);
 			
-			$subordinatesUsers = D('Staff')->where('id != '.$id.' && quarters='.$user['quarters'])->select();
+			$childids = '';
+			foreach($subordinates as $k=>$v){
+				$childids .= $k.',';
+			}
+			$childids = substr($childids,0,-1);
+			if($childids != ''){
+				$chwhere =  ' && quarters in('.$childids.')';
+				$subordinatesUsers = D('Staff')->where('id != '.$id.$chwhere)->select();
+			}
 		}
 		
 		$this->GetCateName();
@@ -144,10 +152,9 @@ class StaffController extends CommonController {
 	 */
 	public function GetSupervisor(){
 		$cate_id = I('post.cate_id');
-		$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
-		if(empty($user)){
-			$user = D('Staff')->getfield('id,name',true);	
-		}
+		//$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
+		$user = D('Staff')->getfield('id,name',true);	
+		
 		$this->ajaxReturn($user);
 	}
 	
@@ -248,47 +255,30 @@ class StaffController extends CommonController {
          if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
-			$str = strpos($user['subordinates'],',');
-			if($str<0){
-				$user['subordinates'] = $user['section'];
-				$user['subordinatestexts'] = $user['departmenttext'];
-				
-				if($user['quarters'] != 0){
-					$user['subordinates'] .= ','.$user['quarters'];
-					$user['subordinatestexts'] .= ','.$user['posttext'];
+           
+			if($user['subordinates']){      
+                $str = strrpos($user['subordinates'],',');
+				/*if($str){
+					$index = substr($user['subordinates'],0,$str);
+				}else{
+					$index = strlen($user['subordinates']);
 				}
 				
-				if($user['subordinates'] != 0){
-					$user['subordinates'] .= ','.$user['subordinates'];
-					$user['subordinatestexts'] .= ','.$user['subordinatestexts'];
-				}
-				 
-				//$user['subordinates'] = explode(',',$user['subordinates']);
-				//$user['subordinatestexts'] = explode(',',$user['subordinatestexts']);
-				
-				//$user['subordinates'] = json_encode($user['subordinates']);
-				//$user['subordinatestexts'] = json_encode($user['subordinatestexts']);
-			}
-			
-			
-			/*
-			 $cate_id = array_pop($user['subordinates']);
-			 $top_cate = D('Category')->where('cate_id='.$cate_id)->find();
-			 $top_cates = D('Category')->where('cate_id='.$top_cate['cate_parent'])->find();
-			 $users = $model->select();
-			 foreach($users as $k=>$v){
-				 $users[$k]['subordinates'] = explode(',',$v['subordinates']);
-				 if(array_pop($users[$k]['subordinates']) != $top_cate['cate_parent']){
-					 unset($users[$k]);
-				 }
-			 }			 
-			 print_r($top_cates);exit;*/            
-
-            If($user['subordinates']){
-                $post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array($user['subordinates']))->select();//getfield('cate_id,cate_name',true);
-                foreach ($post as $k => $v) {
+				$post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,$index)))->select();//getfield('cate_id,cate_name',true);
+               
+				foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
-                }
+                }*/
+				
+if($str > 0){
+	$post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,$str)))->select();//getfield('cate_id,cate_name',true);
+               
+	foreach ($post as $k => $v) {
+	   $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
+	}
+}else{
+	$potview=array();
+}
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);
