@@ -112,9 +112,8 @@ class StaffController extends CommonController {
 			$childids = substr($childids,0,-1);
 			if($childids != ''){
 				$chwhere =  ' && quarters in('.$childids.')';
+				$subordinatesUsers = D('Staff')->where('id != '.$id.$chwhere)->select();
 			}
-			
-			$subordinatesUsers = D('Staff')->where('id != '.$id.$chwhere)->select();
 		}
 		
 		$this->GetCateName();
