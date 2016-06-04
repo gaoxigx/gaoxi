@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"str",
+				"strtotime"
+			],
+			[
+				"post",
+				"postary"
+			],
+			[
 				"C",
 				"Category"
 			],
@@ -154,63 +162,158 @@
 			[
 				"che",
 				"checked=\"checked"
-			],
-			[
-				"post",
-				"post1"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "<?php\nnamespace Console\\Controller;\nuse Think\\Controller;\nheader(\"Content-type:text/html;charset=utf-8\");\n\nclass OrderController extends CommonController {\n /**\n * 生成唯一订单号\n */\npublic function build_order_no()\n{\n    $no = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);\n    //检测是否存在\n    $db = M('order_info');\n    $info = $db->where(array('order_no'=>$no))->find();\n    (!empty($info)) && $no = $this->build_order_no();\n    return $no;\n}\n\n//管理员组类别\nprivate function getrolename($rolename,$roleid){\n    $data=D('staff');\n    $name = $data->where('quarters='.$roleid)->order('id')->select();\n    // dump($name);\n    $this->assign($rolename,$name);\n\n}\n\n\n//设备编号获取\nprivate function getequipment_name(){\n    $data=D('equipment');\n    $name = $data->where('bianhao<>\"\"')->order('id desc')->select();\n    // dump($name);\n    $this->assign('equipment',$name);\n\n}\n\n//通过产品id获取类别id,图片地址\npublic function get_proid_to_typeid($id='',$typeid=''){\n    $data=D('product');\n    $name = $data-> field('protype,pic,pic1')->where('id='.$id)->order('id desc')->find();\n    \n    $pro = $name['protype'];\n    $pic = $name['pic'];\n    $pic1 = $name['pic1'];\n    switch ($typeid) {\n        case 1:\n            return $pro;\n            break;\n        case 2:\n            return $pic;\n            break;\n        case 3:\n            return $pic1;\n            break;\n        \n        default:\n            # code...\n            break;\n    }    \n\n}\n\n\n\n//支付方式获取\nprivate function getpayment(){\n    $data=D('payment');\n    $name = $data->where('payment<>\"\"')->order('id')->select();\n    // dump($name);\n    $this->assign('payment',$name);\n\n}\n//处理付款状态（确认和取消）\n//\npublic function Payment_status($id,$status){\n    $order_info = D('order_info');\n    $data['payment_status'] = 1; \n    if($status==0){\n        $tip=\"确认付款成功！\";\n    }else{\n        $tip=\"取消确认付款！\";\n    }\n    $name = $order_info->where('id='.$id)->save($data);\n    if($name){\n        $this->success($tip);\n    }else{\n        $this->error('更新数据出错');\n    }\n}\n//物流单号查询\n public function numberno($no){\n    echo \"物流信息查询：\".$no;\n    // $this->$this->display(??)\n    // $this->display('plist');\n }\n\n //插入物流单号到订单表\n //\npublic function updatenumberno($id,$numberno){\n$data[\"numberno\"] = $numberno;\n$data[\"status\"] = 2;\n    $order_info = D('order_info');\n     $name = $order_info->where('id='.$id)->save($data);\n     if($name){\n        $this->success(\"物流单号更新成功\");\n    }else{\n        $this->error('更新数据出错');\n    }\n}\n\n\n\n//数据列表\npublic function Plist($name=''){\n    \n    $username = i('username');\n    if($username){\n        $map['order_no']  = array('like','%'.trim($username).'%');\n        $map['product']  = array('like','%'.trim($username).'%');\n        $map['protype']  = array('like','%'.trim($username).'%');  \n        $map['username']  = array('like','%'.trim($username).'%');\n        //$map['agent']  = array('like','%'.trim($username).'%');\n        $map['mobile']  = array('like','%'.trim($username).'%');       \n        $map['buyer_wechat']  = array('like','%'.trim($username).'%');\n        $map['numberno']  = array('like','%'.trim($username).'%');             \n        $map['_logic'] = 'or';\n    }\n\n    $user_id = session(\"user_id\");\n    if($user_id > 0){\n        $map['agent']  = intval($user_id);\n   }\n    \n    foreach( $map as $k=>$v){  \n        if( !$v )  \n            unset( $arr[$k] );  \n    }   \n\n    //分页跳转的时候保证查询条件\n    foreach($map as $key=>$val) {\n        if(!$val){\n            unset($map[$key]);\n        }else{\n        $Page->parameter[$key]   =   urlencode($val);\n          }\n    }\n    $User = M('order_info'); // 实例化User对象\n    $count = $User->where($map)->count();// 查询满足要求的总记录数\n    $Page = new \\Think\\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)\n    $Page->setConfig('header','个会员');\n    $show = $Page->show();// 分页显示输出\n    // 进行分页数据查询 注意limit方法的参数要使用Page类的属性\n    $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();\n\n    $this->assign('list',$list);// 赋值数据集\n    $this->assign('page',$show);// 赋值分页输出\n    $this->display(); // 输出模板\n\n\n}\n//提交订单\npublic function add(){\n     $this->getrolename('agent',38);\n     $this->getrolename('assistant',46);\n     $this->getequipment_name();\n     $this->getpayment();\n    $data = M('product'); // 实例化User对象\n    $list = $data->where('1=1')->order('id')->select();\n    $this->assign('prolist',$list);// 赋值数据集\n    $this->display();\n}\n\n//修改订单\npublic function edit($id){\n    // $this->getprotype();\n     $this->getrolename('agent',38);\n     $this->getrolename('assistant',46);\n     $this->getequipment_name();\n     $this->getpayment();\n     $user = M('order_info');\n     $orderinfolist = $user->where('id='.$id)->order('id')->find();\n\n\n     $this->assign('info',$orderinfolist);// 赋值数据集\n     $data = M('order_goods'); // 实例化User对象\n     $list = $data->field('*,propic as pic1')->where(\"order_no='\".$orderinfolist['order_no'].\"'\")->order('id')->select();\n\n     $this->assign('prolist',$list);// 赋值数据集\n    // $this->display();\n    $controller   =   M('order_info');\n    // 读取数据\n    $data =   $controller->find($id);\n    if($data) {\n        $this->assign('data',$data);// 模板变量赋值\n    }else{\n        $this->error('数据错误');\n    }\n    $this->display();\n\n}\n\n\n//查看页面\n    public function look(){\n        $id=I('get.id');        \n        $model = D('order_info');      \n        if(empty($id)){            \n            $this->error('请选择查看订单');\n        } \n		$user = $model->where(\"id=%d\",array($id))->find(); \n\n\n		$section_map['cate_id']=$user['quarters'];\n		$quarters = D('Category')->field('cate_name')->where($section_map)->find();\n		\n		$map['cate_parent']=$user['quarters'];\n		$subordinates = D('Category')->categoryone($map);\n		\n		$Equipment = D('Equipment')->where('staffid='.$id)->select();\n		$order_nums = D('OrderInfo')->where('agent='.$id)->count();\n        $payment=D('payment')->where('')->getfield('id,payment',true);\n        $staff=D('staff')->getfield('id,name',true);\n		\n         $this->assign('department',D('Category')->department());\n		 $this->assign('quarters',$quarters);\n		 $this->assign('subordinates',$subordinates);\n		 $this->assign('Equipment',$Equipment);\n		 $this->assign('order_nums',$order_nums);\n         $this->assign('payment',$payment);\n         $this->assign('staff',$staff);\n         $this->assign('info',$user);\n         $this->assign('id',$id);\n         $this->display();\n\n    }\n\n//插入数据\npublic function insert(){\n\n    $data = I('');\n    $data['order_no'] = $this->build_order_no();\n    $data['addtime'] = time();\n    $data['status'] = 1;\n    $data['payment_status'] = 0;\n    // $dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@g.com');\n    $roleList   =   D('order_info');\n    // $set = $roleList->create($data);\n\n    if($roleList->create()) {\n        $result =   $roleList->add($data);\n        if($result) {\n            foreach( $data['newslist'] as $k=>$v){  \n                $dataList[] = array(\n                'proid'=>$data[\"id\".$v],\n                'protype'=>$data[\"protype\".$v],\n                'pic'=>$data[\"pic\".$v],\n                'pic1'=>$data[\"pics\".$v],\n                'product'=>$data[\"product\".$v],\n                'price2'=>$data[\"price\".$v],\n                'buynum'=>$data[\"text_box\".$v],\n                'discount'=>$data[\"zhekou\".$v],\n                'tollsprice'=>$data[\"total\".$v],\n                'order_no'=>$data[\"order_no\"],\n                'addtime'=>time(),                \n                );\n            }\n// dump($dataList);\n// exit;\n            $user=M('order_goods');\n            $user->addAll($dataList);\n            // $sset = $User->addAll($dataList);\n\n            $this->success('订单表数据添加成功！');\n        }else{\n            $this->error('订单商表数据添加错误！');\n        }\n\n    }else{\n        $this->error($roleList->getError());\n    }\n   \n}\n\n\n//更新数据\npublic function update(){\n    $roleList   =   D('order_info');\n    $data=$roleList->create();\n    if($data) {\n        order_no=\n        uset($data['order_no']);\n        $result = $roleList->where('order_no=%s',array($data['order_no']))->save($data);\n        if($result) {\n            $this->success('操作成功！');\n        }else{\n            $this->error('写入错误！');\n        }\n    }else{\n        $this->error($roleList->getError());\n    }\n}\n\n//删除数据\npublic function delete(){\n$id=i('id');\n    // dump($id);\n    // exit;\n    $role = M('order_info');\n     $set = $role->where(\"id = \".$id)->find();\n     // $set['oldid'] = $id;\n     // unset($set['id']);\n     // $set['addtime']=strtotime($set['addtime']);\n     $set['price1']= floatval($set['price1']);\n     $set['price2']= floatval($set['price2']);\n     $set['price3']= floatval($set['price3']);\n     // dump($set);\n     // exit;\n    D('product_copy')->add($set);\n    // M('Equipment_copy')->add($set);\n\n    $result = $role->delete($id);\n\n     if($result) {\n            $this->success('数据删除成功！');\n        }else{\n            $this->error('数据删除错误！');\n        }\n    // $this->display();\n}\n\nprotected function top(){\n    // $this->display();\n}\n\nprivate function hello3(){\n    echo '这是private方法!';\n}\n\n//查找下级经济人 ajax请求\npublic function getagent(){\n    $id=I('id');\n    if(empty($id)){        \n        $this->ajaxreturn(0);\n    }     \n    $data=D('staff')->where('nibs=%d',array($id))->getfield('id,name',true);\n    if($data){\n        $this->ajaxreturn($data);    \n    }else{\n        $this->ajaxreturn(0);\n    }\n    \n}\n}\n",
-			"file": "/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
-			"file_size": 10332,
-			"file_write_time": 131093249538402641,
+			"file": "/D/WWW/gaoxi/Application/Console/View/Staff/edit.html",
 			"settings":
 			{
-				"buffer_size": 9314,
+				"buffer_size": 34275,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
+			"file": "/D/WWW/gaoxi/Public/Console/js/staff_edit.js",
 			"settings":
 			{
-				"buffer_size": 4110,
+				"buffer_size": 1770,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "$(function(){	\n		$.validator.setDefaults({\n			submitHandler:function() {\n						submitHandler:function(form) {from.submit();}\n			}\n		});\n\n		$(\"#form1\").validate({\n			rules:{\n				username:{\n					required:true,\n					minlength:2\n				},\n				password:{\n					required:true,\n					minlength:5,\n					maxlength:12\n				},\n				passwordConfirm:{\n					required:true,\n					minlength:5,\n					maxlength:12,\n					equalTo:\"#password\" \n				},\n				nickname:{\n					required:true,\n					minlength:2\n				},\n				become:'required',\n				salaryss:{\n					number:true,\n				},\n				salaryzz:{\n					number:true,\n				},\n				housing:{\n					number:true,\n				},\n				traffic:{\n					number:true,\n				},\n				catering:{\n					number:true,\n				},\n				phone:{\n					number:true,\n				},\n				department:'required',\n				post:'required',\n				name:{\n					required:true,\n					minlength:2\n				},\n				sex:'required',\n				identity_card:{\n					required:true,\n				},\n				mobile:{\n					required:true,\n					number:true,\n					minlength:11,\n					maxlength:11\n				},\n				education:'required',\n				phone_ugy:{\n					number:true,\n					minlength:11,\n					maxlength:11\n				},\n			},\n			messages:{				\n				username:{\n					required:'请输入用户名',\n					minlength:'用户名至少2个字符'\n				},		\n				password:{\n					required:'请输入密码',\n					minlength:'密码长度应在5-12位',\n					maxlength:'密码长度应在5-12位'\n				},	\n				passwordConfirm:{\n					required:'请再次输入密码',\n					minlength:'密码长度应在5-12位',\n					maxlength:'密码长度应在5-12位',\n					equalTo:\"两次输入的密码不一致\" \n				},	\n				nickname:{\n					required:'请输入昵称',\n					minlength:'用户名至少2个字符'\n				},	\n				become:'选择转正状态',	\n				salaryss:{\n					number:'请输入数字'\n				},	\n				salaryzz:{\n					number:'请输入数字'\n				},	\n				housing:{\n					number:'请输入数字'\n				},	\n				traffic:{\n					number:'请输入数字'\n				},	\n				catering:{\n					number:'请输入数字'\n				},	\n				phone:{\n					number:'请输入数字'\n				},	\n				department:'请选择部门',	\n				post:'请选择岗位',	\n				name:{\n					required:'请输入姓名',\n					minlength:'用户名至少2个字符'\n				},	\n				sex:'请选择性别',	\n				identity_card:{\n					required:'请输入省份证号码',\n				},\n				mobile:{\n					required:'请输入手机号码',\n					number:'手机号码格式错误',\n					minlength:'11位手机号码',\n					maxlength:'11位手机号码'\n				},\n				education:'请选择学历',\n				phone_ugy:{\n					number:'手机号码格式错误',\n					minlength:'11位手机号码',\n					maxlength:'11位手机号码'\n				}\n			},\n			errorClass:'cerror',\n			\n		});\n		\n});\n",
+			"file": "/D/WWW/gaoxi/Public/Console/js/staff_add.js",
+			"file_size": 2778,
+			"file_write_time": 131088132963259204,
+			"settings":
+			{
+				"buffer_size": 2273,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
+			"settings":
+			{
+				"buffer_size": 15035,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 0 files for \"submitHandler:function() {\n				$('#form1').submit();\n			}\"\n\n0 matches\n\nSearching 2180 files for \"$('#form1').submit();\"\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Access\\add.html:\n   17  	$.validator.setDefaults({\n   18  		submitHandler:function() {\n   19: 			$('#form1').submit();\n   20  		}\n   21  	});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Access\\edit.html:\n   17  	$.validator.setDefaults({\n   18  		submitHandler:function() {\n   19: 			$('#form1').submit();\n   20  		}\n   21  	});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Category\\add.html:\n   22  	// 	$.validator.setDefaults({\n   23  	// 		submitHandler:function() {\n   24: 	// 			$('#form1').submit();\n   25  	// 		}\n   26  	// 	});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Category\\edit.html:\n   20  	// 	$.validator.setDefaults({\n   21  	// 		submitHandler:function() {\n   22: 	// 			$('#form1').submit();\n   23  	// 		}\n   24  	// 	});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Group\\roleList.html:\n   18  		$.validator.setDefaults({\n   19  			submitHandler: function() {\n   20: 				$('#form1').submit();\n   21  			}\n   22  		});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Group\\roleupdate.html:\n   20  		$.validator.setDefaults({\n   21  			submitHandler: function() {\n   22: 				$('#form1').submit();\n   23  			}\n   24  		});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Personnel\\add.html:\n   18  		$.validator.setDefaults({\n   19  			submitHandler: function() {\n   20: 				$('#form1').submit();\n   21  			}\n   22  		});\n\nD:\\WWW\\gaoxi\\Application\\Console\\View\\Personnel\\edit.html:\n   18  		$.validator.setDefaults({\n   19  			submitHandler: function() {\n   20: 				$('#form1').submit();\n   21  			}\n   22  		});\n\nD:\\WWW\\gaoxi\\Application\\Runtime\\Cache\\Console\\68a355c0e1d134d9ef8e00781733697a.php:\n   22  	// 	$.validator.setDefaults({\n   23  	// 		submitHandler:function() {\n   24: 	// 			$('#form1').submit();\n   25  	// 		}\n   26  	// 	});\n\nD:\\WWW\\gaoxi\\Application\\Runtime\\Cache\\Console\\9fb668bfeb3e399d547282fe71b0e8e0.php:\n   18  		$.validator.setDefaults({\n   19  			submitHandler: function() {\n   20: 				$('#form1').submit();\n   21  			}\n   22  		});\n\nD:\\WWW\\gaoxi\\Application\\Runtime\\Cache\\Console\\ff523cbf1c97c66a943401e16bbeb077.php:\n   20  	// 	$.validator.setDefaults({\n   21  	// 		submitHandler:function() {\n   22: 	// 			$('#form1').submit();\n   23  	// 		}\n   24  	// 	});\n\nD:\\WWW\\gaoxi\\Public\\Console\\js\\staff_add.js:\n    2  		$.validator.setDefaults({\n    3  			submitHandler:function() {\n    4: 				$('#form1').submit();\n    5  			}\n    6  		});\n\n12 matches across 12 files\n",
+			"settings":
+			{
+				"buffer_size": 2561,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
 			}
 		},
 		{
 			"file": "/D/WWW/gaoxi/Application/Console/View/Access/add.html",
 			"settings":
 			{
-				"buffer_size": 3154,
+				"buffer_size": 3151,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Access/edit.html",
 			"settings":
 			{
-				"buffer_size": 4684,
+				"buffer_size": 3438,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/Controller/CategoryController.class.php",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Category/add.html",
 			"settings":
 			{
-				"buffer_size": 5588,
+				"buffer_size": 3531,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/WWW/gaoxi/Application/Console/Model/AccessModel.class.php",
+			"file": "/D/WWW/gaoxi/Application/Console/View/Category/edit.html",
 			"settings":
 			{
-				"buffer_size": 149,
+				"buffer_size": 3837,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Group/roleList.html",
+			"settings":
+			{
+				"buffer_size": 2942,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Group/roleupdate.html",
+			"settings":
+			{
+				"buffer_size": 3116,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Personnel/add.html",
+			"settings":
+			{
+				"buffer_size": 4314,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/View/Personnel/edit.html",
+			"settings":
+			{
+				"buffer_size": 4408,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<title>无标题文档</title>\n<link href=\"/Public/Console/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n<link href=\"/Public/Console/css/select.css\" rel=\"stylesheet\" type=\"text/css\" />\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.idTabs.min.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/select-ui.min.js\"></script>\n<script language=\"javascript\" type=\"text/javascript\" src=\"/Public/My97DatePicker/WdatePicker.js\"></script>\n\n<script src=\"/Public/Console/js/validation/lib/jquery.js\"></script>\n<script src=\"/Public/Console/js/validation/dist/jquery.validate.js\"></script>\n<script src=\"/Public/Console/js/validation/dist/localization/messages_zh.js\"></script> \n\n\n\n</head>\n<script type=\"text/javascript\">\n	// $(function(){	\n	// 	$.validator.setDefaults({\n	// 		submitHandler:function() {\n	// 					submitHandler:function(form) {from.submit();}\n	// 		}\n	// 	});\n\n	// 	$(\"#form1\").validate({\n	// 		rules:{\n	// 			cate_name:'required',\n	// 			cate_name2:'required',\n	// 			is_show:'required',\n	// 			status:'required'\n	// 		},\n	// 		messages:{				\n	// 			cate_name:'请输入分类名称',		\n	// 			cate_name2:'请输入传统名称',	\n	// 			is_show:'请选择显示状态',	\n	// 			status:'请选择审核状态',	\n	// 		},\n	// 		errorClass:'cerror',\n			\n	// 	});\n		\n	// });\n\n</script>\n<body>\n\n    <div class=\"place\">\n		<span>位置：</span>\n		<ul class=\"placeul\">\n		\n			<li><a href=\"#\">首页</a></li>\n			<li><a href=\"#\">组织结构</a></li>\n			<li><a href=\"#\">添加分类</a></li>\n		</ul>\n    </div>\n    \n    <div class=\"formbody\">\n		<div id=\"usual1\" class=\"usual\"> \n			<form name=\"form1\" id=\"form1\" method='post' action=\"/index.php/Console/Category/insert\">\n				<div class=\"itab\">\n					<ul> \n						<li><a href=\"#tab1\" class=\"selected\">添加分类</a></li> \n					</ul>\n				</div> \n    \n				<div id=\"tab1\" class=\"tabson\">\n					<div class=\"formtext\">请正确填写分类信息！</div>\n					<ul class=\"forminfo\">\n						<input name=\"cate_parent\" type=\"hidden\" class=\"dfinput\" value=\"<?php echo ($pid); ?>\"  />\n						<li><label>分类名称<b>*</b></label><input name=\"cate_name\" id=\"cate_name\" type=\"text\" class=\"dfinput\" value=\"\"  required/></li>\n\n						<li><label>传统名称<b>*</b></label><input name=\"cate_name2\" id=\"cate_name2\" type=\"text\" class=\"dfinput\" value=\"\"  /></li>\n\n\n						<li><label>是否显示<b>*</b></label><cite><input type=\"radio\" id=\"is_show\" checked=\"checked\" value=\"1\" name=\"is_show\">是&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"radio\" value=\"0\" name=\"is_show\">否</cite></li>\n\n						<li><label>是否审核<b>*</b></label><cite><input type=\"radio\" id=\"status\" checked=\"checked\" value=\"1\" name=\"status\">是&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"radio\" value=\"0\" name=\"status\">否</cite></li>\n						<li>\n							<label>备注<b></b></label>\n							<textarea class=\"textinput\" rows=\"\" cols=\"\" name=\"cate_content\" id=\"cate_content\" ></textarea>\n						</li>\n						<li>\n							<label>权限</label>\n							<div style=\"float:left;\">\n								<?php if(is_array($node)): $i = 0; $__LIST__ = $node;if( count($__LIST__)==0 ) : echo \"\" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><label ><input style=\"vertical-align: middle\" name=\"node[]\" type=\"checkbox\" id=\"<?php echo ($vo['id']); ?>\"  value=\"<?php echo ($vo[\"id\"]); ?>\" /><?php echo ($vo[\"name\"]); ?></label>\n									<?php if(($i%5) == 0): ?><p style=\"clear:both;\"></p><?php endif; endforeach; endif; else: echo \"\" ;endif; ?>\n							</div>\n						</li>\n\n						<li><label>&nbsp;</label><input name=\"\" type=\"submit\" class=\"btn\" value=\"添加分类\"/></li>\n					</ul>					\n				</div> \n			</form>  \n		</div> \n    </div>\n\n\n</body>\n\n</html>",
+			"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/68a355c0e1d134d9ef8e00781733697a.php",
+			"file_size": 4094,
+			"file_write_time": 131094018561843438,
+			"settings":
+			{
+				"buffer_size": 3842,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<title>无标题文档</title>\n<link href=\"/Public/Console/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n<link href=\"/Public/Console/css/select.css\" rel=\"stylesheet\" type=\"text/css\" />\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.idTabs.min.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/select-ui.min.js\"></script>\n\n\n<script src=\"/Public/Console/js/validation/dist/jquery.validate.js\"></script>\n<script src=\"/Public/Console/js/validation/dist/localization/messages_zh.js\"></script> \n\n<script type=\"text/javascript\">\n$(function(){		\n		$.validator.setDefaults({\n			submitHandler: function() {\n						submitHandler:function(form) {from.submit();}\n			}\n		});\n\n		$(\"#form1\").validate({\n			rules:{\n				\n				rolename: 'required',\n			},\n			messages: {				\n				rolename: '请输入组名称',		\n			},\n			errorClass:'cerror',\n			\n		});\n	});\n$(document).ready(function(e) {\n    $(\".select1\").uedSelect({\n        width : 345           \n    });\n    $(\".select2\").uedSelect({\n        width : 167  \n    });\n    $(\".select3\").uedSelect({\n        width : 100\n    });\n});\n</script>\n\n</head>\n\n<body>\n\n    <div class=\"place\">\n    <span>位置：</span>\n    <ul class=\"placeul\">\n    <li><a href=\"#\">首页</a></li>\n    <li><a href=\"#\">组管理</a></li>\n    </ul>\n    </div>\n    \n    <div class=\"formbody\">\n    \n    \n    <div id=\"usual1\" class=\"usual\"> \n    \n    <div class=\"itab\">\n    <ul> \n    <li><a href=\"#tab1\" >添加新建组</a></li> \n    <li><a href=\"#tab2\" class=\"selected\">组成员列表</a></li> \n    </ul>\n    </div> \n    \n    <div id=\"tab1\" class=\"tabson\">\n    \n    <div class=\"formtext\">Hi，请填写组的信息！</div>\n    \n    <ul class=\"forminfo\">\n    <form name=\"form1\" id=\"form1\" method='post' action=\"/index.php/Console/Group/insert\">\n    <li><label>组名称<b>*</b></label><input id=\"rolename\" name=\"rolename\" type=\"text\" class=\"dfinput\" value=\"\"  /></li>\n   \n    <li><label>备注信息</label>\n    \n\n    \n    <textarea class=\"textinput\" rows=\"\" cols=\"\" name=\"depiction\"></textarea>\n    \n    </li>\n     <li><label>是否审核</label><cite><input type=\"radio\" checked=\"checked\" value=\"1\" name=\"stauts\">是&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"radio\" value=\"0\" name=\"stauts\">否</cite></li>\n     <li><label>设置许可</label></li>\n\n\n    <li><label>&nbsp;</label><input name=\"\" type=\"submit\" class=\"btn\" value=\"保&nbsp;&nbsp;存\"/></li>\n</form>\n    </ul>\n    \n    </div> \n    \n    	\n	<div id=\"tab2\" class=\"tabson\">\n    \n    \n    <ul class=\"seachform\">\n    <form name=\"form2\" id=\"form2\" method='post' action=\"/index.php/Console/Group/roleList\">\n    <li><label>组名</label><input name=\"rolename\" type=\"text\" class=\"scinput\" /></li>\n    </li>\n    <li><label>&nbsp;</label><input name=\"\" type=\"submit\" class=\"scbtn\" value=\"查询\"/>\n    </li>\n    </form>\n    </ul>\n    \n    \n    <table class=\"tablelist\">\n        <thead>\n        <tr>\n        <th><input name=\"\" type=\"checkbox\" value=\"\" checked=\"checked\"/></th>\n        <th>编号<i class=\"sort\"><img src=\"/Public/Console/images/px.gif\" /></i></th>\n        <th>组名称</th>\n        <th>发布时间</th>\n        <th>是否审核</th>\n        <th>操作</th>\n        </tr>\n        </thead>\n        <tbody>\n    <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo \"\" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>\n        <td><input name=\"\" type=\"checkbox\" value=\"\" /></td>\n        <td><?php echo ($vo[\"id\"]); ?></td>\n        <td><?php echo ($vo[\"rolename\"]); ?></td>\n        <td><?php echo (date('Y-m-d',$vo[\"addtime\"])); ?></td>\n        <td><?php if($vo[\"status\"] == 1): ?>已审核 <?php else: ?> 未审核<?php endif; ?></td>\n        <td><?php if($vo[\"status\"] == 1): ?><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <?php else: ?><a href=\"javascript:;\" onclick=\"check(<?php echo ($vo[\"id\"]); ?>);\" class=\"tablelink\">审核</a><?php endif; ?> <a href=\"/index.php/Console/Group/roleupdate/id/<?php echo ($vo[\"id\"]); ?>\" class=\"tablelink\">修改</a><!--<a href=\"/index.php/Console/Group/delete/id/<?php echo ($vo[\"id\"]); ?>\" class=\"tablelink\"> 删除</a>--></td>\n        </tr><?php endforeach; endif; else: echo \"\" ;endif; ?>\n       \n    \n        </tbody>\n    </table>\n    \n	<script>\n	\n		function check(id){\n			if(!id){\n				alert('此信息不存在');\n			}\n			$.post('/index.php/Console/Group/editstatus',{id:id},function(data){\n				var data= eval('('+data+')');\n				alert(data.msg);\n				if(data.result  == 1){\n					window.location.href='/index.php/Console/Group/rolelist#tab2';\n				}\n			})\n		}\n		\n	</script>\n    \n    </div>  \n\n       \n    </div> \n \n    <script type=\"text/javascript\"> \n      $(\"#usual1 ul\").idTabs(); \n    </script>\n    \n    <script type=\"text/javascript\">\n    $('.tablelist tbody tr:odd').addClass('odd');\n    </script>\n    \n    \n    \n    \n    \n    </div>\n\n\n</body>\n\n</html>",
+			"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/9fb668bfeb3e399d547282fe71b0e8e0.php",
+			"file_size": 5363,
+			"file_write_time": 131092526216834554,
+			"settings":
+			{
+				"buffer_size": 5026,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<title>无标题文档</title>\n<link href=\"/Public/Console/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n<link href=\"/Public/Console/css/select.css\" rel=\"stylesheet\" type=\"text/css\" />\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/jquery.idTabs.min.js\"></script>\n<script type=\"text/javascript\" src=\"/Public/Console/js/select-ui.min.js\"></script>\n<script language=\"javascript\" type=\"text/javascript\" src=\"/Public/My97DatePicker/WdatePicker.js\"></script>\n\n<script src=\"/Public/Console/js/validation/lib/jquery.js\"></script>\n<script src=\"/Public/Console/js/validation/dist/jquery.validate.js\"></script>\n<script src=\"/Public/Console/js/validation/dist/localization/messages_zh.js\"></script> \n\n</head>\n<script type=\"text/javascript\">\n	// $(function(){	\n	// 	$.validator.setDefaults({\n	// 		submitHandler:function() {\n	// 					submitHandler:function(form) {from.submit();}\n	// 		}\n	// 	});\n\n	// 	$(\"#form1\").validate({\n	// 		rules:{\n	// 			cate_name:'required',\n	// 			cate_name2:'required',\n	// 			is_show:'required',\n	// 			status:'required'\n	// 		},\n	// 		messages:{				\n	// 			cate_name:'请输入分类名称',		\n	// 			cate_name2:'请输入传统名称',	\n	// 			is_show:'请选择显示状态',	\n	// 			status:'请选择审核状态',	\n	// 		},\n	// 		errorClass:'cerror',\n			\n	// 	});\n		\n	// });\n\n</script>\n<body>\n\n    <div class=\"place\">\n		<span>位置：</span>\n		<ul class=\"placeul\">\n		\n			<li><a href=\"#\">首页</a></li>\n			<li><a href=\"#\">组织结构</a></li>\n			<li><a href=\"#\">修改分类</a></li>\n		</ul>\n    </div>\n    \n    <div class=\"formbody\">\n		<div id=\"usual1\" class=\"usual\"> \n		<form name=\"form1\" id=\"form1\" method='post' action=\"/index.php/Console/Category/update\">\n			<div class=\"itab\">\n				<ul> \n					<li><a href=\"#tab1\" class=\"selected\">修改分类</a></li> \n				</ul>\n			</div> \n    \n			<div id=\"tab1\" class=\"tabson\">\n			\n				<div class=\"formtext\">只能修改分类名称，不能转移到其它父类！</div>\n				<ul class=\"forminfo\">\n					<input name=\"cate_id\" type=\"hidden\" class=\"dfinput\" value=\"<?php echo ($vo[\"cate_id\"]); ?>\"  />\n					<li><label>分类名称<b>*</b></label><input name=\"cate_name\" id=\"cate_name\" type=\"text\" class=\"dfinput\" value=\"<?php echo ($vo[\"cate_name\"]); ?>\"  /></li>\n					<li><label>传统名称<b>*</b></label><input name=\"cate_name2\" id=\"cate_name2\" type=\"text\" class=\"dfinput\" value=\"<?php echo ($vo[\"cate_name2\"]); ?>\"  /></li>\n					<li><label>是否显示<b>*</b></label><cite><input type=\"radio\" id=\"is_show\" checked=\"checked\" value=\"1\" <?php if($vo[\"is_show\"] == '1'): ?>checked=\"checked\"<?php endif; ?> name=\"is_show\">是&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"radio\" value=\"0\" <?php if($vo[\"is_show\"] == '0'): ?>checked=\"checked\"<?php endif; ?> name=\"is_show\">否</cite></li>\n					<li><label>是否审核<b>*</b></label><cite><input type=\"radio\" id=\"status\" checked=\"checked\" value=\"1\" name=\"status\" <?php if($vo[\"status\"] == '1'): ?>checked=\"checked\"<?php endif; ?>>是&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"radio\" value=\"0\" name=\"status\" <?php if($vo[\"status\"] == '0'): ?>checked=\"checked\"<?php endif; ?>>否</cite></li>\n				\n					<li>\n						<label>备注<b></b></label>\n						<textarea class=\"textinput\" rows=\"\" cols=\"\" name=\"cate_content\"><?php echo ($vo[\"cate_content\"]); ?></textarea>\n					</li>\n\n					<li>\n						<label>权限</label>\n						<div style=\"float:left;\">\n							<?php if(is_array($node)): $i = 0; $__LIST__ = $node;if( count($__LIST__)==0 ) : echo \"\" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><label ><input style=\"vertical-align: middle\"  name=\"node[]\" type=\"checkbox\" id=\"<?php echo ($vo['id']); ?>\"  value=\"<?php echo ($vo[\"id\"]); ?>\" \n								<?php if(!empty($selectNode[$vo['id']])): ?>checked<?php endif; ?> /><?php echo ($vo[\"name\"]); ?></label>\n								<?php if(($i%5) == 0): ?><p style=\"clear:both;\"></p><?php endif; endforeach; endif; else: echo \"\" ;endif; ?>\n						</div>\n					</li>\n					<li><label>&nbsp;</label><input name=\"\" type=\"submit\" class=\"btn\" value=\"修改分类\"/></li>\n				</ul>\n\n			</div> \n		</form>\n		</div> \n    </div>\n\n\n</body>\n\n</html>",
+			"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/ff523cbf1c97c66a943401e16bbeb077.php",
+			"file_size": 4516,
+			"file_write_time": 131094909137333063,
+			"settings":
+			{
+				"buffer_size": 4248,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
+			"settings":
+			{
+				"buffer_size": 11519,
 				"line_ending": "Windows"
 			}
 		}
@@ -293,35 +396,49 @@
 	},
 	"expanded_folders":
 	[
-		"/D/WWW/gaoxi",
-		"/D/WWW/gaoxi/Application",
-		"/D/WWW/gaoxi/Application/Common",
-		"/D/WWW/gaoxi/Application/Common/Common",
-		"/D/WWW/gaoxi/Application/Common/Conf",
-		"/D/WWW/gaoxi/Application/Console",
-		"/D/WWW/gaoxi/Application/Console/Conf",
-		"/D/WWW/gaoxi/Application/Console/Model",
-		"/D/WWW/gaoxi/Application/Console/View",
-		"/D/WWW/gaoxi/Application/Console/View/Order",
-		"/D/WWW/gaoxi/Application/Console/View/Staff",
-		"/D/WWW/gaoxi/Application/Console/View/Wecate",
-		"/D/WWW/gaoxi/Public/Console",
-		"/D/WWW/gaoxi/Public/Console/js",
-		"/D/WWW/gaoxi/Uploads"
+		"/D/WWW/mobile",
+		"/D/WWW/mobile/admin/themes",
+		"/D/WWW/mobile/admin/themes/simplebootx",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/User",
+		"/D/WWW/mobile/application",
+		"/D/WWW/mobile/application/Admin/Controller",
+		"/D/WWW/mobile/application/Common",
+		"/D/WWW/mobile/application/Common/Conf"
 	],
 	"file_history":
 	[
-		"/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
-		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Mobile/index.html",
-		"/D/WWW/gaoxi/Application/Console/Common/function.php",
-		"/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
-		"/D/WWW/gaoxi/Application/Console/View/Order/look.html",
+		"/D/WWW/gaoxi/ThinkPHP/Library/Think/Db.class.php",
 		"/D/WWW/gaoxi/Application/Common/Conf/config.php",
+		"/D/WWW/gaoxi/Application/Console/View/Access/add.html",
+		"/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
+		"/D/WWW/gaoxi/Application/Console/View/Category/add.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/CategoryController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Controller/CommonController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Model/CategoryModel.class.php",
+		"/D/WWW/gaoxi/Application/Console/View/Category/edit.html",
+		"/D/WWW/gaoxi/Application/Console/View/Login/login.html",
+		"/D/WWW/gaoxi/Application/Console/Controller/LoginController.class.php",
+		"/D/WWW/gaoxi/Public/Console/js/staff_edit.js",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/Mobile/index.html",
+		"/D/WWW/mobile/application/Admin/Controller/MobileController.class.php",
+		"/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
+		"/D/WWW/mobile/application/Admin/Controller/UserController.class.php",
+		"/D/WWW/mobile/themes/simplebootx/User/index.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/Admin/User/index.html",
+		"/D/WWW/mobile/application/Common/Conf/debug.php",
+		"/D/WWW/mobile/index.php",
+		"/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
+		"/D/WWW/mobile/admin/themes/simplebootx/User/index.html",
+		"/D/WWW/gaoxi/Application/Console/View/Staff/edit.html",
+		"/D/WWW/gaoxi/Application/Console/View/Wecate/lookfind.html",
+		"/D/WWW/gaoxi/Application/Console/Common/function.php",
+		"/D/WWW/gaoxi/Application/Console/View/Order/look.html",
 		"/D/WWW/gaoxi/Application/Console/Controller/WecateController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Equipment/Equipment.html",
 		"/D/WWW/gaoxi/Application/Console/Controller/EquipmentController.class.php",
-		"/D/WWW/gaoxi/Application/Console/Controller/LoginController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Index/left.html",
 		"/D/WWW/gaoxi/Application/Console/View/Wecate/Wecate.html",
 		"/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
@@ -329,17 +446,13 @@
 		"/D/WWW/gaoxi/Application/Console/View/Order/add.html",
 		"/D/WWW/gaoxi/Application/Common/Common/function.php",
 		"/D/WWW/gaoxi/Public/Console/js/validation/dist/localization/messages_zh.js",
-		"/D/WWW/gaoxi/Public/Console/js/validation/demo/index.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/boot/index.html",
 		"/D/WWW/mobile/application/User/Controller/LoginController.class.php",
 		"/D/WWW/mobile/application/Admin/Controller/PublicController.class.php",
 		"/D/WWW/mobile/application/Common/Lang/zh-cn.php",
-		"/D/WWW/gaoxi/Application/Console/View/Login/login.html",
 		"/D/WWW/mobile/themes/simplebootx/User/login.html",
 		"/D/WWW/mobile/admin/themes/simplebootx/Admin/login.html",
-		"/D/WWW/mobile/application/Admin/Controller/MobileController.class.php",
 		"/D/WWW/mobile/admin/themes/simplebootx/Public/assets/css/admin_login.css",
-		"/D/WWW/mobile/index.php",
 		"/D/WWW/mobile/public/simpleboot/themes/bluesky/theme.min.css",
 		"/D/WWW/mobile/application/Common/Conf/config.php",
 		"/D/WWW/gaoxi/ThinkPHP/Library/Org/Util/Rbac.class.php",
@@ -375,7 +488,6 @@
 		"/D/WWW/GAOXI/Application/Console/View/Category/add.html",
 		"/D/WWW/GAOXI/Application/Console/Controller/CategoryController.class.php",
 		"/D/WWW/GAOXI/ThinkPHP/Library/Vendor/Smarty/plugins/modifiercompiler.string_format.php",
-		"/D/WWW/gaoxi/Application/Console/View/Access/add.html",
 		"/D/WWW/gaoxi/Application/Console/Controller/AccessController.class.php",
 		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Model.class.php",
 		"/D/WWW/GAOXI/Application/Console/View/Staff/Staff.html",
@@ -408,13 +520,10 @@
 		"/D/WWW/gaoxi/Public/Console/css/select1.css",
 		"/D/WWW/GAOXI/Public/Console/js/jquery.js",
 		"/D/WWW/gaoxi/Application/Console/View/Order/shopping.html",
-		"/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
-		"/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
 		"/D/WWW/gaoxi/ThinkPHP/Library/Think/Model.class.php",
 		"/D/WWW/gaoxi/Application/Console/Model/StaffModel.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Wecate/add.html",
 		"/D/WWW/gaoxi/Application/Console/View/Staff/Staff.html",
-		"/D/WWW/gaoxi/Application/Console/View/Staff/edit.html",
 		"/D/WWW/GAOXI/Application/Console/View/Category/PList.html",
 		"/D/WWW/GAOXI/Application/Console/View/Index/top.html",
 		"/D/WWW/gaoxi/Public/Console/css/style.css",
@@ -422,23 +531,11 @@
 		"/D/WWW/GAOXI/Application/Console/Controller/OrderController.class.php",
 		"/D/WWW/gaoxi/Application/Console/View/Staff/deparlist.html",
 		"/D/WWW/GAOXI/Application/Console/Model/StaffModel.class.php",
-		"/D/WWW/gaoxi/Application/Console/Model/CategoryModel.class.php",
 		"/D/WWW/GAOXI/Public/My97DatePicker/WdatePicker.js",
 		"/D/WWW/gaoxi/Application/Console/View/Index/main.html",
 		"/D/WWW/GAOXI/Application/Console/View/Order/shopping.html",
 		"/D/WWW/GAOXI/Application/Console/Controller/ProductController.class.php",
-		"/D/WWW/gaoxi/Application/Console/View/Product/Plist.html",
-		"/D/WWW/gaoxi/Application/Console/View/Product/edit.html",
-		"/D/WWW/GAOXI/Application/Console/View/Product/add.html",
-		"/D/WWW/gaoxi/Public/My97DatePicker/开发包/readme.txt",
-		"/D/WWW/gaoxi/Application/Console/View/Category/droparlist.html",
-		"/D/WWW/GAOXI/ThinkPHP/Library/Think/Controller.class.php",
-		"/D/WWW/GAOXI/Application/Console/Controller/IndexController.class.php",
-		"/D/Program Files (x86)/ICW/sshd-stdout.log",
-		"/D/Program Files (x86)/ICW/var/log/wtmp",
-		"/D/Program Files (x86)/ICW/var/log/lastlog",
-		"/D/phpStudy/nginx/conf/nginx.conf",
-		"/D/phpStudy/nginx/conf/vhosts.conf"
+		"/D/WWW/gaoxi/Application/Console/View/Product/Plist.html"
 	],
 	"find":
 	{
@@ -449,6 +546,8 @@
 		"height": 96.0,
 		"where_history":
 		[
+			"",
+			"submitHandler:function(form) {\n				form.submit();\n			}",
 			""
 		]
 	},
@@ -457,6 +556,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"$('#form1').submit();",
+			"submitHandler:function() {\n				$('#form1').submit();\n			}",
+			"quarters_div",
+			"department",
+			"nextselect",
 			"getpayment",
 			"getrolename",
 			"$vo",
@@ -502,6 +606,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"		submitHandler:function(form) {from.submit();}"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -512,24 +617,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/D/WWW/gaoxi/Application/Console/Controller/OrderController.class.php",
+					"file": "/D/WWW/gaoxi/Application/Console/View/Staff/edit.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9314,
+						"buffer_size": 34275,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7888,
-								7888
+								1100,
+								1110
 							]
 						],
 						"settings":
@@ -542,83 +647,401 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5051.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/WWW/gaoxi/Public/Console/js/staff_edit.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1770,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1756,
+								1756
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1800.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/WWW/gaoxi/Public/Console/js/staff_add.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2273,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2235,
+								2255
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2340.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Staff/add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15035,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1101,
+								1110
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 60.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Order/edit.html",
+					"buffer": 4,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4110,
+						"buffer_size": 2561,
 						"regions":
 						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										279,
+										300
+									],
+									[
+										461,
+										482
+									],
+									[
+										656,
+										677
+									],
+									[
+										860,
+										881
+									],
+									[
+										1057,
+										1078
+									],
+									[
+										1250,
+										1271
+									],
+									[
+										1440,
+										1461
+									],
+									[
+										1631,
+										1652
+									],
+									[
+										1856,
+										1877
+									],
+									[
+										2079,
+										2100
+									],
+									[
+										2304,
+										2325
+									],
+									[
+										2486,
+										2507
+									]
+								],
+								"scope": ""
+							}
 						},
 						"selection":
 						[
 							[
-								1030,
-								1030
+								94,
+								94
 							]
 						],
 						"settings":
@@ -631,83 +1054,177 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ 	].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Access/add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3151,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1204,
+								1204
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Access/add.html",
+					"buffer": 6,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Access/edit.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3154,
+						"buffer_size": 3438,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1073,
+								1073
 							]
 						],
 						"settings":
@@ -720,60 +1237,588 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Category/add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1179,
+								1179
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Category/edit.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3837,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1177,
+								1177
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Group/roleList.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2942,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								966,
+								966
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Group/roleupdate.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3116,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								996,
+								996
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Personnel/add.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4314,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1167,
+								1167
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/D/WWW/gaoxi/Application/Console/View/Personnel/edit.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1169,
+								1169
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -783,190 +1828,12 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/D/WWW/gaoxi/Application/Console/View/Category/PList.html",
+					"buffer": 13,
+					"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/68a355c0e1d134d9ef8e00781733697a.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4684,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4567,
-								4567
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2240.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/D/WWW/gaoxi/Application/Console/Controller/CategoryController.class.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5588,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5478,
-								5484
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content"
-							],
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2711.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/D/WWW/gaoxi/Application/Console/Model/AccessModel.class.php",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 149,
+						"buffer_size": 3842,
 						"regions":
 						{
 						},
@@ -979,6 +1846,94 @@
 						],
 						"settings":
 						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/9fb668bfeb3e399d547282fe71b0e8e0.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5026,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/D/WWW/gaoxi/Application/Runtime/Cache/Console/ff523cbf1c97c66a943401e16bbeb077.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4248,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/D/WWW/gaoxi/Application/Console/Controller/StaffController.class.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11519,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7951,
+								7951
+							]
+						],
+						"settings":
+						{
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
@@ -987,64 +1942,66 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1099,12 +2056,108 @@
 		"selected_items":
 		[
 			[
-				"category/plist",
-				"Application\\Console\\View\\Category\\PList.html"
+				"staff_",
+				"gaoxi\\Public\\Console\\js\\staff_edit.js"
+			],
+			[
+				"staff/add",
+				"gaoxi\\Application\\Console\\View\\Staff\\add.html"
+			],
+			[
+				"staffco",
+				"gaoxi\\Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"staff_edit",
+				"gaoxi\\Public\\Console\\js\\staff_edit.js"
+			],
+			[
+				"staffc",
+				"gaoxi\\Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"staff/edit",
+				"gaoxi\\Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"staff/e",
+				"gaoxi\\Application\\Console\\View\\Staff\\edit.html"
+			],
+			[
+				"staffcon",
+				"gaoxi\\Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"user/index",
+				"mobile\\admin\\themes\\simplebootx\\User\\index.html"
+			],
+			[
+				"logincon",
+				"gaoxi\\Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"logincontrolle",
+				"Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"staffo",
+				"Application\\Console\\Controller\\StaffController.class.php"
+			],
+			[
+				"login/login",
+				"Application\\Console\\View\\Login\\login.html"
+			],
+			[
+				"loginc",
+				"Application\\Console\\Controller\\LoginController.class.php"
+			],
+			[
+				"login/login.",
+				"Application\\Console\\View\\Login\\login.html"
+			],
+			[
+				"comm",
+				"Application\\Console\\Controller\\CommonController.class.php"
+			],
+			[
+				"conf",
+				"Application\\Common\\Conf\\config.php"
+			],
+			[
+				"db.",
+				"ThinkPHP\\Library\\Think\\Db.class.php"
+			],
+			[
+				"order/edit",
+				"Application\\Console\\View\\Order\\edit.html"
+			],
+			[
+				"ordercontroller",
+				"Application\\Console\\Controller\\OrderController.class.php"
+			],
+			[
+				"categorym",
+				"Application\\Console\\Model\\CategoryModel.class.php"
+			],
+			[
+				"category/edit",
+				"Application\\Console\\View\\Category\\edit.html"
+			],
+			[
+				"category/add",
+				"Application\\Console\\View\\Category\\add.html"
+			],
+			[
+				"category",
+				"Application\\Console\\Controller\\CategoryController.class.php"
 			],
 			[
 				"categoryc",
 				"Application\\Console\\Controller\\CategoryController.class.php"
+			],
+			[
+				"category/plist",
+				"Application\\Console\\View\\Category\\PList.html"
 			],
 			[
 				"order/e",
@@ -1123,10 +2176,6 @@
 				"gaoxi\\Application\\Console\\Controller\\OrderController.class.php"
 			],
 			[
-				"order/edit",
-				"gaoxi\\Application\\Console\\View\\Order\\edit.html"
-			],
-			[
 				"ordercon",
 				"gaoxi\\Application\\Console\\Controller\\OrderController.class.php"
 			],
@@ -1137,10 +2186,6 @@
 			[
 				"order/a",
 				"Application\\Console\\View\\Order\\add.html"
-			],
-			[
-				"logincon",
-				"Application\\Console\\Controller\\LoginController.class.php"
 			],
 			[
 				"login",
@@ -1159,10 +2204,6 @@
 				"Application\\Console\\View\\Wecate\\Wecate.html"
 			],
 			[
-				"loginc",
-				"Application\\Console\\Controller\\LoginController.class.php"
-			],
-			[
 				"left",
 				"Application\\Console\\View\\Index\\left.html"
 			],
@@ -1177,10 +2218,6 @@
 			[
 				"lookover",
 				"Application\\Console\\View\\Staff\\lookover.html"
-			],
-			[
-				"staff/add",
-				"Application\\Console\\View\\Staff\\add.html"
 			],
 			[
 				"staff/lookover",
@@ -1283,10 +2320,6 @@
 				"Public\\Console\\css\\style.css"
 			],
 			[
-				"login/login",
-				"Application\\Console\\View\\Login\\login.html"
-			],
-			[
 				"commonc",
 				"Application\\Console\\Controller\\CommonController.class.php"
 			],
@@ -1327,10 +2360,6 @@
 				"Application\\Console\\View\\Equipment\\edit.html"
 			],
 			[
-				"category/add",
-				"Application\\Console\\View\\Category\\add.html"
-			],
-			[
 				"category/e",
 				"Application\\Console\\View\\Category\\edit.html"
 			],
@@ -1351,14 +2380,6 @@
 				"Application\\Common\\Conf\\tags.php"
 			],
 			[
-				"category",
-				"Application\\Console\\Controller\\CategoryController.class.php"
-			],
-			[
-				"category/edit",
-				"Application\\Console\\View\\Category\\edit.html"
-			],
-			[
 				"tokenbuild",
 				"ThinkPHP\\Library\\Behavior\\TokenBuildBehavior.class.php"
 			],
@@ -1373,10 +2394,6 @@
 			[
 				"cla",
 				"doc\\vendor\\composer\\ClassLoader.php"
-			],
-			[
-				"staffcon",
-				"Application\\Console\\Controller\\StaffController.class.php"
 			],
 			[
 				"/staff/add",
@@ -1471,20 +2488,12 @@
 				"Public\\Console\\js\\jquery.js"
 			],
 			[
-				"staff/e",
-				"Application\\Console\\View\\Staff\\edit.html"
-			],
-			[
 				"product/edit",
 				"Application\\Console\\View\\Product\\edit.html"
 			],
 			[
 				"pli",
 				"Application\\Console\\View\\Category\\PList.html"
-			],
-			[
-				"staff/edit",
-				"Application\\Console\\View\\Staff\\edit.html"
 			],
 			[
 				"/staffcon",
@@ -1513,10 +2522,6 @@
 			[
 				"staffm",
 				"Application\\Console\\Model\\StaffModel.class.php"
-			],
-			[
-				"staffc",
-				"Application\\Console\\Controller\\StaffController.class.php"
 			],
 			[
 				"view/order/shopping",
@@ -1561,50 +2566,6 @@
 			[
 				"console/staffcon",
 				"Application\\Console\\Controller\\StaffController.class.php"
-			],
-			[
-				"staff/deparlist",
-				"Application\\Console\\View\\Staff\\deparlist.html"
-			],
-			[
-				"categorycon",
-				"Application\\Console\\Controller\\CategoryController.class.php"
-			],
-			[
-				"console/category/plist",
-				"Application\\Console\\View\\Category\\PList.html"
-			],
-			[
-				"staffco",
-				"Application\\Console\\Controller\\StaffController.class.php"
-			],
-			[
-				"ordercontroller.",
-				"Application\\Console\\Controller\\OrderController.class.php"
-			],
-			[
-				"productcon",
-				"Application\\Console\\Controller\\ProductController.class.php"
-			],
-			[
-				"product/plist",
-				"Application\\Console\\View\\Product\\Plist.html"
-			],
-			[
-				"product",
-				"Application\\Console\\Controller\\ProductController.class.php"
-			],
-			[
-				"product/add",
-				"Application\\Console\\View\\Product\\add.html"
-			],
-			[
-				"controller",
-				"ThinkPHP\\Library\\Think\\Controller.class.php"
-			],
-			[
-				"categorycontroller",
-				"Application\\Console\\Controller\\CategoryController.class.php"
 			]
 		],
 		"width": 0.0
