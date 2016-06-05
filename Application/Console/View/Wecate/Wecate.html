@@ -6,6 +6,7 @@
         <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
         <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
         <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 
         <script type="text/javascript">
@@ -29,7 +30,10 @@
             });
         </script>
 
-
+        <style>
+            .inputedit{width:100%;border:none; margin: 0px;padding:0px;display: block;height: 35px; line-height: 35px;}
+            .tableinputedit .tredit{padding: 0px;margin: 0px;}
+        </style>
     </head>
 
 
@@ -52,9 +56,9 @@
                 <ul class="seachform" style="float:right">
                     <form name="form1" id="form1" method='post' action="{:U('Wecate/insert')}">
                     <li><label>微信号<b>*</b></label><input id="wechat_id" name="wechat_id" type="text" class="scinpute" value=""  /></li>
-                    <li><label>昵称<b>*</b></label><input name="nickname" type="text" class="scinpute" value=""  /></li>
+         <!--            <li><label>昵称<b>*</b></label><input name="nickname" type="text" class="scinpute" value=""  /></li>
                     <li><label>姓名<b>*</b></label><input name="username" type="text" class="scinpute" value=""  /></li>
-                    <li><label>性别<b>*</b></label><cite><input style="height:32px;vertical-align: middle;" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input style="height:32px;vertical-align: middle;"  type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
+                    <li><label>性别<b>*</b></label><cite><input style="height:32px;vertical-align: middle;" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input style="height:32px;vertical-align: middle;"  type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li> -->
                     <li><label>&nbsp;</label><input type="submit" value="添加" class="scbtn" name=""></li>
                     </form>
                 </ul>
@@ -75,12 +79,8 @@
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     </form>
                 </ul>
-               
-                
             </div>
-
-
-            <table class="tablelist">
+            <table class="tablelist" id="tableinputedit">
                 <thead>
                     <tr>
 <!--                        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
@@ -100,48 +100,56 @@
 <!--                            <td><input name="" type="checkbox" value="" /></td>-->
                             <td>{$i}</td>
                             <td><a href="{:U('Wecate/lookfind',array('id'=>$vo['id']))}">{$vo.wechat_id}</a></td>
-                            <td>{$vo.username}</td>
-                            <td>{$vo.nickname}</td>                            
-                            <td>{$vo.sex}<if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2"/>女<else/>未知</if></td>
-                            <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>               
-                            <td>{$vo.backup}</td>
+                            <td class="tredit"><input class="inputedit" f="username" v= "{$vo.id}"  type="text" value="{$vo.username}" /></td>
+                            <td class="tredit"><input class="inputedit" f="nickname" v= "{$vo.id}" type="text" value="{$vo.nickname}" /></td>                            
+                            <td>
+                                <select class="inputedit"  name="sex" f="sex" v= "{$vo.id}" >
+                                    <option value="1" <if condition="$vo.sex eq 1">selected="selected"</if>>男</option>
+                                    <option value="2" <if condition="$vo.sex eq 2">selected="selected"</if>>女</option>
+                                </select>
+                            </td>
+                            <td>{$vo.create_time|date="Y-m-d",###}</td>               
+                            <td class="tredit"><input class="inputedit" f="backup" v= "{$vo.id}" type="text" value="{$vo.backup}" /></td>
                             <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/wecate_delete/id/{$vo.id}" class="tablelink"> 删除</a></td>
                         </tr> 
                     </volist>
 
                 </tbody>
             </table>
-
-
             <div id="page" class="pagination">
-　　{$page}
+　　         {$page}
             </div>
-
-            <div class="tip">
-                <div class="tiptop"><span>提示信息</span><a></a></div>
-
-                <div class="tipinfo">
-                    <span><img src="__PUBLIC__/Console/images/ticon.png" /></span>
-                    <div class="tipright">
-                        <p>是否确认对信息的修改 ？</p>
-                        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-                    </div>
-                </div>
-
-                <div class="tipbtn">
-                    <input name="" type="button"  class="sure" value="确定" />&nbsp;
-                    <input name="" type="button"  class="cancel" value="取消" />
-                </div>
-
-            </div>
-
-
-
 
         </div>
        
+        <script src="__PUBLIC__/Console/js/layer/layer.js" script="text/javascript"></script>        
 
         <script type="text/javascript">
+            $(".inputedit").change(function(){
+                var el=$(this);
+                var id=$(this).attr('v');
+                var msg="是否确认对信息的修改 ？</br> 如果是请点击保存按钮 ，否则请点取消。";
+                if(id=="unfund"){
+                    msg="请刷新该页面? </br> 刷新页面后重新修改。";
+                }
+                layer.confirm(msg, {
+                  btn: ['保存','取消'] //按钮
+                }, function(){
+                    ajaxfeild(el);
+                  layer.closeAll();
+                }, function(){
+
+                });    
+            });
+            function ajaxfeild(el){
+                var id=el.attr('v');
+                var value=el.val();
+                var field=el.attr('f');            
+                $.post("{:U('Wecate/editfield')}",{id:id,f:field,v:value},function(data){
+                    console.log(data);  
+                });
+            }
+       
             $('.tablelist tbody tr:odd').addClass('odd');
             $(function(){
                 $('#form1').validate({
@@ -170,7 +178,7 @@
                     if(data.status=="1"){
                         alert("添加成功");
                     }else{
-                        alert(data.msg);
+                        locahost.reload();
                     }
                 })
             }
