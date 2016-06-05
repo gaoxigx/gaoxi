@@ -146,7 +146,7 @@ $(document).ready(function(){
         function cateinfo(id,t){             
             var url="{:U('Category/getroleninfo')}"+"?id="+id;
             $.get(url,function(data){
-                console.log(data);
+              
                 if(t==0){
                     ui="┣━ ━ ";      
                 }else{   
