@@ -19,4 +19,5 @@ class EquipmentModel extends Model {
          array('addtime','time',1,'function'), // 对update_time字段在更新的时候写入当前时间戳
      );
 
+
  }

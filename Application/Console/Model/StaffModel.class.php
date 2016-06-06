@@ -23,6 +23,8 @@ class StaffModel extends Model {
          array('create_time','time',self::MODEL_BOTH,'function'),        
          array('update_time','time',self::MODEL_BOTH,'function'),        
      );
+
+     public $datafield=array();
 //    protected  function autoPassword($value)
 //    {
 //        return password_hash($value,PASSWORD_BCRYPT);
@@ -30,19 +32,19 @@ class StaffModel extends Model {
     /**
      *查询当前用户下级人员     
     **/
-    public function getthislevel($id){
-        $t[]=getlevel($id);
+    public function getthislevel(){         
+        return $this->getlevel(session('userid'));
     }
-
-    private function getlevel($id){
-        $field=$this->where("id=%d",array($id))->getField('id',true);
+    private function getlevel($id){        
+        $field=$this->where("nibs=%d",array($id))->getField('id',true);
         if($field){
-            foreach ($field as $k => $v) {
-                $this->getlevel($v);   
+            $data[]=$id;
+            foreach ($field as $k => $v) {                                                   
+                $data[]=$this->getlevel($v);   
             }
-            
-        }else{
-            return $field;
+            return $data;
+        }else{            
+            return $id;
         }
     }
 

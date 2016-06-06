@@ -7,6 +7,8 @@ class EquipmentController extends CommonController {
     //数据列表
     public function Equipment($name=''){
          $staff=D('staff')->getField('id,name',true);
+         $staffid=D('staff')->getthislevel();//当前职员下的员工；
+
         $this->assign('staff',$staff);
 
         $username = i('username');
@@ -37,9 +39,8 @@ class EquipmentController extends CommonController {
         $data=$User->select();
 
         if(session('roleidstaff')){ 
-            $where['staffid']=session('userid');
-        }
-    
+            $where['staffid']=array("in",implode(',', $staffid));//session('userid');
+        }    
 
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
