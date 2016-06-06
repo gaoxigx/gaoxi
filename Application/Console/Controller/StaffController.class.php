@@ -86,7 +86,22 @@ class StaffController extends CommonController {
         $this->assign('department',$data);
         $this->display();
     }
-
+	/**
+	 *查看当前用户个人信息
+	 */
+	public function UserInfo(){
+		$userid = session('userid');
+		$accounts = session('username');
+		$userinfo = D('Controller');
+        $data = $userinfo ->where('id='.$userid.' and accounts="'.$accounts.'"')->find();
+		if(!empty($data)){
+			$this->redirect('Personnel/AdminInfo', array('id' => $userid));
+		}else{
+			$userinfo = D('Staff');
+			$data = $userinfo ->where('id='.$userid.' and username="'.$accounts.'"')->find();
+			$this->redirect('Staff/lookover', array('id' => $userid));
+		}
+	}
  //查看页面
     public function lookover(){
         $id=I('get.id');        
