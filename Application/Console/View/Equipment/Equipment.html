@@ -72,8 +72,10 @@ $(document).ready(function(){
     	<tr>
         <th><input name="" type="checkbox" value="" checked="checked"/></th>
         <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+        <th>序列号</th>
         <th>型号</th>
         <th>编号</th>
+
         <th>代言人</th>
         <th>手机号</th>
         <th>开机密码</th>
@@ -84,8 +86,9 @@ $(document).ready(function(){
         <th>负责人</th>
         <th>使用人</th>
         <th>所在部门</th>
-        <th>所在工们</th>
-        <th>设备维护</th>
+        <th>所在岗位</th>
+        <th>设备状态</th>
+        <th>用途</th>
         <th>添加日期</th>
         <th>操作</th>
         </tr>
@@ -96,6 +99,7 @@ $(document).ready(function(){
 
        <td><input name="" type="checkbox" value="" /></td>
         <td>{$vo.id}</td>
+        <td>{$vo.cdkey}</td>
         <td>{$vo.xinghao}</td>
         <td>{$vo.bianhao}</td>
         <td>{$vo.daiyanren}</td>
@@ -109,7 +113,9 @@ $(document).ready(function(){
         <td><a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"><!-- {$vo.shiyongren} -->{$staff[$vo["staffid"]]}</a></td>
         <td>{$vo.departmenttext}</td>
         <td>{$vo.posttext}</td>
-        <td>{$vo.stauts|getstautsnum=###}</td>
+        <td>{$vo.stauts|getstautel=###}</td>
+        <td>{$vo.get|getorderget=###}</td>
+
         <td>{$vo.addtime|date='Y-m-d',###}</td>
         <td>
         <a href="{:U('Equipment/tracking',array('id'=>$vo['id']))}" class="tablelink" >登记</a>

@@ -107,7 +107,7 @@ $(document).ready(function(){
             <th>使用人</th>
             <th>所在部门</th>
             <th>所在工们</th>
-            <th>设备维护</th>
+            <th>设备状态</th>
             <th>添加日期</th>      
             </tr>
             </thead>
@@ -137,13 +137,13 @@ $(document).ready(function(){
                 <h2>{$vo.xinghao} 使用详情</h2>
                 <ul>
                     <volist name="dataq" id="v">
-                    <li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> 领取，{$vo.xinghao}，{$v.get}，{$v.comment}。</li>
+                    <li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> 领取，{$vo.xinghao}，{$v.get|getorderget=###}，{$v.comment}。</li>
                     </volist>
                 </ul>
             </notempty>
         </div>
         <div class="trackget">
-            <span id="trackeq" class="btn btn-info" style="line-height:35px; text-align:center;">领取</span>
+            <span id="trackeq" class="btn btn-info" style="line-height:35px; text-align:center;">转移</span>
         </div>
        
         </div>

@@ -65,7 +65,7 @@ class StaffController extends CommonController {
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = $User->where($map)->order('section desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 		
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");

@@ -95,13 +95,13 @@ function reset_pass(id){
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>性别</th>               
-                <th>昵称</th>
+               <!--  <th>昵称</th> -->
                 <!--<th>身份证</th>   -->             
                 <th>部门</th>
                 <th>岗位</th>
 				<th>上班状态</th>
 				<th>岗位状态</th>
-                <th>学历</th>
+              <!--   <th>学历</th> -->
                 <!--<th>电话</th>--> 
                 <th>操作</th>
             </tr>
@@ -115,7 +115,7 @@ function reset_pass(id){
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
             <td><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未填</if></td>
-            <td>{$vo.nickname}</td>
+    <!--         <td>{$vo.nickname}</td> -->
             <!--<td>{$vo.identity_card}</td> -->           
             <td>
 				{$cat[$vo['section']]}
@@ -145,9 +145,9 @@ function reset_pass(id){
 				正常上班
 				</if>
 			</td>
-            <td>{$education[$vo['education']]}</td>
+           <!--  <td>{$education[$vo['education']]}</td> -->
             <!--<td>{$vo.mobile}</td>-->
-            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a><!----></td>
+            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>--></td>
             </tr> 
             </volist>
         

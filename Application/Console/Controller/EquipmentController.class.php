@@ -35,10 +35,11 @@ class EquipmentController extends CommonController {
         }
         $User = M('Equipment'); // 实例化User对象
         $data=$User->select();
-        /*if(session('roleidstaff')){            
-            $where['posid']=session('roleidstaff');
+
+        if(session('roleidstaff')){            
+            $where['staffid']=session('userid');
         }
-        */
+    
 
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
@@ -169,21 +170,36 @@ class EquipmentController extends CommonController {
         $this->display();
     }
     public function trackincrease(){
+
         $track=D('Eqtracking');
         $data=$track->create();  
         if($data){
-            $data['gettime']=time();
-            $data['status']=1;
-            $data['type']=1;
-            $result=$track->add($data);
-            $map['id']=$data['equipment_id'];
-            $update['shiyongren']=$data['staff_name'];
-            $sul==D('Equipment')->where($map)->save($update);
-            if($result){
-                $this->ajaxreturn(array('status'=>1,'msg'=>'添加成功'));
-            }else{
-                $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));                
-            }            
+         //   try{
+               // M()->startTrans();
+                $data['gettime']=time();
+                $data['status']=1;
+                $data['type']=1;
+                $result=$track->add($data);
+                $map['id']=$data['equipment_id'];
+                $update['staffid']=$data['staff_id'];
+                $update['shiyongren']=$data['staff_name'];
+                $update['roleeffect']=$data['get'];
+                $sul==D('Equipment')->where($map)->save($update);
+
+                if($sul&&$result){                    
+                  //  M()->comment();
+                     $this->ajaxreturn(array('status'=>1,'msg'=>'添加成功'));
+                }else{
+                   // M()->rollback();
+                    $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));        
+                    exit();
+                }
+
+            // }catch(Exception $e){
+            //     M()->rollback();
+            //     $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));                
+            // }
+          
         }else{
             $this->ajaxreturn(array('status'=>2,'msg'=>'数据有误,请再操作一次'.$track->geterror()));
         }

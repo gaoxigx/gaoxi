@@ -28,16 +28,20 @@
             <label>领取人</label>    
             <div class="vocation uew-select">                               
                 <select id="staffid" name="staff_id" class="uew-select-value">
-                <volist name="staff" id="vo">
-                    <option values="{$vo.id}">{$vo.name}</option>
-                </volist>
+                    <volist name="staff" id="vo">
+                        <option values="{$vo.id}">{$vo.name}</option>
+                    </volist>
                 </select>
                 <input id="staffname" type="hidden" name="staff_name" value="{$vo[0].name}" />
             </div>
         </li>
         <li>
             <label>用途</label>    
-            <input class="dfinput" id="get" name="get" type="text" value="" />
+            <select name="get" class="dfinput" id="get" >
+                <option value="1">推广小号</option>
+                <option value="2">销售运营</option>
+            </select>
+            
         </li>
         <li>
             <label>备注</label>    

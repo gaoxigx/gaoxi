@@ -232,7 +232,6 @@
                                     <input class="dfinput"  name="mobile" id="mobile" type="text"  placeholder="mobile" />
                                 </if>                                  
                             </li>
-                            
                             <li>
                                 <label>入职时间</label>                                   
                                 <if condition="$id">
@@ -241,9 +240,16 @@
                                     <input class="dfinput"  name="entry_time" type="text" onClick="WdatePicker()"  placeholder="entry_time" />
                                 </if>                                  
                             </li>
-                            
                             <li>
-                                <label>名族</label>                                   
+                                <label>工作地点</label>                                   
+                                <if condition="$id">
+                                    <input class="dfinput" name="address" type="text" placeholder="entry_time" value="{$user.address}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="address" type="text" placeholder="entry_time" />
+                                </if>                                  
+                            </li>
+                            <li>
+                                <label>民族</label>                                   
                                 <if condition="$id">
                                     <input class="dfinput" name="nationality" type="text"  placeholder="nationality" value="{$user.nationality}"/>
                                     <else/>
