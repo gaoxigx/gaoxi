@@ -174,31 +174,32 @@ class EquipmentController extends CommonController {
         $track=D('Eqtracking');
         $data=$track->create();  
         if($data){
-         //   try{
-               // M()->startTrans();
+           try{
+                M()->startTrans();
                 $data['gettime']=time();
                 $data['status']=1;
                 $data['type']=1;
                 $result=$track->add($data);
                 $map['id']=$data['equipment_id'];
+
                 $update['staffid']=$data['staff_id'];
                 $update['shiyongren']=$data['staff_name'];
                 $update['roleeffect']=$data['get'];
-                $sul==D('Equipment')->where($map)->save($update);
+                $sul=D('Equipment')->where($map)->save($update);
 
-                if($sul&&$result){                    
-                  //  M()->comment();
-                     $this->ajaxreturn(array('status'=>1,'msg'=>'添加成功'));
+                if($result&&$sul){                    
+                    M()->comment();
+                    $this->ajaxreturn(array('status'=>1,'msg'=>'添加成功'));
                 }else{
-                   // M()->rollback();
-                    $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));        
+                    M()->rollback();
+                    $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'.$sul));        
                     exit();
                 }
 
-            // }catch(Exception $e){
-            //     M()->rollback();
-            //     $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));                
-            // }
+            }catch(Exception $e){
+                M()->rollback();
+                $this->ajaxreturn(array('status'=>2,'msg'=>'添加失败'));                
+            }
           
         }else{
             $this->ajaxreturn(array('status'=>2,'msg'=>'数据有误,请再操作一次'.$track->geterror()));

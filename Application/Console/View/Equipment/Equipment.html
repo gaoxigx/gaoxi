@@ -114,8 +114,7 @@ $(document).ready(function(){
         <td>{$vo.departmenttext}</td>
         <td>{$vo.posttext}</td>
         <td>{$vo.stauts|getstautel=###}</td>
-        <td>{$vo.get|getorderget=###}</td>
-
+        <td>{$vo.roleeffect|getorderget=###}</td>
         <td>{$vo.addtime|date='Y-m-d',###}</td>
         <td>
         <a href="{:U('Equipment/tracking',array('id'=>$vo['id']))}" class="tablelink" >登记</a>

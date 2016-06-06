@@ -29,7 +29,7 @@
             <div class="vocation uew-select">                               
                 <select id="staffid" name="staff_id" class="uew-select-value">
                     <volist name="staff" id="vo">
-                        <option values="{$vo.id}">{$vo.name}</option>
+                        <option value="{$vo.id}">{$vo.name}</option>
                     </volist>
                 </select>
                 <input id="staffname" type="hidden" name="staff_name" value="{$vo[0].name}" />
@@ -74,6 +74,7 @@
 
             var url="{:U('Equipment/trackincrease')}"
             $.post(url,$("#formincrease").serialize(),function(data){
+                console.log(data);
                 if(data.status==1){
                     layer.msg('领取成功',function(){
                         layer.closeAll();
