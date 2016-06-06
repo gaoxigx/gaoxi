@@ -27,4 +27,24 @@ class StaffModel extends Model {
 //    {
 //        return password_hash($value,PASSWORD_BCRYPT);
 //    }
+    /**
+     *查询当前用户下级人员     
+    **/
+    public function getthislevel($id){
+        $t[]=getlevel($id);
+    }
+
+    private function getlevel($id){
+        $field=$this->where("id=%d",array($id))->getField('id',true);
+        if($field){
+            foreach ($field as $k => $v) {
+                $this->getlevel($v);   
+            }
+            
+        }else{
+            return $field;
+        }
+    }
+
+
  }
