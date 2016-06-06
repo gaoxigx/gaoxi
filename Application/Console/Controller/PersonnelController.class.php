@@ -102,6 +102,22 @@ class PersonnelController extends CommonController {
 
 
      }
+	 
+	/**
+	 *查看管理员信息
+	 */
+    public function AdminInfo($id=0){
+		$this->getprotype();
+		$controller   =   M('controller');
+		// 读取数据
+		$data =   $controller->find($id);
+		if($data) {
+			$this->assign('data',$data);// 模板变量赋值
+		}else{
+			$this->error('数据错误');
+		}
+		$this->display();
+     }
 	
 	public function passadd(){
 		$id = I('get.id',0);

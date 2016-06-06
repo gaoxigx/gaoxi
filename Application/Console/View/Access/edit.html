@@ -16,7 +16,7 @@
 $(function(){
 	$.validator.setDefaults({
 		submitHandler:function(form) {
-					from.submit();
+					form.submit();
 		}
 	});
 
@@ -70,7 +70,17 @@ $(function(){
                 <div id="tab1" class="tabson">                    
                     <ul class="forminfo">
 					 <input name="id" type="hidden" class="dfinput" value="{$data.id}"  />
-                    <input name="cate_parent" type="hidden" class="dfinput" value="{$pid}"  />
+                    <li>
+						<label>上级<b>*</b></label>
+						<div class="vocation uew-select" id="quarters_div">                 
+							<select id="one_pid" name="pid" class="uew-select-value" >
+								<option>请选择上级</option>
+								<foreach name="prev_data" item="val">
+								<option value="{$val.id}" <if condition="$val.id == $data['pid']" >selected="selected"</if>>{$val.name}</option>
+								</foreach>
+							</select>                                    
+						</div>
+					</li>
                     <li><label>名称<b>*</b></label><input id="name" name="name" type="text" class="dfinput" value="{$data.name}"  /></li>
                     <li><label>控制器名称<b>*</b></label><input id="title" name="title" type="text" class="dfinput" value="{$data.title}"  /></li>
                     <li>
@@ -90,8 +100,7 @@ $(function(){
             </form> 
         </div> 
     </div>
-
-
+	
 </body>
 
 </html>
