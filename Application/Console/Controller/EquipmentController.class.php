@@ -36,7 +36,7 @@ class EquipmentController extends CommonController {
         $User = M('Equipment'); // 实例化User对象
         $data=$User->select();
 
-        if(session('roleidstaff')){            
+        if(session('roleidstaff')){ 
             $where['staffid']=session('userid');
         }
     
@@ -60,24 +60,27 @@ class EquipmentController extends CommonController {
     }
     
     public function add(){
+
         //得到所有职员
         $staff=D('staff')->select();
         $this->assign('staff',$staff);
         //得到所有部门
         $department=D('Category')->department();
         $this->assign('department',$department);
+        $this->assign('userid',session('userid'));
         $this->display();
     }
 //添加设备信息
     public function insert(){
-        $jumpUrl =U('Console/Equipment/Equipment');
+     //   $jumpUrl =U('Console/Equipment/Equipment');
         $roleList   =   D('equipment');
-        if($roleList->create()) {
-            $result =   $roleList->add();
+        $data=$roleList->create();
+        if($data) {
+            $result =   $roleList->add($data);
             if($result) {
-                $this->success('数据添加成功！', $jumpUrl);
+                $this->success('数据添加成功！');
             }else{
-                $this->error('数据添加错误！', $jumpUrl);
+                $this->error('数据添加错误！');
             }
         }else{
             $this->error($roleList->getError());
@@ -207,7 +210,7 @@ class EquipmentController extends CommonController {
         
     }
 
-    public function lookfind(){
+    public function lookfpind(){
         $this->display();
     }
 }
