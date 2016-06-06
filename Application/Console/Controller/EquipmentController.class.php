@@ -8,7 +8,7 @@ class EquipmentController extends CommonController {
     public function Equipment($name=''){
          $staff=D('staff')->getField('id,name',true);
          $staffid=D('staff')->getthislevel();//当前职员下的员工；
-
+ 
         $this->assign('staff',$staff);
 
         $username = i('username');
@@ -27,6 +27,7 @@ class EquipmentController extends CommonController {
                 unset( $arr[$k] );  
         }   
 
+
         //分页跳转的时候保证查询条件
         foreach($username as $key=>$val) {
             if(!$val){
@@ -39,7 +40,13 @@ class EquipmentController extends CommonController {
         $data=$User->select();
 
         if(session('roleidstaff')){ 
-            $where['staffid']=array("in",implode(',', $staffid));//session('userid');
+            $strmap=implode(',', $staffid);            
+            if(!empty($strmap)&&isset($strmap)&&strlen($strmap)>0){                
+                $where['staffid']=array("in",implode(',', $staffid));//session('userid');    
+            }else{
+                $where['staffid']=$staffid;//session('userid');
+            }
+            
         }    
 
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
