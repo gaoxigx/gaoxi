@@ -70,15 +70,23 @@
                                     <input class="dfinput"  name="nickname" id="nickname" type="text"  placeholder="nickname" />
                                 </if>  
                             </li>    
-                            
                             <li>
-                                <label>是否转正<b>*</b></label>
-                                <cite><input type="radio" id="become"  <if condition="$user.become == 1">checked="checked"</if> 
-                                        checked="checked" value="1" name="become">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  
-                                        <if condition="$user.become == 2">checked="checked"</if> value="2" name="become">否
-                                </cite>
-                            </li>                           
-                
+								<label>岗位状态<b>*</b></label>
+								<cite>
+									<input id="become" type="radio" checked="checked" value="1" name="become" <if condition="$user.become == 1">checked="checked"</if> >&nbsp;转正&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" value="2" name="become" <if condition="$user.become == 2">checked="checked"</if> >&nbsp;试用&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" value="3" name="become" <if condition="$user.become == 3">checked="checked"</if> >&nbsp;实习
+								</cite>
+							</li>
+							<li>
+								<label>上班状态<b>*</b></label>
+								<cite>
+									<input id="iswork" type="radio" checked="checked" value="1" name="iswork" <if condition="$user.iswork == 1">checked="checked"</if> >&nbsp;正常上班&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" value="2" name="iswork" <if condition="$user.iswork == 2">checked="checked"</if> >&nbsp;休假&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" value="3" name="iswork" <if condition="$user.iswork == 3">checked="checked"</if> >&nbsp;请假&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" value="4" name="iswork" <if condition="$user.iswork == 4">checked="checked"</if> >&nbsp;离职
+								</cite>
+							</li>   
                             <li>
                                 <label>试用期工资</label>                  
                                 <if condition="$id">
@@ -165,30 +173,6 @@
 								<input type="hidden" id="supervisortext" name="nibstext"  />
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 		
-							<!--
-                            <li><label>部门<b>*</b></label>  
-                                <div class="vocation uew-select">                 
-                                    <select id="department" name="section" class="uew-select-value">
-                                        <volist name="department" id="voo">
-                                            <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}">{$voo.cate_name}</option>
-                                        </volist>
-                                    </select>
-                                     <input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>   
-                            <li><label>岗位<b>*</b></label>  
-                                <div class="vocation uew-select">
-									<div class="col-sm-9" id="quarters_div">
-										<select id="post" name="quarters" class="uew-select-value">
-											<option value="0">请选择</option>
-										</select>
-									</div>
-									 <input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.posttext}" />
-                                </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                            </li>
-							-->
                              <li>
                                 <label>姓名<b>*</b></label>                                   
                                 <if condition="$id">
@@ -243,9 +227,9 @@
                             <li>
                                 <label>工作地点</label>                                   
                                 <if condition="$id">
-                                    <input class="dfinput" name="address" type="text" placeholder="entry_time" value="{$user.address}"/>
+                                    <input class="dfinput" name="address" type="text" placeholder="entry_address" value="{$user.address}"/>
                                     <else/>
-                                    <input class="dfinput"  name="address" type="text" placeholder="entry_time" />
+                                    <input class="dfinput"  name="address" type="text" placeholder="entry_address" />
                                 </if>                                  
                             </li>
                             <li>
