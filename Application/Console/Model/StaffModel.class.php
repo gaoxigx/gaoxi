@@ -34,18 +34,18 @@ class StaffModel extends Model {
      *查询当前用户下级人员     
     **/
     public function getthislevel(){      
-        return $this->getlevel(array(session('userid')));      
+        return $this->getlevel(array(session('userid'))); 
     }
     public function getotherlevel($userid){ 
         return $this->getlevel($userid);
     }
     private function getlevel($staffidarr){                        
-        foreach ($staffidarr as $k => $v) { 
-            $field=$this->where("nibs=%d",array($v))->getField('id',true); 
-            $data[]=$v;
+        foreach ($staffidarr as $k => $v) {            
+            $field=$this->where("nibs=%d",array($v))->getField('id',true);             
             if($field){
                 $data=$this->getlevel($field);
             }
+            $data[]=$v;
         } 
         return $data;  
     }
