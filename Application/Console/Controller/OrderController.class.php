@@ -97,7 +97,6 @@ public function Payment_status($id,$status){
  }
 
  //插入物流单号到订单表
- //
 public function updatenumberno($id,$numberno){
 $data["numberno"] = $numberno;
 $data["status"] = 2;
@@ -111,11 +110,10 @@ $data["status"] = 2;
 }
 
 
-
 //数据列表
 public function Plist($name=''){
-    
-    $username = i('username');
+    $username = I('username');
+
     if($username){
         $map['order_no']  = array('like','%'.trim($username).'%');
         $map['product']  = array('like','%'.trim($username).'%');
@@ -132,7 +130,6 @@ public function Plist($name=''){
     if($user_id > 0){
         $map['agent']  = intval($user_id);
    }
-    
     foreach( $map as $k=>$v){  
         if( !$v )  
             unset( $arr[$k] );  
@@ -147,7 +144,7 @@ public function Plist($name=''){
           }
     }
     $User = M('order_info'); // 实例化User对象 
-    $data=$User->select();    
+    $data=$User->select(); 
 
     
     $count = $User->where($map)->count();// 查询满足要求的总记录数
@@ -166,16 +163,16 @@ public function Plist($name=''){
     $this->assign('page',$show);// 赋值分页输出
     $this->display(); // 输出模板
 
-
 }
 //提交订单
 public function add(){
      $this->getrolename('agent',38);
-     $this->getrolename('assistant',46);
+//     $this->getrolename('assistant',46);
      $this->getequipment_name();
      $this->getpayment();
     $data = M('product'); // 实例化User对象
     $list = $data->where('1=1')->order('id')->select();
+    $this->assign('staff',getstaffname());
     $this->assign('prolist',$list);// 赋值数据集
     $this->display();
 }
@@ -184,6 +181,7 @@ public function add(){
 public function edit($id){
     // $this->getprotype();
      $this->getrolename('agent',38);
+  
      $this->getrolename('assistant',46);
      $this->getequipment_name();
      $this->getpayment();
@@ -197,6 +195,8 @@ public function edit($id){
      $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
 
      $this->assign('prolist',$list);// 赋值数据集
+     $this->assign('staff',  getstaffname());
+     
     // $this->display();
     $controller   =   M('order_info');
     // 读取数据
@@ -223,7 +223,9 @@ public function edit($id){
                 $payment=D('payment')->where('')->getfield('id,payment',true);
                 $staff=D('staff')->getfield('id,name',true);
                    
-                $this->GetProdect($info['order_no']);
+//                $this->GetProdect($info['order_no']);
+                $products=$this->GetProdect($info['order_no']);
+                $this->assign('products',$products);             
                 
                 $this->assign('department',D('Category')->department());
                 $this->assign('quarters',$quarters);
@@ -301,11 +303,12 @@ public function insert(){
             }
 // dump($dataList);
 // exit;
+        $jumpUrl =U('Console/Order/Plist');
             $user=M('order_goods');
             $user->addAll($dataList);
             // $sset = $User->addAll($dataList);
 
-            $this->success('订单表数据添加成功！');
+            $this->success('订单表数据添加成功！',$jumpUrl);
         }else{
             $this->error('订单商表数据添加错误！');
         }
@@ -415,5 +418,6 @@ public function weixin_orders_print() {
         // 显示模板
         $this->display ( 'Weixin:weixin_orders_print' );
     }
+    
 
 }

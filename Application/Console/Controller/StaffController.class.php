@@ -31,7 +31,13 @@ class StaffController extends CommonController {
 
 //数据列表
     public function Staff($name=''){
-           
+		$ids = D('Staff')->getthislevel();
+		$ids = implode($ids,',');
+		
+		if($ids !='' && session('roleidstaff') > 0){
+			$map['id']  = array('in',trim($ids));
+		}
+		
         $username = i('username');
         if($username){
             $map['nickname']  = array('like','%'.trim($username).'%');
@@ -57,9 +63,7 @@ class StaffController extends CommonController {
         }
         $User = M('Staff'); // 实例化User对象
         $data=$User->select();
-//        var_dump($data);
-//        
-//        exit();
+		
         $count = $User->where($map)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
@@ -122,14 +126,10 @@ class StaffController extends CommonController {
 			$map['cate_parent']=$user['quarters'];
 			$subordinates = D('Category')->categoryone($map);
 			
-			$childids = '';
-			foreach($subordinates as $k=>$v){
-				$childids .= $k.',';
-			}
-			$childids = substr($childids,0,-1);
-			if($childids != ''){
-				$chwhere =  ' && quarters in('.$childids.')';
-				$subordinatesUsers = D('Staff')->where('id != '.$id.$chwhere)->select();
+			$ids = D('Staff')->getotherlevel($id);
+			$ids = implode($ids,',');
+			if($ids !=''){
+				$subordinatesUsers = D('Staff')->where('id in ('.$ids.')')->select();
 			}
 		}
 		

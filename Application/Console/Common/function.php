@@ -11,34 +11,17 @@ function getstautsnum($stauts){
     }
 
 }
-//通用获取判断
-//
-function getstautel($stauts){
-    if ($stauts == 1) {
-        return '使用';
-    }else{
-        return '经修';
-    }
-
-}
-function getorderget($get){
-    if($get==1){
-        return '推广小号';
-    }else{                        
-        return "销售运营";
-    }
-}
-function getstaffusername($staff_id){
-    $model=D('staff'); 
-    $data=$model->getfield('id,name'); 
-    return $data[$staff_id]; 
-}
 
 function getprotype(){
     $data=D('protype');
     $name = $data->where('1=1')->order('orderid')->select();
         // dump($name);
         // assign('protype',$name);
+}
+function getstaffname(){
+    $model=D("staff");
+    $data=$model->getfield('id,name',true);
+    return $data;
 }
 
 

@@ -36,6 +36,9 @@ class StaffModel extends Model {
     public function getthislevel(){      
         return $this->getlevel(array(session('userid')));
     }
+    public function getotherlevel($userid){ 
+        return $this->getlevel($userid);
+    }
 
     private function getlevel($staffidarr){                        
         foreach ($staffidarr as $k => $v) { 
@@ -45,6 +48,6 @@ class StaffModel extends Model {
                 $data=$this->getlevel($field);
             }
         } 
-        return $data;         
+        return $data;  
     }
  }
