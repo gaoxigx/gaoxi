@@ -109,9 +109,7 @@ class StaffController extends CommonController {
  //查看页面
     public function lookover(){
         $id=I('get.id');        
-        $model = D('Staff');
-        $model->getthislevel();
-        exit();      
+        $model = D('Staff');     
         if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
