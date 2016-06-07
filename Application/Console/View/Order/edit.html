@@ -42,30 +42,23 @@
     
     <div class="formtext">请正确填写发布信息！</div>
     <ul class="forminfo">
-    <li><label>经纪人(组长)<b>*</b></label>  
-        <div class="vocation uew-select">
-            <select id="assistant" name="assistant" class="uew-select-value">
-                <volist name="assistant" id="vo1">
-<!--                    <option value="{$vo1.id}">{$vo1.username}</option>-->
-                    <option value="{$vo1.id}" <if condition="$vo1.id == $data['protype']">selected="selected"</if>>{$vo1.username}</option>
+
+    <li><label>经纪人<b>*</b></label>  
+        <div class="vocation uew-select">         
+            <select id="agent" name="agent" class="uew-select-value">                                      
+                <volist name="staff" id="vo1">
+                    <option value="{$key}" <if condition="$key eq $info['agent']" >selected="selected" </if> >{$vo1}</option>
                 </volist>
             </select>
         </div>
-    </li>     
-        
-    <li><label>经纪人<b>*</b></label>  
-        <div class="vocation uew-select">
-            <select id="agent" name="agent" class="uew-select-value">                                      
-                    <option value="0">没有参数</option>
-            </select>
-        </div>
     </li>
+        
     <li><label>设备编号<b>*</b></label>  
         <div class="vocation uew-select">
             <select name="equipment" class="uew-select-value">
                 <volist name="equipment" id="vo3">
                 <option value="{$vo3.id}"
-                <if condition="$vo3['id'] eq $info['equipment']"> selected="selected" </if>>{$vo3.xinghao}({$vo3.bianhao})</option>
+                <if condition="$vo3['id'] eq $info['equipment']"> selected="selected" </if> >{$vo3.xinghao}({$vo3.bianhao})</option>
             </volist>
             </select>
         </div>
@@ -80,7 +73,7 @@
             </select>
         </div>
     </li>
-
+        
     <li><label>买家微信号<b>*</b></label><input name="buyer_wechat" type="text" class="dfinput" value="{$info.buyer_wechat}"  /></li>
     <li><label>订单来源<b>*</b></label><input name="source" type="text" class="dfinput" value="{$info.source}"  /></li>
     <li><label>收件人姓名<b>*</b></label><input name="username" type="text" class="dfinput" value="{$info.username}"  /></li>
