@@ -23,7 +23,20 @@ function getstaffname(){
     $data=$model->getfield('id,name',true);
     return $data;
 }
-
+function getstautel($param){
+    if($param==1){
+        return "使用";
+    }else{
+        return "维修";
+    }
+}
+function getorderget($param){
+    if($param==1){
+        return "推广小号";
+    }else{
+        return "销售运营";
+    }
+}
 
 //通过组ID值 ，取组名称
     function Getrolename($orleid){ 
