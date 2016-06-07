@@ -2,6 +2,7 @@
 namespace Console\Model;
 use Think\Model;
 class StaffModel extends Model {
+
     // 定义自动验证
     protected $_validate    =   array(
       //  array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),           
@@ -23,7 +24,7 @@ class StaffModel extends Model {
          array('create_time','time',self::MODEL_BOTH,'function'),        
          array('update_time','time',self::MODEL_BOTH,'function'),        
      );
-
+    public $staffidlevel=array();
      public $datafield=array();
 //    protected  function autoPassword($value)
 //    {
@@ -32,21 +33,18 @@ class StaffModel extends Model {
     /**
      *查询当前用户下级人员     
     **/
-    public function getthislevel(){         
-        return $this->getlevel(session('userid'));
+    public function getthislevel(){      
+        return $this->getlevel(array(session('userid')));
     }
-    private function getlevel($id){        
-        $field=$this->where("nibs=%d",array($id))->getField('id',true);
-        if($field){
-            $data[]=$id;
-            foreach ($field as $k => $v) {                                                   
-                $data[]=$this->getlevel($v);   
+
+    private function getlevel($staffidarr){                        
+        foreach ($staffidarr as $k => $v) { 
+            $field=$this->where("nibs=%d",array($v))->getField('id',true); 
+            $data[]=$v;
+            if($field){
+                $data=$this->getlevel($field);
             }
-            return $data;
-        }else{            
-            return $id;
-        }
+        } 
+        return $data;         
     }
-
-
  }
