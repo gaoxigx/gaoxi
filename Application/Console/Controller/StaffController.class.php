@@ -140,7 +140,7 @@ class StaffController extends CommonController {
         $id=I('get.id');        
         $model = D('Staff');
         $model->getthislevel();
-        exit();      
+           
         if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
