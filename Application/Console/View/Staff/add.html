@@ -58,6 +58,11 @@
 									<input type="radio" value="4" name="iswork">&nbsp;离职
 								</cite>
 							</li>
+							<li><label>开始时间<b></b></label><input onClick="WdatePicker()" name="starttime" id="starttime" type="text" class="dfinput" value=""  /></li>  
+							<li><label>结束时间<b></b></label><input onClick="WdatePicker()" name="endtime" id="endtime" type="text" class="dfinput" value=""  /></li>  
+							<li><label>转正时间<b></b></label><input onClick="WdatePicker()" name="positivetime" id="positivetime" type="text" class="dfinput" value=""  /></li>  
+							<li><label>离职时间<b></b></label><input onClick="WdatePicker()" name="leavetime" id="leavetime" type="text" class="dfinput" value=""  /></li>  
+							
 							<li>
                                 <label>试用期工资<b></b></label>
                                 <input name="salaryss" id="salaryss" type="text" class="dfinput_left" value=""  />
@@ -245,27 +250,51 @@
 			}
 			getsupervisor(supervisorid);
 			
-			$.each($('#quarters_div select'),function(){
-				if($(this).index() > $(obj).index()+1){
-					$(this).remove();
-				}
-			})
 			subordinates(obj,id);
-			/*
-			if($(obj).find("option:selected").attr('cate_haschild') == 1){
-				subordinates(obj,id);
-			}else{
-				$(obj).next('select').remove();
-				
-			}	
-			*/
+			
+		};
+		
+		function subordinates(obj,id){
+            var url="{:U('Console/Staff/allcate')}?catid="+id;
+			
+            $.get(url,function(data){
+				if(data.length == 0){
+					return false;
+				}
+				var subordinates_html = '<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">\
+											<option value="0">请选择岗位</option>\
+										</select>';
+				if(!$('#subordinatesdata').html() && data.length > 0){
+					$("#quarters_div").append(subordinates_html);
+				}
+                $('#subordinatesdata').html('<option value="0">请选择岗位</option>');
+				for(i=0 ;i<data.length;i++){
+					$('#subordinatesdata').append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option'); 
+				}
+				      
+            })            
+        }
+		
+		/*
+		function nextselect(obj){
+			var id = $(obj).val();
+			var select_length = $('#quarters_div').find('select').length;
+			
+			var supervisorid = $(obj).prev('select').val();
+			if(!supervisorid){
+				supervisorid =0;
+			}
+			getsupervisor(supervisorid);
+			
+			subordinates(obj,id);
+			
 		};
 		
         function subordinates(obj,id){
-            var url="{:U('Console/Staff/department')}?catid="+id;
+            var url="{:U('Console/Staff/allcate')}?catid="+id;
 			
             $.get(url,function(data){
-				var subordinates_html = '<select id="subordinates_'+id+'" name="subordinates[]" onchange="nextselect(this)" class="subordinates uew-select-value" style="margin-left:5px;">\
+				var subordinates_html = '<select id="subordinates_'+id+'" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">\
 											<option value="0">请选择</option>\
 										</select>';
 				
@@ -289,6 +318,10 @@
 				}         
             })            
         }
+		
+		
+		
+		*/
 		
     </script>
 

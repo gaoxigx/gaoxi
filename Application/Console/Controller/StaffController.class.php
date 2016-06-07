@@ -19,6 +19,35 @@ class StaffController extends CommonController {
         $data=D('Category')->department();
         $this->ajaxReturn($data);
     }
+	
+	/**
+     * 查找下级包含子级分类
+    **/
+    public function allcate(){
+		$id= I('get.catid');
+		$data = $this->allcatedata($id);
+		//print_r($data);exit;
+		$this->ajaxReturn($data);
+    }
+	
+	protected function allcatedata($id){
+		$map['cate_parent']=$id;
+		$map['status']=1;
+		$data=D('Category')->field('cate_id,cate_name')->where($map)->select();    
+		
+		if(!empty($data)){
+			foreach ($data as $k => $v) {
+				$data2 = $this->allcatedata($v['cate_id']);
+				if(!empty($data2)){
+					//$data[$k]['child'] = $data2;
+					$data = array_merge($data,$data2);
+				}
+			}        
+		}   
+		
+		return $data;
+	}
+	
 
     public function deparlist(){
         if(I('post.accounts')){
@@ -110,6 +139,7 @@ class StaffController extends CommonController {
     public function lookover(){
         $id=I('get.id');        
         $model = D('Staff');     
+
         if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
@@ -234,6 +264,10 @@ class StaffController extends CommonController {
                     $data['graduation_date']=strtotime(I('post.graduation_date'));
                     $data['birth_date']=strtotime(I('post.birth_date'));
                     $data['education']=I('post.education1');
+					$data['starttime']=strtotime(I('post.starttime'));
+					$data['endtime']=strtotime(I('post.endtime'));
+					$data['positivetime']=strtotime(I('post.positivetime'));
+					$data['leavetime']=strtotime(I('post.leavetime'));
 					
 					$catedata=D('Category')->categoryone();
 					
@@ -284,16 +318,21 @@ class StaffController extends CommonController {
 				foreach ($post as $k => $v) {
                    $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
                 }*/
+				/*
+				if($str > 0){
+					$post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,$str)))->select();//getfield('cate_id,cate_name',true);
+							   
+					foreach ($post as $k => $v) {
+					   $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
+					}
+				}else{
+					$potview=array();
+				}*/
+				if($user['quarters'] != ''){
+					$potview = $this->allcatedata($user['section']);
+				}
 				
-if($str > 0){
-	$post=D('Category')->field('cate_parent,cate_id,cate_name')->where("cate_parent in(%s)",array(substr($user['subordinates'],0,$str)))->select();//getfield('cate_id,cate_name',true);
-               
-	foreach ($post as $k => $v) {
-	   $potview[$v['cate_parent']][]=array('cate_id'=>$v['cate_id'],'cate_name'=>$v['cate_name']);
-	}
-}else{
-	$potview=array();
-}
+				
                 $this->assign("post",$potview);
             }
             //$postview=array_combine(array_column($post,"cate_parent"),$post);

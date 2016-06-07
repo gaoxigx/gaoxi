@@ -87,6 +87,11 @@
 									<input type="radio" value="4" name="iswork" <if condition="$user.iswork == 4">checked="checked"</if> >&nbsp;离职
 								</cite>
 							</li>   
+							<li><label>开始时间<b></b></label><input onClick="WdatePicker()" name="starttime" id="starttime" type="text" class="dfinput" value="{$user.starttime|date='Y-m-d',###}"  /></li>  
+							<li><label>结束时间<b></b></label><input onClick="WdatePicker()" name="endtime" id="endtime" type="text" class="dfinput" value="{$user.endtime|date='Y-m-d',###}"  /></li>  
+							<li><label>转正时间<b></b></label><input onClick="WdatePicker()" name="positivetime" id="positivetime" type="text" class="dfinput" value="{$user.positivetime|date='Y-m-d',###}"  /></li>  
+							<li><label>离职时间<b></b></label><input onClick="WdatePicker()" name="leavetime" id="leavetime" type="text" class="dfinput" value="{$user.leavetime|date='Y-m-d',###}"  /></li>  
+							
                             <li>
                                 <label>试用期工资</label>                  
                                 <if condition="$id">
@@ -146,8 +151,16 @@
                                         <volist name="department" id="voo">
                                             <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}">{$voo.cate_name}</option>
                                         </volist>
-                                    </select>                                    
-
+                                    </select> 
+									<if condition="$post">
+									<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">                                        
+										<option>请选择岗位</option>
+										<foreach name="post" item="v">   
+											<option value="{$v.cate_id}" <if condition="$v.cate_id == $user['quarters']" >selected="selected"</if>  >{$v.cate_name}</option>
+										</foreach>
+                                    </select>
+									</if>
+									<!--
                                     <foreach name="post" item="vo"> 
                                          <select  name="subordinates[]" onchange="nextselect(this,0)" class="uew-select-value">                                         
                                                 <foreach name="vo" item="v">   
@@ -155,7 +168,8 @@
                                                 </foreach>
                                           </select>
                                     </foreach>
-<!-- 
+									-->
+											<!-- 
                                      <in name="$v['cate_id']" value="$voo.subordinates" >selected="selected"</in> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}" -->
                                 </div>
 								<input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
@@ -465,7 +479,41 @@
 			})
 			
 		}
+		function nextselect(obj){
+			var id = $(obj).val();
+			var select_length = $('#quarters_div').find('select').length;
+			
+			var supervisorid = $(obj).prev('select').val();
+			if(!supervisorid){
+				supervisorid =0;
+			}
+			getsupervisor(supervisorid);
+			
+			subordinates(obj,id);
+			
+		};
 		
+		function subordinates(obj,id){
+            var url="{:U('Console/Staff/allcate')}?catid="+id;
+			
+            $.get(url,function(data){
+				if(data.length == 0){
+					return false;
+				}
+				var subordinates_html = '<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">\
+											<option value="0">请选择岗位</option>\
+										</select>';
+				if(!$('#subordinatesdata').html() && data.length > 0){
+					$("#quarters_div").append(subordinates_html);
+				}
+                $('#subordinatesdata').html('<option value="0">请选择岗位</option>');
+				for(i=0 ;i<data.length;i++){
+					$('#subordinatesdata').append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option'); 
+				}
+				      
+            })            
+        }
+		/*
 		function nextselect(obj,idload){ 
 			var id = $(obj).val();
 			var select_length = $('#quarters_div').find('select').length;
@@ -486,13 +534,7 @@
 				}
 			})
 			subordinates(obj,id);
-			/*
-			if($(obj).find("option:selected").attr('cate_haschild') == 1){
-				subordinates(obj,id);
-			}else{
-				$(obj).next('select').remove();
-				
-			}	*/
+			
 			
 		};
 		
@@ -509,10 +551,10 @@
 				if(data.length == 0){
 					return false;
 				}
-				/*
+				
 				if(!$(obj).next('select').html() && data.length > 0){
 					$("#quarters_div").append(subordinates_html);
-				}*/
+				}
 				$("#quarters_div").append(subordinates_html);
 				$(obj).next('select').html('');
 				$(obj).next('select').attr('id','subordinates_'+id);
@@ -537,59 +579,8 @@
 						
             })            
         }
+		*/
 		
-		/*
-        function department(){
-            var id=$('#department').val();
-            var url="{:U('Console/Staff/department')}?catid="+id;         
-				
-            $.get(url,function(data){
-                $("#post").html("");
-                if(data.length==0){
-                    $("#post").append("<option value='0'>请新建岗位</option>");
-                    return false;
-                }
-                for(i=0 ;i<data.length;i++){  
-                    var post2=data[i].cate_id;                    
-                    if(post1==post2){
-                        $("#post").append('<option selected="selected" value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
-                    }else{
-                        $("#post").append('<option value='+data[i].cate_id+' cate_haschild='+data[i].cate_haschild+'>'+data[i].cate_name+'</option');    
-                    }                                         
-                    
-                }
-				
-				subordinates($('#post').find("option:selected").val());         
-            })            
-        }
-		
-		function subordinates(id){
-            var url="{:U('Console/Staff/department')}?catid="+id;                     
-			var user_subordinates="{$user.subordinates}";			
-            $.get(url,function(data){
-                
-				var subordinates_html = '<select id="subordinates" name="subordinates" class="uew-select-value">\
-											<option value="0">请选择</option>\
-										</select>';
-				if(data.length == 0){
-					return false;
-				}
-				
-				if(!$('#subordinates').html() && data.length > 0){
-                    $("#quarters_div").append(subordinates_html);
-                }
-                for(i=0 ;i<data.length;i++){  
-                    var post2=data[i].cate_id;                    
-                    if(user_subordinates==post2){
-                        $("#subordinates").append('<option selected="selected" value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
-                    }else{
-                        $("#subordinates").append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option');    
-                    }                                         
-                    
-                }
-                          
-            })            
-        }*/
 
     </script>
 
