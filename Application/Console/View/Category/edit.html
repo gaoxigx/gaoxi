@@ -82,13 +82,32 @@
 					<li>
 						<label>权限</label>
 						<div style="float:left;">
+							<table cellpadding="0" cellspacing="0">
 							<volist name="node" id="vo">						
-								<label ><input style="vertical-align: middle"  name="node[]" type="checkbox" id="{$vo['id']}"  value="{$vo.id}" 
-								<if condition="!empty($selectNode[$vo['id']])">checked</if> />{$vo.name}</label>
-								<if condition="($i%5) eq 0">
-								  <p style="clear:both;"></p>
-								</if>
+								<tr>
+									<td>
+									<label ><input style="vertical-align: middle"  name="node[]" type="checkbox" id="{$vo['id']}"  value="{$vo.id}" 
+									<if condition="!empty($selectNode[$vo['id']])">checked</if> />{$vo.name}</label>
+									<if condition="($i%5) eq 0">
+									  <p style="clear:both;"></p>
+									</if>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>
+									<volist name="vo.child" id="val">	
+										<label ><input style="vertical-align: middle"  name="node[]" type="checkbox" id="{$val['id']}"  value="{$val.id}" 
+										<if condition="!empty($selectNode[$val['id']])">checked</if> />{$val.name}</label>
+										<if condition="($i%5) eq 0">
+										  <p style="clear:both;"></p>
+										</if>
+									</volist>
+									</td>
+								</tr>
+								<tr style="margin:10px 0;border:1px solid #d0dee5;"></tr>
 							</volist>
+							</table>
 						</div>
 					</li>
 					<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改分类"/></li>

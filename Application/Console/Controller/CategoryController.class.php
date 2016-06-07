@@ -88,7 +88,12 @@ public function insert(){
 public function edit($cate_id){
     $roleList   =   M('category');
     $nodeModel=D('node');
-    $node=$nodeModel->field('id,title,name')->select();    
+    $node=$nodeModel->where('pid=0')->field('id,title,name,pid')->select();
+	foreach($node as $k=>$v){
+		$node_child=$nodeModel->where('pid='.$v['id'])->field('id,title,name,pid')->select();
+		$node[$k]['child'] = $node_child;
+	}
+	
     $selectNode=D('Access')->where('role_id='.$cate_id)->getfield('node_id,module',true);        
     $this->assign('vo',$roleList->find($cate_id));
     $this->assign("node",$node);

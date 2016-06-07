@@ -35,13 +35,24 @@ class StaffModel extends Model {
     public function getthislevel(){         
         return $this->getlevel(session('userid'));
     }
+	
+	 public function getotherlevel($userid){ 
+        return $this->getlevel($userid);
+    }
     private function getlevel($id){        
-        $field=$this->where("nibs=%d",array($id))->getField('id',true);
-        if($field){
-            $data[]=$id;
-            foreach ($field as $k => $v) {                                                   
-                $data[]=$this->getlevel($v);   
-            }
+        $field=$this->where("nibs=%d",array($id))->getField('id',true);	
+		$data[]=$id;		
+        if($field){  
+            foreach ($field as $k => $v) {
+				$vl=$this->getlevel($v);				
+				if(!is_array($vl)){			
+					$data[]=$vl;
+				}else{
+					foreach($vl as $key=>$val){
+						$data[]=$val;
+					} 
+				}
+            }            
             return $data;
         }else{            
             return $id;
