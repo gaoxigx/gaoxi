@@ -154,6 +154,7 @@
                                     </select> 
 									<if condition="$post">
 									<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">                                        
+										<option>请选择岗位</option>
 										<foreach name="post" item="v">   
 											<option value="{$v.cate_id}" <if condition="$v.cate_id == $user['quarters']" >selected="selected"</if>  >{$v.cate_name}</option>
 										</foreach>
@@ -500,12 +501,12 @@
 					return false;
 				}
 				var subordinates_html = '<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">\
-											<option value="0">请选择</option>\
+											<option value="0">请选择岗位</option>\
 										</select>';
 				if(!$('#subordinatesdata').html() && data.length > 0){
 					$("#quarters_div").append(subordinates_html);
 				}
-                $('#subordinatesdata').html('<option value="0">请选择</option>');
+                $('#subordinatesdata').html('<option value="0">请选择岗位</option>');
 				for(i=0 ;i<data.length;i++){
 					$('#subordinatesdata').append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option'); 
 				}
