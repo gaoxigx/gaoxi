@@ -78,7 +78,7 @@ $(document).ready(function(){
             <tr>
         <!--       <td><input name="" type="checkbox" value="" /></td>-->
                 <td >{$vo.id}</td>
-                <td>{$vo.order_no}</td>
+                <td><a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a></td>                
                 <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
                 <td colspan="5">
                 <table class="tablelistpro" style="border:0px;">
