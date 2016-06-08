@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">财务管理</a></li>
+            <li><a href="#">进账单</a></li>
+        </ul>
+    </div>
+    
+    <div class="rightinfo">
+
+        <div class="tools">
+        <!--
+            <ul class="toolbar">
+            <li><a href="{:U('Console/Category/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加一级分类</a></li>
+             <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
+            <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
+            <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> 
+            </ul>
+
+            -->
+            <ul class="toolbar1">
+            <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
+            </ul>
+            <ul class="seachform">
+                <form action="/index.php/Console/Personnel/PerList" method="post" id="form2" name="form2">
+                    <li><label>名称</label><input type="text" class="scinput" name="accounts"></li>
+                    <li><label>顶级</label><input type="text" class="scinput" name="nickname"></li>
+                    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                </form>
+            </ul>
+        </div>
+
+
+        <table class="tablelist">
+            <thead>
+                <tr>
+                    <th>编号<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+                    <th>订单号</th>
+                    <th>订单金额</th>
+                    <th>购买人</th>
+                    <th>购买人姓名</th>
+                    <th>下单人姓名</th>
+                    <th>备注</th>
+                    <th>状态</th> 
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+<!--                    <th>类型</th>-->
+                    <th>支付方式</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <volist name="list" id="vo">
+                    <tr>
+                <!--       <td><input name="" type="checkbox" value="" /></td>-->
+                        <td>{$vo.id}</td>
+                        <td>{$vo.order_no}</td>
+                        <td>{$vo.total_price}</td>
+                        <td>{$vo.wecate_id}</td>
+                        <td>{$vo.wecate_name}</td>
+                        <td>{$vo.staff_name}</td>
+                        <td>{$vo.note}</td>
+                        <td>{$vo.status}</td>
+                        <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+                        <td>{$vo.addtime|date='Y-m-d',###}</td>
+                        <td>{$vo.payment_method}</td>
+                        <td>
+                            <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a>
+                            <!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a>-->
+                        </td>
+                    </tr> 
+                </volist>
+            </tbody>
+        </table>
+
+        <div id="page" class="pagination">{$page}</div>
+
+    </div>    
+
+</body>
+
+</html>
