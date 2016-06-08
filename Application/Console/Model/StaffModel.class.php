@@ -24,12 +24,7 @@ class StaffModel extends Model {
          array('create_time','time',self::MODEL_BOTH,'function'),        
          array('update_time','time',self::MODEL_BOTH,'function'),        
      );
-    public $staffidlevel=array();
-     public $datafield=array();
-//    protected  function autoPassword($value)
-//    {
-//        return password_hash($value,PASSWORD_BCRYPT);
-//    }
+
     /**
      *查询当前用户下级人员     
     **/
