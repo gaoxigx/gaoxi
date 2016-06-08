@@ -9,7 +9,7 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
 <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
-
+<script src="__PUBLIC__/Console/js/jquery.1.4.2-min.js"></script>
 <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
@@ -82,12 +82,11 @@
 					<li>
 						<label>权限</label>
 						<div style="float:left;">
-							<table cellpadding="0" cellspacing="0">
+							<table cellpadding="0" cellspacing="0" class="node_table">
 							<volist name="node" id="vo">						
-								<tr>
+								<tr class="pnode">
 									<td>
-									<label ><input style="vertical-align: middle"  name="node[]" type="checkbox" id="{$vo['id']}"  value="{$vo.id}" 
-									<if condition="!empty($selectNode[$vo['id']])">checked</if> />{$vo.name}</label>
+									<label ><input style="vertical-align: middle"  class="pnode_check" type="checkbox" id="pnode_check_{$vo['id']}"  value="{$vo.id}" onclick="check_next(this,{$vo.id})"/>{$vo.name}</label>
 									<if condition="($i%5) eq 0">
 									  <p style="clear:both;"></p>
 									</if>
@@ -95,10 +94,9 @@
 								</tr>
 								
 								<tr>
-									<td>
+									<td id="chnode_{$vo.id}" class="chnodelist" pid="{$vo.id}">
 									<volist name="vo.child" id="val">	
-										<label ><input style="vertical-align: middle"  name="node[]" type="checkbox" id="{$val['id']}"  value="{$val.id}" 
-										<if condition="!empty($selectNode[$val['id']])">checked</if> />{$val.name}</label>
+										<label ><input style="vertical-align: middle" class="ch_node" pid="{$vo['id']}" name="node[]" type="checkbox" id="{$val['id']}"  value="{$val.id}" <if condition="!empty($selectNode[$val['id']])">checked</if>  />{$val.name}</label>
 										<if condition="($i%5) eq 0">
 										  <p style="clear:both;"></p>
 										</if>
@@ -118,7 +116,22 @@
 		</div> 
     </div>
 
-
+	<script>
+		
+		function check_next(obj,pid){
+			if($(obj).is(':checked')){
+				$('#chnode_'+pid).find('.ch_node').each(function(){
+					$(this).attr('checked',true);
+				})
+				$(obj).attr('checked',true);
+			}else{
+				$(obj).attr('checked',false);
+				$('#chnode_'+pid).find('.ch_node').each(function(){
+					$(this).attr('checked',false);
+				})
+			}
+		}
+	</script>
 </body>
 
 </html>
