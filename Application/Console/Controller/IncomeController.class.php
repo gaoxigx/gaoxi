@@ -27,7 +27,6 @@ class IncomeController extends CommonController {
 
     //进账单列表
     public function Plist(){
-        $User = M()
         $User = M('order_info'); // 实例化User对象
         $data=$User->select();
         $count = $User->where($map)->count();// 查询满足要求的总记录数
