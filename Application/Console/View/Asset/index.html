@@ -57,9 +57,9 @@ function reset_pass(id){
 	<div class="place">
     <span>位置：</span>
     <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">员工组</a></li>
-    <li><a href="#">员工管理</a></li>
+        <li><a href="#">首页</a></li>
+        <li><a href="#">财务管理</a></li>
+        <li><a href="#">资产管理</a></li>
     </ul>
     </div>
     
@@ -67,10 +67,6 @@ function reset_pass(id){
             <div class="tools">
                 <ul class="toolbar">
                     <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
-                    <!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
-                            <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
-                            <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
-
                 </ul>
 
                 <ul class="seachform">
@@ -78,9 +74,7 @@ function reset_pass(id){
                         <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     </form>
-					<ul class="toolbar" style="float:right;">
-						<li><a href="#"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>导入表格</a></li>
-					</ul>
+					
                 </ul>
 				
             </div>
@@ -90,67 +84,33 @@ function reset_pass(id){
     <table class="tablelist">
     	<thead>
             <tr>
-<!--                <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
                 <th>序号</th>
                 <th>用户名</th>
-                <th>姓名</th>
-                <th>性别</th>               
-               <!--  <th>昵称</th> -->
-                <!--<th>身份证</th>   -->             
-                <th>部门</th>
-                <th>岗位</th>
-				<th>上班状态</th>
-				<th>岗位状态</th>
-              <!--   <th>学历</th> -->
-                <!--<th>电话</th>--> 
+                <th>用途</th>
+                <th>状态</th>                         
+                <th>金额</th>
+                <th>库存</th>
+				<th>采购总数</th>
+				<th>搁置数量</th>
+                <th>使用数</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
             <volist name="list" id="vo">
-
-            <tr>
-            <td>{$i}</td>
-<!--            <td><input name="" type="checkbox" value="" /></td>-->
-            <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
-            <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
-            <td><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未填</if></td>
-    <!--         <td>{$vo.nickname}</td> -->
-            <!--<td>{$vo.identity_card}</td> -->           
-            <td>
-				{$cat[$vo['section']]}
-			</td>
-            <td>
-				{$cat[$vo['quarters']]}
-			</td>
-			<td>
-				<if condition="$vo.become eq 1">
-				转正
-				<elseif condition="$vo.become eq 2"/>
-				试用
-				<elseif condition="$vo.become eq 3"/>
-				实习
-				<else/>
-				未知
-				</if>
-			</td>
-			<td>
-				<if condition="$vo.iswork eq 2">
-				休假
-				<elseif condition="$vo.iswork eq 3"/>
-				请假
-				<elseif condition="$vo.iswork eq 4"/>
-				离职
-				<else/>
-				正常上班
-				</if>
-			</td>
-           <!--  <td>{$education[$vo['education']]}</td> -->
-            <!--<td>{$vo.mobile}</td>-->
-            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>--></td>
-            </tr> 
-            </volist>
-        
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.usage}</td>
+                    <td>{$vo.status}</td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.stock}</td>
+                    <td>{$vo.amount}</td>
+                    <td>{$vo.idle}</td>
+                    <td>{$vo.idle}</td>
+                    <td>采购</td>
+                </tr>
+            </volist>        
         </tbody>
     </table>
     
