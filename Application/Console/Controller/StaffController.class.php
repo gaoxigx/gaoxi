@@ -26,7 +26,6 @@ class StaffController extends CommonController {
     public function allcate(){
 		$id= I('get.catid');
 		$data = $this->allcatedata($id);
-		//print_r($data);exit;
 		$this->ajaxReturn($data);
     }
 	
