@@ -26,15 +26,33 @@ private function getrolename($rolename,$roleid){
 
 }
 
+//设备编号获取
+public function getEquipment(){
 
+   $id=I('id');
+    if(!$id){
+        return 0;
+    }    
+    $data=D('equipment');
+    $result = $data->field('id,xinghao,bianhao')->where('staffid=%d',array($id))->order('id desc')->select();
+    if(!$result)
+    {
+        return 0;
+    }
+    $this->ajaxReturn($result);
+    
+
+}
 //设备编号获取
 private function getequipment_name(){
     $data=D('equipment');
     $name = $data->where('bianhao<>""')->order('id desc')->select();
-    // dump($name);
+//     dump($name);exit;
     $this->assign('equipment',$name);
 
 }
+
+
 
 //通过产品id获取类别id,图片地址
 public function get_proid_to_typeid($id='',$typeid=''){
@@ -163,17 +181,18 @@ public function Plist($name=''){
     $this->display(); // 输出模板
 
 }
+
 //提交订单
 public function add(){
      $this->getrolename('agent',38);
-//     $this->getrolename('assistant',46);
      $this->getequipment_name();
      $this->getpayment();
     $data = M('product'); // 实例化User对象
     $list = $data->where('1=1')->order('id')->select();
     $this->assign('staff',getstaffname());
-    $this->assign('prolist',$list);// 赋值数据集
+    $this->assign('prolist',$list);// 赋值数据集 
     $this->display();
+
 }
 
 //修改订单
