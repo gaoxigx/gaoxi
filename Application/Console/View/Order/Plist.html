@@ -5,44 +5,16 @@
 <title>无标题文档</title>
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-  $(".click").click(function(){
-  $(".tip").fadeIn(200);
-  });
-  
-  $(".tiptop a").click(function(){
-  $(".tip").fadeOut(200);
-});
-
-  $(".sure").click(function(){
-  $(".tip").fadeOut(100);
-});
-
-  $(".cancel").click(function(){
-  $(".tip").fadeOut(100);
-});
-
-});
-</script>
-
-
 </head>
-
-
 <body>
-
 	<div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">订单管理</a></li>
-    <li><a href="#">订单列表</a></li>
-    </ul>
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">订单管理</a></li>
+            <li><a href="#">订单列表</a></li>
+        </ul>
     </div>
-    
     <div class="rightinfo">
         <div class="tools">
             <ul class="seachform">
@@ -52,12 +24,11 @@ $(document).ready(function(){
                 </form>
             </ul>
         </div>
-    </div>
+   
     
     <table class="tablelist">
     	<thead>
             <tr>
-    <!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
                 <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
                 <th>订单编辑</th>
                 <th>下单时间</th>
@@ -76,7 +47,6 @@ $(document).ready(function(){
         <tbody>
             <volist name="list" id="vo">
             <tr>
-        <!--       <td><input name="" type="checkbox" value="" /></td>-->
                 <td >{$vo.id}</td>
                 <td><a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a></td>                
                 <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
@@ -119,24 +89,31 @@ $(document).ready(function(){
         </volist>
         
         </tbody>
-    </table>
-    
-   
-   <div id="page" class="pagination">
-　　{$page}
-</div>
-    
-    
-    <script type="text/javascript">
-	// $('.tablelist tbody tr:odd').addClass('odd');
-     $(document).ready(function(){
-    
-        //数字验证 
-        // $("#getcode_num").click(function(){
-        //     $(this).attr("src", 'verify.html?' + Math.random());
-        // });
-        
-        $(".suresmall").click(function(){
+    </table>    
+     {$page}
+</div> 
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+      $(".tip").fadeIn(200);
+      });
+  
+  $(".tiptop a").click(function(){
+      $(".tip").fadeOut(200);
+    });
+
+  $(".sure").click(function(){
+      $(".tip").fadeOut(100);
+    });
+
+  $(".cancel").click(function(){
+      $(".tip").fadeOut(100);
+    });
+});
+
+$(document).ready(function(){
+    $(".suresmall").click(function(){
 
             var id = $(this).attr('name');
             var data = $(this).attr('data');
@@ -147,29 +124,18 @@ $(document).ready(function(){
             var id = $(this).attr('name');
             var data = $(this).attr('data');
 
-if($("#suresmall3"+id ).val()==''){
-    alert("物流单号不能为空！");
-    return false;
-} else{
-    $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
+    if($("#suresmall3"+id ).val()==''){
+        alert("物流单号不能为空！");
+        return false;
+    } else{
+        $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
 
-}
+    }
 
-
-
-    //  val()是jQuery获取元素值得一个函数
-
-
-            // if($("#suresma113"+id+".val()") ==''){
-            //     alert('物流单号不能为空！');
-            //     return false;
-            // }
-        });
     });
-    // 
-	</script>
-
-
+});
+ 
+</script>
 </body>
 
 </html>

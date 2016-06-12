@@ -45,7 +45,7 @@ $(document).ready(function(){
             <li><a href="#">产品列表</a></li>
         </ul>
     </div>
- 
+    <div class="rightinfo">
     <div class="tools">
         <ul class="seachform">
             <form action="/index.php/Console/Product/Plist" method="post" id="form2" name="form2">     
@@ -114,8 +114,8 @@ $(document).ready(function(){
         </tbody>
     </table>
     
-   <div id="page" class="pagination">{$page}</div>
-
+   {$page}
+    </div>
     
     <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');

@@ -24,6 +24,7 @@ class Page{
     private $nowPage = 1;
 
 	// 分页显示定制
+    /*
     private $config  = array(
         'header' => '<span class="rows">共 %TOTAL_ROW% 条记录</span>',
         'prev'   => '<<',
@@ -31,7 +32,24 @@ class Page{
         'first'  => '1...',
         'last'   => '...%TOTAL_PAGE%',
         'theme'  => '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%',
+    );*/
+    // 分页显示定制
+    private $config  = array(
+        'header' => '<span class="rows">共 %TOTAL_ROW% 条记录</span>',
+        'prev'   => '<span class="pagepre"></span>',
+        'next'   => '<span class="pagenxt"></span>',
+        'first'  => '1...',
+        'last'   => '...%TOTAL_PAGE%',
+        'theme'  => '
+        <div class="message">共<i class="blue">%TOTAL_ROW%</i>条记录，当前显示第&nbsp;<i class="blue">%NOW_PAGE%&nbsp;</i>页</div>
+        <ul class="paginList">            
+            %UP_PAGE%
+             %LINK_PAGE%
+            <li class="paginItem">%DOWN_PAGE%</li>
+        </ul>',
     );
+
+
 
     /**
      * 架构函数
@@ -93,7 +111,7 @@ class Page{
 
         //上一页
         $up_row  = $this->nowPage - 1;
-        $up_page = $up_row > 0 ? '<a class="prev" href="' . $this->url($up_row) . '">' . $this->config['prev'] . '</a>' : '';
+        $up_page = $up_row > 0 ? '<li class="paginItem"><a class="prev" href="' . $this->url($up_row) . '">' . $this->config['prev'] . '</a></li>' : '';
 
         //下一页
         $down_row  = $this->nowPage + 1;
@@ -124,13 +142,13 @@ class Page{
             if($page > 0 && $page != $this->nowPage){
 
                 if($page <= $this->totalPages){
-                    $link_page .= '<a class="num" href="' . $this->url($page) . '">' . $page . '</a>';
+                    $link_page .= '<li class="paginItem"><a href="' . $this->url($page) . '">' . $page . '</a></li>';
                 }else{
                     break;
                 }
             }else{
                 if($page > 0 && $this->totalPages != 1){
-                    $link_page .= '<span class="current">' . $page . '</span>';
+                    $link_page .= '<li class="paginItem current"><a href="javascript:;">' . $page . '</a></li>';
                 }
             }
         }
@@ -140,6 +158,6 @@ class Page{
             array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%'),
             array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages),
             $this->config['theme']);
-        return "<div>{$page_str}</div>";
+        return "<div class='pagin'>{$page_str}</div>";
     }
 }
