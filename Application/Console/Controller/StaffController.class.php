@@ -47,7 +47,7 @@ class StaffController extends CommonController {
 		return $data;
 	}
 	
-
+    
     public function deparlist(){
         if(I('post.accounts')){
             $map['cate_name']=array('like','%'.I('post.accounts').'%');
@@ -65,17 +65,30 @@ class StaffController extends CommonController {
 		if($ids !='' && session('roleidstaff') > 0){
 			$map['id']  = array('in',trim($ids));
 		}
+		$department=I('department');
+		if($department){
+			$map['section']=$department;
+			$this->assign('section',$department);
+		}
+
+		$quarters=I('quarters');
+		if($quarters){
+			$map['quarters']=$quarters;
+			$this->assign('quarters',$quarters);
+		}
 		
         $username = i('username');
         if($username){
-            $map['nickname']  = array('like','%'.trim($username).'%');
-            $map['username']  = array('like','%'.trim($username).'%');
-            $map['name']  = array('like','%'.trim($username).'%');
-            $map['section']  = array('like','%'.trim($username).'%');
-            $map['identity_card']  = array('like','%'.trim($username).'%');
-            $map['mobile']  = array('like','%'.trim($username).'%');              
-            $map['_logic'] = 'or';
+            $map1['nickname']  = array('like','%'.trim($username).'%');
+            $map1['username']  = array('like','%'.trim($username).'%');
+            $map1['name']  = array('like','%'.trim($username).'%');
+            $map1['section']  = array('like','%'.trim($username).'%');
+            $map1['identity_card']  = array('like','%'.trim($username).'%');
+            $map1['mobile']  = array('like','%'.trim($username).'%');              
+            $map1['_logic'] = 'or';
+            $map['_complex'] = $map1;
         }
+        
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
@@ -101,7 +114,9 @@ class StaffController extends CommonController {
 		
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
+        $department=D('Category')->categoryone(array('cate_parent'=>0));
         $this->assign('education',$education);
+        $this->assign('department',$department);
         $this->assign('cat',$catdata);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -162,8 +177,9 @@ class StaffController extends CommonController {
 		
 		$this->GetCateName();
 		$this->GetEducationName();
-		
+		 $this->assign("stafftake",D('StaffTake')->tackfind(I("id")));
          $this->assign('department',D('Category')->department());
+
 		 $this->assign('quarters',$quarters);
 		 $this->assign('subordinates',$subordinates);
 		 $this->assign('Equipment',$Equipment);

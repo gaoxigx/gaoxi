@@ -116,9 +116,9 @@
 
                 </tbody>
             </table>
-            <div id="page" class="pagination">
+            
 　　         {$page}
-            </div>
+                
 
         </div>
        
@@ -130,7 +130,7 @@
                 var id=$(this).attr('v');
                 var msg="是否确认对信息的修改 ？</br> 如果是请点击保存按钮 ，否则请点取消。";
                 if(id=="unfund"){
-                    msg="请刷新该页面? </br> 刷新页面后重新修改。";
+                msg="请刷新该页面? </br> 刷新页面后重新修改。";
                 }
                 layer.confirm(msg, {
                   btn: ['保存','取消'] //按钮
