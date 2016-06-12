@@ -147,7 +147,9 @@ function reset_pass(id){
 			</td>
            <!--  <td>{$education[$vo['education']]}</td> -->
             <!--<td>{$vo.mobile}</td>-->
-            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>--></td>
+            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>-->
+                <a href="{:U('Asset/staffAsset')}" >领取办公用品</a>
+            </td>
             </tr> 
             </volist>
         
