@@ -379,6 +379,25 @@
 							</foreach>
 						</table>
 					</div>
+                    <div class="formtext" style="line-height:76px;">领取办公用品</div>
+                    <div class="gwc" style=" margin:auto;">
+                        <table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+                            <tr style="background:#d0e7fa;">
+                                <td class="tb1_td1" style="height:35px;">id</td>
+                                <td class="tb1_td1" style="height:35px;">名称</td>
+                                <td class="tb1_td1" style="height:35px;">数量</td>
+                                <td class="tb1_td1" style="height:35px;">用途</td>
+                            </tr>
+                            <volist name="stafftake" id="vo">
+                            <tr>
+                                <td class="tb2_td1" style="height:35px;">{$vo.id}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.name}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.number}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.comment}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                    </div>
                     <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
                         <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
                     </div>

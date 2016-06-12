@@ -49,7 +49,8 @@ $(document).ready(function(){
         <div class="tools">
             <ul class="toolbar">
                 <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
-                <!--         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
+              
+                <!--
                         <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
                         <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
 
@@ -61,6 +62,7 @@ $(document).ready(function(){
                 <form action="/index.php/Console/Equipment/Equipment" method="post" id="form2" name="form2">            
                     <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
                     <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                    <li class="click"><label>统计手机共{$count}部</label></li>
                 </form>
             </ul>
         </div>

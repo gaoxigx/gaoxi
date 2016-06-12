@@ -74,7 +74,16 @@ function reset_pass(id){
                 </ul>
 
                 <ul class="seachform">
+
                     <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">            
+                        <li><label>部门</label><select class="sciselect" name="department" id="department">
+                            <volist name="department"  id="vo">
+                                <option <if condition="$key eq $section">selected="selected"</if> value="{$key}">{$vo}</option>
+                            </volist>
+                        </select></li>
+                        <li><label>岗位</label><select class="sciselect" name="quarters" id="quarters">                            
+                                <option>请选择岗位</option>
+                            </select></li>
                         <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     </form>
@@ -148,7 +157,7 @@ function reset_pass(id){
            <!--  <td>{$education[$vo['education']]}</td> -->
             <!--<td>{$vo.mobile}</td>-->
             <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>-->
-                <a href="{:U('Asset/staffAsset')}" >领取办公用品</a>
+                <a  href="javascript:stafftake({$vo.id});" >领取办公用品</a>
             </td>
             </tr> 
             </volist>
@@ -161,12 +170,46 @@ function reset_pass(id){
 　　{$page}
     
     
-    </div>
-    
+    </div>    
+
+    <script type="text/javascript" src="__PUBLIC__/Console/js/layer/layer.js" ></script> 
     <script type="text/javascript">
+
 	$('.tablelist tbody tr:odd').addClass('odd');
+    function stafftake(id){
+        layer.open({
+          type: 2,
+          title: false,
+          shadeClose: true,
+          shade: 0.8,
+          area: ['420px', '380px'],
+          content: "{:U('Asset/staffAsset')}?id="+id, //iframe的url
+        }); 
+    }
+    var postid="{$quarters}";
+    ajxpost($("#department").val(),postid);
+    //部门联级查找
+    $("#department").change(function(){
+        ajxpost($(this).val());
+    })
+    function ajxpost(catid,nb){
+        var url="{:U('Staff/allcate')}?catid="+catid;        
+        $.get(url,function(data){            
+            var option="<option value=''>请选择岗位</option>";
+            for(itme in data){
+                if(nb==data[itme]['cate_id']&&nb.length>0){
+                    option+="<option selected='selected' value="+data[itme]['cate_id']+">"+data[itme]['cate_name']+"</option>";
+                }else{
+                    option+="<option value="+data[itme]['cate_id']+">"+data[itme]['cate_name']+"</option>";    
+                }
+                
+            }
+            $('#quarters').html(option);    
+        })
+    }    
 	</script>
 
 </body>
 
 </html>
+
