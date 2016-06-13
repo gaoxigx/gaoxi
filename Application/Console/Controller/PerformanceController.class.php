@@ -6,11 +6,8 @@ class PerformanceController extends CommonController{
 		$this->display();
 	}
 	public function staff(){
-
+            $this->display();
 	}
 
-	public function department(){
-		
-	}
 }
 ?>
