@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <body>
+
+            <div class="formbody">
+                <div id="usual1" class="usual"> 
+                    <form name="form1" id="form1" method='post' action="{:U('Asset/StaffTake')}">
+                        <input type="hidden" name="staff_id" value="{:I('get.id')}" />
+           
+                        <div id="tab1" class="tabson">
+                                          
+                            <ul class="forminfo">
+                                <li><label>办公用品<b>*</b></label><select id="asset_id" name="asset_id" class="dfselect"><option  value="0">请选择</option><volist name="asset" id="vo"><option  value="{$key}">{$vo}</option></volist></select></li>
+                                <li><label>库存<b></b></label><span id="kc">0</span></li>                           
+                                <li><label>数量<b>*</b></label><input  name="number" id="number" type="text" class="dfinput" value="1"  /></li>
+                                <li><label>用途</label><input name="comment" id="comment" type="text" class="dfinput" value="{$data.usage}"  /></li>
+
+                                <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="领&nbsp;&nbsp;取"/></li>
+                            </ul>
+                    </div>
+                </form>
+            </div> 
+        </div>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
+        <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+        <script src="__PUBLIC__/Console/js/layer/layer.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+        <script type="text/javascript">
+
+            $(function(){
+                
+                $('#asset_id').change(function(){
+                    var url="{:U('Asset/getStock')}";                    
+                    var data={id:$(this).val()}
+                    $.ajax({
+                        type:"get",
+                        url:url,
+                        dataType:"json",
+                        data:data,
+                        success:function(data){
+                            $("#kc").text(data.status);                            
+                        }
+                    })
+                })
+
+              
+                $("#form1").validate({
+                    rules:{
+                        asset_id:{
+                            required:true,    
+                        },
+                        number:{
+                            required:true,                            
+                            digits:true,
+                            min:1,
+                            max:function(){
+                                var n=$("#kc").text();
+                                var num=$("#number").val();
+                                if(Number(n)>Number(num)){
+                                    return true;
+                                }else{
+                                    return false;    
+                                }
+                                
+                            },
+                        },
+                    },
+                    messages:{
+                        asset_id:{
+                            required:'请选择办公用品'
+                        },
+                        number:{
+                             required:'请填写数量',
+                             digits:'必须为整数',
+                             min:'库存不足或数量不足',
+                             max:'库存不足',
+                        }    
+                    },
+                     submitHandler:function(form) {
+                        form.submit();
+                    },showErrors:function(errorMap,errorList) {
+                        var msg = "";  
+                        $.each( errorList, function(i,v){  
+                          msg += (v.message+"\r\n");  
+                        });  
+                        if(msg!="") 
+                        layer.msg(msg);
+                    }
+                });
+            });
+        </script>
+
+    </body>
+
+</html>

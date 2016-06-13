@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+});
+
+//密码重置
+function reset_pass(id){
+	if(confirm('确定要重置密码吗？')){
+		$.post('__URL__/resetpass/',{id:id},function(data){
+			if(data.info){
+				alert(data.info);
+				return false;
+			}
+			var data = eval('('+data+')');
+			if(data.result == 1){
+				alert('密码重置成功');
+				window.location.href='__URL__/Staff';
+			}else{
+				alert(data.msg);
+			}
+		})
+	}
+	
+}
+</script>
+
+
+</head>
+
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">财务管理</a></li>
+        <li><a href="#">资产管理</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+            <div class="tools">
+                <ul class="toolbar">
+                    <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
+                </ul>
+
+                <ul class="seachform">
+                    <form action="/index.php/Console/Asset/add" method="post" id="form2" name="form2">            
+                        <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
+                        <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                    </form>
+					
+                </ul>
+				
+            </div>
+    
+    
+    
+    <table class="tablelist">
+    	<thead>
+            <tr>
+                <th>序号</th>
+                <th>用户名</th>
+                <th>数量</th>
+                <th>开始时间</th>
+                <th>最后时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.numberby}</td>
+                    <td>{$vo.statetime}</td>
+                    <td>{$vo.endtime}</td>
+                    <td><a href="{U('Asset/')}">删除</a></td>
+                </tr>
+            </volist>        
+        </tbody>
+    </table>
+　　{$page}
+    </div>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+
+</body>
+
+</html>
