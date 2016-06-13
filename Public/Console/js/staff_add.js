@@ -1,7 +1,7 @@
 $(function(){	
 		$.validator.setDefaults({
-			submitHandler:function() {
-				$('#form1').submit();
+			submitHandler:function(from) {
+				from.submit();
 			}
 		});
 
