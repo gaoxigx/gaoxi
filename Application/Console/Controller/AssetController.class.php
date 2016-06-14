@@ -15,10 +15,12 @@ class AssetController extends CommonController{
         if(!IS_POST){
              $this->display(); 
              exit();
-        }
-        unset($_POST['name']);
+        }        
         $data = $asset->create();    
         if($data){    
+            $data['status']=1;
+            $data['createtime']=time();
+            $data['gettime']=time();
             $result = $asset->add($data);
             if($result){
                 $this->success('添加成功!',$jumpUrl);
