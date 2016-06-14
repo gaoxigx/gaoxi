@@ -52,7 +52,7 @@ class StaffTakeModel extends Model{
 		if(!$id){
 			$id=session('userid');
 		}
-		$result=$this->alias('st')->field('st.*,na.name')->join('nico_asset as na on na.id=st.asset_id','left')->where("st.staff_id=%d",array($id))->select();
+		$result=$this->alias('st')->field('st.*,na.name')->join('nico_asset as na on na.id=st.asset_id','left')->where("st.status>0 and st.staff_id=%d",array($id))->select();
 		return $result;
 	}
 
@@ -60,7 +60,7 @@ class StaffTakeModel extends Model{
 		if(!$id){
 			return false;
 		}
-		$result=$this->alias('st')->field('st.*,ns.name,sum(st.number) as numberby,min(st.addtime) as statetime,max(st.addtime) as endtime')->join('nico_staff as ns on ns.id=st.staff_id','left')->where("st.asset_id=%d",array($id))->group('st.staff_id')->select();
+		$result=$this->alias('st')->field('st.*,ns.name,sum(st.number) as numberby,min(st.addtime) as statetime,max(st.addtime) as endtime')->join('nico_staff as ns on ns.id=st.staff_id','left')->where("st.status>0 and st.asset_id=%d",array($id))->group('st.staff_id')->select();
 		return $result;
 	}
 
