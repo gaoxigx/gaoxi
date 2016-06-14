@@ -144,47 +144,37 @@
                                     <input class="dfinput"  name="phone" id="phone" type="text"  placeholder="phone" />
                                 </if>                                  
                             </li>
-							<li><label>岗位<b>*</b></label>  
+                                                        
+                            <li>
+                                <label>岗位<b>*</b></label>  
                                 <div class="vocation uew-select" id="quarters_div">                 
                                     <select id="department" name="subordinates[]" class="uew-select-value">
-										<option>请选择部门</option>
+                                        <option>请选择部门</option>
                                         <volist name="department" id="voo">
                                             <option <if condition="$voo['cate_id'] eq $user['section']" >selected="selected"</if> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}">{$voo.cate_name}</option>
                                         </volist>
                                     </select> 
-									<if condition="$post">
-									<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">                                        
-										<option>请选择岗位</option>
-										<foreach name="post" item="v">   
-											<option value="{$v.cate_id}" <if condition="$v.cate_id == $user['quarters']" >selected="selected"</if>  >{$v.cate_name}</option>
-										</foreach>
-                                    </select>
-									</if>
-									<!--
-                                    <foreach name="post" item="vo"> 
-                                         <select  name="subordinates[]" onchange="nextselect(this,0)" class="uew-select-value">                                         
-                                                <foreach name="vo" item="v">   
-                                                    <option value="{$v.cate_id}" <in name="v['cate_id']" value="$user['subordinates']" >selected="selected"</in>  >{$v.cate_name}</option>
-                                                </foreach>
-                                          </select>
-                                    </foreach>
-									-->
-											<!-- 
-                                     <in name="$v['cate_id']" value="$voo.subordinates" >selected="selected"</in> value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}" -->
+                                    <if condition="$post">
+                                        <select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">                                        
+                                            <option>请选择岗位</option>
+                                            <foreach name="post" item="v">   
+                                                    <option value="{$v.cate_id}" <if condition="$v.cate_id == $user['quarters']" >selected="selected"</if>  >{$v.cate_name}</option>
+                                            </foreach>
+                                        </select>
+                                    </if>
                                 </div>
-								<input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
-								<div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                                <input name='departmenttext' type="hidden" id="departmenttext" value="{$voo.departmenttext}" />
                             </li> 
 							
-							<li><label>上司<b>*</b></label>  
-								<div class="vocation uew-select" >
-									<select id="supervisor" name="nibs" class="uew-select-value">
-										<option>请选择上司</option>
-										
+                            <li>
+                                <label>上司<b>*</b></label>  
+                                <div class="vocation uew-select" >
+                                    <select id="supervisor" name="nibs" class="uew-select-value">
+                                        <option>请选择上司</option>					
                                     </select>
-								</div>
-								<input type="hidden" id="old_nibs" value="{$user.nibs}">
-								<input type="hidden" id="supervisortext" name="nibstext"  />
+                                </div>
+                                <input type="hidden" id="old_nibs" value="{$user.nibs}">
+                                <input type="hidden" id="supervisortext" name="nibstext"  />
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 		
                              <li>

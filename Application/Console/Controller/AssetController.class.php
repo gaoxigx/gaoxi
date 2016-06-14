@@ -42,11 +42,24 @@ class AssetController extends CommonController{
         if($data['status']){
             $data['msg']='成功';
         }else{
-            $data['msg']='成功';
+            $data['msg']='失败';
         }        
         $this->ajaxreturn($data);
     }
 
+    public function getShop($id){
+        if(!$id){
+            $id = session('userid');
+        }
+        $data['status']=D('Asset')->getStock($id);
+        if($data['status']){
+            $data['msg'] = '成功';            
+        }else{
+            $data['msg'] = '失败';
+        }
+        $this->ajaxReturn($data);
+    }
+    
     /**
      *领取设备
     **/

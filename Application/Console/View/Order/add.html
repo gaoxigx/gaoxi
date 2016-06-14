@@ -194,7 +194,6 @@
         $(function(){
             function getequipment(obj,id){
                     var url="{:U('Console/Equipment/add')}?catid="+id;
-			
                     $.get(url,function(data){
                                         if(data.length == 0){
                                                 return false;

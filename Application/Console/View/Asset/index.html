@@ -108,7 +108,7 @@ function reset_pass(id){
                     <td>{$vo.amount}</td>
                     <td>{$vo.idle}</td>
                     <td>{$vo.idle}</td>
-                    <td>采购</td>
+                    <td><a  href="javascript:stafftake({$vo.id});" >采购</a></td>
                 </tr>
             </volist>        
         </tbody>
@@ -118,8 +118,24 @@ function reset_pass(id){
     
     <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
-	</script>
+    </script>
 
+    <script type="text/javascript" src="__PUBLIC__/Console/js/layer/layer.js" ></script> 
+    <script type="text/javascript">
+
+	$('.tablelist tbody tr:odd').addClass('odd');
+        function stafftake(id){
+            layer.open({
+              type: 2,
+              title: false,
+              shadeClose: true,
+              shade: 0.8,
+              area: ['420px', '380px'],
+              content: "{:U('Asset/shopping')}?id="+id, //iframe的url
+            }); 
+        }    
+    </script>
+    
 </body>
 
 </html>
