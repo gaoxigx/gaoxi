@@ -387,6 +387,7 @@
                                 <td class="tb1_td1" style="height:35px;">名称</td>
                                 <td class="tb1_td1" style="height:35px;">数量</td>
                                 <td class="tb1_td1" style="height:35px;">用途</td>
+                                <td class="tb1_td1" style="height:35px;">操作</td>
                             </tr>
                             <volist name="stafftake" id="vo">
                             <tr>
@@ -394,6 +395,7 @@
                                 <td class="tb2_td1" style="height:35px;">{$vo.name}</td>
                                 <td class="tb2_td1" style="height:35px;">{$vo.number}</td>
                                 <td class="tb2_td1" style="height:35px;">{$vo.comment}</td>
+                                <td class="tb2_td1" style="height:35px;"><a href="{:U('Asset/assetrecycle',array('id'=>$vo['id']))}">回收</a> <a href="{:U('Asset/assetpayment',array('id'=>$vo['id']))}">扣款</a> </td>
                             </tr>
                             </volist>
                         </table>

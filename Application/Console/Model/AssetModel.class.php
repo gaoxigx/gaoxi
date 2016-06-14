@@ -34,5 +34,27 @@ class AssetModel extends Model{
       return $this->where('id=%d',array($id))->setDec('stock',$num);
     }
 
+    //回收资源
+    public function resycle($id){
+      $assetid=D('StaffTake')->where('id=%d',array($id))->getfield('asset_id');
+      $result1=D('StaffTake')->where('id=%d',array($id))->setfield('status',0);
+      $result2=$this->where('id=%d',array($assetid))->setInc('stock');
+      if($result1&&$result2){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+    //资源处理
+    public function assetpayment($id){      
+      $result1=D('StaffTake')->where('id=%d',array($id))->setfield('status',2);      
+      if($result1){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
 }
 ?>

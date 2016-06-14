@@ -80,6 +80,34 @@ class AssetController extends CommonController{
         $this->ajaxreturn();
     }
 
+    /**
+    *设备回收
+    **/
+    public function assetrecycle(){
+        $id=I('id');
+        if(!$id){
+            $this->error('回收失败');            
+        } 
+        $result=D('Asset')->resycle($id);
+        if($result){
+            $this->success('成功回收');
+        }else{
+            $this->error('回收失败');            
+        }
+    }
+
+    /**
+    *设备扣款
+    **/
+    public function assetpayment(){
+        $data=D('Asset')->assetpayment($asset_id);
+        if($data){
+            $this->success('已列为捐款设备');
+        }else{
+            $this->success('操作失败');
+        }
+    }
+
 
 
         
