@@ -6,7 +6,19 @@ class PerformanceController extends CommonController{
 		$this->display();
 	}
 	public function staff(){
-            $this->display();
+		$department=D('Category')->field('cate_id,cate_name,cate_parent')->select();
+		
+		
+		$staff=D('staff')->getfield('id,name,quarters,nibs',true);
+		foreach ($staff as $k => $v) {
+			$cat[$v['nibs']][]=$staff[$k];
+		}
+		
+		$this->assign('department',$department);
+		$this->assign('cat',$cat);
+
+		$this->assign('staff',$staff);
+        $this->display();
 	}
 
 }

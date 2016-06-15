@@ -5,9 +5,7 @@
     <title>员工业绩图</title>
     <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
     <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
-    <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
-
+   
     <style>
     #canvas-holder {
         width: 100%;
@@ -32,9 +30,9 @@
       width: 10px;
       height: 10px;
     }
+    .clr{float:left;border:1px solid #000; min-width:150px;background:#f1f1f1;}
+    .clr b{font-weight: 400; line-height: 24px;}
     </style>
-
-
 </head>
 
 
@@ -47,220 +45,335 @@
                 <li><a href="#">部门业绩</a></li>
         </ul>
     </div>
-
-    <div id="canvas-holder" style="width: 50px;">
-        <canvas id="chart-area1" width="50" height="50" />
-    </div>
-    <div id="canvas-holder" style="width: 300px;">
-        <canvas id="chart-area2" width="300" height="300" />
-    </div>
-
-    <div id="chartjs-tooltip"></div>
-
-   <script type="text/javascript">
- //加载饼状图和柱状图
- var bra_data="bra.json"; 
- var data_basic=[],type_basic=[],data_color=[],type_color=[],data_size=[],type_size=[];
-$.getJSON(bra_data, function(data){
- //颜色
-$.each(data.color,function(key,word){
-  if(key!="whole" ){
-  data_color.push({"value":word,"name":key});
-  type_color.push(key);
-  }
-});
-  //尺寸
-$.each(data.basic,function(key,word){
- if(key!="whole"){
-  data_basic.push({"value":word,"name":key+"杯"});
-  type_basic.push(key+"杯");
- }
-});
-//百分比
-$.each(data.detail,function(key,word){
-  var whole=data.detail.whole;
-  if(key!="whole"&&word>=1000 ){
-  data_size.push((100*word/whole).toFixed(3));
-  type_size.push(key);
-  }
-});
-
- 
-        // 基于准备好的dom，初始化echarts实例
-        var myChart_color = echarts.init(document.getElementById('color'));
-        var myChart_basic = echarts.init(document.getElementById('basic'));
-        var myChart_details = echarts.init(document.getElementById('details'));
-
-        // 指定图表的配置项和数据
-option_color = {
-
-    title : {
-        text: '淘宝网用户购买文胸颜色饼状图',
-        subtext: '仅具参考意义',
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: type_color
-    },
-    series : [
-        {
-            name: '该颜色购买人数',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:data_color,
-            color:['#EEB422','#BEBEBE','#FFA07A','#483D8B','#EE3B3B','#6B8E23','#5F9EA0','#FFC125','#696969'],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }
-    ]
-};
- option_basic = {
-    title : {
-        text: '淘宝网用户购买文胸尺寸饼状图',
-        subtext: '仅具参考意义',
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: type_basic
-    },
-    series : [
-        {
-            name: '该尺寸购买人数',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:data_basic,
-            color:['#EEB422','#BEBEBE','#FFA07A','#483D8B','#EE3B3B','#6B8E23','#5F9EA0','#FFC125','#696969'],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }
-    ]
-};
-
-option_details = {
-    title : {
-        text: '淘宝网用户购买文胸颜色饼状图',
-        subtext: '仅具参考意义',
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'axis'
-    },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
-            magicType: {show: true, type: ['line', 'bar']},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-    calculable : true,
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data:['各胸围尺寸所占的人数百分比']
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : type_size
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value',
-            name : '人数',
-            min: 0,
-            max: 20,
-            interval:5,
-            axisLabel : {
-                formatter: '{value} %'
-            }
-        }
-       
-    ],
-    series : [
-
-        {
-            name:'各胸围尺寸所占的人数百分比',
-            type:'bar',
-            data:data_size,
-            color:'#191970'
-        },
+    <div class="rightinfo">
+        <div class="tools">
+            <ul class="toolbar1">
+            <li class="click"><span></span>按日期</li>
+            <li class="click"><span></span>按月份</li>
+            <li><span></span>按年份</li>
+            <li><span></span>统计</li>
+            <li><span></span>设置</li>
+            </ul>
+        </div>
+        <div class="clr" >
+            <div>
+                <?php var_dump($department) ?>
+                <ul>
+                <volist name="staff" id='vo'>
+                        <li><b>{$vo.name}<?php var_dump($vo) ?></b></li>
+                <volist>
+                </ul>
+            </div>
+        </div>
         
-    ]
-};
-        // 使用刚指定的配置项和数据显示图。
-        myChart_color.setOption(option_color);
-        myChart_basic.setOption(option_basic);
-        myChart_details.setOption(option_details);
-});
-//左右翻页显示
-  basic_div=$("#basic");
-  color_div=$("#color");
-  details_div=$("#details");
 
-$(".previous").click(function(){
-	if (basic_div.is(":visible")){
-		basic_div.css("display","none");
-		color_div.css("display", "none");
-		details_div.css("display","block");
-	}
-	else if (color_div.is(":visible")){
-		color_div.css("display","none");
-		basic_div.css("display", "block");
-		details_div.css("display","none");
-	}
-	else if (details_div.is(":visible")){
-		details_div.css("display","none");
-		color_div.css("display", "block");
-		basic_div.css("display","none");
-	}
-});
-$(".next").click(function(){
-if (basic_div.is(":visible")){
-		basic_div.css("display","none");
-		color_div.css("display", "block");
-		details_div.css("display","none");
-	}
-	else if (color_div.is(":visible")){
-		color_div.css("display","none");
-		basic_div.css("display", "none");
-		details_div.css("display","block");
-	}
-	else if (details_div.is(":visible")){
-		details_div.css("display","none");
-		color_div.css("display", "none");
-		basic_div.css("display","block");
-	}
-});
+
+        <div style="width:950px;float:right">
+            <div id="canvas-holder" style="width: 300px;">
+                <canvas id="chart-area2" width="300" height="300" />
+            </div>
+
+            <div id="chartjs-tooltip"></div>
+
+             <div style="width:900px;">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+    <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
+
+    <script>
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100 * (Math.random() > 0.5 ? -1 : 1));
+        };
+        var randomColorFactor = function() {
+            return Math.round(Math.random() * 255);
+        };
+        var randomColor = function(opacity) {
+            return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+        };
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "My First dataset",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                    fill: false,
+                    borderDash: [5, 5],
+                }, {
+                    label: "My Second dataset",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                    fill: false,
+                    borderDash: [5, 5],
+                }, {
+                    label: "My Third dataset - No bezier",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                    lineTension: 0,
+                    fill: false,
+                }, {
+                    label: "My Fourth dataset",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
+                hover: {
+                    mode: 'label'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Line Chart - Legend'
+                }
+            }
+        };
+
+        $.each(config.data.datasets, function(i, dataset) {
+            var background = randomColor(0.5);
+            dataset.borderColor = background;
+            dataset.backgroundColor = background;
+            dataset.pointBorderColor = background;
+            dataset.pointBackgroundColor = background;
+            dataset.pointBorderWidth = 1;
+        });
+
+       
+
+        $('#randomizeData').click(function() {
+            $.each(config.data.datasets, function(i, dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return randomScalingFactor();
+                });
+
+            });
+
+            window.myLine.update();
+        });
+
+        $('#addDataset').click(function() {
+            var background = randomColor(0.5);
+            var newDataset = {
+                label: 'Dataset ' + config.data.datasets.length,
+                borderColor: background,
+                backgroundColor: background,
+                pointBorderColor: background,
+                pointBackgroundColor: background,
+                pointBorderWidth: 1,
+                fill: false,
+                data: [],
+            };
+
+            for (var index = 0; index < config.data.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            config.data.datasets.push(newDataset);
+            window.myLine.update();
+        });
+
+        $('#addData').click(function() {
+            if (config.data.datasets.length > 0) {
+                var month = MONTHS[config.data.labels.length % MONTHS.length];
+                config.data.labels.push(month);
+
+                $.each(config.data.datasets, function(i, dataset) {
+                    dataset.data.push(randomScalingFactor());
+                });
+
+                window.myLine.update();
+            }
+        });
+
+        $('#removeDataset').click(function() {
+            config.data.datasets.splice(0, 1);
+            window.myLine.update();
+        });
+
+        $('#removeData').click(function() {
+            config.data.labels.splice(-1, 1); // remove the label first
+
+            config.data.datasets.forEach(function(dataset, datasetIndex) {
+                dataset.data.pop();
+            });
+
+            window.myLine.update();
+        });
     </script>
 
+    <script>
+    Chart.defaults.global.tooltips.custom = function(tooltip) {
+
+        // Tooltip Element
+      var tooltipEl = $('#chartjs-tooltip');
+
+      if (!tooltipEl[0]) {
+        $('body').append('<div id="chartjs-tooltip"></div>');
+        tooltipEl = $('#chartjs-tooltip');
+      }
+
+      // Hide if no tooltip
+      if (!tooltip.opacity) {
+        tooltipEl.css({
+          opacity: 0
+        });
+        $('.chartjs-wrap canvas')
+          .each(function(index, el) {
+            $(el).css('cursor', 'default');
+          });
+        return;
+      }
+
+      $(this._chart.canvas).css('cursor', 'pointer');
+
+      // Set caret Position
+      tooltipEl.removeClass('above below no-transform');
+      if (tooltip.yAlign) {
+        tooltipEl.addClass(tooltip.yAlign);
+      } else {
+        tooltipEl.addClass('no-transform');
+      }
+
+      // Set Text
+      if (tooltip.body) {
+        var innerHtml = [
+          (tooltip.beforeTitle || []).join('\n'), (tooltip.title || []).join('\n'), (tooltip.afterTitle || []).join('\n'), (tooltip.beforeBody || []).join('\n'), (tooltip.body || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
+          .join('\n'), (tooltip.footer || []).join('\n'), (tooltip.afterFooter || []).join('\n')
+        ];
+        tooltipEl.html(innerHtml.join('\n'));
+      }
+
+      // Find Y Location on page
+      var top = 0;
+      if (tooltip.yAlign) {
+        if (tooltip.yAlign == 'above') {
+          top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+        } else {
+          top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+        }
+      }
+
+      var position = $(this._chart.canvas)[0].getBoundingClientRect();
+
+      // Display, position, and set styles for font
+      tooltipEl.css({
+        opacity: 1,
+        width: tooltip.width ? (tooltip.width + 'px') : 'auto',
+        left: position.left + tooltip.x + 'px',
+        top: position.top + top + 'px',
+        fontFamily: tooltip._fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip._fontStyle,
+        padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
+      });
+    };
+
+    var config1 = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [300, 50, 100, 40, 10],
+                backgroundColor: [
+                    "#F7464A",
+                    "#46BFBD",
+                    "#FDB45C",
+                    "#949FB1",
+                    "#4D5360",
+                ],
+            }],
+            labels: [
+                "Red",
+                "Green",
+                "Yellow",
+                "Grey",
+                "Dark Grey"
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false,
+            }
+        }
+    };
+
+    window.onload = function() {
+
+        var ctx2 = document.getElementById("chart-area2").getContext("2d");
+        window.myPie = new Chart(ctx2, config1);
+
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };    
+    </script>
+
+    <script type="text/javascript">
+       $('.tablelist tbody tr:odd').addClass('odd');
+       
+       var ui="";
+       var cs=0;
+       $('.addinfo').find('.cate_id').each(function(){
+            var t=0;
+            ui=""; 
+            var id=$(this).html();        
+            cateinfo(id,t);
+       })       
+        function cateinfo(id,t){             
+            var url="{:U('Category/getroleninfo')}"+"?id="+id;
+            $.get(url,function(data){
+              
+                if(t==0){
+                    ui="┣━ ━ ";      
+                }else{   
+                    ui=$('.td'+id).html()+"━ ━ ";                     
+                }
+              
+                if(data!='undefined' && data!='' && data!='0'){                       
+                    cs++;
+                    for(i in data){         
+                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>";
+                        string+="<a href='__URL__/add/pid/"+data[i].cate_id+"' class='tablelink'>添加子类</a>";
+                        string+="<a href='__URL__/edit/cate_id/"+data[i].cate_id+"' class='tablelink'>修改</a>";
+                        string+="<a href='__URL__/delete/cate_id/"+data[i].cate_id+"' class='tablelink' > 删除</a></td></tr>";
+
+                        $("#tr"+id).after(string); 
+                        cateinfo(data[i].cate_id,cs);
+                    }
+
+                }else{
+                    cs=1;
+                }
+
+                
+            })
+        }
+    </script>
 </body>
 
 </html>
