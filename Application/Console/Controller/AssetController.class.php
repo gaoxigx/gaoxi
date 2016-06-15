@@ -7,6 +7,7 @@ class AssetController extends CommonController{
 		$this->assign('list',$list);
 		$this->display();
 	}
+  
         
  //添加页面       
     public function add(){
@@ -35,32 +36,24 @@ class AssetController extends CommonController{
     	$this->assign('asset',D('Asset')->getAsset());        
     	$this->display();
     }
-
-    public function getStock($id){
+    
+    public function shopping(){        
+        $controller = M('Asset');
+        // 读取数据
+        $id=I('id');
         if(!$id){
-            $id=session('userid');
+            $this->error('数据错误');
         }
-        $data['status']=D('Asset')->getStock($id);
-        if($data['status']){
-            $data['msg']='成功';
+        $data =  $controller->find($id);
+        if($data) {
+            $this->assign('user',$data);// 模板变量赋值
         }else{
-            $data['msg']='失败';
+            $this->error('数据错误');
         }        
-        $this->ajaxreturn($data);
-    }
-
-    public function getShop($id){
-        if(!$id){
-            $id = session('userid');
-        }
-        $data['status']=D('Asset')->getStock($id);
-        if($data['status']){
-            $data['msg'] = '成功';            
-        }else{
-            $data['msg'] = '失败';
-        }
-        $this->ajaxReturn($data);
-    }
+        $this->display();        
+    } 
+    
+    
     
     /**
      *领取设备
@@ -120,9 +113,27 @@ class AssetController extends CommonController{
             $this->success('操作失败');
         }
     }
-
-
-
+            
+    public function edit(){
+        $jumpUrl =U('Console/Asset/index'); 
+        $model = D('Asset'); 
+        $id =I('id');
+        if (IS_POST) {
+            if ($id > 0) {
+                $data=$model->create();                
+                $result=$model->where($map)->save($data);
+                if ($result){
+                    $this->success('修改成功', $jumpUrl);
+                } else {                    
+                    $this->error('修改失败');
+                }          
+            } 
+        } else {                                    
+            $data=D('asset')->where('id='.$id)->find();
+            $this->assign('info',$data);
+            $this->display();
+        }
+    }         
         
 }
 ?>

@@ -15,12 +15,11 @@
                         <div id="tab1" class="tabson">
                                           
                             <ul class="forminfo">
-                                <li><label>物品名称<b>*</b></label><select id="asset_id" name="asset_id" class="dfselect"><option  value="0">请选择</option><volist name="asset" id="vo"><option  value="{$key}">{$vo}</option></volist></select></li>
-                                <li><label>库存<b></b></label><span id="kc">9999</span></li>                           
-                                <li><label>数量<b>*</b></label><input  name="number" id="number" type="text" class="dfinput" value="1"  /></li>
-                                <li><label>用途</label><input name="comment" id="comment" type="text" class="dfinput" value="{$data.usage}"  /></li>
-
-                                <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="采&nbsp;&nbsp;购"/></li>
+                                <li><label>办公用品</label><input class="dfinput" name="typename" type="text"  value="{$user.name}"  readonly="readonly" /></li>  
+                                <li><label>金额<b></b></label><input  name="money" id="money" type="text" class="dfinput" value="{$user.money}"  /></li>   
+                                <li><label>库存<b></b></label><input  name="kc" id="kc" type="text" class="dfinput" value="0"  /></li>                           
+                                <li><label>采购数量<b>*</b></label><input  name="amount" id="amount" type="text" class="dfinput" value="1"  /></li>
+                                <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="采购"/></li>
                             </ul>
                     </div>
                 </form>
@@ -39,7 +38,7 @@
             $(function(){
                 
                 $('#asset_id').change(function(){
-                    var url="{:U('Asset/getShop')}";                    
+                    var url="{:U('Asset/getStock')}";                    
                     var data={id:$(this).val()}
                     $.ajax({
                         type:"get",
@@ -98,6 +97,7 @@
                 });
             });
         </script>
+
 
     </body>
 

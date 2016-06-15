@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
+        <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+
+        <body>
+            <div class="place">
+                <span>位置：</span>
+                <ul class="placeul">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">资产管理</a></li>
+                </ul>
+            </div>
+
+            <div class="formbody">
+                <div id="usual1" class="usual"> 
+                    <form name="form1" id="form1" method='post' action="__URL__/edit">
+                        <div class="itab">
+                            <ul> 
+                                <li><a href="#tab1" class="selected">修改资产</a></li> 
+                            </ul>
+                        </div> 
+
+                        <div id="tab1" class="tabson">
+                            <div class="formtext">请正确填写信息！</div>
+                            <ul class="forminfo">
+                                <if condition="$info.id gt 0">                                   
+                                    <input type="hidden" name="id" value="{$info.id}"/>
+                                </if>                                
+                                <li><label>办公设备<b>*</b></label><input name="name" id="accounts" type="text" class="dfinput" value="{$info.name}"  /></li>
+                                <li><label>金额<b>*</b></label><input name="money" id="username" type="text" class="dfinput" value="{$info.money}"  /></li>
+                                <li><label>采购总数<b>*</b></label><input name="amount" id="mobile" type="text" class="dfinput" value="{$info.amount}"  /></li>
+                                <li><label>库存<b>*</b></label><input name="stock" id="stock" type="text" class="dfinput" value="{$info.stock}"  /></li>
+                                <li><label>用途</label><input name="usage" id="password" type="text" class="dfinput" value="{$info.usage}"  /></li>
+                                <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="保&nbsp;&nbsp;存"/></li>
+                            </ul>
+                    </div>
+                </form>
+            </div> 
+        </div>
+
+
+    </body>
+
+</html>
