@@ -9,20 +9,19 @@
 
             <div class="formbody">
                 <div id="usual1" class="usual"> 
-                    <form name="form1" id="form1" method='post' action="{:U('Asset/StaffTake')}">
+                    <form name="form1" id="form1" method='post' action="{:U('Asset/shopping',array('id'=>$_GET['id']))}">
                         <input type="hidden" name="staff_id" value="{:I('get.id')}" />
            
                         <div id="tab1" class="tabson">
                                           
                             <ul class="forminfo">
                                 <li><label>办公用品</label><input class="dfinput" name="typename" type="text"  value="{$user.name}"  readonly="readonly" /></li>  
-                                <li><label>金额<b></b></label><input  name="money" id="money" type="text" class="dfinput" value="{$user.money}"   readonly="readonly"/></li>   
-                                <li><label>库存<b></b></label><input  name="stock" id="stock" type="text" class="dfinput" value="{$user.stock}"  readonly="readonly"/></li>                           
+                                <li><label>金额<b></b></label><input  name="money" id="money" type="text" class="dfinput" value="{$user.money}"   readonly="readonly"/></li>                                                           
                                 <li><label>采购数量<b>*</b></label><input  name="amount" id="amount" type="text" class="dfinput" value="1"  /></li>
                                 <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="采购"/></li>
                             </ul>
-                    </div>
-                </form>
+                        </div>
+                    </form>
             </div> 
         </div>
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
