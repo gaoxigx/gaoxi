@@ -57,11 +57,27 @@ class AssetController extends CommonController{
     
     public function shopping(){        
         $controller = D('Asset');
-        // 读取数据
-        $id=I('id');
+        $jumpUrl =U('Console/Asset/index');
+        // 读取数据       
+        $id=I('request.id');
         if(!$id){
             $this->error('数据错误');
+        }   
+ 
+        if(IS_POST){           
+            $stock=I('amount');            
+            $data['stock']=array('exp','stock+'.$stock);
+            $data['amount']=array('exp','amount+'.$stock);
+            $data['gettime']=time();
+            $sul =  $controller->where('id=%d',array($id))->save($data);
+            if($sul){
+                $this->success('增加成功',$jumpUrl);
+            }else{
+                $this->error('数据错误');
+            }        
+            exit();
         }
+        
         $data =  $controller->find($id);
         if($data) {
             $this->assign('user',$data);// 模板变量赋值
