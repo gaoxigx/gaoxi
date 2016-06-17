@@ -16,8 +16,8 @@
                                           
                             <ul class="forminfo">
                                 <li><label>办公用品</label><input class="dfinput" name="typename" type="text"  value="{$user.name}"  readonly="readonly" /></li>  
-                                <li><label>金额<b></b></label><input  name="money" id="money" type="text" class="dfinput" value="{$user.money}"  /></li>   
-                                <li><label>库存<b></b></label><input  name="kc" id="kc" type="text" class="dfinput" value="0"  /></li>                           
+                                <li><label>金额<b></b></label><input  name="money" id="money" type="text" class="dfinput" value="{$user.money}"   readonly="readonly"/></li>   
+                                <li><label>库存<b></b></label><input  name="stock" id="stock" type="text" class="dfinput" value="{$user.stock}"  readonly="readonly"/></li>                           
                                 <li><label>采购数量<b>*</b></label><input  name="amount" id="amount" type="text" class="dfinput" value="1"  /></li>
                                 <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="采购"/></li>
                             </ul>
@@ -46,7 +46,7 @@
                         dataType:"json",
                         data:data,
                         success:function(data){
-                            $("#kc").text(data.status);                            
+                            $("#stock").text(data.status);                            
                         }
                     })
                 })
@@ -62,7 +62,7 @@
                             digits:true,
                             min:1,
                             max:function(){
-                                var n=$("#kc").text();
+                                var n=$("#stock").text();
                                 var num=$("#number").val();
                                 if(Number(n)>Number(num)){
                                     return true;

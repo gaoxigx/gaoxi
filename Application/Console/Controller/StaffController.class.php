@@ -8,7 +8,7 @@ class StaffController extends CommonController {
     private function getprotype(){
         $data=D('role');
         $name = $data->where('status=1')->order('id')->select();
-        // dump($name);
+//         dump($name);
         $this->assign('roletype',$name);
     }
 
@@ -19,7 +19,21 @@ class StaffController extends CommonController {
         $data=D('Category')->department();
         $this->ajaxReturn($data);
     }
-	
+    
+    /*
+     * 查询考勤人数
+     */
+    public function check(){
+        $user = D('Staff');
+        $data= $user->group('iswork')->getfield('iswork,count(*)');
+            return $data;
+//        $data['userCount1'] = $user->where('iswork = 1')->count();
+//        $data['userCount2'] = $user->where('iswork = 2')->count();
+//        $data['userCount3'] = $user->where('iswork = 3')->count();
+//        $data['userCount4'] = $user->where('iswork = 4')->count();
+        }
+
+    
 	/**
      * 查找下级包含子级分类
     **/
@@ -88,7 +102,9 @@ class StaffController extends CommonController {
             $map1['_logic'] = 'or';
             $map['_complex'] = $map1;
         }
-        
+      
+        $map['iswork']=I('iswork');
+                
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
@@ -115,11 +131,14 @@ class StaffController extends CommonController {
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $department=D('Category')->categoryone(array('cate_parent'=>0));
+        
+        $count_data = $this->check();
         $this->assign('education',$education);
         $this->assign('department',$department);
         $this->assign('cat',$catdata);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
+        $this->assign('count_data',$count_data);
         $this->display(); // 输出模板
 
 
@@ -213,8 +232,7 @@ class StaffController extends CommonController {
 	public function GetSupervisor(){
 		$cate_id = I('post.cate_id');
 		//$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
-		$user = D('Staff')->getfield('id,name',true);	
-		
+		$user = D('Staff')->getfield('id,name',true);			
 		$this->ajaxReturn($user);
 	}
 	
@@ -460,4 +478,5 @@ $id = I('session.userid',0);
     private function hello3(){
         echo '这是private方法!';
     }
+    
 }

@@ -32,13 +32,31 @@ class AssetController extends CommonController{
           $this->error($asset->getError());
         }            
     } 
+    
+    /*
+     * 获取办公用品
+     */
     public function  staffAsset(){   
-    	$this->assign('asset',D('Asset')->getAsset());        
-    	$this->display();
+        $controller = D('Asset');
+        // 读取数据
+        $id=I('id');
+       
+    	$this->assign('asset',D('Asset')->getAsset());         
+    	$this->display();        
+    }
+   
+    /*
+     * 获取库存数量
+     */
+    public function  getStock(){   
+        $controller = D('Asset');
+        $asset_id=I('id'); 
+        $info = D('Asset')->where('id='.$asset_id)->getField('stock');
+        $this->ajaxReturn($info);   
     }
     
     public function shopping(){        
-        $controller = M('Asset');
+        $controller = D('Asset');
         // 读取数据
         $id=I('id');
         if(!$id){
@@ -135,5 +153,14 @@ class AssetController extends CommonController{
         }
     }         
         
+    /**
+     * 查找下级分类
+    **/
+    public function deparnext(){
+        $data=D('Asset')->deparnext();
+        $this->ajaxReturn($data);
+    }
+	    
+    
 }
 ?>

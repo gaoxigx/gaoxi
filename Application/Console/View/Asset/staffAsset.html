@@ -9,20 +9,28 @@
 
             <div class="formbody">
                 <div id="usual1" class="usual"> 
-                    <form name="form1" id="form1" method='post' action="{:U('Asset/StaffTake')}">
+                    <form name="form1" id="form1" method='post' action="{:U('Asset/StaffTake')}">   
                         <input type="hidden" name="staff_id" value="{:I('get.id')}" />
            
                         <div id="tab1" class="tabson">
-                                          
-                            <ul class="forminfo">
-                                <li><label>办公用品<b>*</b></label><select id="asset_id" name="asset_id" class="dfselect"><option  value="0">请选择</option><volist name="asset" id="vo"><option  value="{$key}">{$vo}</option></volist></select></li>
-                                <li><label>库存<b></b></label><span id="kc">0</span></li>                           
-                                <li><label>数量<b>*</b></label><input  name="number" id="number" type="text" class="dfinput" value="1"  /></li>
-                                <li><label>用途</label><input name="comment" id="comment" type="text" class="dfinput" value="{$data.usage}"  /></li>
-
+                            
+                            <ul class="forminfo">         
+                                                                            
+                                <li><label>办公用品<b>*</b></label>
+                                    <select id="asset_id" name="asset_id" class="dfselect">
+                                        <option  value="0">请选择</option>
+                                        <volist name="asset" id="vo">
+                                            <option  value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </li>
+                                <li><label>库存<b></b></label><input  name="stock" id="stock" type="text" class="dfinput" value=""  readonly="readonly"/></li>  
+                                <li><label>领取数量<b>*</b></label><input  name="number" id="number" type="text" class="dfinput" value="1"  /></li>
+                                <li><label>用途</label><input name="comment" id="comment" type="text" class="dfinput" value=""  /></li>
                                 <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="领&nbsp;&nbsp;取"/></li>
                             </ul>
-                    </div>
+                    
+                        </div>
                 </form>
             </div> 
         </div>
@@ -47,7 +55,7 @@
                         dataType:"json",
                         data:data,
                         success:function(data){
-                            $("#kc").text(data.status);                            
+                            $("#stock").val(data);                            
                         }
                     })
                 })
@@ -63,12 +71,12 @@
                             digits:true,
                             min:1,
                             max:function(){
-                                var n=$("#kc").text();
-                                var num=$("#number").val();
-                                if(Number(n)>Number(num)){
-                                    return true;
+                                var n=$("#stock").val();   
+                                var num=$("#number").val();                              
+                                if(parseInt(n)<parseInt(num)){
+                                    return true;  
                                 }else{
-                                    return false;    
+                                    layer.closeAll();
                                 }
                                 
                             },
@@ -82,13 +90,13 @@
                              required:'请填写数量',
                              digits:'必须为整数',
                              min:'库存不足或数量不足',
-                             max:'库存不足',
+                             max:'超出库存数量',
                         }    
                     },
                      submitHandler:function(form) {
                         form.submit();
                     },showErrors:function(errorMap,errorList) {
-                        var msg = "";  
+                        var msg = "";  1
                         $.each( errorList, function(i,v){  
                           msg += (v.message+"\r\n");  
                         });  
@@ -98,6 +106,7 @@
                 });
             });
         </script>
+        
 
     </body>
 

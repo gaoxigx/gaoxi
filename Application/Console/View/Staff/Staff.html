@@ -76,22 +76,33 @@ function reset_pass(id){
                 <ul class="seachform">
 
                     <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">            
-                        <li><label>部门</label><select class="sciselect" name="department" id="department">
-                            <volist name="department"  id="vo">
-                                <option <if condition="$key eq $section">selected="selected"</if> value="{$key}">{$vo}</option>
-                            </volist>
-                        </select></li>
-                        <li><label>岗位</label><select class="sciselect" name="quarters" id="quarters">                            
+                        <li><label>部门</label>
+                            <select class="sciselect" name="department" id="department">
+                                <volist name="department"  id="vo">
+                                    <option <if condition="$key eq $section">selected="selected"</if> value="{$key}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </li>
+                        <li><label>岗位</label>
+                            <select class="sciselect" name="quarters" id="quarters">                            
                                 <option>请选择岗位</option>
-                            </select></li>
+                            </select>
+                        </li>
                         <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+   
+<!--                        <li><label>请假人数:</label><a style="width:10px; height:32px; color:red;">{$count_data.userCount3}</a></li>                                
+                        <li><label>离职人数:</label><a style="width:10px; height:32px; color:#666666;">{$count_data.userCount4}</a></li>-->
+                           
                     </form>
-					<ul class="toolbar" style="float:right;">
-						<li><a href="#"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>导入表格</a></li>
-					</ul>
-                </ul>
-				
+                        <li><label><a href="/index.php/Console/Staff/Staff/iswork/1"  type="submit">上班人数:</a></label><a style="line-height:32px; color: blue;">{$count_data[1]|default=0}</a></li> 
+                        <li><label><a href="/index.php/Console/Staff/Staff/iswork/2"type="submit">休息人数:</a></label><a style="line-height:32px; color:#33cc00;">{$count_data[2]|default=0}</a></li>     
+                        <li><label><a href="/index.php/Console/Staff/Staff/iswork/3"type="submit">请假人数:</a></label><a style="line-height:32px; color:red;">{$count_data[3]|default=0}</a></li>                                
+                        <li><label><a href="/index.php/Console/Staff/Staff/iswork/4"type="submit">离职人数:</a></label><a style="line-height:32px; color:#666666;">{$count_data[4]|default=0}</a></li>  
+                    <ul class="toolbar" style="float:right;">
+                            <li><a href="#"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>导入表格</a></li>
+                    </ul>
+                </ul>                                   
             </div>
     
     
