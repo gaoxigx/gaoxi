@@ -102,8 +102,10 @@ class StaffController extends CommonController {
             $map1['_logic'] = 'or';
             $map['_complex'] = $map1;
         }
-      
-        $map['iswork']=I('iswork');
+       if(isset($_GET['iswork'])){
+           $map['iswork']=I('iswork');
+       }
+        
                 
         foreach( $map as $k=>$v){  
             if( !$v )  
