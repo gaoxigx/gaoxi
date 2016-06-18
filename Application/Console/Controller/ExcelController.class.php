@@ -52,9 +52,9 @@ class ExcelController extends CommonController {
 							$data[$v['column_name']] = strtotime($data[$v['column_name']]);
 						}
 					}
-					$staffinfo = D('Staff')->where('id=%d',array($data['id']))->find();
+					$staffinfo = D('Staff')->where('number=%d',array($data['number']))->find();
 					if(!empty($staffinfo)){
-						$savedata = D('Staff')->where('id=%d',array($data['id']))->save($data);
+						$savedata = D('Staff')->where('number=%d',array($data['number']))->save($data);
 						if($savedata >= 0){
 							$change_num += $savedata;
 						}
@@ -73,7 +73,7 @@ class ExcelController extends CommonController {
 	
 	protected function getColumn(){
 		$columns[] = array(
-			'column_name' => 'id',
+			'column_name' => 'number',
 			'column_num' => 'A',
 			'is_time' => '0'
 		);
