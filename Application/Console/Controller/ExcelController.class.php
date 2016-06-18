@@ -52,9 +52,12 @@ class ExcelController extends CommonController {
 							$data[$v['column_name']] = strtotime($data[$v['column_name']]);
 						}
 					}
-					$staffinfo = D('Staff')->where('number=%d',array($data['number']))->find();
+					$map['number'] = $data['number'];
+					$map['name'] = $data['name'];
+					$staffinfo = D('Staff')->where($map)->find();
 					if(!empty($staffinfo)){
 						$savedata = D('Staff')->where('number=%d',array($data['number']))->save($data);
+						$$savedata = 0;
 						if($savedata >= 0){
 							$change_num += $savedata;
 						}
@@ -66,6 +69,7 @@ class ExcelController extends CommonController {
 		}else{
 			$msg = '上传文件不存在';
 		}
+		
 		$result = $change_num > 0?1:0;
 		if($change_num == 0){$msg = '数据未修改';}
 		return array('result'=>$result,'change_num'=>$change_num,'msg'=>$msg);
@@ -77,13 +81,13 @@ class ExcelController extends CommonController {
 			'column_num' => 'A',
 			'is_time' => '0'
 		);
-		/*$columns[] = array(
+		$columns[] = array(
 			'column_name' => 'name',
 			'column_num' => 'B',
 			'is_time' => '0'
 		);
 		
-		$columns[] = array(
+		/*$columns[] = array(
 			'column_name' => 'posttext',
 			'column_num' => 'C',
 			'is_time' => '0'
