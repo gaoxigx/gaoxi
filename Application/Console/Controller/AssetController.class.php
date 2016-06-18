@@ -91,13 +91,13 @@ class AssetController extends CommonController{
     
     /**
      *领取设备
-    **/
+    **/ 
     public function StaffTake(){
-
         $staff_id=I('staff_id');
+
         $data=D('StaffTake')->StaffTake($staff_id);
         if($data['status']>0){
-            $this->success('增加成功');    
+            $this->success('领取成功');    
         }else{
             $this->error($data['msg']);
         }        
