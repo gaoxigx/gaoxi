@@ -323,3 +323,33 @@ h2{font-weight:normal;}
 
 .forminfo li label.cerror{width:auto;text-indent:10px;color:red;}
 .cerror{float:left;}
+
+/*导入表格按钮*/
+.file_btn {
+	position: relative;
+	display: inline-block;
+	background: #D0EEFF;
+	border: 1px solid #99D3F5;
+	border-radius: 4px;
+	padding:0px 15px 0px 5px;
+	overflow: hidden;
+	color: #1E88C7;
+	text-decoration: none;
+	text-indent: 0;
+	line-height: 33px;
+	cursor:pointer;
+}
+.file_btn input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	cursor:pointer;
+}
+.file_btn:hover {
+	background: #AADFFD;
+	border-color: #78C3F3;
+	color: #004974;
+	text-decoration: none;
+}

@@ -133,7 +133,8 @@ class StaffController extends CommonController {
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $department=D('Category')->categoryone(array('cate_parent'=>0));
-        
+        //$this->GetNumbers();
+		
         $count_data = $this->check();
         $this->assign('education',$education);
         $this->assign('department',$department);
@@ -145,7 +146,17 @@ class StaffController extends CommonController {
 
 
     }
-
+	
+	protected function GetNumbers(){
+		$list=M('Staff')->select();
+		$nums = M('Staff')->count();
+		$number = 1000;
+		for($i=0;$i<$nums;$i++){
+			$number = $number +1;
+			M('Staff')->where('id='.$list[$i]['id'])->order('id asc')->save(array('number'=>$number));
+		}	
+	}
+	
  //添加页面
     public function add($value='')
     {
@@ -243,8 +254,17 @@ class StaffController extends CommonController {
         $jumpUrl =U('Console/Staff/Staff');
         $roleList   =   D('Staff');
         $data=$roleList->create();
+		$max_info = D('Staff')->field('max(number) max_number')->find();
+		
+		if($max_info['max_number'] > 0){
+			$number = $max_info['max_number']+1;
+		}else{
+			$number = 1001;
+		}
+		
         if($data) {
-            $data['password']=md5(I('post.password'));
+            $data['number'] = $number;
+			$data['password']=md5(I('post.password'));
             $data['entry_time']=strtotime(I('post.entry_time'));
             $data['graduation_date']=strtotime(I('post.graduation_date'));
             $data['birth_date']=strtotime(I('post.birth_date'));
@@ -457,7 +477,19 @@ $id = I('session.userid',0);
         $this->error($roleList->getError());
     }
  }
-
+	/**
+	 *导入表格
+	 */
+	public function ExcelStaff(){
+		$files = $_FILES['excel'];
+		$excel = new \Console\Controller\ExcelController();
+		$result = $excel->Excel($files);
+		if($result['result'] > 0){
+			$this->success('导入成功');
+		}else{
+			$this->error($result['msg']);
+		}
+	}
  //删除数据
     public function delete(){
     $id=i('id');

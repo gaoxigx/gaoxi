@@ -99,9 +99,12 @@ function reset_pass(id){
                         <li><label><a href="/index.php/Console/Staff/Staff/iswork/2"type="submit">休息人数:</a></label><a style="line-height:32px; color:#33cc00;">{$count_data[2]|default=0}</a></li>     
                         <li><label><a href="/index.php/Console/Staff/Staff/iswork/3"type="submit">请假人数:</a></label><a style="line-height:32px; color:red;">{$count_data[3]|default=0}</a></li>                                
                         <li><label><a href="/index.php/Console/Staff/Staff/iswork/4"type="submit">离职人数:</a></label><a style="line-height:32px; color:#666666;">{$count_data[4]|default=0}</a></li>  
-                    <ul class="toolbar" style="float:right;">
-                            <li><a href="#"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>导入表格</a></li>
-                    </ul>
+                    
+					<form action="/index.php/Console/Staff/ExcelStaff" method="post" id="save_excel" enctype="multipart/form-data">  			
+					<ul class="toolbar" style="float:right;">
+						<li style="padding:0"><a href="javascript:;" class="file_btn"><span><img src="__PUBLIC__/Console/images/t01.png" /></span><input  type="file" id="excel" name="excel" />导入表格</a></li>
+					</ul>
+					</form>
                 </ul>                                   
             </div>
     
@@ -112,6 +115,7 @@ function reset_pass(id){
             <tr>
 <!--                <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
                 <th>序号</th>
+				<th>编号</th>
                 <th>用户名</th>
                 <th>姓名</th>
                 <th>性别</th>               
@@ -132,6 +136,7 @@ function reset_pass(id){
 
             <tr>
             <td>{$i}</td>
+			<td>{$vo.number}</td>
 <!--            <td><input name="" type="checkbox" value="" /></td>-->
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.username}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
@@ -219,6 +224,15 @@ function reset_pass(id){
             $('#quarters').html(option);    
         })
     }    
+	
+	$(function(){
+		$(".file_btn").on("change","input[type='file']",function(){
+			var filePath=$(this).val();
+			if(filePath != ''){
+				$('#save_excel').submit();
+			}
+		})
+	})
 	</script>
 
 </body>

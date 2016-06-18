@@ -33,7 +33,6 @@
                     </if> 
 
                     <div class="itab">
-
                         <ul> 
                             <li><a href="#tab1" class="selected">修改信息</a></li> 
                         </ul>
@@ -43,7 +42,10 @@
 
                         <div class="formtext">请正确填写个人信息！</div>
                         <ul class="forminfo">
-
+							<li>
+                                <label>编号</label>                  
+                                <input class="dfinput" name="number" id="number" readonly="readonly" type="text"  placeholder="number" value="{$user.number}" style="border:none;"/>
+                            </li>
                             <li>
                                 <label>用户名<b>*</b></label>                  
                                 <if condition="$id">
@@ -52,6 +54,7 @@
                                     <input class="dfinput"  name="username" id="username" type="text"  placeholder="username" />
                                 </if>  
                             </li>
+							
                             <!--
                             <li>
                                 <label>密码</label>                  
