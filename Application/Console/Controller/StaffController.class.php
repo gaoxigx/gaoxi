@@ -133,7 +133,7 @@ class StaffController extends CommonController {
         $catdata=D('Category')->categoryone();  
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $department=D('Category')->categoryone(array('cate_parent'=>0));
-       // $this->GetNumbers();
+        $this->GetNumbers();
 		
         $count_data = $this->check();
         $this->assign('education',$education);
