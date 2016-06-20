@@ -409,7 +409,10 @@
                         </table>
                     </div>
                     <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
-                        <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+						<if condition="$Think.session.userid == $user['id']">
+						<a style="width:137px; height:35px; display:block; text-align:center; line-height:35px;float:left;margin-right:10px;" class="btn btn-info" href="/员工休假表格式.xls">申请休假/请假</a>
+						</if>
+						<a style="width:137px; height:35px; display:block; text-align:center; line-height:35px;float:left;" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
                     </div>
                 </div>      
             </div> 
