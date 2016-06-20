@@ -30,7 +30,7 @@ class ProductController extends CommonController {
     
     //产品列表
     public function Plist($name=''){
-         $username = i('username');
+        $username = i('username');
         if($username){
             $map['product']  = array('like','%'.trim($username).'%');
             $map['purchaseper']  = array('like','%'.trim($username).'%');                 
@@ -64,19 +64,26 @@ class ProductController extends CommonController {
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+        foreach($list as $key=>$val){
+            if($val['purchaseper'] >0){
+                $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
+                $list[$key]['purchaseper_name'] = $purchaseper_name;
+            }
+        }
+//        print_r($list);exit;
         $this->getprotype();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
-
-
     }
-//添加
+//添加产品
+
     public function add(){
-         $this->getprotype();
-         $this->display();
+        $this->getprotype(); 
+        $list = D('staff')->field('id,name')->select();
+        $this->assign('list',$list);
+        $this->display();
     }
-    
 
 //插入数据
 public function insert(){
@@ -94,7 +101,7 @@ public function insert(){
         'autoSub'    =>    true,
         'subName'    =>    array('date','Ymd'),
     );
-    $upload = new \Think\Upload($config);// 实例化上传类
+    $upload = new \Think\Upload($config);// 实例化上传类    
     // 上传文件 
 
     $info   =   $upload->upload();
@@ -130,28 +137,29 @@ public function insert(){
 
 
 
-//编辑
-    public function edit($id=0){
-        $this->getprotype();
-    $controller   =   M('product');
-    // 读取数据
-    $data =   $controller->find($id);
-    if($data) {
-        $this->assign('data',$data);// 模板变量赋值
-    }else{
+//编辑    
+    
+    
+public function edit($id = 0){
+    
+    $this->getprotype();
+    $controller = D('product');
+    //读取数据
+    $data = $controller->find($id);
+    if($data){
+        $this->assign('data',$data);
+        $list = D('staff')->field('id,name')->select();
+    }elseif($id){
         $this->error('数据错误');
-    }
+    }    
+    $this->assign('list',$list);
     $this->display();
+}
 
-
-     }
-
-
+    
 //更新数据
     public function update(){
     $data = I('');
-
-
       $config = array(
         'maxSize'    =>    31457280,
         'rootPath'   =>    '.',

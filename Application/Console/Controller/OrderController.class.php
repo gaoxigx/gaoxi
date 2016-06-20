@@ -211,7 +211,7 @@ public function edit($id){
 
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
-     var_dump($data);exit;
+//     var_dump($data);exit;
      $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
 
      $this->assign('prolist',$list);// 赋值数据集
