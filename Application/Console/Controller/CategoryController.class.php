@@ -68,8 +68,10 @@ public function insert(){
             $result =   $roleList->add($data);
             if($result || $upresult) {
                 $uid=$result;
-                $node=I('node');                
-                $map['id']=array('in',implode(',',$node));
+                $node=I('node'); 
+				if(!empty($node)&&isset($node)){
+					$map['id']=array('in',implode(',',$node));
+				}
                 $result=D('node')->field('id as node_id,title as module,'.$uid.' role_id')->where($map)->select();         
                 $result=D('Access')->addAll($result);   
 
