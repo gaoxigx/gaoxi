@@ -173,8 +173,13 @@ function reset_pass(id){
 			</td>
            <!--  <td>{$education[$vo['education']]}</td> -->
             <!--<td>{$vo.mobile}</td>-->
-            <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a><!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>-->
+            <td>
+				<a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a>
+				<a href="javascript:;" class="tablelink" onclick="reset_pass({$vo.id});"> 密码重置</a>
                 <a  href="javascript:stafftake({$vo.id});" >领取办公用品</a>
+				<if condition="$isadmin gt 0">
+				<a href="javascript:;" onclick="del_data(this)" del_href="__URL__/delete/id/{$vo.id}" class="tablelink"> 删除</a>
+				</if>
             </td>
             </tr> 
             </volist>
@@ -191,8 +196,16 @@ function reset_pass(id){
 
     <script type="text/javascript" src="__PUBLIC__/Console/js/layer/layer.js" ></script> 
     <script type="text/javascript">
-
+	
 	$('.tablelist tbody tr:odd').addClass('odd');
+	
+	function del_data(obj){
+		var href= $(obj).attr('del_href');
+		if(confirm('确定要删除吗')){
+			window.location.href=href;
+		}
+	}
+	
     function stafftake(id){
         layer.open({
           type: 2,

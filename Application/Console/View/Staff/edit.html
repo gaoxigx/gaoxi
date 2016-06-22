@@ -19,7 +19,6 @@
         <div class="place">
             <span>位置：</span>
             <ul class="placeul">
-
                 <li><a href="#">首页</a></li>
                 <li><a href="#">员工管理</a></li>
             </ul>
@@ -104,7 +103,7 @@
                                 </div>
                                 <input type="hidden" id="old_nibs" value="{$user.nibs}">
                                 <input type="hidden" id="supervisortext" name="nibstext"  />
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line"></div>
                             </li> 		
                             <li>
                                 <label>姓名<b>*</b></label>                                   
@@ -139,7 +138,7 @@
                                         <input name="educationtext" id="educationtext" type="hidden" value="{$user.educationtext}" />
                                     </div>
                                 </div>
-                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line"></div>
                             </li> 
                             <li>
                                 <label>身份证<b>*</b></label>                                   
@@ -179,19 +178,27 @@
                             <li>
                                 <label>岗位状态<b>*</b></label>
                                 <cite>
-                                    <input id="become" type="radio" checked="checked" value="1" name="become" <if condition="$user.become == 1">checked="checked"</if> >&nbsp;转正&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <if condition="$user.become eq 1">
+									<input id="become" type="radio" checked="checked" value="1" name="become" <if condition="$user.become == 1">checked="checked"</if> >&nbsp;转正&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <else/>
+									<input id="become" type="radio" checked="checked" value="1" name="become" <if condition="$user.become == 1">checked="checked"</if> >&nbsp;转正&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="radio" value="2" name="become" <if condition="$user.become == 2">checked="checked"</if> >&nbsp;试用&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="radio" value="3" name="become" <if condition="$user.become == 3">checked="checked"</if> >&nbsp;实习
-                                </cite>
+									</if>
+								</cite>
                             </li>
                             <li>
                                 <label>上班状态<b>*</b></label>
                                 <cite>
-                                    <input id="iswork" type="radio" checked="checked" value="1" name="iswork" <if condition="$user.iswork == 1">checked="checked"</if> >&nbsp;正常上班&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" value="2" name="iswork" <if condition="$user.iswork == 2">checked="checked"</if> >&nbsp;休假&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" value="3" name="iswork" <if condition="$user.iswork == 3">checked="checked"</if> >&nbsp;请假&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" value="4" name="iswork" <if condition="$user.iswork == 4">checked="checked"</if> >&nbsp;离职
-                                </cite>
+                                    <if condition="$user.iswork eq 4">
+									<input type="radio" value="4" name="iswork" <if condition="$user.iswork == 4">checked="checked"</if> />&nbsp;离职
+									<else/>
+									<input id="iswork" type="radio" checked="checked" value="1" name="iswork" <if condition="$user.iswork == 1">checked="checked"</if> />&nbsp;正常上班&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" value="2" name="iswork" <if condition="$user.iswork == 2">checked="checked"</if> />&nbsp;休假&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" value="3" name="iswork" <if condition="$user.iswork == 3">checked="checked"</if> />&nbsp;请假&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" value="4" name="iswork" <if condition="$user.iswork == 4">checked="checked"</if> />&nbsp;离职
+									</if>
+								</cite>
                             </li>   
                             <li><label>开始时间<b></b></label><input onClick="WdatePicker()" name="starttime" id="starttime" type="text" class="dfinput" value="{$user.starttime|date='Y-m-d',###}"  /></li>  
                             <li><label>结束时间<b></b></label><input onClick="WdatePicker()" name="endtime" id="endtime" type="text" class="dfinput" value="{$user.endtime|date='Y-m-d',###}"  /></li>  

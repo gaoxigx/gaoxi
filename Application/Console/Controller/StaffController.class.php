@@ -76,6 +76,7 @@ class StaffController extends CommonController {
 		$ids = D('Staff')->getthislevel();
 		$ids = implode($ids,',');
 		
+		
 		if($ids !='' && session('roleidstaff') > 0){
 			$map['id']  = array('in',trim($ids));
 		}
@@ -92,6 +93,7 @@ class StaffController extends CommonController {
 		}
 		
         $username = i('username');
+		
         if($username){
             $map1['nickname']  = array('like','%'.trim($username).'%');
             $map1['username']  = array('like','%'.trim($username).'%');
@@ -103,10 +105,14 @@ class StaffController extends CommonController {
             $map['_complex'] = $map1;
         }
        if(isset($_GET['iswork'])){
-           $map['iswork']=I('iswork');
+			$map['iswork']=I('iswork');
+			
        }
-        
-                
+		if(I('iswork') != 4){
+			$map2['iswork']=array('neq',4);
+			$map2['_logic'] = 'and';
+			$map['_complex'] = $map2;
+	   }
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
@@ -134,8 +140,10 @@ class StaffController extends CommonController {
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $department=D('Category')->categoryone(array('cate_parent'=>0));
         //$this->GetNumbers();
+		$isadmin = $this->isAdmin();
 		
         $count_data = $this->check();
+		$this->assign('isadmin',$isadmin);
         $this->assign('education',$education);
         $this->assign('department',$department);
         $this->assign('cat',$catdata);
@@ -155,6 +163,21 @@ class StaffController extends CommonController {
 			$number = $number +1;
 			M('Staff')->where('id='.$list[$i]['id'])->order('id asc')->save(array('number'=>$number));
 		}	
+	}
+	
+	protected function isAdmin(){
+		$roleidstaff = session('roleidstaff');
+		$userid = session('userid');
+		if($roleidstaff > 0){
+			$staff_info = D('Staff')->where("id=".$userid." and section=14")->getField('section,departmenttext');
+		}else{
+			$staff_info = D('Controller')->where('id=%d',array($userid))->getField('id,accounts,username');
+		}
+		if(!empty($staff_info)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
  //添加页面
