@@ -140,8 +140,10 @@ class StaffController extends CommonController {
         $education=array(0=>"请选择",1=>"大专", 2=>"本专",3=>"研究生",4=>"在校大专",5=>"在校本科",6=>"高中",7=>"中专",8=>"初中");
         $department=D('Category')->categoryone(array('cate_parent'=>0));
         //$this->GetNumbers();
+		$isadmin = $this->isAdmin();
 		
         $count_data = $this->check();
+		$this->assign('isadmin',$isadmin);
         $this->assign('education',$education);
         $this->assign('department',$department);
         $this->assign('cat',$catdata);
@@ -161,6 +163,21 @@ class StaffController extends CommonController {
 			$number = $number +1;
 			M('Staff')->where('id='.$list[$i]['id'])->order('id asc')->save(array('number'=>$number));
 		}	
+	}
+	
+	protected function isAdmin(){
+		$roleidstaff = session('roleidstaff');
+		$userid = session('userid');
+		if($roleidstaff > 0){
+			$staff_info = D('Staff')->where("id=".$userid." and departmenttext ='人事部'")->getField('section,departmenttext');
+		}else{
+			$staff_info = D('Controller')->where('id=%d',array($userid))->getField('id,accounts,username');
+		}
+		if(!empty($staff_info)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
  //添加页面
