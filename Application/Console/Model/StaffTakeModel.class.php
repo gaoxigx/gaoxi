@@ -17,7 +17,8 @@ class StaffTakeModel extends Model{
 		$data=$this->create();
 		if($data){
 			$data['addtime']=time();
-			$result['status']=$this->where('staff_id=%d',array($staff_id))->add($data);
+                        $data['status']=1;
+			$result['status']=$this->add($data);
 			D('Asset')->getStockDec($data['asset_id'],$data['number']);	//库存减1
 			$result['msg']='成功';
 		}else{
@@ -53,7 +54,8 @@ class StaffTakeModel extends Model{
 			$id=session('userid');
 		}
 		$result=$this->alias('st')->field('st.*,na.name')->join('nico_asset as na on na.id=st.asset_id','left')->where("st.status>0 and st.staff_id=%d",array($id))->select();
-		return $result;
+		print_r(M()->getlastsql());
+                return $result;
 	}
 
 	public function assetfind($id){
