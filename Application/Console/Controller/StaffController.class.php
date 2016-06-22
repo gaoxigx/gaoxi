@@ -76,6 +76,7 @@ class StaffController extends CommonController {
 		$ids = D('Staff')->getthislevel();
 		$ids = implode($ids,',');
 		
+		
 		if($ids !='' && session('roleidstaff') > 0){
 			$map['id']  = array('in',trim($ids));
 		}
@@ -92,6 +93,7 @@ class StaffController extends CommonController {
 		}
 		
         $username = i('username');
+		
         if($username){
             $map1['nickname']  = array('like','%'.trim($username).'%');
             $map1['username']  = array('like','%'.trim($username).'%');
@@ -103,10 +105,14 @@ class StaffController extends CommonController {
             $map['_complex'] = $map1;
         }
        if(isset($_GET['iswork'])){
-           $map['iswork']=I('iswork');
+			$map['iswork']=I('iswork');
+			
        }
-        
-                
+		if(I('iswork') != 4){
+			$map2['iswork']=array('neq',4);
+			$map2['_logic'] = 'and';
+			$map['_complex'] = $map2;
+	   }
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
