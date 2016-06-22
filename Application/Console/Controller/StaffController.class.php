@@ -169,7 +169,7 @@ class StaffController extends CommonController {
 		$roleidstaff = session('roleidstaff');
 		$userid = session('userid');
 		if($roleidstaff > 0){
-			$staff_info = D('Staff')->where("id=".$userid." and departmenttext ='人事部'")->getField('section,departmenttext');
+			$staff_info = D('Staff')->where("id=".$userid." and section=14")->getField('section,departmenttext');
 		}else{
 			$staff_info = D('Controller')->where('id=%d',array($userid))->getField('id,accounts,username');
 		}
