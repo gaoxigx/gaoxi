@@ -190,7 +190,8 @@ class AssetController extends CommonController{
         $id = I('id');
         $role = M('staff_take');
         $set = $role->where("id = ".$id)->find();
-        $data = $role->delete($id);
+        $data['status']=0;
+        $data = $role->where('id=%d',array($id))->save($data);
         if($data) {
             $this->success('数据删除成功！');
         }else{
