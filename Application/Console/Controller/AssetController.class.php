@@ -90,7 +90,7 @@ class AssetController extends CommonController{
     
     
     /**
-     *领取设备
+     *领取用品
     **/ 
     public function StaffTake(){
         $staff_id=I('staff_id');
@@ -104,15 +104,23 @@ class AssetController extends CommonController{
     }
 
     /**
-     *领取设备详情
+     *领取用品详情
     **/
     public function assetlist(){
         $asset_id=I('id');
         $data=D('StaffTake')->assetfind($asset_id);
+        
+    //查看领取用品信息       
+      foreach($data as $k=>$v){
+          $aslist = D('Asset')->where('id='.$v['asset_id'])->getField('name');
+//          echo M()->getLastSql();exit;
+          $data[$k]['asset_name'] = $aslist;
+      }  
+        
         $this->assign('list',$data);
         $this->display();
     }
-
+   
     /**
     *删除设备
     **/
@@ -177,6 +185,17 @@ class AssetController extends CommonController{
         $this->ajaxReturn($data);
     }
 	    
-    
+     //删除数据
+    public function delete(){
+        $id = I('id');
+        $role = M('staff_take');
+        $set = $role->where("id = ".$id)->find();
+        $data = $role->delete($id);
+        if($data) {
+            $this->success('数据删除成功！');
+        }else{
+            $this->error('数据删除错误！');
+        }
+    }
 }
 ?>
