@@ -3,7 +3,7 @@ namespace Console\Controller;
 use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class ExcelController extends CommonController {
-	public function Excel($files){
+	public function Excel($files,$columns){
 		$config = array( 
 			'maxSize'    =>    3145728,
 			'rootPath'   =>    '.',
@@ -15,7 +15,8 @@ class ExcelController extends CommonController {
 		);
 		$msg = '导入失败';
 		$change_num = 0;
-		if(!empty($files['name'])){
+              
+		if(!empty($files['name']) && !empty($columns)){
 			$upload = new \Think\Upload($config);// 实例化上传类
 			$info   =   $upload->upload();
 			if(!$info) {// 上传错误提示错误信息
@@ -45,7 +46,7 @@ class ExcelController extends CommonController {
 						$arr[$currentRow][$currentColumn]=$currentSheet->getCell($address)->getValue();
 					}
 					*/
-					$columns=$this->getColumn();
+                                        
 					foreach($columns as $k=>$v){
 						$data[$v['column_name']] = $currentSheet->getCell($v['column_num'].$currentRow)->getValue();
 						if($v['is_time'] == 1){
@@ -66,8 +67,14 @@ class ExcelController extends CommonController {
 					}
 				}
 			}	
-		}else{
-			$msg = '上传文件不存在';
+		}else{ 
+                    if(empty($files)){
+                         $msg = '上传文件不存在';
+                    }else if(empty($columns)){
+                        $msg = '请先设置表格格式';
+                    }else{
+                        $msg = '上传文件不存在';
+                    }
 		}
 		
 		$result = $change_num > 0?1:0;
@@ -75,59 +82,6 @@ class ExcelController extends CommonController {
 		return array('result'=>$result,'change_num'=>$change_num,'msg'=>$msg);
 	}
 	
-	protected function getColumn(){
-		$columns[] = array(
-			'column_name' => 'number',
-			'column_num' => 'A',
-			'is_time' => '0'
-		);
-		$columns[] = array(
-			'column_name' => 'name',
-			'column_num' => 'B',
-			'is_time' => '0'
-		);
-		
-		/*$columns[] = array(
-			'column_name' => 'posttext',
-			'column_num' => 'C',
-			'is_time' => '0'
-		);*/
-		$columns[] = array(
-			'column_name' => 'become',
-			'column_num' => 'D',
-			'is_time' => '0'
-		);
-		$columns[] = array(
-			'column_name' => 'iswork',
-			'column_num' => 'E',
-			'is_time' => '0'
-		);
-		$columns[] = array(
-			'column_name' => 'entry_time',
-			'column_num' => 'F',
-			'is_time' => '1'
-		);
-		$columns[] = array(
-			'column_name' => 'starttime',
-			'column_num' => 'G',
-			'is_time' => '1'
-		);
-		$columns[] = array(
-			'column_name' => 'endtime',
-			'column_num' => 'H',
-			'is_time' => '1'
-		);
-		$columns[] = array(
-			'column_name' => 'positivetime',
-			'column_num' => 'I',
-			'is_time' => '1'
-		);
-		$columns[] = array(
-			'column_name' => 'leavetime',
-			'column_num' => 'J',
-			'is_time' => '1'
-		);
-		return $columns;
-	}
+	
     
 }

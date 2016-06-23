@@ -506,7 +506,8 @@ $id = I('session.userid',0);
 	public function ExcelStaff(){
 		$files = $_FILES['excel'];
 		$excel = new \Console\Controller\ExcelController();
-		$result = $excel->Excel($files);
+                $columns = D('Staff')->getColumn();
+		$result = $excel->Excel($files,$columns);
 		if($result['result'] > 0){
 			$this->success('导入成功');
 		}else{

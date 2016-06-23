@@ -44,4 +44,59 @@ class StaffModel extends Model {
         } 
         return $data;  
     }
+    
+    public function getColumn(){
+        $columns[] = array(
+                'column_name' => 'number',
+                'column_num' => 'A',
+                'is_time' => '0'
+        );
+        $columns[] = array(
+                'column_name' => 'name',
+                'column_num' => 'B',
+                'is_time' => '0'
+        );
+
+        /*$columns[] = array(
+                'column_name' => 'posttext',
+                'column_num' => 'C',
+                'is_time' => '0'
+        );*/
+        $columns[] = array(
+                'column_name' => 'become',
+                'column_num' => 'D',
+                'is_time' => '0'
+        );
+        $columns[] = array(
+                'column_name' => 'iswork',
+                'column_num' => 'E',
+                'is_time' => '0'
+        );
+        $columns[] = array(
+                'column_name' => 'entry_time',
+                'column_num' => 'F',
+                'is_time' => '1'
+        );
+        $columns[] = array(
+                'column_name' => 'starttime',
+                'column_num' => 'G',
+                'is_time' => '1'
+        );
+        $columns[] = array(
+                'column_name' => 'endtime',
+                'column_num' => 'H',
+                'is_time' => '1'
+        );
+        $columns[] = array(
+                'column_name' => 'positivetime',
+                'column_num' => 'I',
+                'is_time' => '1'
+        );
+        $columns[] = array(
+                'column_name' => 'leavetime',
+                'column_num' => 'J',
+                'is_time' => '1'
+        );
+        return $columns;
+    }
  }
