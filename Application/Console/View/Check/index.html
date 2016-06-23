@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  // alert($(this).attr('data'));
+  // $(".picpic").src($(this).attr('data'));
+  $(".picpic").attr('src',$(this).attr('data')); 
+  $(".tip0").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip0").fadeOut(200);
+});
+
+  $(".tip0").click(function(){
+  $(".tip0").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip0").fadeOut(100);
+});
+
+});
+</script>
+
+</head>
+
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">考勤列表</a></li>
+        </ul>
+    </div>
+    <div class="rightinfo">
+    <div class="tools">
+        <ul class="toolbar">
+            <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
+        </ul>
+        <ul class="seachform">
+            <form action="/index.php/Console/Check/index" method="post" id="form2" name="form2">             
+                <li><label>&nbsp;&nbsp;搜索</label><input type="text" class="scinpute" name="keywords" value=""></li>
+                <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+            </form>
+            <form action="/index.php/Console/Check/ExcelCheck" method="post" id="save_excel" enctype="multipart/form-data">  	
+                <ul class="toolbar" style="float:right;">
+                    <li style="padding:0"><a href="javascript:;" class="file_btn"><span><img src="__PUBLIC__/Console/images/t01.png" /></span><input  type="file" id="excel" name="excel" />导入表格</a></li>
+                </ul>
+            </form>
+            <if condition="$data.calculated != ''">
+            <li style="float:right"><label>统计日期:</label><a style="line-height:32px; color: red;">{$data.calculated}</a></li> 
+            </if>
+        </ul>
+    </div>
+    
+    <table class="tablelist">
+    	<thead>
+            <tr>
+<!--                <th>ID</th>-->
+                <th>工号</th>
+                <th>姓名</th>
+                <th>所属部门</th>             
+                <th>工作时数(标准)</th>
+                <th>工作时数(实际)</th>
+                <th>迟到(次数)</th>
+                <th>迟到(分钟)</th>
+                <th>早退(次数)</th>
+                <th>早退(分钟)</th>
+                <th>加班(特殊)</th>
+                <th>加班(正常)</th>
+                <th>出勤天数(标准/实际)</th>
+                <th>出差(天)</th>
+                <th>旷工(天)</th>
+                <th>请假(天)</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="vo">
+                <tr>
+<!--                    <td>{$vo.id}</td>-->
+                    <td>{$vo.gh_id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.bumen}</td>
+                    <td>{$vo['hours_bz']|timestr=###}</td>                             
+                    <td>{$vo['hours_sj']|timestr=###}</td>
+                    <td>{$vo.late_tm}</td>
+                    <td>{$vo.late_mi}</td>
+                    <td>{$vo.leave_tm}</td>
+                    <td>{$vo.leave_mi}</td>  
+                    <td>{$vo['overtime_ts']|timestr=###}</td>
+                    <td>{$vo['overtime_zc']|timestr=###}</td>
+                    <td>{$vo.turn}</td>
+                    <td>{$vo.evection}</td>
+                    <td>{$vo.truant}</td>
+                    <td>{$vo.leave}</td>
+                    <td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a></td>
+                </tr> 
+            </volist>
+        </tbody>
+    </table>
+    
+   {$page}
+    </div>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+
+    <div class="tip0" style="">
+        <div class="tiptop"><span>图片预览</span><a></a></div>
+           <img src="" class="picpic" width=100% >
+
+    </div>
+    <script>
+    $(function(){
+		$(".file_btn").on("change","input[type='file']",function(){
+			var filePath=$(this).val();
+			if(filePath != ''){
+				$('#save_excel').submit();
+			}
+		})
+	})
+       </script>
+</body>
+
+</html>

@@ -87,4 +87,27 @@ function getorderget($param){
         return substr_replace($str,'***',3,strlen($str)-6);
 
     }
+/*
+ * 时间搓转换成文本
+ */
+    function timestr($obj){
+        $h=floor( $obj/3600);        
+        $s=floor(($obj%3600)/60);
+        $s=($s==0)?'00':$s;
+        $str=$h.':'.$s;  
+        return $str;
+    }
+    /*
+    * 时间搓转换成文本
+    * return array
+    */
+    function timearray($str='h',$obj){
+        $h=floor( $obj/3600);        
+        $s=floor(($obj%3600)/60);
+        $s=($s==0)?'00':$s;
+        $data['h'] = $h;
+        $data['s'] = $s;
+        
+        return $data[$str];
+    }
 ?>
