@@ -3,14 +3,14 @@ namespace Console\Controller;
 use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class ExcelController extends CommonController {
-	/*
+		/*
          * 导入表格
-         * $files导入的文件数据
-         * $columns字段与表对应数组-二维
-         * $table保存数据的表
-         * $is_add:1为添加数据,0为修改
+         * $files:导入的文件数据
+         * $columns:字段与表对应数组-二维
+         * $table:保存数据的表
+         * $is_add:1为允许添加数据,0为不允许添加-只能修改
          * $startRow:保存数据在表格起始行数
-         * $count_time:1为统计,0:不需要
+         * $count_time:1为获取统计时间,0:不需要，字段为calculated;
          */
         public function Excel($files,$columns,$table,$is_add,$startRow=2,$count_time){
 		$config = array( 
@@ -60,41 +60,53 @@ class ExcelController extends CommonController {
 						$data[$v['column_name']] = $currentSheet->getCell($v['column_num'].$currentRow)->getValue();
 						if($v['is_time'] == 1){
 							$data[$v['column_name']] = strtotime($data[$v['column_name']]);
-                                                }else if($v['is_time'] == 2){
-                                                    $time2 = explode(':',$data[$v['column_name']]);
-                                                    $data[$v['column_name']] = $time2[0]*3600+$time2[1]*60;
-                                                }
-                                                if($count_time == 1){
-                                                    $data['calculated'] = $currentSheet->getCell('B2')->getValue();
-                                                }
+						}else if($v['is_time'] == 2){
+							$time2 = explode(':',$data[$v['column_name']]);
+							$data[$v['column_name']] = $time2[0]*3600+$time2[1]*60;
+						}
+						if(isset($v['is_split']) && $v['is_split'] == 1){
+							$split_columns = explode(',',$v['split_column']);
+							$split_vals = explode($v['split_str'],$data[$v['column_name']]);
+							for($i=0;$i<count($split_columns);$i++){
+								$data[$split_columns[$i]] = $split_vals[$i];
+							}
+							unset($data[$v['column_name']]);
+						}
+						if($count_time == 1){
+							$data['calculated'] = $currentSheet->getCell('B2')->getValue();
+						}
+						if($v['is_where'] == 1){
+							$map[$v['column_name']]  = $data[$v['column_name']];   
+						}
+						
 					}
-                                      
-                                        if($is_add == 1){ 
-                                            $savedata = D($table)->add($data);
-                                        }else{
-                                            $map['number'] = $data['number'];
-                                            $map['name'] = $data['name'];
-                                            $staffinfo = D($table)->where($map)->find();
-
-                                            if(!empty($staffinfo)){
-                                                $savedata = D($table)->where('number=%d',array($data['number']))->save($data);
-                                            }else{
-                                                    $msg = '此条信息不存在';
-                                            }
-                                        }
-                                        if($savedata >= 0){
-                                            $change_num += $savedata;
-                                       }
+					
+					$map[$columns[0]['column_name']] = $data[$columns[0]['column_name']];
+					$datainfo = D($table)->where($map)->find();
+					
+					if(!empty($datainfo)){
+						$savedata = D($table)->where($columns[0]['column_name'].'=%d',array($data[$columns[0]['column_name']]))->save($data);
+					}else{
+						if($is_add == 1){ 
+							$savedata = D($table)->add($data);
+						}else{	
+							$msg = '此条信息不存在';
+						}
+					}
+					
+					if($savedata >= 0){
+						$change_num += $savedata;
+				   }
 				}
 			}	
 		}else{ 
-                    if(empty($files)){
-                         $msg = '上传文件不存在';
-                    }else if(empty($columns)){
-                        $msg = '请先设置表格格式';
-                    }else{
-                        $msg = '上传文件不存在';
-                    }
+			if(empty($files)){
+				 $msg = '上传文件不存在';
+			}else if(empty($columns)){
+				$msg = '请先设置表格格式';
+			}else{
+				$msg = '上传文件不存在';
+			}
 		}
 		
 		$result = $change_num > 0?1:0;
