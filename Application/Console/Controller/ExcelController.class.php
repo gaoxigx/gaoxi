@@ -3,7 +3,16 @@ namespace Console\Controller;
 use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class ExcelController extends CommonController {
-	public function Excel($files,$columns){
+	/*
+         * 导入表格
+         * $files导入的文件数据
+         * $columns字段与表对应数组-二维
+         * $table保存数据的表
+         * $is_add:1为添加数据,0为修改
+         * $startRow:保存数据在表格起始行数
+         * $count_time:1为统计,0:不需要
+         */
+        public function Excel($files,$columns,$table,$is_add,$startRow=2,$count_time){
 		$config = array( 
 			'maxSize'    =>    3145728,
 			'rootPath'   =>    '.',
@@ -15,7 +24,7 @@ class ExcelController extends CommonController {
 		);
 		$msg = '导入失败';
 		$change_num = 0;
-              
+                
 		if(!empty($files['name']) && !empty($columns)){
 			$upload = new \Think\Upload($config);// 实例化上传类
 			$info   =   $upload->upload();
@@ -37,7 +46,7 @@ class ExcelController extends CommonController {
 				$allRow=$currentSheet->getHighestRow();
 				
 				//循环获取表中的数据，$currentRow表示当前行，从哪行开始读取数据，索引值从0开始
-				for($currentRow=2;$currentRow<=$allRow;$currentRow++){
+				for($currentRow=$startRow;$currentRow<=$allRow;$currentRow++){
 					//从哪列开始，A表示第一列
 					/*for($currentColumn='A';$currentColumn<=$allColumn;$currentColumn++){
 						//数据坐标
@@ -51,20 +60,31 @@ class ExcelController extends CommonController {
 						$data[$v['column_name']] = $currentSheet->getCell($v['column_num'].$currentRow)->getValue();
 						if($v['is_time'] == 1){
 							$data[$v['column_name']] = strtotime($data[$v['column_name']]);
-						}
+                                                }else if($v['is_time'] == 2){
+                                                    $time2 = explode(':',$data[$v['column_name']]);
+                                                    $data[$v['column_name']] = $time2[0]*3600+$time2[1]*60;
+                                                }
+                                                if($count_time == 1){
+                                                    $data['calculated'] = $currentSheet->getCell('B2')->getValue();
+                                                }
 					}
-					$map['number'] = $data['number'];
-					$map['name'] = $data['name'];
-					$staffinfo = D('Staff')->where($map)->find();
-					if(!empty($staffinfo)){
-						$savedata = D('Staff')->where('number=%d',array($data['number']))->save($data);
-						$$savedata = 0;
-						if($savedata >= 0){
-							$change_num += $savedata;
-						}
-					}else{
-						$msg = '此条信息不存在';
-					}
+                                      
+                                        if($is_add == 1){ 
+                                            $savedata = D($table)->add($data);
+                                        }else{
+                                            $map['number'] = $data['number'];
+                                            $map['name'] = $data['name'];
+                                            $staffinfo = D($table)->where($map)->find();
+
+                                            if(!empty($staffinfo)){
+                                                $savedata = D($table)->where('number=%d',array($data['number']))->save($data);
+                                            }else{
+                                                    $msg = '此条信息不存在';
+                                            }
+                                        }
+                                        if($savedata >= 0){
+                                            $change_num += $savedata;
+                                       }
 				}
 			}	
 		}else{ 
