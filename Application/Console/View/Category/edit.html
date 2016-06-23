@@ -73,7 +73,7 @@
 					<li><label>传统名称<b>*</b></label><input name="cate_name2" id="cate_name2" type="text" class="dfinput" value="{$vo.cate_name2}"  /></li>
 					<li><label>是否显示<b>*</b></label><cite><input type="radio" id="is_show" checked="checked" value="1" <if condition="$vo.is_show eq '1'"> checked="checked" </if> name="is_show">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" <if condition="$vo.is_show eq '0'"> checked="checked" </if> name="is_show">否</cite></li>
 					<li><label>是否审核<b>*</b></label><cite><input type="radio" id="status" checked="checked" value="1" name="status" <if condition="$vo.status eq '1'"> checked="checked" </if>>是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="status" <if condition="$vo.status eq '0'"> checked="checked" </if>>否</cite></li>
-				
+					<li style="height:32px;"><label>提成率</label><input id="royalty_rate" name="royalty_rate" type="text" class="dfinput" value="{$vo.royalty_rate}" style="float:left;"/><label class="cerror_show" for="royalty_rate">请输入小数形式</label></li>
 					<li>
 						<label>备注<b></b></label>
 						<textarea class="textinput" rows="" cols="" name="cate_content">{$vo.cate_content}</textarea>
