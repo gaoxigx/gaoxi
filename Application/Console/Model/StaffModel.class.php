@@ -54,7 +54,8 @@ class StaffModel extends Model {
         $columns[] = array(
                 'column_name' => 'name',
                 'column_num' => 'B',
-                'is_time' => '0'
+                'is_time' => '0',
+				'is_where'=>'1'
         );
 
         /*$columns[] = array(
