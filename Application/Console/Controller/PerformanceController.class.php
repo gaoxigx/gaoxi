@@ -67,7 +67,7 @@ class PerformanceController extends CommonController{
 	 */
 	public function GetYearPer(){
 		$total_ruleid = I('total_ruleid');
-        $data = D('Performance')->GetPelPer('',$total_ruleid,0,1);
+        $data = D('Performance')->GetPelPer('',$total_ruleid,0,1,10);
 		$this->ajaxReturn($data);
 	}
 	

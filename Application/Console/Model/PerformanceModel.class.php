@@ -27,8 +27,10 @@ class PerformanceModel extends Model{
 	 *$total_ruleid:筛选条件-1当天，2按月，3按年
 	 *$is_rate:1需要算提成，0不需要
 	 *$is_all:1统计年份或月份所有，0为筛选员工
+	 *$year_num:统计年数，默认最近3年
+	 *$cur_year：统计年份，默认当前年份
 	 */
-	public function GetPelPer($agent,$total_ruleid,$is_rate,$is_all,$cur_year){
+	public function GetPelPer($agent,$total_ruleid,$is_rate,$is_all,$year_num=3,$cur_year){
 		if($is_all != 1){
 			$map['agent'] = $agent;
 			$is_one = strpos($agent,',');
@@ -50,7 +52,7 @@ class PerformanceModel extends Model{
 			$date_rule = 'n';
 		}else if($total_ruleid == 3){
 			$group = "FROM_UNIXTIME(addtime,'%Y')";
-			$map2["FROM_UNIXTIME(addtime,'%Y')"] = array('gt',date('Y',time()) - 2);
+			$map2["FROM_UNIXTIME(addtime,'%Y')"] = array('gt',date('Y',time()) - $year_num-1);
 			$map2['_logic'] = 'and';
             $map3['_complex'] = $map2;
 			$map3["FROM_UNIXTIME(addtime,'%Y')"] = array('elt',date('Y',time()));
