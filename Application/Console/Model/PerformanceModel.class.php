@@ -7,28 +7,46 @@ class PerformanceModel extends Model{
 	
 	/**
 	 *根据部门id查找部门下的所有成员id
-	 *return array
+	 *return string
 	 */
 	public function GetStaffByDep($departmentid){
 		if(!isset($departmentid) || $departmentid<=0){
 			return false;
 		}
 		$data = D('Staff')->field('id')->where('section=%d',array($departmentid))->select();
-		return $data;
+		foreach($data as $k=>$v){
+			$agentids .= $v['id'].',';
+		}
+		$agentids = substr($agentids,0,-1);
+		return $agentids;
 	}
 	
 	/**
-	 *获取个人业绩
+	 *获取业绩
 	 *$agent:员工id
 	 *$total_ruleid:筛选条件-1当天，2按月，3按年
+	 *$is_rate:1需要算提成，0不需要
+	 *$is_all:1统计年份或月份所有，0为筛选员工
 	 */
-	public function GetPelPer($agent,$total_ruleid){
-		$map['agent'] = $agent;
-		if(!$total_ruleid){$total_ruleid=1;}
+	public function GetPelPer($agent,$total_ruleid,$is_rate,$is_all,$cur_year){
+		if($is_all != 1){
+			$map['agent'] = $agent;
+			$is_one = strpos($agent,',');
+			if($is_one > 0){
+				$map['agent'] = array('in',$agent);
+			}
+		}
 		
+		if(!$total_ruleid){$total_ruleid=1;}
 		$now_date = date('Y-m-d',time());
+		if(!$cur_year){
+			$cur_year = date('Y',time());
+		}
 		if($total_ruleid == 2){
 			$group = "FROM_UNIXTIME(addtime,'%Y-%m')";
+			$map4["FROM_UNIXTIME(addtime,'%Y')"] = $cur_year;
+			$map4['_logic'] = 'and';
+            $map['_complex'] = $map4;
 			$date_rule = 'n';
 		}else if($total_ruleid == 3){
 			$group = "FROM_UNIXTIME(addtime,'%Y')";
@@ -46,17 +64,27 @@ class PerformanceModel extends Model{
             $map['_complex'] = $map1;
 			$date_rule = 'G';
 		}
-		
-		$royalty_rate = D('Category')->table('nico_category c,nico_staff s')->where('c.cate_id=s.quarters and s.id='.$agent)->getField('c.royalty_rate');
-		$Performance = D('OrderInfo')->where($map)->group($group)->getField("addtime,agent,sum(total_price) total_price",true);
+		if($is_rate == 1){
+			$royalty_rate = D('Category')->table('nico_category c,nico_staff s')->where('c.cate_id=s.quarters and s.id='.$agent)->getField('c.royalty_rate');
+		}
+		if($is_all == 1 || $is_one > 0){
+			$field = "addtime,sum(total_price) total_price";
+		}else{
+			$field = "addtime,agent,sum(total_price) total_price";
+		}
+		$Performance = D('OrderInfo')->where($map)->group($group)->getField($field,true);
 		
 		foreach($Performance as $k=>$v){
-			$Performance[$k]['addtime'] = date('Y-m-d H:i:s',$v['addtime']);
-			if($total_ruleid == 3){
+			if(isset($Performance[$k]['addtime'])){
+				$Performance[$k]['addtime'] = date('Y-m-d H:i:s',$v['addtime']);
+			}
+			if($total_ruleid == 3 && isset($Performance[$k]['addtime'])){
 				$Performance[$k]['year'] = date('Y',$v['addtime']);
 			}
+			if($is_rate == 1){
+				$Performance[$k]['total_price'] = round($v['total_price']*$royalty_rate,2);
+			}
 			
-			$Performance[$k]['total_price'] = round($v['total_price']*$royalty_rate,2);
 			$Performancelist[date($date_rule,$k)] = $Performance[$k];
 		}
 		

@@ -166,7 +166,7 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '月 份'
+                            labelString: '时间'
                         }
                     }],
                     yAxes: [{
@@ -314,10 +314,12 @@
 			if(datalist['total_ruleid'] == 2){
 				str = '月';
 				labels_length = 12;
+				
 			}else if(datalist['total_ruleid'] == 3){
 				str = '年';
 				labels_length = 3;
 			}
+			
 			var mydate = new Date();
 			var year = mydate.getFullYear();
 			

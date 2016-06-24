@@ -21,6 +21,7 @@ class PerformanceController extends CommonController{
 		$this->assign('staff',$staff);
         $this->display();
 	}
+	
 	/**
 	 *部门报表
 	 */
@@ -32,13 +33,20 @@ class PerformanceController extends CommonController{
 	}
 	
 	/**
+	 *年份报表
+	 */
+	public function YearPer(){
+        $this->display();
+	}
+	
+	/**
 	 *根据员工id获取业绩
 	 */
 	public function GetPerformance(){
 		$agent = I('agent');
 		$total_ruleid = I('total_ruleid');
 		
-		$data = D('Performance')->GetPelPer($agent,$total_ruleid);
+		$data = D('Performance')->GetPelPer($agent,$total_ruleid,1);
 		$this->ajaxReturn($data);
 	}
 	
@@ -51,22 +59,17 @@ class PerformanceController extends CommonController{
 		if(isset($department) && $department>0){
 			$agents = D('Performance')->GetStaffByDep($department);
 		}
-		foreach($agents as $k=>$v){
-			$pelPer = D('Performance')->GetPelPer($v['id'],$total_ruleid);
-			$departmentlist[] = $pelPer;
-		}
-		$taotal=array();
-		foreach($departmentlist as $key=>$val){
-			foreach($val['list'] as $k1=>$v1){
-				$taotal[$k1]+=$v1['total_price'];
-			}
-		}
-		
-		$data['total_ruleid'] = $total_ruleid;
-		$data['list'] = $taotal;
+		$data = D('Performance')->GetPelPer($agents,$total_ruleid);
 		$this->ajaxReturn($data);
 	}
-	
+	/**
+	 *获取年份报表
+	 */
+	public function GetYearPer(){
+		$total_ruleid = I('total_ruleid');
+        $data = D('Performance')->GetPelPer('',$total_ruleid,0,1);
+		$this->ajaxReturn($data);
+	}
 	
 }
 ?>
