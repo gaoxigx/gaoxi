@@ -74,40 +74,45 @@ $(document).ready(function(){
     <table class="tablelist">
     	<thead>
     	<tr>
-        <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-        <th>内部名称(传统名称)</th>
-        <th>父类ID</th>
-        <th>是否有下级分类</th>
-		<th>提成率</th>
-        <th>排序</th>
-        <th>是否显示</th>
-        <th>是否审核</th>
-<!--         <th>添加日期</th>
-        <th>更新日期</th> -->
-        <th>操作</th>
+            <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+            <th>内部名称(传统名称)</th>
+            <th>父类ID</th>
+            <th>是否有下级分类</th>
+            <th>提成率</th>
+            <th>上班时间</th>  
+            <th>下班时间</th>
+            <th>排序</th>
+            <th>是否显示</th>
+            <th>是否审核</th>
+    <!--         <th>添加日期</th>
+            <th>更新日期</th> -->
+            <th>操作</th>
         </tr>
         </thead>
         
        <tbody>
-        <volist name="cateRow" id="vo">
-                <tr class="addinfo" id="tr{$vo['cate_id']}" >                
+            <volist name="cateRow" id="vo">
+                <tr class="addinfo" id="tr{$vo['cate_id']}">                
                     <td class="cate_id">{$vo['cate_id']}</td>
                     <td>{$vo['cate_name']}</td> 
-					<td>{$vo['cate_parent']}</td>
+                    <td>{$vo['cate_parent']}</td>
                     <td>{$vo['cate_haschild']}</td>              
-                    <td>{$vo['royalty_rate']}</td>   
+                    <td>{$vo['royalty_rate']}</td>
+                    <td>{$vo['gotime']|date="H:i",###}</td> 
+                    <td>{$vo['totime']|date="H:i",###}</td>                     
                     <td>{$vo['cate_sort']}</td>
                     <td>{$vo['is_show']}</td>
                     <td>{$vo['status']}</td>
          <!--            <td>{$vo['addtime']}</td>
                     <td>{$vo['uptime']}</td> -->
-                    <td><a href="__URL__/add/pid/{$vo['cate_id']}" class="tablelink">添加子类</a>
-                    <a href="__URL__/edit/cate_id/{$vo['cate_id']}" class="tablelink">修改</a>
-                    <a href="__URL__/delete/cate_id/{$vo['cate_id']}" class="tablelink" > 删除</a></td>
+                    <td>
+                        <a href="__URL__/add/pid/{$vo['cate_id']}" class="tablelink">添加子类</a>
+                        <a href="__URL__/edit/cate_id/{$vo['cate_id']}" class="tablelink">修改</a>
+                        <a href="__URL__/delete/cate_id/{$vo['cate_id']}" class="tablelink" >删除</a>
+                    </td>
                 </tr>
             </volist>
-
-</tbody>
+        </tbody>
     </table>
 　　{$page}    
     <div class="tip">
@@ -140,7 +145,7 @@ $(document).ready(function(){
             var id=$(this).html();        
             cateinfo(id,t);
        })       
-        function cateinfo(id,t){             
+        function cateinfo(id,t){                
             var url="{:U('Category/getroleninfo')}"+"?id="+id;
             $.get(url,function(data){
               
@@ -150,10 +155,10 @@ $(document).ready(function(){
                     ui=$('.td'+id).html()+"━ ━ ";                     
                 }
               
-                if(data!='undefined' && data!='' && data!='0'){                       
+                if(data!='undefined' && data!='' && data!='0'){                     
                     cs++;
-                    for(i in data){         
-                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].royalty_rate+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>";
+                    for(i in data){ 
+                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].royalty_rate+"</td><td>"+userTime(data[i].gotime)+"</td><td>"+userTime(data[i].totime)+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>";
                         string+="<a href='__URL__/add/pid/"+data[i].cate_id+"' class='tablelink'>添加子类</a>";
                         string+="<a href='__URL__/edit/cate_id/"+data[i].cate_id+"' class='tablelink'>修改</a>";
                         string+="<a href='__URL__/delete/cate_id/"+data[i].cate_id+"' class='tablelink' > 删除</a></td></tr>";
@@ -169,7 +174,20 @@ $(document).ready(function(){
                 
             })
         }
-	</script>
+
+
+    //时间戳转换成四位时间10:10  
+
+    function userTime(uTime){
+
+      var myDate = new Date(uTime*1000);
+      var hours = myDate.getHours()>9?myDate.getHours():'0'+myDate.getHours();
+      var minutes =myDate.getMinutes()>9?myDate.getMinutes():'0'+myDate.getMinutes();
+      return hours + ':' + minutes;
+    }
+    
+    
+   </script>
 
 
 

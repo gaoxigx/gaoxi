@@ -2,6 +2,11 @@
 namespace Console\Model;
 use Think\Model;
 class CategoryModel extends Model {
+    
+    
+    
+    
+    
     protected $tablename="category";
 
     public function department($map=array()){

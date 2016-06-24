@@ -52,7 +52,9 @@ public function insert(){
         $data['cate_haschild']=I('cate_haschild');        
         $data['is_show']=I('post.is_show');
         $data['status']=I('post.status');
-		$data['royalty_rate']=I('royalty_rate');   
+		$data['royalty_rate']=I('royalty_rate');
+                $data['gotime']= strtotime(I('gotime')); 
+                $data['totime']= strtotime(I('totime')); 
         $data['cate_content']=I('post.cate_content');
 
 
@@ -113,14 +115,16 @@ public function edit($cate_id){
     $data['is_show']=I('post.is_show');
     $data['status']=I('post.status');
 	$data['royalty_rate']=I('royalty_rate');  
+        $data['gotime']= strtotime(I('gotime')); 
+        $data['totime']= strtotime(I('totime')); 
     $data['uptime']=time();        
     $data['__hash__']=I('__hash__');   
 
     $uid=I('cate_id');
-    $data=$roleList->create($data);        
+    $data=$roleList->create($data);     
     if($data) {    
         $data['addtime']=time();
-        unset($data['__hash__']);                   
+        unset($data['__hash__']);     
         $result = $roleList->where('cate_id='.$uid)->save($data); 
 
         if($result) {      

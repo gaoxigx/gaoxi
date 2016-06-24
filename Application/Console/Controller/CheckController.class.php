@@ -45,8 +45,12 @@ public function add(){
     if($super){
         $super['hours_bz']=$super['hours_bz']*3600+$super['hours_bz1']*60;
         $super['hours_sj']=$super['hours_sj']*3600+$super['hours_bz1']*60;
+        $super['overtime_ts']=$super['overtime_ts']*3600+$super['overtime_ts1']*60;
+        $super['overtime_zc']=$super['overtime_zc']*3600+$super['overtime_zc1']*60;
         unset($super['hours_sj1']);
         unset($super['hours_bz1']);
+        unset($super['overtime_ts1']);
+        unset($super['overtime_zc1']);
         $iphone = $check->add($super);
         if($iphone){
             $this->success('添加成功',$jumpUrl);
