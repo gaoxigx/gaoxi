@@ -30,8 +30,27 @@
       width: 10px;
       height: 10px;
     }
-    .clr{float:left;border:1px solid #000; min-width:150px;background:#f1f1f1;}
+	.toolbar1 li{cursor:pointer;}
+    .clr{min-width:220px;
+		text-align:left;
+		float:left;
+		border:1px solid #000; 
+		background:#f1f1f1;}
+	.stafflist ul li{cursor:pointer;padding-left:15px;}
     .clr b{font-weight: 400; line-height: 24px;}
+	.scroll{
+			height:480px;
+			overflow: scroll; 
+			scrollbar-face-color:#70807d; 
+			scrollbar-arrow-color:#ffffff; 
+			scrollbar-highlight-color:#ffffff; 
+			scrollbar-3dlight-color:#70807d; 
+			scrollbar-shadow-color:#ffffff; 
+			scrollbar-darkshadow-color:#70807d; 
+			scrollbar-track-color:#ffffff"
+		}
+	.tb1_td1{min-width:30px;}
+	.tb2_td1{text-align:center;}
     </style>
 </head>
 
@@ -42,50 +61,58 @@
         <span>位置：</span>
         <ul class="placeul">
                 <li><a href="#">首页</a></li>
-                <li><a href="#">部门业绩</a></li>
+                <li><a href="#">员工业绩</a></li>
         </ul>
     </div>
     <div class="rightinfo">
         <div class="tools">
-            <ul class="toolbar1">
-            <li class="click"><span></span>按日期</li>
-            <li class="click"><span></span>按月份</li>
-            <li><span></span>按年份</li>
-            <li><span></span>统计</li>
-            <li><span></span>设置</li>
+            <ul class="toolbar1" id="total_rule">
+				<li value="1"><span></span>按日期</li>
+				<li value="2"><span></span>按月份</li>
+				<li value="3"><span></span>按年份</li>
             </ul>
         </div>
-        <div class="clr" >
-            <div>
-                <?php var_dump($department) ?>
-                <ul>
-                <volist name="staff" id='vo'>
-                        <li><b>{$vo.name}<?php var_dump($vo) ?></b></li>
-                <volist>
-                </ul>
-            </div>
-        </div>
-        
+		<div class="clearfix">
+			<div class="clr scroll" >
+				<div class="stafflist">
+					<ul id="staff_list">
+					<volist name="staff" id='vo'>
+						<li value="{$vo.id}"><b>{$vo.name}({$vo.posttext})</b></li>
+					</volist>
+					</ul>
+				</div>
+			</div>
+		   
+			<div style="width:950px;float:left;margin-left:50px;">
+				<!--
+				<div id="canvas-holder" style="width: 300px;">
+					<canvas id="chart-area2" width="300" height="300" />
+				</div>
+				-->
+				<div id="chartjs-tooltip"></div>
 
-
-        <div style="width:950px;float:right">
-            <div id="canvas-holder" style="width: 300px;">
-                <canvas id="chart-area2" width="300" height="300" />
-            </div>
-
-            <div id="chartjs-tooltip"></div>
-
-             <div style="width:900px;">
-                <canvas id="canvas"></canvas>
-            </div>
-        </div>
-
+				 <div style="width:900px;">
+					<canvas id="canvas"></canvas>
+				</div>
+				
+			</div>
+			
+		</div>
+		<div class="formtext" style="line-height:45px;margin-top:20px;"><span class="staff_name" style="display:inline;"></span>业绩列表</div>
+		<div class="gwc" style=" margin:auto;">
+			<table id="perinfo" cellpadding="0" cellspacing="0" class="tablelist" >
+				
+			</table>
+			
+		</div>
     </div>
+	<input id="staff_info" staff_name='' type="hidden" value="" />
     <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
     <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
-
+	
     <script>
-        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		
+		var MONTHS = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
         var randomScalingFactor = function() {
             return Math.round(Math.random() * 100 * (Math.random() > 0.5 ? -1 : 1));
         };
@@ -99,8 +126,13 @@
         var config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
+                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+				datasets: [{
+                    label: "员工业绩",
+                    data: [20, 90, 50, 70, 80, 100, 60],
+                    fill: false,
+                }]
+			   /* datasets: [{
                     label: "My First dataset",
                     data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
                     fill: false,
@@ -119,7 +151,7 @@
                     label: "My Fourth dataset",
                     data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
                     fill: false,
-                }]
+                }]*/
             },
             options: {
                 responsive: true,
@@ -134,25 +166,24 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Month'
+                            labelString: '月 份'
                         }
                     }],
                     yAxes: [{
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Value'
+                            labelString: '业 绩(提成)'
                         }
                     }]
                 },
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart - Legend'
+                    text: '业绩曲线图'
                 }
             }
         };
-
-        $.each(config.data.datasets, function(i, dataset) {
+		 $.each(config.data.datasets, function(i, dataset) {
             var background = randomColor(0.5);
             dataset.borderColor = background;
             dataset.backgroundColor = background;
@@ -160,9 +191,7 @@
             dataset.pointBackgroundColor = background;
             dataset.pointBorderWidth = 1;
         });
-
-       
-
+		
         $('#randomizeData').click(function() {
             $.each(config.data.datasets, function(i, dataset) {
                 dataset.data = dataset.data.map(function() {
@@ -222,9 +251,119 @@
 
             window.myLine.update();
         });
+		
+		
+		var staff_id = $('#staff_list li:first').attr('value');
+		var staff_name = $('#staff_list li:first').find('b').text();
+		var total_ruleid = $('#total_rule li:first').attr('value');
+		$('#staff_info').val(staff_id);
+		$('#staff_info').attr('staff_name',staff_name);
+		performance_num(staff_id,staff_name,total_ruleid);
+		
+		//个人员工业绩
+		$('#staff_list li').click(function() {
+			var staff_id = $(this).attr('value');
+			var staff_name = $(this).find('b').text();
+			$('#staff_info').val(staff_id);
+			$('#staff_info').attr('staff_name',staff_name);
+            performance_num(staff_id,staff_name,total_ruleid);
+        });
+		
+		//统计规则
+		$('#total_rule li').click(function(){
+			var staff_id = $('#staff_info').val();
+			var staff_name = $('#staff_info').attr('staff_name');
+			var total_ruleid = $(this).attr('value');
+			performance_num(staff_id,staff_name,total_ruleid);
+		})
+		
+		function performance_num(staff_id,staff_name,total_ruleid){
+			$('.staff_name').text(staff_name);
+			$('#perinfo').html('');
+			$('#staff_list li').css('background-color','#f1f1f1');
+			$('#staff_list li').each(function(){
+				if($(this).attr('value') == staff_id){
+					$(this).css('background-color','#48b9e5');
+				}
+			})
+			var url="{:U('Performance/GetPerformance')}";
+			$.get(url,{agent:staff_id,total_ruleid:total_ruleid},function(data){
+				update_config(data,staff_name);
+			})
+		}
+		
+		function update_config(datalist,staff_name){
+			var background = randomColor(0.5);
+			var newDataset = {
+				label: staff_name+'的业绩',
+				borderColor: background,
+				backgroundColor: background,
+				pointBorderColor: background,
+				pointBackgroundColor: background,
+				pointBorderWidth: 1,
+				fill: false,
+				data: [],
+			};
+			
+			var html_th = '<thead><tr>';
+			var html_val = '<tbody><tr>';
+			
+			var str = '时';
+			var labelset = [];
+			var labels_length = 24;
+			if(datalist['total_ruleid'] == 2){
+				str = '月';
+				labels_length = 12;
+			}else if(datalist['total_ruleid'] == 3){
+				str = '年';
+				labels_length = 3;
+			}
+			var mydate = new Date();
+			var year = mydate.getFullYear();
+			
+			for (var index = 1; index <= labels_length; ++index) {
+				var index_col = index;
+				if(datalist['total_ruleid'] == 3){
+					index_col = parseInt(year)-parseInt(labels_length-index);
+				}
+				if(!datalist['list']){
+					datalist['list'] = [] ;
+					datalist['list'][index_col] = [] ;
+					datalist['list'][index_col]['year'] = 0;
+					datalist['list'][index_col]['total_price'] = 0;
+				}
+				if(!datalist['list'][index_col]){
+					datalist['list'][index_col] = [] ;
+					datalist['list'][index_col]['year'] = 0;
+					datalist['list'][index_col]['total_price'] = 0;
+				}
+				
+				var total_price = datalist['list'][index_col]['total_price'];
+				var strstr = index_col+str;
+				
+				labelset.push(strstr);
+				newDataset.data.push(total_price);
+				
+				html_th += '<th style="text-align:center;">'+strstr+'</th>';
+				html_val += '<td align="center">'+total_price+'</td>';
+			}
+			
+			html_th += '</tr></thead>';
+			html_val += '</tr></tbody>';
+			
+			$('#perinfo').append(html_th);
+			$('#perinfo').append(html_val);
+			
+			config.data.labels =labelset;
+			config.data.datasets.pop();
+			config.data.datasets.push(newDataset);
+			
+			window.myLine.update();
+		}
     </script>
 
     <script>
+	
     Chart.defaults.global.tooltips.custom = function(tooltip) {
 
         // Tooltip Element
@@ -324,10 +463,10 @@
     };
 
     window.onload = function() {
-
+		/*
         var ctx2 = document.getElementById("chart-area2").getContext("2d");
         window.myPie = new Chart(ctx2, config1);
-
+		*/
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myLine = new Chart(ctx, config);
     };    
@@ -336,43 +475,6 @@
     <script type="text/javascript">
        $('.tablelist tbody tr:odd').addClass('odd');
        
-       var ui="";
-       var cs=0;
-       $('.addinfo').find('.cate_id').each(function(){
-            var t=0;
-            ui=""; 
-            var id=$(this).html();        
-            cateinfo(id,t);
-       })       
-        function cateinfo(id,t){             
-            var url="{:U('Category/getroleninfo')}"+"?id="+id;
-            $.get(url,function(data){
-              
-                if(t==0){
-                    ui="┣━ ━ ";      
-                }else{   
-                    ui=$('.td'+id).html()+"━ ━ ";                     
-                }
-              
-                if(data!='undefined' && data!='' && data!='0'){                       
-                    cs++;
-                    for(i in data){         
-                        var string="<tr class='addinfo' id='tr"+data[i].cate_id+"'' ><td>"+data[i].cate_id+"</td><td><t class='td"+data[i].cate_id+"'>"+ui+"</t>"+data[i].cate_name+"</td><td>"+data[i].cate_parent+"</td><td>"+data[i].cate_haschild+"</td><td>"+data[i].cate_sort+"</td><td>"+data[i].is_show+"</td><td>"+data[i].status+"</td><td>";
-                        string+="<a href='__URL__/add/pid/"+data[i].cate_id+"' class='tablelink'>添加子类</a>";
-                        string+="<a href='__URL__/edit/cate_id/"+data[i].cate_id+"' class='tablelink'>修改</a>";
-                        string+="<a href='__URL__/delete/cate_id/"+data[i].cate_id+"' class='tablelink' > 删除</a></td></tr>";
-
-                        $("#tr"+id).after(string); 
-                        cateinfo(data[i].cate_id,cs);
-                    }
-
-                }else{
-                    cs=1;
-                }
-
-                
-            })
-        }
     </script>
 </body>
 
