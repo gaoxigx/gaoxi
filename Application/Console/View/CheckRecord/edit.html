@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
+        <script src="__PUBLIC__/Console/js/validation/lib/jquery.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+        <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+		<script type="text/javascript">
+			$(function(){	
+				$.validator.setDefaults({
+					submitHandler:function(from) {
+						from.submit();
+					}
+				});
+
+				$("#form1").validate({
+					rules:{
+						gh_id:'required',
+						name:'required',
+						dep_name:'required',
+					},
+					messages:{				
+						gh_id:'请输入工号',
+						name:'请输入姓名',
+						dep_name:'请输入部门名称',
+					},
+					errorClass:'cerror',
+					
+				});
+				
+			});
+
+		</script>
+        <body>
+            <div class="place">
+                <span>位置：</span>
+                <ul class="placeul">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">考勤记录</a></li>
+                </ul>
+            </div>
+
+            <div class="formbody">
+                <div id="usual1" class="usual"> 
+                    <form name="form1" id="form1" method='post' action="__URL__/SaveData">
+                        <div class="itab">
+                            <ul> 
+                                <li><a href="#tab1" class="selected">修改考勤记录</a></li> 
+                            </ul>
+                        </div> 
+						<input type="hidden" name="id" value="{$data.id}"/>
+                        <div id="tab1" class="tabson">
+                            <div class="formtext">请正确填写信息！</div>
+                            <ul class="forminfo">
+                                <li><label>工号<b>*</b></label><input name="gh_id" id="gh_id" type="text" class="dfinput" value="{$data.gh_id}"  /></li>
+                                <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value="{$data.name}"  /></li>
+                                <li><label>所属部门<b>*</b></label><input name="dep_name" id="dep_name" type="text" class="dfinput" value="{$data.dep_name}"  /></li>
+                                <li><label>打卡日期</label><input onClick="WdatePicker()" name="datetime" id="datetime" type="text" class="dfinput" value="<if condition='$data.datetime != 0'>{$data.datetime|date='Y-m-d',###}</if>"  /></li>  
+                                <li><label>上班打卡时间</label><input onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="working_time" id="working_time" type="text" class="dfinput" value="<if condition='$data.working_time != 0'>{$data.working_time|date='H:i',###}</if>"  /></li>  
+                                <li><label>下班打卡时间</label><input onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="leave_time" id="leave_time" type="text" class="dfinput" value="<if condition='$data.leave_time != 0'>{$data.leave_time|date='H:i',###}</if>"  /></li>
+                                <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="保&nbsp;&nbsp;存"/></li>
+                            </ul>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </body>
+
+</html>
+
