@@ -6,6 +6,7 @@
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   $(".click").click(function(){
@@ -48,8 +49,10 @@ $(document).ready(function(){
             <li><a href="__URL__/add"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</a></li>
         </ul>
         <ul class="seachform">
-            <form action="/index.php/Console/Check/index" method="post" id="form2" name="form2">             
-                <li><label>&nbsp;&nbsp;搜索</label><input type="text" class="scinpute" name="keywords" value=""></li>
+            <form action="/index.php/Console/CheckRecord/index" method="post" id="form2" name="form2">             
+                <li><label>&nbsp;&nbsp;姓名</label><input type="text" class="scinpute" name="name" value="{$map.name}"></li>
+				<li><label>&nbsp;&nbsp;部门名称</label><input type="text" class="scinpute" name="dep_name" value="{$map.dep_name}"></li>
+				<li><label>&nbsp;&nbsp;日期</label><input onClick="WdatePicker()" type="text" class="scinpute" name="datetime" <if condition="$map.datetime != ''">value="{$map.datetime|date='Y-m-d',###}"></if></li>
                 <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
             </form>
             <form action="/index.php/Console/CheckRecord/ExcelCheckRecord" method="post" id="save_excel" enctype="multipart/form-data">  	
