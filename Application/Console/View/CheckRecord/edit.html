@@ -62,7 +62,16 @@
                             <ul class="forminfo">
                                 <li><label>工号<b>*</b></label><input name="gh_id" id="gh_id" type="text" class="dfinput" value="{$data.gh_id}"  /></li>
                                 <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value="{$data.name}"  /></li>
-                                <li><label>所属部门<b>*</b></label><input name="dep_name" id="dep_name" type="text" class="dfinput" value="{$data.dep_name}"  /></li>
+                                <li>
+									<label>所属部门<b>*</b></label>
+									<div class="vocation uew-select"> 
+										<select name="dep_name" id="dep_name" class="uew-select-value">
+											<foreach name="department" item="val">
+											<option value="{$val}" <if condition="$data.dep_name == $val">selected</if>>{$val}</option>
+											</foreach>
+										</select>
+									</div>
+								</li>
                                 <li><label>打卡日期</label><input onClick="WdatePicker()" name="datetime" id="datetime" type="text" class="dfinput" value="<if condition='$data.datetime != 0'>{$data.datetime|date='Y-m-d',###}</if>"  /></li>  
                                 <li><label>上班打卡时间</label><input onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="working_time" id="working_time" type="text" class="dfinput" value="<if condition='$data.working_time != 0'>{$data.working_time|date='H:i',###}</if>"  /></li>  
                                 <li><label>下班打卡时间</label><input onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="leave_time" id="leave_time" type="text" class="dfinput" value="<if condition='$data.leave_time != 0'>{$data.leave_time|date='H:i',###}</if>"  /></li>

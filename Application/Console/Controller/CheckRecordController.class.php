@@ -46,12 +46,24 @@ class CheckRecordController extends CommonController{
 	} 
 	
 	/**
+     *添加页面
+     */
+	public function add(){
+		$department = D('Category')->where('cate_parent=0')->getField('cate_id,cate_name');
+		
+		$this->assign('department',$department);
+		$this->display();
+	}
+	
+	/**
      *修改页面
      */
 	public function edit(){
 		$id =I('id');
 		$data = D('CheckRecord')->where('id=%d',array($id))->find();
+		$department = D('Category')->where('cate_parent=0')->getField('cate_id,cate_name');
 		
+		$this->assign('department',$department);
 		$this->assign('data',$data);
 		$this->display();
 	}
