@@ -36,7 +36,7 @@ public function index(){
     foreach($list as $k=>$v){
         $data['calculated'] = $v['calculated'];
     }
-    print_r(M()->getLastsql());
+    
     $this->assign('data',$data);
     $this->assign('list',$list);
 	$this->assign('parameter',$parameter);
