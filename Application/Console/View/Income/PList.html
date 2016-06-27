@@ -75,13 +75,12 @@ $(document).ready(function(){
                     <th>订单金额</th>
                     <th>购买人姓名</th>
                     <th>下单人姓名</th>
-                    <th>备注</th>
-                    <th>订单状态</th> 
-                    <th>创建时间</th>
-                    <th>修改时间</th>
-<!--                    <th>类型</th>-->
                     <th>支付方式</th>
-                    <th>操作</th>
+                    <th>订单状态</th> 
+                    <th>下单时间</th>
+                    <th>订单修改时间</th>                   
+                    <th>备注</th>
+<!--                    <th>操作</th>-->
                 </tr>
             </thead>
 
@@ -94,15 +93,19 @@ $(document).ready(function(){
                         <td>{$vo.total_price}</td>
                         <td>{$vo.buyer_wechat}</td>
                         <td>{$staff[$vo['agent']]}</td>
-                        <td>{$vo.note}</td>
-                        <td>{$vo.status}</td>
-                        <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
-                        <td>{$vo.addtime|date='Y-m-d',###}</td>
                         <td>{$payment[$vo['payment_method']]}</td>
                         <td>
+                            <if condition="$vo.status eq 1" >未发货
+                                <elseif condition="$vo.status eq 2"/>已发货
+                                <else/>未知状态</if>
+                        </td>       
+                        <td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+                        <td>{$vo['update_time'] ? date('Y-m-d H:i:s',$vo['update_time']):'从未修改'}</td>             
+                        <td>{$vo.note}</td>
+<!--                        <td>
                             <a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a>
-                            <!--<a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a>-->
-                        </td>
+                            <a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a>
+                        </td>-->
                     </tr> 
                 </volist>
             </tbody>

@@ -18,7 +18,8 @@ class productModel extends Model {
         );
     // 定义自动完成
     protected $_auto = array( 
-         array('addtime','time',1,'function'), // 对update_time字段在更新的时候写入当前时间戳
+         array('addtime','time',1,'function'), // 对addtime(修改时间)字段在更新的时候写入当前时间戳
+         array('create_time','time',1,'function'), // 对create_time(创建时间)字段在更新的时候写入当前时间戳
      );
 
  }

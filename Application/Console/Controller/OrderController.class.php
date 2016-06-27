@@ -189,7 +189,7 @@ public function add(){
      $this->getequipment_name();
      $this->getpayment();
     $data = M('product'); // 实例化User对象
-    $list = $data->where('1=1')->order('id')->select();
+    $list = $data->where('1=1')->order('id')->select();  
     $this->assign('staff',getstaffname());
     $this->assign('prolist',$list);// 赋值数据集 
     $this->display();
@@ -197,22 +197,28 @@ public function add(){
 }
 
 //修改订单
-public function edit($id){
-    // $this->getprotype();
+public function edit($id){;
      $this->getrolename('agent',38);
-  
+
      $this->getrolename('assistant',46);
      $this->getequipment_name();
      $this->getpayment();
      $user = M('order_info');
      $orderinfolist = $user->where('id='.$id)->order('id')->find();
-//     var_dump($orderinfolist);exit;
-
 
      $this->assign('info',$orderinfolist);// 赋值数据集
      $data = M('order_goods'); // 实例化User对象
-//     var_dump($data);exit;
-     $list = $data->field('*,propic as pic1')->where("order_no='".$orderinfolist['order_no']."'")->order('id')->select();
+
+// alias('og')给order_goods表取个别名og
+//nico_product表也给取个别名np     
+     $list = $data->alias('og')
+             ->join('nico_product as np on np.id = og.proid ')
+             ->field('og.*,np.pic as pic1')
+             ->where("og.order_no=%s",array($orderinfolist['order_no']))
+             ->order ('id')
+             ->select();
+//     var_dump($orderinfolist['order_no']);
+//       echo M()->getLastSql();exit;
 
      $this->assign('prolist',$list);// 赋值数据集
      $this->assign('staff',  getstaffname());
@@ -287,7 +293,7 @@ public function edit($id){
     //根据订单号查找产品
     private function GetProdect($order_no){
             $datagoods = D('order_goods');
-            $products = $datagoods-> field('product,price2,buynum')->where('order_no="'.$order_no.'"')->order('id desc')->select();
+            $products = $datagoods-> field('product,price2,buynum')->where('order_no="'.$order_no.'"')->order('id desc')->select();  
             return $products;            
     }
 
@@ -295,6 +301,7 @@ public function edit($id){
 public function insert(){
 
     $data = I('');
+//    var_dump($data);exit;
     $data['order_no'] = $this->build_order_no();
     $data['addtime'] = time();
     $data['status'] = 1;
@@ -344,6 +351,7 @@ public function insert(){
 public function update(){
     $roleList   =   D('order_info');
     $data=$roleList->create();
+
     if($data) {
         $order_no=$data['order_no'];
         unset($data['order_no']);

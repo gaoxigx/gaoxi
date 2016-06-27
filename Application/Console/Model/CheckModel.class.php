@@ -6,8 +6,10 @@ class CheckModel extends Model{
     protected $_validate    =   array(
       //  array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),           
         array('name','require','缺少用户名'),
-        array('name','','用户已存在',2,'unique',3),        
-        array('money','require','请输入金额'),        
+        array('name','','用户已存在',2,'unique',3),  
+        array('gh_id','require','请输入工号'),
+        array('gh_id','','工号不予许重复',2,'unique',3),    
+        array('bumen','require','须填写所在部门'),
         );
     
     // 定义自动完成

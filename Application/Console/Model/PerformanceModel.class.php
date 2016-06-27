@@ -20,7 +20,7 @@ class PerformanceModel extends Model{
 		$agentids = substr($agentids,0,-1);
 		return $agentids;
 	}
-	
+
 	/**
 	 *获取业绩
 	 *$agent:员工id

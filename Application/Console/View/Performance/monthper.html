@@ -1,0 +1,438 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>月份报表</title>
+    <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+   
+    <style>
+    #canvas-holder {
+        width: 100%;
+        margin-top: 50px;
+        text-align: center;
+    }
+    #chartjs-tooltip {
+      opacity: 1;
+      position: absolute;
+      background: rgba(0, 0, 0, .7);
+      color: white;
+      border-radius: 3px;
+      -webkit-transition: all .1s ease;
+      transition: all .1s ease;
+      pointer-events: none;
+      -webkit-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+    }
+
+    .chartjs-tooltip-key {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+    }
+	.toolbar1 li{cursor:pointer;}
+    .clr{min-width:220px;
+		text-align:left;
+		float:left;
+		border:1px solid #000; 
+		}
+	.stafflist ul li{cursor:pointer;padding-left:15px;}
+    .clr b{font-weight: 400; line-height: 24px;}
+	.scroll{
+			height:480px;
+			overflow: scroll; 
+			scrollbar-face-color:#70807d; 
+			scrollbar-arrow-color:#ffffff; 
+			scrollbar-highlight-color:#ffffff; 
+			scrollbar-3dlight-color:#70807d; 
+			scrollbar-shadow-color:#ffffff; 
+			scrollbar-darkshadow-color:#70807d; 
+			scrollbar-track-color:#ffffff"
+		}
+	.tb1_td1{min-width:30px;}
+	.tb2_td1{text-align:center;}
+    </style>
+</head>
+
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">员工业绩</a></li>
+        </ul>
+    </div>
+    <div class="rightinfo">
+        <div class="clearfix">
+
+            <div class="clr scroll" >
+                    <div class="stafflist">
+                            <ul id="permenu_list">
+                                <volist name="yearlist" id='vo'>
+                                        <li value="{$vo}"><b>{$vo}年</b></li>
+                                </volist>
+                            </ul>
+                    </div>
+            </div>
+
+            <div style="width:950px;float:left;margin-left:50px;">
+
+                <div id="chartjs-tooltip"></div>
+
+                 <div style="width:900px;">
+                        <canvas id="canvas"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="formtext" style="line-height:45px;margin-top:20px;">月份报表</div>
+        <div class="gwc" style=" margin:auto;">
+                <table id="perinfo" cellpadding="0" cellspacing="0" class="tablelist" >
+
+                </table>
+        </div>
+    </div>
+	<input id="permenu_info" permenu_name='' type="hidden" value="" />
+    <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+    <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
+	
+    <script>
+		
+		var MONTHS = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100 * (Math.random() > 0.5 ? -1 : 1));
+        };
+        var randomColorFactor = function() {
+            return Math.round(Math.random() * 255);
+        };
+        var randomColor = function(opacity) {
+            return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+        };
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+				datasets: [{
+                    label: "员工业绩",
+                    data: [20, 90, 50, 70, 80, 100, 60],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
+                hover: {
+                    mode: 'label'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '月 份'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '业 绩'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '业绩曲线图'
+                }
+            }
+        };
+		 $.each(config.data.datasets, function(i, dataset) {
+            var background = randomColor(0.5);
+            dataset.borderColor = background;
+            dataset.backgroundColor = background;
+            dataset.pointBorderColor = background;
+            dataset.pointBackgroundColor = background;
+            dataset.pointBorderWidth = 1;
+        });
+		
+        $('#randomizeData').click(function() {
+            $.each(config.data.datasets, function(i, dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return randomScalingFactor();
+                });
+
+            });
+
+            window.myLine.update();
+        });
+
+        $('#addDataset').click(function() {
+            var background = randomColor(0.5);
+            var newDataset = {
+                label: 'Dataset ' + config.data.datasets.length,
+                borderColor: background,
+                backgroundColor: background,
+                pointBorderColor: background,
+                pointBackgroundColor: background,
+                pointBorderWidth: 1,
+                fill: false,
+                data: [],
+            };
+
+            for (var index = 0; index < config.data.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            config.data.datasets.push(newDataset);
+            window.myLine.update();
+        });
+
+        $('#addData').click(function() {
+            if (config.data.datasets.length > 0) {
+                var month = MONTHS[config.data.labels.length % MONTHS.length];
+                config.data.labels.push(month);
+
+                $.each(config.data.datasets, function(i, dataset) {
+                    dataset.data.push(randomScalingFactor());
+                });
+
+                window.myLine.update();
+            }
+        });
+
+        $('#removeDataset').click(function() {
+            config.data.datasets.splice(0, 1);
+            window.myLine.update();
+        });
+
+        $('#removeData').click(function() {
+            config.data.labels.splice(-1, 1); // remove the label first
+
+            config.data.datasets.forEach(function(dataset, datasetIndex) {
+                dataset.data.pop();
+            });
+
+            window.myLine.update();
+        });
+		
+                    var permenu_id = $('#permenu_list li:first').attr('value');
+                    var permenu_name = $('#permenu_list li:first').find('b').text();
+
+                    $('#permenu_info').val(permenu_id);
+                    $('#permenu_info').attr('permenu_name',permenu_name);
+                    performance_num(permenu_id,permenu_name,2);
+
+                    //月份报表
+                    $('#permenu_list li').click(function() {
+                            var permenu_id = $(this).attr('value');
+                            var permenu_name = $(this).find('b').text();
+                            $('#permenu_info').val(permenu_id);
+                            $('#permenu_info').attr('permenu_name',permenu_name);
+                            performance_num(permenu_id,permenu_name,2);
+                });
+		
+		function performance_num(permenu_id,permenu_name,total_ruleid){
+                        $('.permenu_name').text(permenu_name);
+                        $('#perinfo').html('');
+                        $('#permenu_list li').css('background-color','#fff');
+                        $('#permenu_list li').each(function(){
+                            if($(this).attr('value') == permenu_id){
+                                    $(this).css('background-color','#48b9e5');
+                            }
+                        })
+			$('#perinfo').html('');
+			var url="{:U('Performance/GetMonthPer')}";
+			$.get(url,{total_ruleid:total_ruleid,cur_year:permenu_id},function(data){
+				update_config(data,permenu_name+'月份报表');
+			})
+		}
+		
+		function update_config(datalist,permenu_name){
+			var background = randomColor(0.5);
+			var newDataset = {
+				label: permenu_name,
+				borderColor: background,
+				backgroundColor: background,
+				pointBorderColor: background,
+				pointBackgroundColor: background,
+				pointBorderWidth: 1,
+				fill: false,
+				data: [],
+			};
+			
+			var html_th = '<thead><tr>';
+			var html_val = '<tbody><tr>';
+			
+			var str = '时';
+			var labelset = [];
+			var labels_length = 24;
+			if(datalist['total_ruleid'] == 2){
+				str = '月';
+				labels_length = 12;
+			}else if(datalist['total_ruleid'] == 3){
+				str = '年';
+				labels_length = 10;
+			}
+			var mydate = new Date();
+			var year = mydate.getFullYear();
+			
+			for (var index = 1; index <= labels_length; ++index) {
+				var index_col = index;
+				if(datalist['total_ruleid'] == 3){
+					index_col = parseInt(year)-parseInt(labels_length-index);
+				}
+				if(!datalist['list']){
+					datalist['list'] = [] ;
+					datalist['list'][index_col] = 0;
+				}
+				if(!datalist['list'][index_col]){
+					datalist['list'][index_col] = 0;
+				}
+				
+				var total_price = datalist['list'][index_col];
+				var strstr = index_col+str;
+				
+				labelset.push(strstr);
+				newDataset.data.push(total_price);
+				
+				html_th += '<th style="text-align:center;">'+strstr+'</th>';
+				html_val += '<td align="center">'+total_price+'</td>';
+			}
+			
+			html_th += '</tr></thead>';
+			html_val += '</tr></tbody>';
+			
+			$('#perinfo').append(html_th);
+			$('#perinfo').append(html_val);
+			
+			config.data.labels =labelset;
+			config.data.datasets.pop();
+			config.data.datasets.push(newDataset);
+			
+			window.myLine.update();
+		}
+    </script>
+
+    <script>
+	
+    Chart.defaults.global.tooltips.custom = function(tooltip) {
+
+        // Tooltip Element
+      var tooltipEl = $('#chartjs-tooltip');
+
+      if (!tooltipEl[0]) {
+        $('body').append('<div id="chartjs-tooltip"></div>');
+        tooltipEl = $('#chartjs-tooltip');
+      }
+
+      // Hide if no tooltip
+      if (!tooltip.opacity) {
+        tooltipEl.css({
+          opacity: 0
+        });
+        $('.chartjs-wrap canvas')
+          .each(function(index, el) {
+            $(el).css('cursor', 'default');
+          });
+        return;
+      }
+
+      $(this._chart.canvas).css('cursor', 'pointer');
+
+      // Set caret Position
+      tooltipEl.removeClass('above below no-transform');
+      if (tooltip.yAlign) {
+        tooltipEl.addClass(tooltip.yAlign);
+      } else {
+        tooltipEl.addClass('no-transform');
+      }
+
+      // Set Text
+      if (tooltip.body) {
+        var innerHtml = [
+          (tooltip.beforeTitle || []).join('\n'), (tooltip.title || []).join('\n'), (tooltip.afterTitle || []).join('\n'), (tooltip.beforeBody || []).join('\n'), (tooltip.body || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
+          .join('\n'), (tooltip.footer || []).join('\n'), (tooltip.afterFooter || []).join('\n')
+        ];
+        tooltipEl.html(innerHtml.join('\n'));
+      }
+
+      // Find Y Location on page
+      var top = 0;
+      if (tooltip.yAlign) {
+        if (tooltip.yAlign == 'above') {
+          top = tooltip.y - tooltip.caretHeight - tooltip.caretPadding;
+        } else {
+          top = tooltip.y + tooltip.caretHeight + tooltip.caretPadding;
+        }
+      }
+
+      var position = $(this._chart.canvas)[0].getBoundingClientRect();
+
+      // Display, position, and set styles for font
+      tooltipEl.css({
+        opacity: 1,
+        width: tooltip.width ? (tooltip.width + 'px') : 'auto',
+        left: position.left + tooltip.x + 'px',
+        top: position.top + top + 'px',
+        fontFamily: tooltip._fontFamily,
+        fontSize: tooltip.fontSize,
+        fontStyle: tooltip._fontStyle,
+        padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
+      });
+    };
+
+    var config1 = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [300, 50, 100, 40, 10],
+                backgroundColor: [
+                    "#F7464A",
+                    "#46BFBD",
+                    "#FDB45C",
+                    "#949FB1",
+                    "#4D5360",
+                ],
+            }],
+            labels: [
+                "Red",
+                "Green",
+                "Yellow",
+                "Grey",
+                "Dark Grey"
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false,
+            }
+        }
+    };
+
+    window.onload = function() {
+		/*
+        var ctx2 = document.getElementById("chart-area2").getContext("2d");
+        window.myPie = new Chart(ctx2, config1);
+		*/
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };    
+    </script>
+
+    <script type="text/javascript">
+       $('.tablelist tbody tr:odd').addClass('odd');
+       
+    </script>
+</body>
+
+</html>

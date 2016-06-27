@@ -62,16 +62,18 @@ function getorderget($param){
     function get_orderno_to_pro($order_no){
     $datagoods = D('order_goods');
     $name = $datagoods-> field('product,price2,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
-    // dump($name);
+//    dump($name);
+//     echo M()->getLastSql();exit;
+     
     echo "<tr>";
     foreach ($name as $k => $v) {
         foreach($v as $key=>$value){
         if($key=='product'){
-             echo '<td style="width:150px;">'.$value.'</td>';
+             echo '<td style="width:180px;">'.$value.'</td>';
         }else{
-            echo '<td style="width:50px;">'.$value.'</td>';
-        }
-       
+            echo '<td style="width:100px;">'.$value.'</td>';
+        }  
+        
         }
         echo '</tr><tr>';
         }

@@ -32,11 +32,13 @@
                 <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
                 <th>订单编辑</th>
                 <th>下单时间</th>
-                <th style="width:150px;">产品</th>
-                <th style="width:50px;">价格</th>
+                
+                <th style="width:100px;">产品名称</th>
+                <th style="width:80px;">价格</th>
                 <th style="width:50px;">折扣</th>
                 <th style="width:50px;">数量</th>
-                <th style="width:50px;">优惠价</th>
+                <th style="width:100px;">优惠价</th> 
+                
                 <th>订单金额</th>
                 <th>经纪人</th>
                 <th>操作发货</th>
@@ -51,9 +53,9 @@
                 <td><a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a></td>                
                 <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
                 <td colspan="5">
-                <table class="tablelistpro" style="border:0px;">
-                    {$vo.order_no|get_orderno_to_pro=###}
-                </table>
+                    <table class="tablelistpro" style="border:0px;">
+                        {$vo.order_no|get_orderno_to_pro=###}
+                    </table>
                 </td>
                 <td>{$vo.total_price}</td> 
                 <td>{$staff[$vo['agent']]}</td>
@@ -136,6 +138,30 @@ $(document).ready(function(){
 });
  
 </script>
+
+  <!---总数---->
+    <script>
+        $(function () {
+            $(".quanxun").click(function () {
+                setTotal();
+                //alert($(lens[0]).text());
+            });
+            function setTotal() {
+                var len = $(".tot");
+                var num = 0;
+                for (var i = 0; i < len.length; i++) {
+                    num = parseInt(num) + parseInt($(len[i]).text());
+
+                }
+                //alert(len.length);
+                $("#zong{$i}").text(parseInt(num));
+                $("#shuliang").text(len.length);
+            }
+            //setTotal();
+        })
+    </script>
+
+
 </body>
 
 </html>

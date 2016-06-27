@@ -76,6 +76,30 @@ class IncomeController extends CommonController {
         }else{
             $this->error('更新数据出错');
         }
+    }
+    
+//修改
+    public function edit(){
+        $jumpUrl =U('Console/Income/PList'); 
+        $income = D('order_info'); 
+        $id =I('id');
+        if (IS_POST) {
+            if ($id > 0) {
+                $super=$income->create();   
+                $iphone=$income->save($super);
+                if ($iphone){
+                    $this->success('修改成功', $jumpUrl);
+                } else {                    
+                    $this->error('修改失败',$jumpUrl);
+                }          
+            } 
+        } else {                                    
+            $super=D('order_info')->where('id='.$id)->find();
+            $zf_payment = D('payment')->select();
+            $this->assign('zhifu',$zf_payment);
+            $this->assign('info',$super);
+            $this->display();
+        }
     }    
     
 }

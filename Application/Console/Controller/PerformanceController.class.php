@@ -10,7 +10,7 @@ class PerformanceController extends CommonController{
 	 */
 	public function Staff(){
 		$department=D('Category')->field('cate_id,cate_name,cate_parent')->select();
-		
+                
 		$staff=D('staff')->where('iswork != 4')->getfield('id,name,quarters,posttext,nibs',true);
 		foreach ($staff as $k => $v) {
 			$cat[$v['nibs']][]=$staff[$k];
@@ -29,9 +29,22 @@ class PerformanceController extends CommonController{
 		$department=D('Category')->where('cate_parent=%d',array(0))->field('cate_id,cate_name,cate_parent')->select();
 		
 		$this->assign('department',$department);
-        $this->display();
+                $this->display();
 	}
-	
+
+        /**
+        *月份报表
+        */
+	public function MonthPer(){
+            $year_num = 10;
+            $cur_year = date('Y',time());
+            for($i=0;$i<$year_num;$i++){
+               $year[] = $cur_year-$i; 
+            }
+            $this->assign('yearlist',$year);
+             $this->display();
+	}    
+        
 	/**
 	 *年份报表
 	 */
@@ -62,12 +75,24 @@ class PerformanceController extends CommonController{
 		$data = D('Performance')->GetPelPer($agents,$total_ruleid);
 		$this->ajaxReturn($data);
 	}
+        
+        /*
+         * 获取月份报表
+         */
+	public function GetMonthPer(){
+		$total_ruleid = I('total_ruleid');
+                $cur_year = I('cur_year');
+                $data = D('Performance')->GetPelPer('',$total_ruleid,0,1,'',$cur_year);
+		$this->ajaxReturn($data);
+	}
+        
+        
 	/**
 	 *获取年份报表
 	 */
 	public function GetYearPer(){
 		$total_ruleid = I('total_ruleid');
-        $data = D('Performance')->GetPelPer('',$total_ruleid,0,1,10);
+                $data = D('Performance')->GetPelPer('',$total_ruleid,0,1,10);
 		$this->ajaxReturn($data);
 	}
 	
