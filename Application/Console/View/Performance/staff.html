@@ -35,7 +35,7 @@
 		text-align:left;
 		float:left;
 		border:1px solid #000; 
-		background:#f1f1f1;}
+		background:#fff;}
 	.stafflist ul li{cursor:pointer;padding-left:15px;}
     .clr b{font-weight: 400; line-height: 24px;}
 	.scroll{
@@ -280,7 +280,7 @@
 		function performance_num(staff_id,staff_name,total_ruleid){
 			$('.staff_name').text(staff_name);
 			$('#perinfo').html('');
-			$('#staff_list li').css('background-color','#f1f1f1');
+			$('#staff_list li').css('background-color','#fff');
 			$('#staff_list li').each(function(){
 				if($(this).attr('value') == staff_id){
 					$(this).css('background-color','#48b9e5');
