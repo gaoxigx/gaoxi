@@ -229,15 +229,15 @@ class ExcelController extends CommonController {
 						$working_time = $time_a;
 						$leave_time = 0;
 					}
-					if($time_a != $time_b && ($time_a <= $time_c && $time_b <= $time_c)){
+					if($time_a != $time_b && ($time_a <= $time_c || $time_b <= $time_c)){
 						$working_time = $time_a;
 						$leave_time = 0;
 					}
-					if($time_a != $time_b && ($time_a > $time_c && $time_b > $time_c)){
+					if($time_a != $time_b && ($time_a > $time_c || $time_b > $time_c)){
 						$working_time = 0;
 						$leave_time = $time_b;
 					}
-					if($time_a != $time_b && ($time_a <= $time_c && $time_b > $time_c)){
+					if($time_a != $time_b && ($time_a < $time_c || $time_b > $time_c)){
 						$working_time = $time_a;
 						$leave_time = $time_b;
 					}
@@ -249,6 +249,9 @@ class ExcelController extends CommonController {
 						$map[$v['column_name']]  = $one_data[$v['column_name']];   
 					}
 				}
+				$islate = $this->Islate($one_data['dep_name'],$one_data['working_time'],$one_data['leave_time']);
+				$one_data['late_min'] = $islate['late_min'];
+				$one_data['leave_min'] = $islate['leave_min'];
 				
 				$map[$columns[0]['column_name']] = $one_data[$columns[0]['column_name']];
 				$datainfo = D($table)->where($map)->find();
@@ -272,7 +275,6 @@ class ExcelController extends CommonController {
 			}
 			
 		}
-		
 		return array('change_num'=>$change_num,'msg'=>$msg);
 	}
 }

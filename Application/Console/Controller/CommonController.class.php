@@ -52,5 +52,46 @@ class CommonController extends Controller{
  		}
  		return false;
  	}
-
+	
+	/**
+	 *返回迟到早退分钟，return array
+	 *$depname:部门名称
+	 *$vworktime:上班打卡时间，时间戳格式
+	 *$vleavetime:下班打卡时间，时间戳格式
+	 */
+	protected function Islate($depname,$vworktime,$vleavetime){
+		$dep_name = ($depname == '行政部')?'行政人事部':$depname;
+		$worktime = D('Category')->field('cate_id,gotime,totime')->where("cate_name='".$dep_name."'")->find();
+		
+		$gotime = $worktime['gotime'];
+		$totime = $worktime['totime'];
+		if($gotime != ''){
+			$work_time = strtotime(date('H:i',$gotime));
+		}else{
+			$work_time = strtotime('09:00');
+		}
+		$worked_time = $vworktime != 0?strtotime(date('H:i',$vworktime)):0;
+		$late_min = ($worked_time-$work_time)/60;
+		if($worked_time > $work_time && $worked_time > 0){
+			$ll_arr['late_min'] = $late_min;
+		}else{
+			$ll_arr['late_min'] = 0;
+		}
+		
+		if($totime != ''){
+			$to_time = strtotime(date('H:i',$totime));
+		}else{
+			$to_time = strtotime('18:00');
+		}
+		$leave_time = $vleavetime != 0?strtotime(date('H:i',$vleavetime)):0;
+		if($leave_time < $to_time && $leave_time > 0){
+			$leave_min = ($to_time-$leave_time)/60;
+			if($leave_min > 0){
+				$ll_arr['leave_min'] = $leave_min;
+			}
+		}else{
+			$ll_arr['leave_min'] = 0;
+		}
+		return $ll_arr;
+	}
 }

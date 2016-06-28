@@ -36,6 +36,7 @@ class CheckRecordController extends CommonController{
 		$list = $CheckRecord->where($map)->order('gh_id asc,datetime desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 		foreach($list as $k=>$v){
 			$data['calculated'] = $v['calculated'];
+			
 		}
 		
 		$this->assign('data',$data);
@@ -80,6 +81,9 @@ class CheckRecordController extends CommonController{
 		$data['datetime'] = strtotime($data['datetime']);
 		$data['working_time'] = strtotime($data['working_time']);
 		$data['leave_time'] = strtotime($data['leave_time']);
+		$islate = $this->Islate($data['dep_name'],$data['working_time'],$data['leave_time']);
+		$data['late_min'] = $islate['late_min'];
+		$data['leave_min'] = $islate['leave_min'];
 		
 		if($id > 0){
 			$data['modifytime'] = time();
