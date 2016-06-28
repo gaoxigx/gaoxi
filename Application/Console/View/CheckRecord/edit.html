@@ -67,7 +67,7 @@
 									<div class="vocation uew-select"> 
 										<select name="dep_name" id="dep_name" class="uew-select-value">
 											<foreach name="department" item="val">
-											<option value="{$val}" <if condition="$data.dep_name == $val">selected</if>>{$val}</option>
+												<option value="{$val}" <if condition="($data.dep_name == '行政部' && $val == '行政人事部') || $data.dep_name == $val" >selected</if>>{$val}</option>
 											</foreach>
 										</select>
 									</div>
