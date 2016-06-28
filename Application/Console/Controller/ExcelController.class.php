@@ -229,15 +229,15 @@ class ExcelController extends CommonController {
 						$working_time = $time_a;
 						$leave_time = 0;
 					}
-					if($time_a != $time_b && ($time_a <= $time_c || $time_b <= $time_c)){
+					if($time_a != $time_b && ($time_a <= $time_c && $time_b <= $time_c)){
 						$working_time = $time_a;
 						$leave_time = 0;
 					}
-					if($time_a != $time_b && ($time_a > $time_c || $time_b > $time_c)){
+					if($time_a != $time_b && ($time_a > $time_c && $time_b > $time_c)){
 						$working_time = 0;
 						$leave_time = $time_b;
 					}
-					if($time_a != $time_b && ($time_a < $time_c || $time_b > $time_c)){
+					if($time_a != $time_b && ($time_a < $time_c && $time_b > $time_c)){
 						$working_time = $time_a;
 						$leave_time = $time_b;
 					}
