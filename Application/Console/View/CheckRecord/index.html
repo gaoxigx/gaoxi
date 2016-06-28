@@ -75,6 +75,8 @@ $(document).ready(function(){
                 <th style="text-align:center">日期</th>
                 <th style="text-align:center">上班时间</th>
                 <th style="text-align:center">下班时间</th>
+				<th style="text-align:center">迟到/分钟</th>
+				<th style="text-align:center">早退/分钟</th>
                 <th style="text-align:center">操作</th>
             </tr>
         </thead>
@@ -85,8 +87,10 @@ $(document).ready(function(){
                     <td align="center">{$vo.name}</td>
                     <td align="center">{$vo.dep_name}</td>
 					<td align="center"><if condition="$vo.datetime != 0">{$vo.datetime|date='Y-m-d',###}</if></td>
-                    <td align="center"><if condition="$vo.working_time != 0">{$vo.working_time|date='H:i',###}</if></td>                             
-                    <td align="center"><if condition="$vo.leave_time != 0">{$vo.leave_time|date='H:i',###}</if></td>
+                    <td align="center" <if condition="$vo.late_min gt 0">style="color:red;"</if>><if condition="$vo.working_time != 0">{$vo.working_time|date='H:i',###}</if></td>                             
+                    <td align="center" <if condition="$vo.leave_min gt 0">style="color:red;"</if>><if condition="$vo.leave_time != 0">{$vo.leave_time|date='H:i',###}</if></td>
+					<td align="center"><if condition="$vo.late_min != 0">{$vo.late_min}</if></td>
+					<td align="center"><if condition="$vo.leave_min != 0">{$vo.leave_min}</if></td>
                     <td align="center">
 						<a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a>
 						<a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a>
