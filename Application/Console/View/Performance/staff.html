@@ -51,7 +51,12 @@
 		}
 	.tb1_td1{min-width:30px;}
 	.tb2_td1{text-align:center;}
+	
+	.stafflist .staff_list{display:none;}
+	.stafflist .out_li .out_li_con{padding-left:15px;background:url('__PUBLIC__/Console/images/inner_two_fold.gif') 0 center no-repeat;}
+	.stafflist .unfold .out_li_con{padding-left:15px;background:url('__PUBLIC__/Console/images/inner_two_unfold.gif') 0 center no-repeat;}		
     </style>
+	
 </head>
 
 
@@ -75,10 +80,17 @@
 		<div class="clearfix">
 			<div class="clr scroll" >
 				<div class="stafflist">
-					<ul id="staff_list">
-					<volist name="staff" id='vo'>
-						<li value="{$vo.id}"><b>{$vo.name}({$vo.posttext})</b></li>
-					</volist>
+					<ul class="left_staff_menu">
+					<foreach name="staff" item='val'>
+						<li class="out_li" value="{$val.section}">
+							<div class="out_li_con"><b>{$val.departmenttext}</b></div>
+							<ul class="staff_list">
+							<foreach name="val.staff" item='vo'>
+								<li value="{$vo.id}">&nbsp;&nbsp;&nbsp;<b>{$vo.name}({$vo.posttext})</b></li>
+							</foreach>
+							</ul>
+						</li>
+					</foreach>
 					</ul>
 				</div>
 			</div>
@@ -109,7 +121,19 @@
 	<input id="staff_info" staff_name='' type="hidden" value="" />
     <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
     <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
-	
+	<script>
+		$(function(){
+			$('.left_staff_menu .out_li:first').addClass('unfold');
+			$('.left_staff_menu .out_li:first .staff_list').show();
+			$('.left_staff_menu .out_li .out_li_con').click(function(){
+				var obj = $(this).parents('.out_li');
+				obj.toggleClass('unfold');
+				obj.find('.staff_list').slideToggle();
+				
+			})
+		})
+		
+	</script>
     <script>
 		
 		var MONTHS = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
@@ -253,15 +277,15 @@
         });
 		
 		
-		var staff_id = $('#staff_list li:first').attr('value');
-		var staff_name = $('#staff_list li:first').find('b').text();
+		var staff_id = $('.staff_list:first li:first').attr('value');
+		var staff_name = $('.staff_list:first li:first').find('b').text();
 		var total_ruleid = $('#total_rule li:first').attr('value');
 		$('#staff_info').val(staff_id);
 		$('#staff_info').attr('staff_name',staff_name);
 		performance_num(staff_id,staff_name,total_ruleid);
 		
 		//个人员工业绩
-		$('#staff_list li').click(function() {
+		$('.staff_list li').click(function() {
 			var staff_id = $(this).attr('value');
 			var staff_name = $(this).find('b').text();
 			$('#staff_info').val(staff_id);
@@ -280,8 +304,8 @@
 		function performance_num(staff_id,staff_name,total_ruleid){
 			$('.staff_name').text(staff_name);
 			$('#perinfo').html('');
-			$('#staff_list li').css('background-color','#fff');
-			$('#staff_list li').each(function(){
+			$('.staff_list li').css('background-color','#fff');
+			$('.staff_list li').each(function(){
 				if($(this).attr('value') == staff_id){
 					$(this).css('background-color','#48b9e5');
 				}

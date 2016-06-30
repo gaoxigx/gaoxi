@@ -9,16 +9,17 @@ class PerformanceController extends CommonController{
 	 *员工报表
 	 */
 	public function Staff(){
-		$department=D('Category')->field('cate_id,cate_name,cate_parent')->select();
-                
-		$staff=D('staff')->where('iswork != 4')->getfield('id,name,quarters,posttext,nibs',true);
+		     
+		$staff=D('staff')->where('iswork != 4')->getfield('id,name,section,departmenttext,quarters,posttext,nibs',true);
 		foreach ($staff as $k => $v) {
 			$cat[$v['nibs']][]=$staff[$k];
+			$dep_staff[$v['section']]['section']= $v['section'];
+			$dep_staff[$v['section']]['departmenttext']= $v['departmenttext'];
+			$dep_staff[$v['section']]['staff'][] = $staff[$k];
 		}
 		
-		$this->assign('department',$department);
 		$this->assign('cat',$cat);
-		$this->assign('staff',$staff);
+		$this->assign('staff',$dep_staff);
         $this->display();
 	}
 	
