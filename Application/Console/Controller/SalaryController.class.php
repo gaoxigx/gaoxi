@@ -3,10 +3,15 @@ namespace Console\Controller;
 use Think\Controller;
 class SalaryController extends CommonController{
 	public function index(){
-		$name = I('name');
-		$map['name'] = array('like','%'.$name.'%');
+		$keywords = I('keywords');
 		$map['iswork'] = array('neq',4);
-		$parameter['name'] = $name;
+		if($keywords != ''){
+			$map1['name'] = array('like','%'.$keywords.'%');
+			$map1['departmenttext'] = array('like','%'.$keywords.'%');
+			$map1['_logic'] = 'or';
+            $map['_complex'] = $map1;
+			$parameter['keywords'] = $keywords;
+		}
 		
 		$Staff = D('Staff');
 		$count = $Staff->where($map)->count();// 查询满足要求的总记录数
