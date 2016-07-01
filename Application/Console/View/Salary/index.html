@@ -27,25 +27,6 @@ $(document).ready(function(){
 
 });
 
-//密码重置
-function reset_pass(id){
-	if(confirm('确定要重置密码吗？')){
-		$.post('__URL__/resetpass/',{id:id},function(data){
-			if(data.info){
-				alert(data.info);
-				return false;
-			}
-			var data = eval('('+data+')');
-			if(data.result == 1){
-				alert('密码重置成功');
-				window.location.href='__URL__/Staff';
-			}else{
-				alert(data.msg);
-			}
-		})
-	}
-	
-}
 </script>
 
 
@@ -74,13 +55,15 @@ function reset_pass(id){
                 </ul>
 
                 <ul class="seachform">
-                    <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">            
-                        <li><label>搜索</label><input type="text" class="scinpute" name="username" value=""></li>
+                    <form action="/index.php/Console/Salary/index" method="post" id="form2" name="form2">            
+                        <li><label>搜索</label><input type="text" class="scinpute" name="name" value=""></li>
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     </form>
 					<!-- <ul class="toolbar" style="float:right;">
 						<li><a href="#"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>导入表格</a></li>
 					</ul> -->
+					<li style="float:right"><label>统计时间:</label><a style="line-height:32px; color: red;">{$param.now_time|date='Y-m-d',###}</a></li> 
+					<li style="float:right"><label>统计日期:</label><a style="line-height:32px; color: red;">{$param.cur_month_time|date='Y-m',###}</a></li> 
                 </ul>
 				
             </div>
@@ -100,17 +83,15 @@ function reset_pass(id){
                 <th>基本工资</th>
                 <th>用餐补助</th>
                 <th>住宿补助</th>
-                <th>当月提成总金额</th>
-                <th>提成比例</th>
-                <th>效效工资</th>    
+                <th>提成比例</th>  
+				<th>当月提成总金额</th>
                 <th>事假</th>
-                <th>病假</th>                                
+                <th>病假</th>  
+				<th>旷工</th>
                 <th>全勤奖</th>
-                <th>奖金</th>
-                <th>迟到早退处罚</th>    
+                <th>迟到早退</th>    
                 <th>应扣除工资</th>
                 <th>实发工资</th>
-                <th>备注</th>
             </tr>
         </thead>
         <tbody>
@@ -121,20 +102,18 @@ function reset_pass(id){
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.name}</a></td>
             <td><a href="{:U('Staff/lookover',array('id'=>$vo['id']))}" >{$vo.departmenttext}</a></td>
             <td>{$vo.posttext}</td>
-            <td>{$cat[$vo['section']]}</td>
-            <td>{$cat[$vo['quarters']]}</td>
-			<td>{$vo.salaryss}</td>
+            <td>{$vo.base_pay}</td>
             <td>{$vo.catering}</td>
-            <td>{$vo.housing}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-            <td>{$vo.catering}</td>
-			<td>{$vo.catering}</td>
-            <td></td>
+			<td>{$vo.housing}</td>
+            <td>{$vo.royalty_rate}</td>
+			<td>{$vo.rate_total}</td>
+            <td>{$vo.casual_leave}</td>
+            <td>{$vo.sick_leave}</td>
+			<td>{$vo.truant_leave}</td>
+			<td>{$vo.attendance_bonus}</td>
+            <td>{$vo.late_bonus}</td>
+            <td>{$vo.deduct_total}</td>
+            <td>{$vo.fsalary}</td>
             </volist>
         
         </tbody>
@@ -167,9 +146,6 @@ function reset_pass(id){
     
     </div>
     
-    <script type="text/javascript">
-	$('.tablelist tbody tr:odd').addClass('odd');
-	</script>
 
 </body>
 
