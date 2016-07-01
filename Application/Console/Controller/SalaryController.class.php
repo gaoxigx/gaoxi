@@ -19,7 +19,7 @@ class SalaryController extends CommonController{
         $show = $Page->show();// 分页显示输出
 		$staff = $Staff->where($map)->limit($Page->firstRow.','.$Page->listRows)->getField('id,name,departmenttext,quarters,posttext,entry_time,become,iswork,salaryss,salaryzz,housing,traffic,catering,phone');
 		
-		$cur_month_time = time()-3600*24;
+		$cur_month_time = time();
 		$month_holiday = 4;
 		$statutory_holiday = 0;//法定假期
 		$param['cur_month_time'] = $cur_month_time;
