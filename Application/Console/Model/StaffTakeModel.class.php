@@ -54,7 +54,7 @@ class StaffTakeModel extends Model{
 			$id=session('userid');
 		}
 		$result=$this->alias('st')->field('st.*,na.name')->join('nico_asset as na on na.id=st.asset_id','left')->where("st.status>0 and st.staff_id=%d",array($id))->select();
-		print_r(M()->getlastsql());
+		
                 return $result;
 	}
 
