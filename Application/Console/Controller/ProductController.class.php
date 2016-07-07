@@ -23,9 +23,6 @@ class ProductController extends CommonController {
         }else{
             $this->error($data->getError());
         }
-
-
-
     }
     
     //产品列表
@@ -63,7 +60,7 @@ class ProductController extends CommonController {
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $User->where($map)->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         foreach($list as $key=>$val){
             if($val['purchaseper'] >0){
                 $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
