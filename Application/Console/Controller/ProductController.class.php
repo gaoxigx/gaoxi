@@ -87,59 +87,28 @@ class ProductController extends CommonController {
 
 //插入数据
 public function insert(){
-
-    // 上传文件 
     $data = I('');
-    $data['addtime'] = time();
-
-        $config = array(
-        'maxSize'    =>    31457280,
-        'rootPath'   =>    '.',
-        'savePath'   =>    '/Uploads/',
-        'saveName'   =>    array('uniqid',''),
-        'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
-        'autoSub'    =>    true,
-        'subName'    =>    array('date','Ymd'),
-    );
-    $upload = new \Think\Upload($config);// 实例化上传类    
-    // 上传文件 
-
-    $info   =   $upload->upload();
-
-    if(!$info) {// 上传错误提示错误信息
-        // $this->error($upload->getError());
-    }else
-        {// 上传成功 获取上传文件信息
-           
-            foreach($info as $file){
-                $data['pic'] = $file['savepath'].$file['savename'];
-                $image = new \Think\Image(); 
-                $image->open($config['rootPath'].$data['pic']);
-                //将图片裁剪为400x400并保存为corp.jpg
-                $image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
-                $data['pic1'] = $file['savepath'].'s'.$file['savename'];
-            }
-        }    
-        $jumpUrl =U('Console/Product/Plist');
-        $roleList   =   D('product');
-        if($roleList->create()) {
-            $result =   $roleList->add($data);
-            if($result) {
-                $this->success('数据添加成功！',$jumpUrl);
-            }else{
-                $this->error('数据添加错误！',$jumpUrl);
-            }
-        }else{
-            $this->error($roleList->getError());
-        }
+	$data['addtime'] = time();
+	$uploadimg = $this->uploadimg();
+	$data['pic'] = $uploadimg['pic'];
+	$data['pic1'] = $uploadimg['pic1'];
+     
+	$jumpUrl =U('Console/Product/Plist');
+	$roleList   =   D('product');
+	if($roleList->create()) {
+		$result =   $roleList->add($data);
+		if($result) {
+			$this->success('数据添加成功！',$jumpUrl);
+		}else{
+			$this->error('数据添加错误！');
+		}
+	}else{
+		$this->error($roleList->getError());
+	}
        
-    }
-
-
+}
 
 //编辑    
-    
-    
 public function edit($id = 0){
     
     $this->getprotype();
@@ -159,50 +128,64 @@ public function edit($id = 0){
     
 //更新数据
     public function update(){
-    $data = I('');
-      $config = array(
-        'maxSize'    =>    31457280,
-        'rootPath'   =>    '.',
-        'savePath'   =>    '/Uploads/',
-        'saveName'   =>    array('uniqid',''),
-        'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
-        'autoSub'    =>    true,
-        'subName'    =>    array('date','Ymd'),
-    );
-    $upload = new \Think\Upload($config);// 实例化上传类
-    // 上传文件 
-
-    $info   =   $upload->upload();
-    if(!$info) {// 上传错误提示错误信息
-         // $this->error($upload->getError());
-    }else
-        {// 上传成功 获取上传文件信息
-            foreach($info as $file){
-            $data['pic'] = $file['savepath'].$file['savename'];
-            $image = new \Think\Image(); 
-            $image->open($config['rootPath'].$data['pic']);
-            //将图片裁剪为400x400并保存为corp.jpg
-            $image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
-            $data['pic1'] = $file['savepath'].'s'.$file['savename'];
-            }
-        }
-    
-
-// dump($data);
-// exit();
-    $roleList   =   D('product');
-    if($roleList->create()) {
-        $result = $roleList->save($data);
-        if($result) {
-            $this->success('操作成功！');
-        }else{
-            $this->error('写入错误！');
-        }
-    }else{
-        $this->error($roleList->getError());
-    }
- }
-
+		$data = I('');
+		$id = I('id');
+		$uploadimg = $this->uploadimg();
+		if($uploadimg['pic'] != ''){
+			$data['pic'] = $uploadimg['pic'];
+		}
+		if($uploadimg['pic1'] != ''){
+			$data['pic1'] = $uploadimg['pic1'];
+		}
+		
+		$roleList   =   D('product');
+		$jumpUrl =U('Console/Product/Plist');
+		if($roleList->create()) {
+			$result = $roleList->where('id=%d',array($id))->save($data);
+			if($result) {
+				$this->success('修改成功！',$jumpUrl);
+			}else{
+				$this->error('写入错误！');
+			}
+		}else{
+			$this->error($roleList->getError());
+		}
+	}
+	
+	/**
+	 *上传产品图片
+	 */
+	protected function uploadimg(){
+		$file_image = $_FILES['pic'];
+		$config = array(
+			'maxSize'    =>    31457280,
+			'rootPath'   =>    '.',
+			'savePath'   =>    '/Uploads/',
+			'saveName'   =>    array('uniqid',''),
+			'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
+			'autoSub'    =>    true,
+			'subName'    =>    array('date','Ymd'),
+		);
+		$upload = new \Think\Upload($config);// 实例化上传类
+		
+		if($file_image['name'] != ''){
+			$info   =   $upload->upload();
+			if(!$info) {
+				  $this->error($upload->getError());
+			}else{
+				foreach($info as $file){
+					$data['pic'] = $file['savepath'].$file['savename'];
+					$image = new \Think\Image(); 
+					$image->open($config['rootPath'].$data['pic']);
+					//将图片裁剪为400x400并保存为corp.jpg
+					$image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
+					$data['pic1'] = $file['savepath'].'s'.$file['savename'];
+				}
+			}
+		}
+		return $data;
+	}
+	
  //删除数据
     public function delete(){
     $id=i('id');

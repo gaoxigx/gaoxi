@@ -197,7 +197,7 @@ public function add(){
 }
 
 //修改订单
-public function edit($id){;
+public function edit($id){
      $this->getrolename('agent',38);
 
      $this->getrolename('assistant',46);
