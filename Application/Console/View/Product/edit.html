@@ -31,10 +31,7 @@ $(function(){
 				},	
                                 product:{
                                         required:true,
-                                },
-				pic:{
-					required: true,
-				},	
+                                },	
 				price1:{
 					required: true,
                                         maxlength:19
@@ -68,9 +65,6 @@ $(function(){
 				product: {
 					required: "须填写产品名称",
 				},	
-				pic: {
-					required: "需要上传图片",
-				},
 				price1: {
 					required: "请填写成本价格",
 				},
@@ -139,10 +133,7 @@ $(document).ready(function(){
     
     <div class="formbody">
         <div id="usual1" class="usual"> 
-
-            <div class="itab">
-
-                <input type="hidden" name ="id"   value="{$data.id}"/>
+            <div class="itab">  
                 <ul> 
                    <li><a href="#tab1" class="selected">发布信息</a></li> 
                 </ul>
@@ -151,8 +142,9 @@ $(document).ready(function(){
             <div id="tab1" class="tabson">
                 <form name="form1" id="form1" enctype="multipart/form-data"  method='post'   action="__URL__/update">
                     <div class="formtext">请正确填写发布信息！</div>
-                    <ul class="forminfo">
-                        <li><label>类别{$data.protype}<b>*</b></label>  
+                    <input type="hidden" name ="id"   value="{$data.id}"/>
+					<ul class="forminfo">
+                        <li><label>类别<b>*</b></label>  
                             <div class="vocation uew-select">
                                 <select name="protype" class="uew-select-value" autocomplete="off">
                                     <volist name="protype" id="voo">

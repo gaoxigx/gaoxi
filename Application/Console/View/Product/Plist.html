@@ -71,10 +71,9 @@ $(document).ready(function(){
             <tr>
         <!--        <th><input name="" type="checkbox" value="" checked="checked"/></th>-->
                 <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-
-                <th><label>类别<b></b></label> </th>
+				<th>产品名称</th>
                 <th>图片</th>
-                <th>产品名称</th>
+				<th><label>类别<b></b></label> </th>
                 <th>成本价格</th>
                 <th>标准价格</th>
                 <th>最高价格</th>
@@ -92,13 +91,13 @@ $(document).ready(function(){
                 <tr>
             <!--       <td><input name="" type="checkbox" value="" /></td>-->
                     <td>{$vo.id}</td>
-                    <td>{$vo.protype|Getprotypename=###}</td>
+					<td><a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a></td>
                     <td >
                         <div class="click"  style="float: left;" data="{$vo.pic}">
                             <span> <img src="{$vo.pic1}" height=100></span>
                         </div>
                     </td>
-                    <td><a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a></td>
+                    <td>{$vo.protype|Getprotypename=###}</td>
                     <td>{$vo.price1}</td>
                     <td>{$vo.price2}</td>
                     <td>{$vo.price3}</td>
