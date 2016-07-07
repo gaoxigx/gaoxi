@@ -78,7 +78,7 @@
                         </tr>-->
 
 
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
 
                         <tr>
                             <td style="height:20px;padding:5px;">
@@ -98,7 +98,7 @@
                             </td>
                         </tr>
 
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
                                 <label><b>产品列表:</b></label>  
@@ -121,7 +121,7 @@
                                 </table>
                             </td>
                         </tr>
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
 
                         <tr>
                             <td style="height:20px;padding:5px;">
@@ -132,7 +132,7 @@
                             </td> 
                         </tr>
                         
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
                                 <label><b>订单来源:</b></label>  
@@ -166,11 +166,15 @@
                                 <label><b>订单状态:</b></label>  
                             </td>   
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                {$info.status}
+                                <if condition="$info.status eq 2">
+								已发货
+								<else/>
+								未发货
+								</if>
                             </td>
                         </tr>
 
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
                                 <label><b>收件人姓名:</b></label>  
@@ -207,7 +211,7 @@
                             </td>
                         </tr>
 
-<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
 
                     </table>
                     

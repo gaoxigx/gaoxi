@@ -59,7 +59,7 @@ class ProductController extends CommonController {
         $Page = new \Think\Page($count,6);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
-        // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+       
         $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         foreach($list as $key=>$val){
             if($val['purchaseper'] >0){
@@ -67,14 +67,14 @@ class ProductController extends CommonController {
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
             }
         }
-//        print_r($list);exit;
+
         $this->getprotype();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
     }
-//添加产品
-
+	
+	//添加产品
     public function add(){
         $this->getprotype(); 
         $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
@@ -82,48 +82,48 @@ class ProductController extends CommonController {
         $this->display();
     }
 
-//插入数据
-public function insert(){
-    $data = I('');
-	$data['addtime'] = time();
-	$uploadimg = $this->uploadimg();
-	$data['pic'] = $uploadimg['pic'];
-	$data['pic1'] = $uploadimg['pic1'];
-     
-	$jumpUrl =U('Console/Product/Plist');
-	$roleList   =   D('product');
-	if($roleList->create()) {
-		$result =   $roleList->add($data);
-		if($result) {
-			$this->success('数据添加成功！',$jumpUrl);
+	//插入数据
+	public function insert(){
+		$data = I('');
+		$data['addtime'] = time();
+		$uploadimg = $this->uploadimg();
+		$data['pic'] = $uploadimg['pic'];
+		$data['pic1'] = $uploadimg['pic1'];
+		 
+		$jumpUrl =U('Console/Product/Plist');
+		$roleList   =   D('product');
+		if($roleList->create()) {
+			$result =   $roleList->add($data);
+			if($result) {
+				$this->success('数据添加成功！',$jumpUrl);
+			}else{
+				$this->error('数据添加错误！');
+			}
 		}else{
-			$this->error('数据添加错误！');
+			$this->error($roleList->getError());
 		}
-	}else{
-		$this->error($roleList->getError());
+		   
 	}
-       
-}
 
-//编辑    
-public function edit($id = 0){
-    
-    $this->getprotype();
-    $controller = D('product');
-    //读取数据
-    $data = $controller->find($id);
-    if($data){
-        $this->assign('data',$data);
-        $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
-    }elseif($id){
-        $this->error('数据错误');
-    }    
-    $this->assign('list',$list);
-    $this->display();
-}
+	//编辑    
+	public function edit($id = 0){
+		
+		$this->getprotype();
+		$controller = D('product');
+		//读取数据
+		$data = $controller->find($id);
+		if($data){
+			$this->assign('data',$data);
+			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
+		}elseif($id){
+			$this->error('数据错误');
+		}    
+		$this->assign('list',$list);
+		$this->display();
+	}
 
     
-//更新数据
+	//更新数据
     public function update(){
 		$data = I('');
 		$id = I('id');

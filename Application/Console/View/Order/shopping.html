@@ -156,7 +156,7 @@ function GetCount() {
         <table cellpadding="0" cellspacing="0" class="gwc_tb2">
             <tr>
                 <td class="tb2_td1">
-                  <input type="checkbox" value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
+                  <input type="checkbox" <if condition="$info.order_no gt 0" >checked="checked"</if> value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
                   <input type="hidden" name="tolnums" id="tolnums{$i}" value="">
                   <input type="hidden" name="id{$i}"  value="{$pvo.id}">
                   <input type="hidden" name="protype{$i}"  value="{$pvo.protype}">
@@ -172,7 +172,7 @@ function GetCount() {
                 </td>
                 <td class="tb1_td5">
                     <input id="min{$i}" name="" class="min" type="button" value="-" />
-                    <input id="text_box{$i}" name="text_box{$i}" type="text" value="1" class="num" />
+                    <input id="text_box{$i}" name="text_box{$i}" type="text" <if condition="$pvo.buynum gt 1" >value="{$pvo.buynum}"<else />value="1"</if> class="num" />
                     <input id="add{$i}" name="" class="add" type="button" value="+" />
                 </td>
                 <td class="tb1_td6"><input id="zhekou{$i}" name="zhekou{$i}" type="text" value="{$pvo.discount}" class="num" />折</td>
@@ -210,12 +210,12 @@ function GetCount() {
               反选<input id="cancel" type="checkbox" />取消
           </td>
           <td class="tb3_td2">已选商品
-              <span><input id="shuliang"  name="pro_num" type="text" value="0" class="totprice"  />件</span> 
+              <span><input id="shuliang"  name="pro_num" type="text" <if condition="$info.order_no gt 0" >value="{$info.pro_num}"<else/>value="0"</if> class="totprice"  />件</span> 
           </td>
           <td class="tb3_td3">合计(不含运费):
-              <span>￥<input id="zong1"  name="total_price" type="text" value="0" class="totprice" /></span>
+              <span>￥<input id="zong1"  name="total_price" type="text" <if condition="$info.order_no gt 0" >value="{$info.total_price}"<else/>value="0"</if> class="totprice" style="width:auto"/></span>
           </td>
 
       </tr>
     </table>
-  </div>
+</div>
