@@ -59,7 +59,7 @@ class ProductController extends CommonController {
         $User = M('Product'); // 实例化User对象
         $data=$User->select();
         $count = $User->where($map)->count();// 查询满足要求的总记录数
-        $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $Page = new \Think\Page($count,6);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
@@ -80,7 +80,7 @@ class ProductController extends CommonController {
 
     public function add(){
         $this->getprotype(); 
-        $list = D('staff')->field('id,name')->select();
+        $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
         $this->assign('list',$list);
         $this->display();
     }
@@ -117,7 +117,7 @@ public function edit($id = 0){
     $data = $controller->find($id);
     if($data){
         $this->assign('data',$data);
-        $list = D('staff')->field('id,name')->select();
+        $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
     }elseif($id){
         $this->error('数据错误');
     }    
