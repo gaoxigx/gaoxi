@@ -183,7 +183,13 @@ $(document).ready(function(){
                             </select>
                             <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
                         </li> 
-                        <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+                        <li>
+							<label>是否审核</label>
+							<cite>
+								<input type="radio" <if condition="$data.stauts eq 1">checked="checked"</if> value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
+							</cite>
+						</li>
                         <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
                     </ul>
                 </form>    
