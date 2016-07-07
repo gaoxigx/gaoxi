@@ -7,7 +7,7 @@ class ProductController extends CommonController {
     private function getprotype(){
         $data=D('protype');
         $name = $data->where('typename<>""')->order('id desc')->select();
-        // dump($name);
+       
         $this->assign('protype',$name);
 
     }
@@ -188,47 +188,27 @@ public function edit($id = 0){
 	
  //删除数据
     public function delete(){
-    $id=i('id');
-        // dump($id);
-        // exit;
+		$id=i('id');
         $role = M('product');
-         $set = $role->where("id = ".$id)->find();
-         // $set['oldid'] = $id;
-         // unset($set['id']);
-         // $set['addtime']=strtotime($set['addtime']);
-         $set['price1']= floatval($set['price1']);
-         $set['price2']= floatval($set['price2']);
-         $set['price3']= floatval($set['price3']);
-         // dump($set);
-         // exit;
-        D('product_copy')->add($set);
-        // M('Equipment_copy')->add($set);
-
         $result = $role->delete($id);
 
          if($result) {
-                $this->success('数据删除成功！');
-            }else{
-                $this->error('数据删除错误！');
-            }
-        // $this->display();
+			$this->success('数据删除成功！');
+		}else{
+			$this->error('数据删除错误！');
+		}
     }
 
-    protected function top(){
-        // $this->display();
-    }
-
-    private function hello3(){
-        echo '这是private方法!';
-    }
-    
     public function examine(){
-        $this->getprotype();
-            $controller   =   M('Product');
-        // 读取数据
-        $data =   $controller->find($id);
+		$id = I('id');
+        $controller   =   M('Product');
+        $data =  $controller->find($id);
+		
+		$staffinfo = $this->GetStaffInfo($data['purchaseper']);
+		$data['purchaseper_name'] = $staffinfo['username'];
+		
         if($data) {
-            $this->assign('user',$data);// 模板变量赋值
+            $this->assign('productinfo',$data);// 模板变量赋值
         }else{
             $this->error('数据错误');
         }

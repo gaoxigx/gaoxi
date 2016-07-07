@@ -53,6 +53,11 @@ class CommonController extends Controller{
  		return false;
  	}
 	
+	public function GetStaffInfo($id){
+		$staff_info = D('Staff')->where('id=%d',array($id))->find();
+		return $staff_info;
+	}
+	
 	/**
 	 *返回迟到早退分钟，return array
 	 *$depname:部门名称
