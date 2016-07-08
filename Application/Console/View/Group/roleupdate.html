@@ -53,64 +53,59 @@ $(document).ready(function(e) {
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">组管理</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+		<li><a href="#">首页</a></li>
+		<li><a href="#">组管理</a></li>
+		</ul>
     </div>
     
     <div class="formbody">
     
     
-    <div id="usual1" class="usual"> 
-    
-    <div class="itab">
-    <ul> 
-    <li><a href="#tab1" class="selected">修改组信息</a></li> 
-    <li><a href="#tab2">组成员列表</a></li> 
-    </ul>
-    </div> 
-    
-    <div id="tab1" class="tabson">
-    
-    <div class="formtext">Hi，请填写组的信息！</div>
-    
-    <ul class="forminfo">
-    <form name="form1" id="form1" method='post' action="__URL__/update">
-    <input type="hidden" name ="id"   value="{$vo.id}">
-    <li><label>组名称<b>*</b></label><input id="rolename" name="rolename" type="text" class="dfinput" value="{$vo.rolename}"  /></li>
-   
-    <li><label>备注信息</label>
-    <textarea class="textinput" rows="" cols="" name="depiction">{$vo.depiction}</textarea>
-    
-    </li>
-    <li><label>是否审核</label><cite><input type="radio"<if condition="$vo.status eq 1"> checked="checked" </if> value="1" name="status">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" <if condition="$vo.status eq 0"> checked="checked" </if> value="0" name="status">否</cite></li>
-     <li><label>设置许可</label></li>
+		<div id="usual1" class="usual"> 
+		
+			<div class="itab">
+			<ul> 
+			<li><a href="#tab1" class="selected">修改组信息</a></li> 
+			<li><a href="#tab2">组成员列表</a></li> 
+			</ul>
+			</div> 
+		
+			<div id="tab1" class="tabson">
+			
+				<div class="formtext">Hi，请填写组的信息！</div>
+				
+				<ul class="forminfo">
+					<form name="form1" id="form1" method='post' action="__URL__/update">
+						<input type="hidden" name ="id"   value="{$vo.id}">
+						<li><label>组名称<b>*</b></label><input id="rolename" name="rolename" type="text" class="dfinput" value="{$vo.rolename}"  /></li>
+					   
+						<li><label>备注信息</label>
+						<textarea class="textinput" rows="" cols="" name="depiction">{$vo.depiction}</textarea>
+						
+						</li>
+						<li><label>是否审核</label><cite><input type="radio"<if condition="$vo.status eq 1"> checked="checked" </if> value="1" name="status">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" <if condition="$vo.status eq 0"> checked="checked" </if> value="0" name="status">否</cite></li>
+						<!--<li><label>设置许可</label></li>-->
 
 
-    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改组信息"/></li>
-</form>
-    </ul>
-    
-    </div> 
-    
-    
-     <include file="./Application/Console/View/Group/list.html" />
-       
-       
-    </div> 
+						<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="修改组信息"/></li>
+					</form>
+				</ul>
+			
+			</div>
+		 <include file="./Application/Console/View/Group/list.html" />
+		   
+		   
+		</div> 
  
-    <script type="text/javascript"> 
-      $("#usual1 ul").idTabs(); 
-    </script>
-    
-    <script type="text/javascript">
-    $('.tablelist tbody tr:odd').addClass('odd');
-    </script>
-    
-    
-    
+		<script type="text/javascript"> 
+		  $("#usual1 ul").idTabs(); 
+		</script>
+		
+		<script type="text/javascript">
+		$('.tablelist tbody tr:odd').addClass('odd');
+		</script>
     
     
     </div>
