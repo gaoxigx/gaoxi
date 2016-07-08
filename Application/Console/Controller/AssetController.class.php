@@ -3,7 +3,11 @@ namespace Console\Controller;
 use Think\Controller;
 class AssetController extends CommonController{
 	public function index(){
-		$list=D('Asset')->select();
+		if(I('name') != ''){
+			$map['name'] = array('like','%'.I('name').'%');
+		}
+		
+		$list=D('Asset')->where($map)->select();
 		$this->assign('list',$list);
 		$this->display();
 	}
@@ -134,7 +138,7 @@ class AssetController extends CommonController{
     public function assetrecycle(){
         $id=I('id');
         if(!$id){
-            $this->error('回收失败');            
+            $this->error('此信息不存在');            
         } 
         $result=D('Asset')->resycle($id);
         if($result){
@@ -147,8 +151,8 @@ class AssetController extends CommonController{
     /**
     *设备扣款
     **/
-    public function assetpayment(){
-        $data=D('Asset')->assetpayment($asset_id);
+    public function assetpayment($id){
+        $data=D('Asset')->assetpayment($id);
         if($data){
             $this->success('已列为捐款设备');
         }else{
