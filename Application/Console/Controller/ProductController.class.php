@@ -27,16 +27,17 @@ class ProductController extends CommonController {
     
     //产品列表
     public function Plist($name=''){
-        $username = i('username');
-        if($username){
-            $map['product']  = array('like','%'.trim($username).'%');
-            $map['purchaseper']  = array('like','%'.trim($username).'%');                 
-            $map['_logic'] = 'or';
-        }
-        //选择分类查询
-        $protype=I('protype');
-        if($protype){
+        $product_name = i('product_name');
+		$protype=I('protype');
+		
+		if($protype){
             $map['protype']  =$protype;
+			$parameter['protype'] = $protype;
+        }
+		
+		if($product_name){
+            $map['product']  = array('like','%'.trim($product_name).'%');
+			$parameter['product_name'] = $product_name;
         }
         
         foreach( $map as $k=>$v){  
@@ -44,21 +45,11 @@ class ProductController extends CommonController {
                 unset( $arr[$k] );  
         }   
 
-        //分页跳转的时候保证查询条件
-        foreach($username as $key=>$val) {
-            if(!$val){
-                unset($map[$key]);
-            }else{
-            $Page->parameter[$key]   =   urlencode($val);
-              }
-        }
-        
         $User = M('Product'); // 实例化User对象
-        $data=$User->select();
         $count = $User->where($map)->count();// 查询满足要求的总记录数
-        $Page = new \Think\Page($count,6);// 实例化分页类 传入总记录数和每页显示的记录数(25)
-        $Page->setConfig('header','个会员');
-        $show = $Page->show();// 分页显示输出
+		
+        $Page = new \Think\Page($count,6,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
        
         $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         foreach($list as $key=>$val){
