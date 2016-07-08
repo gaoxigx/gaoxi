@@ -76,25 +76,32 @@ class StaffController extends CommonController {
 		$ids = D('Staff')->getthislevel();
 		$ids = implode($ids,',');
 		
+		if(isset($_GET['iswork'])){
+			$map['iswork']=I('iswork');
+			
+		}
+		if(I('iswork') != 4){
+			$map['iswork']=array('neq',4);
+		}
 		
 		if($ids !='' && session('roleidstaff') > 0){
 			$map['id']  = array('in',trim($ids));
 		}
 		$department=I('department');
-		if($department){
+		if($department != 0){
 			$map['section']=$department;
 			$this->assign('section',$department);
 		}
 
 		$quarters=I('quarters');
-		if($quarters){
+		if($quarters != 0){
 			$map['quarters']=$quarters;
 			$this->assign('quarters',$quarters);
 		}
 		
         $username = i('username');
 		
-        if($username){
+        if($username != ''){
             $map1['nickname']  = array('like','%'.trim($username).'%');
             $map1['username']  = array('like','%'.trim($username).'%');
             $map1['name']  = array('like','%'.trim($username).'%');
@@ -104,15 +111,7 @@ class StaffController extends CommonController {
             $map1['_logic'] = 'or';
             $map['_complex'] = $map1;
         }
-       if(isset($_GET['iswork'])){
-			$map['iswork']=I('iswork');
-			
-       }
-		if(I('iswork') != 4){
-			$map2['iswork']=array('neq',4);
-			$map2['_logic'] = 'and';
-			$map['_complex'] = $map2;
-	   }
+		
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
@@ -268,7 +267,7 @@ class StaffController extends CommonController {
 	public function GetSupervisor(){
 		$cate_id = I('post.cate_id');
 		//$user = D('Staff')->where('quarters=%d',array($cate_id))->getfield('id,name',true);		
-		$user = D('Staff')->getfield('id,name',true);			
+		$user = D('Staff')->where('iswork!=4')->getfield('id,name',true);			
 		$this->ajaxReturn($user);
 	}
 	
@@ -303,11 +302,17 @@ class StaffController extends CommonController {
 				}
 			}
 			
+			$subordinates_num = count($subordinates_data);
 			$data['section'] = array_shift($subordinates_data);
 			$data['departmenttext'] = $catdata[$data['section']];
-			$data['quarters'] = array_pop($subordinates_data);
-			$data['posttext'] = $catdata[$data['quarters']];
-			
+			if($subordinates_num > 1){
+				$data['quarters'] = array_pop($subordinates_data);
+				$data['posttext'] = $catdata[$data['quarters']];
+			}else{
+				$data['quarters'] = '';
+				$data['posttext'] = '';
+			}
+	
 			$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
 			$data['subordinates'] = implode(',',$data['subordinates']);
 			
@@ -358,11 +363,17 @@ class StaffController extends CommonController {
 							$data['subordinatetexts'] .= $catedata[$v].',';
 						}
 					}
-					
+					$subordinates_num = count($subordinates_data);
 					$data['section'] = array_shift($subordinates_data);
 					$data['departmenttext'] = $catedata[$data['section']];
-					$data['quarters'] = array_pop($subordinates_data);
-					$data['posttext'] = $catedata[$data['quarters']];
+					
+					if($subordinates_num > 1){
+						$data['quarters'] = array_pop($subordinates_data);
+						$data['posttext'] = $catedata[$data['quarters']];
+					}else{
+						$data['quarters'] = '';
+						$data['posttext'] = '';
+					}
 					
 					$data['subordinatetexts'] = substr($data['subordinatetexts'],0,-1);
 					$data['subordinates'] = implode(',',$data['subordinates']);
