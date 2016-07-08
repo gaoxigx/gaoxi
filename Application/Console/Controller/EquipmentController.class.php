@@ -37,8 +37,7 @@ class EquipmentController extends CommonController {
               }
         }
         $User = M('Equipment'); // 实例化User对象
-        $data=$User->select();
-
+        
         if(session('roleidstaff')){ 
             $strmap=implode(',', $staffid);            
             if(!empty($strmap)&&isset($strmap)&&strlen($strmap)>0){                
@@ -80,13 +79,13 @@ class EquipmentController extends CommonController {
     }
 //添加设备信息
     public function insert(){
-     //   $jumpUrl =U('Console/Equipment/Equipment');
+		$jumpUrl =U('Console/Equipment/Equipment');
         $roleList   =   D('equipment');
         $data=$roleList->create();
         if($data) {
             $result =   $roleList->add($data);
             if($result) {
-                $this->success('数据添加成功！');
+                $this->success('数据添加成功！',$jumpUrl);
             }else{
                 $this->error('数据添加错误！');
             }
@@ -99,15 +98,15 @@ class EquipmentController extends CommonController {
 //编辑
     public function edit($id=0){
         $controller   =   M('Equipment');
-        // 读取数据
+        
         $data =   $controller->find($id);
         if($data) {
-             $staff=D('staff')->select();
-            $this->assign('staff',$staff);
-            //得到所有部门
+            $staff=D('staff')->select();
             $department=D('Category')->department();
+			
+			$this->assign('staff',$staff);
             $this->assign('department',$department);
-            $this->assign('data',$data);// 模板变量赋值
+            $this->assign('data',$data);
         }else{
             $this->error('数据错误');
         }
@@ -119,10 +118,11 @@ class EquipmentController extends CommonController {
 //更新数据
     public function update(){
         $roleList   =   D('Equipment');
+		$jumpUrl =U('Console/Equipment/Equipment');
         if($roleList->create()) {
             $result = $roleList->save();
             if($result) {
-                $this->success('操作成功！');
+                $this->success('操作成功！',$jumpUrl);
             }else{
                 $this->error('写入错误！');
             }
@@ -138,6 +138,7 @@ class EquipmentController extends CommonController {
         $set = $role->where("id = ".$id)->find();
         M('Equipment_copy')->add($set);
         $result = $role->delete($id);
+		
         if($result) {
             $this->success('数据删除成功！');
         }else{
@@ -176,7 +177,7 @@ class EquipmentController extends CommonController {
         $this->display();
     }
     public function trackadd(){    
-        $stall=D('staff')->field('id,name')->select();   
+        $stall=D('staff')->where('iswork!=4')->field('id,name')->select();   
         $this->assign('staff',$stall);
         $this->display();
     }

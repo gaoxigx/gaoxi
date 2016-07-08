@@ -9,144 +9,193 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
 <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+<script type="text/javascript">
+$(function(){
+		$.validator.setDefaults({
+			submitHandler: function(from) {
+				from.submit();
+			}
+		});
 
+		$("#form1").validate({
+			rules:{
+				shiyongrenid:'required',
+				bianhao: {
+					required: true,
+				},
+				mobile: {
+					required: true,
+					number:true,
+					minlength: 11,
+					maxlength: 11
+				},	
+				cdkey: {
+					required: true,
+				},
+				xinghao:{
+						required:true,
+				},
+				daiyanren:'required',
+				endtime:'required',
+				fuzerenid:'required'
+				
+			},
+			messages: {				
+				shiyongrenid: "请选择设备使用人",
+				bianhao: {
+					required: "须填写编号",
+				},	
+				mobile: {
+					required: "请输入手机号",
+					minlength: "11位手机号",
+					maxlength: "11位手机号",
+					number: "手机格式错误"
+				},
+				cdkey:{
+					required: "须填写序列号",
+				},
+				xinghao: {
+					required: "须填写序列号",
+				},
+				daiyanren:'须填写代言人',
+				endtime:'须填写登记日期',
+				fuzerenid:'须选择设备负责人'
+			},
+			errorClass:'cerror',
+			
+		});
+	});
+</script>
 </head>
 
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    
-    <li><a href="#">首页</a></li>
-    <li><a href="#">设备管理</a></li>
-    <li><a href="#">添加设备</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">设备管理</a></li>
+			<li><a href="#">添加设备</a></li>
+		</ul>
     </div>
     
     <div class="formbody">
-    <div id="usual1" class="usual"> 
+		<div id="usual1" class="usual"> 
+			<div class="itab">
+				<ul> 
+					<li><a href="#tab1" class="selected">发布信息</a></li> 
+				</ul>
+			</div> 
     
-    <div class="itab">
-        <ul> 
-            <li><a href="#tab1" class="selected">发布信息</a></li> 
-        </ul>
-    </div> 
-    
-    <div id="tab1" class="tabson">
-    <form name="form1" id="form1" method='post' action="__URL__/update">
-    <input type="hidden" name="id" value="{$data.id}">
-    <div class="formtext">请正确填写发布信息！</div>
-    <table class="eqtable">
-        <tr>
-            <td>
-                 <ul class="forminfo">
-                    <li><label>设备使用人<b>*</b></label>
-                        <select id="shiyongrenid" name="staffid" type='text' class="sciselect">
-                            <volist name="staff" id='vo'>
-                                <option <if condition="$vo['id'] eq $data['staffid']">selected="selected"</if> value="{$vo.id}">{$vo.name}</option>
-                            </volist>
-                        </select>
-                        <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-                    </li>  
-                    <li>
-                        <label>设备类型</label>
-                        <input type="" class="dfinput" value="5s" />
-                    </li>
-                    <li><label>设备编号<b>*</b></label><input name="bianhao" type="text" class="dfinput" value="{$data.bianhao}"  /></li>
-                    <li><label>设备号码<b>*</b></label><input name="mobile" type="text" class="dfinput" value="{$data.mobile}"  />手机号</li>
-                    <li><label>设备号码1</label><input name="mobile1" type="text" class="dfinput" value="{$data.mobile1}"  />手机号</li>
-                    <li><label>序列号<b>*</b></label><input name="cdkey" type="text" class="dfinput" value="{$data.cdkey}"  /></li>
-                    <li><label>登陆微信号</label>
-                        <input name="weixinhao" type="text" class="dfinput_left" value="{$data.weixinhao}"  />
-                        <label class="pl10">微信密码</label>
-                        <input name="weixinpass" type="text" class="dfinput_left" value="{$data.weixinpass}"  />
-                    </li>
-                    <li><label>登陆淘宝账号</label>
-                        <input name="taobaohao" type="text" class="dfinput_left" value="{$data.taobaohao}"  />
-                        <label class="pl10">淘宝密码</label>
-                        <input name="taobaopass" type="text" class="dfinput_left" value="{$data.taobaopass}"  />
-                    </li>
+			<div id="tab1" class="tabson">
+				<form name="form1" id="form1" method='post' action="__URL__/update">
+					<input type="hidden" name="id" value="{$data.id}" />
+					<div class="formtext">请正确填写发布信息！</div>
+					<table class="eqtable">
+						<tr>
+							<td>
+								 <ul class="forminfo">
+									<li><label>设备使用人<b>*</b></label>
+										<select id="shiyongrenid" name="staffid" type='text' class="sciselect">
+											<volist name="staff" id='vo'>
+												<option <if condition="$vo['id'] eq $data['staffid']">selected="selected"</if> value="{$vo.id}">{$vo.name}</option>
+											</volist>
+										</select>
+										<input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+									</li>  
+									<li>
+										<label>设备类型</label>
+										<input type="" class="dfinput" value="5s" />
+									</li>
+									<li><label>设备编号<b>*</b></label><input name="bianhao" type="text" class="dfinput" value="{$data.bianhao}"  /></li>
+									<li><label>设备号码<b>*</b></label><input name="mobile" type="text" class="dfinput" value="{$data.mobile}"  />手机号</li>
+									<li><label>设备号码1</label><input name="mobile1" type="text" class="dfinput" value="{$data.mobile1}"  />手机号</li>
+									<li><label>序列号<b>*</b></label><input name="cdkey" type="text" class="dfinput" value="{$data.cdkey}"  /></li>
+									
+									
+									<li><label>登陆微信号</label>
+										<input name="weixinhao" type="text" class="dfinput_left" value="{$data.weixinhao}"  />
+										<label class="pl10">微信密码</label>
+										<input name="weixinpass" type="text" class="dfinput_left" value="{$data.weixinpass}"  />
+									</li>
+									<li><label>登陆淘宝账号</label>
+										<input name="taobaohao" type="text" class="dfinput_left" value="{$data.taobaohao}"  />
+										<label class="pl10">淘宝密码</label>
+										<input name="taobaopass" type="text" class="dfinput_left" value="{$data.taobaopass}"  />
+									</li>
 
-                    <li><label>登陆QQ账号</label>
-                        <input name="qqhao" type="text" class="dfinput_left" value="{$data.qqhao}"  />
-                        <label class="pl10">QQ密码</label>
-                        <input name="qqpass" type="text" class="dfinput_left" value="{$data.qqpass}"  />
-                    </li>
+									<li><label>登陆QQ账号</label>
+										<input name="qqhao" type="text" class="dfinput_left" value="{$data.qqhao}"  />
+										<label class="pl10">QQ密码</label>
+										<input name="qqpass" type="text" class="dfinput_left" value="{$data.qqpass}"  />
+									</li>
 
-                    <li><label>微博账号</label>
-                        <input name="weibohao" type="text" class="dfinput_left" value="{$data.weibohao}"  />
-                        <label class="pl10">微博密码</label>
-                        <input name="weibopass" type="text" class="dfinput_left" value="{$data.weibopass}"  />
-                    </li>
+									<li><label>微博账号</label>
+										<input name="weibohao" type="text" class="dfinput_left" value="{$data.weibohao}"  />
+										<label class="pl10">微博密码</label>
+										<input name="weibopass" type="text" class="dfinput_left" value="{$data.weibopass}"  />
+									</li>
 
-                    <li><label>所属分组</label>  
-                        <div class="vocation uew-select">
-                            <select id="roleid" name="roleid" class="uew-select-value">
-                            <option value="1">管理员</option>
-                            <option value="2">代言人</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li><label>设备型号<b>*</b></label><input name="xinghao" type="text" class="dfinput" value="{$data.xinghao}"  /></li>
-                    <li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value="{$data.kaijipassword}"  /></li>
-                    <li><label>设备绑定代言人</label><input name="daiyanren" type="text" class="dfinput" value="{$data.daiyanren}"  /></li>               
-                    <li><label>绑定银行卡<b>*</b></label><input name="eqbank" type="text" class="dfinput" value="{$data.eqbank}"  /></li>
-                    <li><label>银行账号名:<b>*</b></label><input name="bankname" type="text" class="dfinput" value="{$data.bankname}"  /></li>
-                   <!--  <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value="{$data.bumen}"  /></li>    
-                    <li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value="{$data.gongwei}"  /></li>  -->
-                    <li>
-						<label>登记日期<b>*</b></label>
-						<input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime("+3 month"))}"  onClick="WdatePicker()" style="width:187px;"/>
-					</li>                   
-                    <li><label>设备负责人<b>*</b></label>
-                        <select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
-                            <volist name="staff" id='vo'>
-                                <option value="{$vo.id}" <if condition="$vo['id'] eq $data['fuzerenid']"> selected="selected"</if>>{$vo.name}</option>
-                            </volist>
-                        </select>
-                        <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-                    </li>
-                    <li>
-						<label>是否使用</label>
-						<cite>
-							<input type="radio" <if condition="$data.stauts eq 1">checked="checked"</if> value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
-						</cite>
-					</li>
-                    <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="确认修改"/></li>
+									<li><label>所属分组</label>  
+										<div class="vocation uew-select">
+											<select id="roleid" name="roleid" class="uew-select-value">
+											<option value="1">管理员</option>
+											<option value="2">代言人</option>
+											</select>
+										</div>
+									</li>
+									<li><label>设备型号<b>*</b></label><input name="xinghao" type="text" class="dfinput" value="{$data.xinghao}"  /></li>
+									<li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value="{$data.kaijipassword}"  /></li>
+									<li><label>设备绑定代言人<b>*</b></label><input name="daiyanren" type="text" class="dfinput" value="{$data.daiyanren}"  /></li>               
+									<li><label>绑定银行卡</label><input name="eqbank" type="text" class="dfinput" value="{$data.eqbank}"  /></li>
+									<li><label>银行账号名</label><input name="bankname" type="text" class="dfinput" value="{$data.bankname}"  /></li>
+								   <!--  <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value="{$data.bumen}"  /></li>    
+									<li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value="{$data.gongwei}"  /></li>  -->
+									<li>
+										<label>登记日期<b>*</b></label>
+										<input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime('+3 month'))}"  onClick="WdatePicker()" style="width:187px;"/>
+									</li>                   
+									<li><label>设备负责人<b>*</b></label>
+										<select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
+											<volist name="staff" id='vo'>
+												<option value="{$vo.id}" <if condition="$vo['id'] eq $data['fuzerenid']"> selected="selected"</if>>{$vo.name}</option>
+											</volist>
+										</select>
+										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+									</li>
+									<li>
+										<label>是否使用</label>
+										<cite>
+											<input type="radio" <if condition="$data.stauts eq 1">checked="checked"</if> value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
+										</cite>
+									</li>
+									<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="确认修改"/></li>
 
-                    </ul>
-
-            </td>
-            <td>
-            <ul class="forminfo">
-                <li><label>拟定角色</label><input name="roletask" type="text" class="dfinput" value="{$data.roletask}" ></li>
-                <li><label>拟定姓名</label><input name="rolename" type="text" class="dfinput" value="{$data.rolename}" ></li>
-                <li><label>拟定身高</label><input name="roleheight" type="text" class="dfinput" value="{$data.roleheight}" ></li>
-                <li><label>拟定年龄</label><input name="roleage" type="text" class="dfinput" value="{$data.roleage}" ></li>
-                <li><label>拟定家乡</label><input name="rolevillage" type="text" class="dfinput" value="{$data.rolevillage}" ></li>
-                <li><label>拟定现居住地</label><input name="roleaddress" type="text" class="dfinput" value="{$data.roleaddress}" ></li>
-                <li><label>拟定工作地点</label><input name="roleword" type="text" class="dfinput" value="{$data.roleword}" ></li>
-                <li><label>拟定爱好</label><input name="rolehobby" type="text" class="dfinput" value="{$data.rolehobby}" ></li>
-                <li><label>拟定简介</label><input name="roleintro" type="text" class="dfinput" value="{$data.roleintro}" ></li>
-                <li><label>粉丝数量</label><input name="rolemuber" type="text" class="dfinput" value="{$data.rolemuber}" ></li>
-                <li> <label>作用</label><input name="roleeffect" type="text" class="dfinput" value="{$data.roleeffect}" ></li>        
-            </ul>
-            </td>
-        </tr>
-    </table>
-   
-    
-</form>    
-    </div> 
-    
-    
-   
-       
-    </div> 
-    
-    
+								</ul>
+							</td>
+							<td>
+								<ul class="forminfo">
+									<li><label>拟定角色</label><input name="roletask" type="text" class="dfinput" value="{$data.roletask}" ></li>
+									<li><label>拟定姓名</label><input name="rolename" type="text" class="dfinput" value="{$data.rolename}" ></li>
+									<li><label>拟定身高</label><input name="roleheight" type="text" class="dfinput" value="{$data.roleheight}" ></li>
+									<li><label>拟定年龄</label><input name="roleage" type="text" class="dfinput" value="{$data.roleage}" ></li>
+									<li><label>拟定家乡</label><input name="rolevillage" type="text" class="dfinput" value="{$data.rolevillage}" ></li>
+									<li><label>拟定现居住地</label><input name="roleaddress" type="text" class="dfinput" value="{$data.roleaddress}" ></li>
+									<li><label>拟定工作地点</label><input name="roleword" type="text" class="dfinput" value="{$data.roleword}" ></li>
+									<li><label>拟定爱好</label><input name="rolehobby" type="text" class="dfinput" value="{$data.rolehobby}" ></li>
+									<li><label>拟定简介</label><input name="roleintro" type="text" class="dfinput" value="{$data.roleintro}" ></li>
+									<li><label>粉丝数量</label><input name="rolemuber" type="text" class="dfinput" value="{$data.rolemuber}" ></li>
+									<li> <label>作用</label><input name="roleeffect" type="text" class="dfinput" value="{$data.roleeffect}" ></li>        
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</form>    
+			</div> 
+		</div>
     </div>
 
 <script type="text/javascript">

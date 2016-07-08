@@ -48,7 +48,7 @@ class WecateController extends CommonController {
     public function insert(){
         $jumpUrl =U('Console/Wecate/Wecate');
         $roleList   =   D('Wecate');
-    $count=$roleList->where(array('wechat_id'=>I('wechat_id')))->count();
+		$count=$roleList->where(array('wechat_id'=>I('wechat_id')))->count();
         if($count>0){
                 $data['status']=0;
                 $data['msg']="已存在";

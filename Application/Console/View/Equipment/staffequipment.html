@@ -62,94 +62,94 @@ $(document).ready(function(){
 <body>
 
     <div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    
-    <li><a href="#">首页</a></li>
-    <li><a href="#">手机设备</a></li>
-    <li><a href="#">设备跟踪</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+		
+			<li><a href="#">首页</a></li>
+			<li><a href="#">手机设备</a></li>
+			<li><a href="#">设备跟踪</a></li>
+		</ul>
     </div>
     
     <div class="formbody">
-    <div id="usual1" class="usual"> 
-    
-    <div class="itab">
-        <form name="form1" id="form1" enctype="multipart/form-data"  method='post'   action="__URL__/update">
-    <input type="hidden" name ="id"   value="{$data.id}">
-    <ul> 
+		<div id="usual1" class="usual">
+			<div class="itab">	
+				<input type="hidden" name ="id"   value="{$data.id}">
+				<ul> 
 
-    <li><a href="#tab1" class="selected">设备跟踪</a></li> 
-   
-    </ul>
-    </div> 
+				<li><a href="#tab1" class="selected">设备跟踪</a></li> 
+			   
+				</ul>
+			</div> 
     
-    <div id="tab1" class="tabson">
-    
-    <div class="formtext">请正确填写发布信息！</div>
-        <div class="forminfo">   
-            {$track.id} 
-            <table class="tablelist">
-            <thead>
-            <tr>      
-            <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-            <th>型号</th>
-            <th>编号</th>
-            <th>代言人</th>
-            <th>手机号</th>
-            <th>开机密码</th>
-            <th>微信</th>
-            <th>淘宝</th>
-            <th>QQ</th>
-            <th>微博</th>
-            <th>负责人</th>
-            <th>使用人</th>
-            <th>所在部门</th>
-            <th>所在工们</th>
-            <th>设备维护</th>
-            <th>添加日期</th>      
-            </tr>
-            </thead>
-            <tbody>
-            <volist name="data" id="vo">
-            <tr>            
-                <td>{$vo.id}</td>
-                <td>{$vo.xinghao}</td>
-                <td>{$vo.bianhao}</td>
-                <td>{$vo.daiyanren}</td>
-                <td>{$vo.mobile}</td>
-                <td>{$vo.kaijipassword}</td>
-                <td>{$vo.weixinhao}</td>
-                <td>{$vo.taobaohao}</td>
-                <td>{$vo.qqhao}</td>
-                <td>{$vo.weibohao}</td>
-                <td>{$vo.fuzeren}</td>
-                <td>{$vo.shiyongren}</td>
-                <td>{$vo.departmenttext}</td>
-                <td>{$vo.posttext}</td>
-                <td>{$vo.stauts|getstautsnum=###}</td>
-                <td>{$vo.addtime|date='Y-m-d',###}</td>       
-            </tr> 
-            </volist>
-            </tbody>
-        </table>
-        <div class="gettrack">           
-            <notempty  name="dataq">
-                <h2>{$vo.xinghao} 使用详情</h2>
-                <ul>
-                    <volist name="dataq" id="v">
-                    <li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> 领取，{$vo.xinghao}，{$v.get}，{$v.comment}。</li>
-                    </volist>
-                </ul>
-            </notempty>
-        </div>
-        <div class="trackget">
-            <span onclick="javascript:history.go(-1)" class="btn btn-info" style="line-height:35px; text-align:center;">返回</span>
-        </div>
-       
-        </div>
-    </div>
-   
+			<div id="tab1" class="tabson">
+				
+					<!--<div class="formtext">请正确填写发布信息！</div>-->
+					<div class="forminfo">   
+						{$track.id} 
+						<table class="tablelist">
+							<thead>
+								<tr>      
+									<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+									<th>型号</th>
+									<th>编号</th>
+									<th>代言人</th>
+									<th>手机号</th>
+									<th>开机密码</th>
+									<th>微信</th>
+									<th>淘宝</th>
+									<th>QQ</th>
+									<th>微博</th>
+									<th>负责人</th>
+									<th>使用人</th>
+									<th>所在部门</th>
+									<th>所在工们</th>
+									<th>设备维护</th>
+									<th>添加日期</th>      
+								</tr>
+							</thead>
+							<tbody>
+								<volist name="data" id="vo">
+								<tr>            
+									<td>{$vo.id}</td>
+									<td>{$vo.xinghao}</td>
+									<td>{$vo.bianhao}</td>
+									<td>{$vo.daiyanren}</td>
+									<td>{$vo.mobile}</td>
+									<td>{$vo.kaijipassword}</td>
+									<td>{$vo.weixinhao}</td>
+									<td>{$vo.taobaohao}</td>
+									<td>{$vo.qqhao}</td>
+									<td>{$vo.weibohao}</td>
+									<td>{$vo.fuzeren}</td>
+									<td>{$vo.shiyongren}</td>
+									<td>{$vo.departmenttext}</td>
+									<td>{$vo.posttext}</td>
+									<td>{$vo.stauts|getstautsnum=###}</td>
+									<td>{$vo.addtime|date='Y-m-d',###}</td>       
+								</tr> 
+								</volist>
+							</tbody>
+						</table>
+						<div class="gettrack">           
+							<notempty  name="dataq">
+								<h2>{$vo.xinghao} 使用详情</h2>
+								<ul>
+									<volist name="dataq" id="v">
+									<li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> 领取，{$vo.xinghao}，{$v.get}，{$v.comment}。</li>
+									</volist>
+								</ul>
+							</notempty>
+						</div>
+						<div class="trackget">
+							<span onclick="javascript:history.go(-1)" class="btn btn-info" style="line-height:35px; text-align:center;">返回</span>
+						</div>
+				   
+					</div>
+				
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

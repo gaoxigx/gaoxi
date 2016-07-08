@@ -30,7 +30,32 @@
 
 
     </head>
-    
+    <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+	<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+	<script type="text/javascript">
+	$(function(){
+			$.validator.setDefaults({
+				submitHandler: function(from) {
+					from.submit();
+				}
+			});
+
+			$("#form1").validate({
+				rules:{
+					wechat_id:'required',
+					nickname:'required',
+					username:'required'
+				},
+				messages: {				
+					wechat_id:'请输入微信号',
+					nickname:'请输入昵称',
+					username:'请输入姓名'
+				},
+				errorClass:'cerror',
+				
+			});
+		});
+	</script>
     <body>  
         
         
@@ -45,64 +70,62 @@
 
         <div class="formbody">
             <div id="usual1" class="usual"> 
-                 <form name="form1" id="form1" method='post' action="__URL__/edit">
-                      <if condition="$id">
-                       <input name="id" type="hidden"   value="{$id}"/>
-                      </if> 
-                <div class="itab">
-                   
-                        <ul> 
-
-                            <li><a href="#tab1" class="selected">修改信息</a></li> 
-
-                        </ul>
-                </div> 
+				<div class="itab">
+					<ul> 
+						<li><a href="#tab1" class="selected">修改信息</a></li>
+					</ul>
+				</div> 
 
                 <div id="tab1" class="tabson">
+					<form name="form1" id="form1" method='post' action="__URL__/edit">
+						<if condition="$id">
+						<input name="id" type="hidden"   value="{$id}"/>
+						</if> 
+						<div class="formtext">请正确填写个人信息！</div>
+						<ul class="forminfo">
 
-                    <div class="formtext">请正确填写个人信息！</div>
-                    <ul class="forminfo">
+							<li>
+								<label>粉丝号<b>*</b></label>                  
+								<if condition="$id">
+									<input class="dfinput" name="wechat_id" type="text"  placeholder="wechat_id" value="{$user.wechat_id}"/>
+									<else/>
+									<input class="dfinput"  name="wechat_id" type="text"  placeholder="wechat_id" />
+								</if>  
+							</li>
 
-                        <li>
-                            <label>粉丝号<b>*</b></label>                  
-                            <if condition="$id">
-                                <input class="dfinput" name="wechat_id" type="text"  placeholder="wechat_id" value="{$user.wechat_id}"/>
-                                <else/>
-                                <input class="dfinput"  name="wechat_id" type="text"  placeholder="wechat_id" />
-                            </if>  
-                        </li>
+							<li>
+								<label>昵称<b>*</b></label>                  
+								<if condition="$id">
+									<input class="dfinput" name="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
+									<else/>
+									<input class="dfinput"  name="nickname" type="text"  placeholder="nickname" />
+								</if>  
+							</li>
 
-                        <li>
-                            <label>昵称<b>*</b></label>                  
-                            <if condition="$id">
-                                <input class="dfinput" name="nickname" type="text"  placeholder="nickname" value="{$user.nickname}"/>
-                                <else/>
-                                <input class="dfinput"  name="nickname" type="text"  placeholder="nickname" />
-                            </if>  
-                        </li>
-
-                        <li>
-                            <label>姓名<b>*</b></label>                  
-                            <if condition="$id">
-                                <input class="dfinput" name="username" type="text"  placeholder="Username" value="{$user.username}"/>
-                                <else/>
-                                <input class="dfinput"  name="username" type="text"  placeholder="Username" />
-                            </if>  
-                        </li>
-                        
-                               
-                        <li><label>性别<b>*</b></label><cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
-                                  
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
-                        </div>
-
-                    </ul>
-              
+							<li>
+								<label>姓名<b>*</b></label>                  
+								<if condition="$id">
+									<input class="dfinput" name="username" type="text"  placeholder="Username" value="{$user.username}"/>
+									<else/>
+									<input class="dfinput"  name="username" type="text"  placeholder="Username" />
+								</if>  
+							</li>
+							
+								   
+							<li><label>性别<b>*</b></label><cite><input type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
+									  
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" type="submit" style="float:left;"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+								&nbsp; &nbsp; &nbsp;
+								<!--<button class="btn" type="reset" ><i class="ace-icon fa fa-undo bigger-110"></i>取消</button>-->
+								<a style="width:137px; height:35px; float:left;margin-left:50px;display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">取消</a>
+						
+							</div>
+								
+						</ul>
+					</form>
                 </div> 
-                 </form>
+                 
 
             </div>
         </div>

@@ -177,8 +177,9 @@
                 $.post(url,param,function(data){
                     if(data.status=="1"){
                         alert("添加成功");
+						window.location.reload();
                     }else{
-                        locahost.reload();
+                        alert(data.msg);
                     }
                 })
             }
