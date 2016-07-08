@@ -112,7 +112,7 @@ public function add(){
     public function delete(){
         $id = I('id');
         $role = M('check');
-        $set = $role->where("id = ".$id)->find();
+        
         $iphone = $role->delete($id);
         if($iphone) {
             $this->success('数据删除成功！');
