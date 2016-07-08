@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
 
@@ -35,103 +36,113 @@ $(document).ready(function(){
 <body>
 
 	<div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">组织结构</a></li>
-    <li><a href="#">分类管理</a></li>
-    </ul>
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">组织结构</a></li>
+			<li><a href="#">分类管理</a></li>
+		</ul>
     </div>
     
     <div class="rightinfo">
     
-    <div class="tools">
-    <!--
-    	<ul class="toolbar">
-        <li><a href="{:U('Console/Category/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加一级分类</a></li>
-         <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
-        <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
-        <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> 
+		<div class="tools">
+		<!--
+			<ul class="toolbar">
+			<li><a href="{:U('Console/Category/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>添加一级分类</a></li>
+			 <li class="click"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>修改</li>
+			<li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
+			<li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> 
 
-        </ul>
-        
-        -->
-        <ul class="toolbar1">
-        <!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
-        </ul>
-    <ul class="seachform">
-    <form action="/index.php/Console/Personnel/PerList" method="post" id="form2" name="form2">
-    <li><label>名称</label><input type="text" class="scinput" name="accounts"></li>
-    <li><label>顶级</label><input type="text" class="scinput" name="nickname"></li>
+			</ul>
+			
+			-->
+			<ul class="toolbar1">
+			<!-- <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li> -->
+			</ul>
+			<ul class="seachform">
+				<form action="/index.php/Console/Category/PList" method="post" id="form2" name="form2">
+					<li><label>名称</label><input type="text" class="scinput" name="cate_name"></li>
+					<li><label>顶级</label>
+						<div class="vocation uew-select">
+							<select name="pid" class="uew-select-value">  
+								<option value="0">请选择</option>
+								<volist name="department" id="vo">
+									<option value="{$vo['cate_id']}">{$vo['cate_name']}</option>
+								</volist>
+							</select>
+						</div>
+					</li>
 
-    <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
-    </li>
+					<li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name="">
+					</li>
+				
+				</form>
+			</ul>
+		</div>
     
-    </form></ul>
-    </div>
     
-    
-    <table class="tablelist">
-    	<thead>
-    	<tr>
-            <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-            <th>内部名称(传统名称)</th>
-            <th>父类ID</th>
-            <th>是否有下级分类</th>
-            <th>提成率</th>
-            <th>上班时间</th>  
-            <th>下班时间</th>
-            <th>排序</th>
-            <th>是否显示</th>
-            <th>是否审核</th>
-    <!--         <th>添加日期</th>
-            <th>更新日期</th> -->
-            <th>操作</th>
-        </tr>
-        </thead>
-        
-       <tbody>
-            <volist name="cateRow" id="vo">
-                <tr class="addinfo" id="tr{$vo['cate_id']}">                
-                    <td class="cate_id">{$vo['cate_id']}</td>
-                    <td>{$vo['cate_name']}</td> 
-                    <td>{$vo['cate_parent']}</td>
-                    <td>{$vo['cate_haschild']}</td>              
-                    <td>{$vo['royalty_rate']}</td>
-                    <td>{$vo['gotime']|date="H:i",###}</td> 
-                    <td>{$vo['totime']|date="H:i",###}</td>                     
-                    <td>{$vo['cate_sort']}</td>
-                    <td>{$vo['is_show']}</td>
-                    <td>{$vo['status']}</td>
-         <!--            <td>{$vo['addtime']}</td>
-                    <td>{$vo['uptime']}</td> -->
-                    <td>
-                        <a href="__URL__/add/pid/{$vo['cate_id']}" class="tablelink">添加子类</a>
-                        <a href="__URL__/edit/cate_id/{$vo['cate_id']}" class="tablelink">修改</a>
-                        <a href="__URL__/delete/cate_id/{$vo['cate_id']}" class="tablelink" >删除</a>
-                    </td>
-                </tr>
-            </volist>
-        </tbody>
-    </table>
-　　{$page}    
-    <div class="tip">
-    	<div class="tiptop"><span>提示信息</span><a></a></div>
-        
-      <div class="tipinfo">
-        <span><img src="__PUBLIC__/Console/images/ticon.png" /></span>
-        <div class="tipright">
-        <p>是否确认对信息的修改 ？</p>
-        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-        </div>
-        </div>
-        
-        <div class="tipbtn">
-        <input name="" type="button"  class="sure" value="确定" />&nbsp;
-        <input name="" type="button"  class="cancel" value="取消" />
-        </div>
-    
-    </div>   
+		<table class="tablelist">
+			<thead>
+			<tr>
+				<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+				<th>内部名称(传统名称)</th>
+				<th>父类ID</th>
+				<th>是否有下级分类</th>
+				<th>提成率</th>
+				<th>上班时间</th>  
+				<th>下班时间</th>
+				<th>排序</th>
+				<th>是否显示</th>
+				<th>是否审核</th>
+		<!--         <th>添加日期</th>
+				<th>更新日期</th> -->
+				<th>操作</th>
+			</tr>
+			</thead>
+			
+		   <tbody>
+				<volist name="cateRow" id="vo">
+					<tr class="addinfo" id="tr{$vo['cate_id']}">                
+						<td class="cate_id">{$vo['cate_id']}</td>
+						<td>{$vo['cate_name']}</td> 
+						<td>{$vo['cate_parent']}</td>
+						<td>{$vo['cate_haschild']}</td>              
+						<td>{$vo['royalty_rate']}</td>
+						<td>{$vo['gotime']|date="H:i",###}</td> 
+						<td>{$vo['totime']|date="H:i",###}</td>                     
+						<td>{$vo['cate_sort']}</td>
+						<td>{$vo['is_show']}</td>
+						<td>{$vo['status']}</td>
+			 <!--            <td>{$vo['addtime']}</td>
+						<td>{$vo['uptime']}</td> -->
+						<td>
+							<a href="__URL__/add/pid/{$vo['cate_id']}" class="tablelink">添加子类</a>
+							<a href="__URL__/edit/cate_id/{$vo['cate_id']}" class="tablelink">修改</a>
+							<a href="__URL__/delete/cate_id/{$vo['cate_id']}" class="tablelink" >删除</a>
+						</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+　　	{$page}    
+		<div class="tip">
+			<div class="tiptop"><span>提示信息</span><a></a></div>
+			
+		  <div class="tipinfo">
+			<span><img src="__PUBLIC__/Console/images/ticon.png" /></span>
+			<div class="tipright">
+			<p>是否确认对信息的修改 ？</p>
+			<cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+			</div>
+			</div>
+			
+			<div class="tipbtn">
+			<input name="" type="button"  class="sure" value="确定" />&nbsp;
+			<input name="" type="button"  class="cancel" value="取消" />
+			</div>
+		
+		</div>   
     
     </div>    
     <script type="text/javascript">

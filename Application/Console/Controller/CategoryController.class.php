@@ -20,16 +20,38 @@ class CategoryController extends CommonController {
     //栏目列表页
 
     public function PList(){
-       $cateObj = D('category');
-        $cateRow = $cateObj->order(array('cate_parent'=>'asc'))->select();//查询数据时对parent父级排序
-        $treeObj = new \Lib\Tree();//引用Tree类
-        $row = $treeObj->getTree($cateRow,$pid = 0, $col_id = 'cate_id', $col_pid = 'cate_parent', $col_cid = 'cate_haschild');//$col_id,$col_pid,$col_cid对应分类表category中的字段
-        // dump($row);
-        $this->assign('cateRow', $row);
-        // dump($row);
+		$cate_name = I('cate_name');
+		$parent_id = I('pid');
+		if($cate_name != ''){
+			$map['cate_name'] = array('like','%'.$cate_name.'%');
+		}
+		if($parent_id != '' && $parent_id != 0){
+			$map['cate_parent'] = $parent_id;
+			$pid = $parent_id;
+		}else{
+			$pid = 0;
+		}
+		$map['_logic'] = 'or';
+		
+		$cateObj = D('category');
+        $cateRow = $cateObj->where($map)->order(array('cate_parent'=>'asc'))->select();//查询数据时对parent父级排序
+        
+		$treeObj = new \Lib\Tree();//引用Tree类
+        $row = $treeObj->getTree($cateRow,$pid = $pid, $col_id = 'cate_id', $col_pid = 'cate_parent', $col_cid = 'cate_haschild');//$col_id,$col_pid,$col_cid对应分类表category中的字段
+       
+        $department = $this->GetDepartment();
+		
+		$this->assign('department', $department);
+		$this->assign('cateRow', $row);
+       
         $this->display('PList');
     }
-
+	
+	public function GetDepartment(){
+		$department = D('category')->where('cate_parent=0')->select();
+		return $department;
+	}
+	
 public function add($pid=0){
 //添加时把父级分类的“cate_haschild”字段更新为1
     $nodeModel=D('node');
@@ -99,7 +121,7 @@ public function edit($cate_id){
 		$node[$k]['child'] = $node_child;
 	}
 	
-    $selectNode=D('Access')->where('role_id='.$cate_id)->getfield('node_id,module',true);        
+    $selectNode=D('Access')->where('role_id='.$cate_id)->getfield('node_id,module',true);    
     $this->assign('vo',$roleList->find($cate_id));
     $this->assign("node",$node);
     $this->assign('selectNode',$selectNode);
