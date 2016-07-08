@@ -28,9 +28,10 @@ class IncomeController extends CommonController {
     //进账单列表
     public function Plist(){
         $User = M('order_info'); // 实例化User对象 
-        $data=$User->select(); 
-
-
+		if(I('order_no') != '' || I('order_no') != 0){
+			$map['order_no'] = array('like','%'.I('order_no').'%');
+		}
+       
         $count = $User->where($map)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
