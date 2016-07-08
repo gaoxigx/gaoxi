@@ -105,8 +105,6 @@ class StaffController extends CommonController {
             $map1['nickname']  = array('like','%'.trim($username).'%');
             $map1['username']  = array('like','%'.trim($username).'%');
             $map1['name']  = array('like','%'.trim($username).'%');
-            $map1['section']  = array('like','%'.trim($username).'%');
-            $map1['identity_card']  = array('like','%'.trim($username).'%');
             $map1['mobile']  = array('like','%'.trim($username).'%');              
             $map1['_logic'] = 'or';
             $map['_complex'] = $map1;
