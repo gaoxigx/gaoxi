@@ -48,6 +48,7 @@ class SalaryController extends CommonController{
 			$month_days = date('d',$last_time);
 			
 			$map_check['name'] = $v['name'];
+			$map_check["FROM_UNIXTIME(count_time,'%Y-%m')"] = $cur_month;
 			$check_info = D('check')->field('gh_id,late_mi,leave_mi,truant,leave,turn')->where($map_check)->find();
 			
 			$ondays = floor(($last_time - $v['entry_time'])/(3600*24)); 

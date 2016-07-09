@@ -109,6 +109,7 @@ class ExcelController extends CommonController {
 				}
 				if($count_time == 1){
 					$data['calculated'] = $currentSheet->getCell('B2')->getValue();
+					$data['count_time'] = strtotime(substr($data['calculated'],0,7));
 				}
 				if($v['is_where'] == 1){
 					$map[$v['column_name']]  = $data[$v['column_name']];   
@@ -137,7 +138,7 @@ class ExcelController extends CommonController {
 	}
 	
 	/**
-	 *表格处理-默认第一张表，有规则表
+	 *表格处理-默认第一张表，不规则表
 	 * $filename:导入的文件名称
 	 * $columns:字段与表对应数组-二维
 	 * $table:保存数据的表

@@ -26,6 +26,7 @@
 						gh_id:'required',
 						name:'required',
 						bumen:'required',
+						count_month:'required',
 						hours_bz:'required',
 						hours_sj:'required',
 						turn:'required'
@@ -34,6 +35,7 @@
 						gh_id:'请输入工号',
 						name:'请输入姓名',
 						bumen:'请输入部门名称',
+						count_month:'请选择统计月份',
 						hours_bz:'请输入标准工作时数',
 						hours_sj:'请输入实际工作时数',
 						turn:'请输入出勤天数'
@@ -69,6 +71,30 @@
                                 <li><label>工号<b>*</b></label><input name="gh_id" id="accounts" type="text" class="dfinput" value=""  /></li>
                                 <li><label>姓名<b>*</b></label><input name="name" id="username" type="text" class="dfinput" value=""  /></li>
                                 <li><label>所属部门<b>*</b></label><input name="bumen" id="bumen" type="text" class="dfinput" value=""  /></li>
+                                <li>
+									<label>统计年份<b>*</b></label>
+									<input name="count_year" type="text" class="dfinput" value="{$cur_year}"  />
+								</li>
+								<li>
+									<label>统计月份<b>*</b></label>
+									<div class="vocation uew-select">
+										<select name="count_month" class="uew-select-value"> 
+											<option value="0">请选择月份</option>
+											<option value="1">1月</option>
+											<option value="2">2月</option>
+											<option value="3">3月</option>
+											<option value="4">4月</option>
+											<option value="5">5月</option>
+											<option value="6">6月</option>
+											<option value="7">7月</option>
+											<option value="8">8月</option>
+											<option value="9">9月</option>
+											<option value="10">10月</option>
+											<option value="11">11月</option>
+											<option value="12">12月</option>
+										</select>
+									</div>
+								</li>
                                 <li><label>工作时数(标准)<b>*</b></label><input name="hours_bz" style="width: 50px" id="hours_bz" type="text" class="dfinput" value="00"  />小时<input name="hours_bz1" style="width: 50px" id="hours_bz1" type="text" class="dfinput" value="00"  />分钟</li>  
                                 <li><label>工作时数(实际)<b>*</b></label><input name="hours_sj" style="width: 50px" id="hours_sj" type="text" class="dfinput" value="00"  />小时<input name="hours_sj1" style="width: 50px" id="hours_sj1" type="text" class="dfinput" value="00"  />分钟</li>  
                                 <li><label>迟到(次数)</label><input name="late_tm" id="late_tm" type="text" class="dfinput" value=""  /></li>

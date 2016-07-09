@@ -72,7 +72,31 @@
                                 <li><label>工号<b>*</b></label><input name="gh_id" id="accounts" type="text" class="dfinput" value="{$info.gh_id}"  /></li>
                                 <li><label>姓名<b>*</b></label><input name="name" id="username" type="text" class="dfinput" value="{$info.name}"  /></li>
                                 <li><label>所属部门<b>*</b></label><input name="bumen" id="bumen" type="text" class="dfinput" value="{$info.bumen}"  /></li>
-                                <li><label>工作时数(标准)<b>*</b></label><input name="hours_bz" style="width: 50px" id="hours_bz" type="text" class="dfinput" value="{$info['hours_bz']|timearray='h',###}"  />小时<input name="hours_bz1" style="width: 50px" id="hours_bz1" type="text" class="dfinput" value="{$info['hours_bz']|timearray='s',###}"  />分钟</li>  
+                                <li>
+									<label>统计年份<b>*</b></label>
+									<input name="count_year" type="text" class="dfinput" value="{$info.count_time|date='Y',###}"  />
+								</li>
+								<li>
+									<label>统计月份<b>*</b></label>
+									<div class="vocation uew-select">
+										<select name="count_month" class="uew-select-value"> 
+											<option value="0">请选择月份</option>
+											<option value="1" <if condition="$info.count_month eq 1">selected="selected"</if> >1月</option>
+											<option value="2" <if condition="$info.count_month eq 2">selected="selected"</if> >2月</option>
+											<option value="3" <if condition="$info.count_month eq 3">selected="selected"</if> >3月</option>
+											<option value="4" <if condition="$info.count_month eq 4">selected="selected"</if> >4月</option>
+											<option value="5" <if condition="$info.count_month eq 5">selected="selected"</if> >5月</option>
+											<option value="6" <if condition="$info.count_month eq 6">selected="selected"</if> >6月</option>
+											<option value="7" <if condition="$info.count_month eq 7">selected="selected"</if> >7月</option>
+											<option value="8" <if condition="$info.count_month eq 8">selected="selected"</if> >8月</option>
+											<option value="9" <if condition="$info.count_month eq 9">selected="selected"</if> >9月</option>
+											<option value="10" <if condition="$info.count_month eq 10">selected="selected"</if> >10月</option>
+											<option value="11" <if condition="$info.count_month eq 11">selected="selected"</if> >11月</option>
+											<option value="12" <if condition="$info.count_month eq 12">selected="selected"</if> >12月</option>
+										</select>
+									</div>
+								</li>
+								<li><label>工作时数(标准)<b>*</b></label><input name="hours_bz" style="width: 50px" id="hours_bz" type="text" class="dfinput" value="{$info['hours_bz']|timearray='h',###}"  />小时<input name="hours_bz1" style="width: 50px" id="hours_bz1" type="text" class="dfinput" value="{$info['hours_bz']|timearray='s',###}"  />分钟</li>  
                                 <li><label>工作时数(实际)<b>*</b></label><input name="hours_sj" style="width: 50px" id="hours_sj" type="text" class="dfinput" value="{$info['hours_sj']|timearray='h',###}"  />小时<input name="hours_sj1" style="width: 50px" id="hours_sj1" type="text" class="dfinput" value="{$info['hours_sj']|timearray='s',###}"  />分钟</li>  
                                 <li><label>迟到(次数)<b></b></label><input name="late_tm" id="late_tm" type="text" class="dfinput" value="{$info.late_tm}"  /></li>
                                 <li><label>迟到(分钟)<b></b></label><input name="late_mi" id="late_mi" type="text" class="dfinput" value="{$info.late_mi}"  /></li>
