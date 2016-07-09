@@ -4,12 +4,15 @@ use Think\Controller;
 class SalaryController extends CommonController{
 	public function index(){
 		$keywords = I('keywords');
+		$count_time = I('count_time');
+		
 		$map['iswork'] = array('neq',4);
 		if($keywords != ''){
 			$map1['name'] = array('like','%'.$keywords.'%');
 			$map1['departmenttext'] = array('like','%'.$keywords.'%');
 			$map1['_logic'] = 'or';
             $map['_complex'] = $map1;
+			$param['keywords'] = $keywords;
 			$parameter['keywords'] = $keywords;
 		}
 		
@@ -17,13 +20,19 @@ class SalaryController extends CommonController{
 		$count = $Staff->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,17,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show = $Page->show();// 分页显示输出
-		$staff = $Staff->where($map)->limit($Page->firstRow.','.$Page->listRows)->getField('id,name,departmenttext,quarters,posttext,entry_time,become,iswork,salaryss,salaryzz,housing,traffic,catering,phone');
+		$staff = $Staff->where($map)->limit($Page->firstRow.','.$Page->listRows)->getField('id,name,departmenttext,quarters,posttext,entry_time,positivetime,become,iswork,salaryss,salaryzz,housing,traffic,catering,phone');
+		if($count_time != ''){
+			$cur_month_time = strtotime($count_time);
+		}else{
+			$cur_month_time = time();
+		}
 		
-		$cur_month_time = time();
 		$month_holiday = 4;
 		$statutory_holiday = 0;//法定假期
 		$param['cur_month_time'] = $cur_month_time;
 		$param['now_time'] = time();
+		$param['count_time'] = $count_time;
+		
 		
 		foreach($staff as $k=>$v){
 			if($v['become'] == 1){
@@ -51,7 +60,8 @@ class SalaryController extends CommonController{
 			$map_check["FROM_UNIXTIME(count_time,'%Y-%m')"] = $cur_month;
 			$check_info = D('check')->field('gh_id,late_mi,leave_mi,truant,leave,turn')->where($map_check)->find();
 			
-			$ondays = floor(($last_time - $v['entry_time'])/(3600*24)); 
+			$ondays = floor(($last_time - $v['entry_time'])/(3600*24));
+			$positivetime_days = floor(($last_time - $v['positivetime'])/(3600*24));//转正的天数
 			$real_days = explode('/',$check_info['turn']);
 			$real_days = $real_days[1];
 			

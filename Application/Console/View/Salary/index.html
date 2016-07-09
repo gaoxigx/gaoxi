@@ -56,7 +56,8 @@ $(document).ready(function(){
 
                 <ul class="seachform">
                     <form action="/index.php/Console/Salary/index" method="post" id="form2" name="form2">            
-                        <li><label>搜索</label><input type="text" class="scinpute" name="keywords" value="" title="请输入姓名或部门"></li>
+                        <li><label>搜索</label><input type="text" class="scinpute" name="keywords" value="{$param.keywords}" title="请输入姓名或部门"></li>
+						<li><label>统计日期(年-月)</label><input type="text" class="scinpute" name="count_time" value="{$param.count_time}" ></li>
                         <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     </form>
 					<li style="float:right"><label>统计时间:</label><a style="line-height:32px; color: red;">{$param.now_time|date='Y-m-d',###}</a></li> 
