@@ -20,7 +20,7 @@ function getprotype(){
 }
 function getstaffname(){
     $model=D("staff");
-    $data=$model->getfield('id,name',true);
+    $data=$model->where('iswork!=4')->getfield('id,name',true);
     return $data;
 }
 function getstautel($param){
