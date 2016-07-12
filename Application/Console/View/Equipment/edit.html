@@ -104,7 +104,14 @@ $(function(){
 											</volist>
 										</select>
 										<input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-									</li>  
+									</li> 
+									<li><label>设备地址</label>          
+										<select name="addr_id" type='text' class="sciselect">                           
+											<option value="0">请选择地址</option>
+											<option value="1" <if condition="$data.addr_id eq 1">selected="selected"</if>>广东省</option>
+											<option value="2" <if condition="$data.addr_id eq 2">selected="selected"</if>>山东省</option>
+										</select>
+									</li>
 									<li>
 										<label>设备类型</label>
 										<input type="" class="dfinput" value="5s" />

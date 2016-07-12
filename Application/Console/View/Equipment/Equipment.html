@@ -59,6 +59,14 @@ $(document).ready(function(){
             <ul class="seachform">
                 <form action="/index.php/Console/Equipment/Equipment" method="post" id="form2" name="form2">            
                     <li><label>搜索</label><input type="text" class="scinpute" name="username" value="" title="请输入型号/编号/代言人/设备号码/微信号/负责人/使用人"></li>
+                    <li>
+						<label>设备地址</label>
+						<select name="addr_id" type='text' class="sciselect">                           
+							<option value="0">请选择地址</option>
+							<option value="1" <if condition="$param.addr_id eq 1">selected="selected"</if>>广东省</option>
+							<option value="2" <if condition="$param.addr_id eq 2">selected="selected"</if>>山东省</option>
+						</select>
+					</li>
                     <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                     <li class="click"><label>统计手机共{$count}部</label></li>
                 </form>
@@ -75,9 +83,9 @@ $(document).ready(function(){
 				<th>序列号</th>
 				<th>型号</th>
 				<th>编号</th>
-
 				<th>代言人</th>
 				<th>手机号</th>
+				<th>设备地址</th>
 				<th>开机密码</th>
 				<th>微信</th>
 				<th>淘宝</th>
@@ -103,6 +111,13 @@ $(document).ready(function(){
 					<td>{$vo.bianhao}</td>
 					<td>{$vo.daiyanren}</td>
 					<td>{$vo.mobile}</td>
+					<td>
+						<if condition="$vo.addr_id eq 1">
+						广东省
+						<elseif condition="$vo.addr_id eq 2"/>
+						山东省
+						</if>
+					</td>
 					<td>{$vo.kaijipassword}</td>
 					<td>{$vo.weixinhao}</td>
 					<td>{$vo.taobaohao}</td>

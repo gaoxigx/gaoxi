@@ -10,10 +10,16 @@ class EquipmentController extends CommonController {
          $staffid=D('staff')->getthislevel();//当前职员下的员工；
  
         $this->assign('staff',$staff);
-
-        $username = i('username');
+		$addr_id = i('addr_id');
+		$username = i('username');
+		if($addr_id != 0 && $addr_id != ''){
+			$where['addr_id'] = $addr_id;
+			$parameter['addr_id'] = $addr_id;
+		}
+		
         if($username){
-            $where['xinghao']  = array('like','%'.trim($username).'%');
+            $parameter['username'] = $username;
+			$where['xinghao']  = array('like','%'.trim($username).'%');
             $where['bianhao']  = array('like','%'.trim($username).'%');
             $where['daiyanren']  = array('like','%'.trim($username).'%');
             $where['et.mobile']  = array('like','%'.trim($username).'%');
@@ -27,14 +33,13 @@ class EquipmentController extends CommonController {
                 unset( $arr[$k] );  
         }   
 
-
         //分页跳转的时候保证查询条件
         foreach($username as $key=>$val) {
             if(!$val){
                 unset($map[$key]);
             }else{
-            $Page->parameter[$key]   =   urlencode($val);
-              }
+				$Page->parameter[$key]   =   urlencode($val);
+            }
         }
         $User = M('Equipment'); // 实例化User对象
         
@@ -49,7 +54,7 @@ class EquipmentController extends CommonController {
         }    
 
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
-        $Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
@@ -58,7 +63,8 @@ class EquipmentController extends CommonController {
                 ->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
-        $this->assign('count',$count);
+		$this->assign('count',$count);
+        $this->assign('param',$parameter);
         $this->display(); // 输出模板
     }
     public function img(){
