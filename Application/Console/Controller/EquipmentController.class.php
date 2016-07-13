@@ -19,6 +19,7 @@ class EquipmentController extends CommonController {
 		
         if($username){
             $parameter['username'] = $username;
+			$where['cdkey']  = array('like','%'.trim($username).'%');
 			$where['xinghao']  = array('like','%'.trim($username).'%');
             $where['bianhao']  = array('like','%'.trim($username).'%');
             $where['daiyanren']  = array('like','%'.trim($username).'%');
