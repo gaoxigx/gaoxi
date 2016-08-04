@@ -162,7 +162,9 @@ $(document).ready(function(){
                                 <tr>
                                     <td>{$val.staff_name}</td>
 									<td>{$val.xinghao}</td>
-                                    <td>{$val.get}</td>
+                                    <td>
+										{$val.get|getorderget=###}
+									</td>
                                     <td>
 										<if condition="$val.status == 1">
 										已领取
