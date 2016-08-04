@@ -41,6 +41,8 @@ $(function(){
 				sex:'required',
 				identity_card:{
 					required:true,
+					minlength:15,
+					maxlength:18
 				},
 				mobile:{
 					required:true,
@@ -49,10 +51,18 @@ $(function(){
 					maxlength:11
 				},
 				education1:'required',
+				urgency:'required',
 				phone_ugy:{
+					required:true,
 					number:true,
 					minlength:11,
 					maxlength:11
+				},
+				bankaddress:'required',
+				bank_account:{
+					required:true,
+					minlength:16,
+					maxlength:16
 				},
 			},
 			messages:{				
@@ -91,7 +101,9 @@ $(function(){
 				},	
 				sex:'请选择性别',	
 				identity_card:{
-					required:'请输入省份证号码',
+					required:'请输入身份证号码',
+					minlength:'15位号码',
+					maxlength:'18位号码'
 				},
 				mobile:{
 					required:'请输入手机号码',
@@ -100,11 +112,19 @@ $(function(){
 					maxlength:'11位手机号码'
 				},
 				education1:'请选择学历',
+				urgency:'请输入紧急联系人',
 				phone_ugy:{
+					required:'请输入紧急联系电话',
 					number:'手机号码格式错误',
 					minlength:'11位手机号码',
 					maxlength:'11位手机号码'
-				}
+				},
+				bankaddress:'请输入银行名称',
+				bank_account:{
+					required:'请输入银行卡号',
+					minlength:'16位银行卡号',
+					maxlength:'16位银行卡号'
+				},
 			},
 			errorClass:'cerror',
 		});

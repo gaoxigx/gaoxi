@@ -338,7 +338,7 @@
                             </li>
 
                             <li>
-                                <label>紧急联系人</label>                                   
+                                <label>紧急联系人<b>*</b></label>                                   
                                 <if condition="$id">
                                     <input class="dfinput" name="urgency" type="text"  placeholder="urgency" value="{$user.urgency}"/>
                                     <else/>
@@ -347,14 +347,14 @@
                             </li>
 
                             <li>
-                                <label>电话</label>                                   
+                                <label>电话<b>*</b></label>                                   
                                 <if condition="$id">
                                     <input class="dfinput" name="phone_ugy" id="phone_ugy" type="text"  placeholder="phone_ugy" value="{$user.phone_ugy}"/>
                                     <else/>
                                     <input class="dfinput"  name="phone_ugy" id="phone_ugy" type="text"  placeholder="phone_ugy" />
                                 </if>                                      
                             </li>                              
-
+							<!--
                             <li><label>开户行<b></b></label>  
                                 <div class="vocation uew-select">
                                     <div class="col-sm-9">
@@ -368,10 +368,17 @@
                                         <input type="hidden" id="banckaddresstext" name="bankaddresstext" value="{$user.bankaddresstext}" />
                                     </div>
                                 </div>
-                            </li>   
-
+                            </li> -->  
+							<li>
+                                <label>银行名称<b>*</b></label>                                   
+                                <if condition="$user.bankaddress">
+                                    <input class="dfinput" name="bankaddress" id="bankaddress" type="text"  placeholder="banckaddress" value="{$user.bankaddress}"/>
+                                    <else/>
+                                    <input class="dfinput"  name="bankaddress" id="bankaddress" type="text"  placeholder="bankaddress" />
+                                </if>                                      
+                            </li>  
                             <li>
-                                <label>银行账号<b></b></label>                                   
+                                <label>银行账号<b>*</b></label>                                   
                                 <if condition="$id gt 0">
                                     <input class="dfinput" name="bank_account" id="bank_account" type="text"  placeholder="bank_account" value="{$user.bank_account}"/>
                                     <else/>

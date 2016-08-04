@@ -6,8 +6,8 @@ class EquipmentController extends CommonController {
 
     //数据列表
     public function Equipment($name=''){
-         $staff=D('staff')->getField('id,name',true);
-         $staffid=D('staff')->getthislevel();//当前职员下的员工；
+         $staff=D('staff')->where('iswork!=4')->getField('id,name',true);
+         $staffid=D('staff')->where('iswork!=4')->getthislevel();//当前职员下的员工；
  
         $this->assign('staff',$staff);
 		$addr_id = i('addr_id');
@@ -76,7 +76,7 @@ class EquipmentController extends CommonController {
     public function add(){
 
         //得到所有职员
-        $staff=D('staff')->select();
+        $staff=D('staff')->where('iswork!=4')->select();
         $this->assign('staff',$staff);
         //得到所有部门
         $department=D('Category')->department();
@@ -108,7 +108,7 @@ class EquipmentController extends CommonController {
         
         $data =   $controller->find($id);
         if($data) {
-            $staff=D('staff')->select();
+            $staff=D('staff')->where('iswork!=4')->select();
             $department=D('Category')->department();
 			
 			$this->assign('staff',$staff);

@@ -22,6 +22,7 @@ $(function(){
 		$("#form1").validate({
 			rules:{
 				shiyongrenid:'required',
+				addr_id:'required',
 				bianhao: {
 					required: true,
 				},
@@ -44,6 +45,7 @@ $(function(){
 			},
 			messages: {				
 				shiyongrenid: "请选择设备使用人",
+				addr_id:'请选择设备地址',
 				bianhao: {
 					required: "须填写编号",
 				},	
@@ -106,8 +108,7 @@ $(function(){
 										<input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
 									</li> 
 									<li><label>设备地址</label>          
-										<select name="addr_id" type='text' class="sciselect">                           
-											<option value="0">请选择地址</option>
+										<select name="addr_id" type='text' class="sciselect">
 											<option value="1" <if condition="$data.addr_id eq 1">selected="selected"</if>>广东省</option>
 											<option value="2" <if condition="$data.addr_id eq 2">selected="selected"</if>>山东省</option>
 										</select>
@@ -183,6 +184,7 @@ $(function(){
 
 								</ul>
 							</td>
+							<!--
 							<td>
 								<ul class="forminfo">
 									<li><label>拟定角色</label><input name="roletask" type="text" class="dfinput" value="{$data.roletask}" ></li>
@@ -197,7 +199,7 @@ $(function(){
 									<li><label>粉丝数量</label><input name="rolemuber" type="text" class="dfinput" value="{$data.rolemuber}" ></li>
 									<li> <label>作用</label><input name="roleeffect" type="text" class="dfinput" value="{$data.roleeffect}" ></li>        
 								</ul>
-							</td>
+							</td>-->
 						</tr>
 					</table>
 				</form>    
