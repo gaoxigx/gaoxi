@@ -196,7 +196,7 @@ class EquipmentController extends CommonController {
            try{
                 M()->startTrans();
                 $data['gettime']=time();
-                $data['status']=1;
+                $data['status']=2;
                 $data['type']=1;
                 $result=$track->add($data);
                 $map['id']=$data['equipment_id'];
@@ -225,7 +225,22 @@ class EquipmentController extends CommonController {
         }
         
     }
-
+	//确认领取设备
+	public function verify(){
+		$id=I('id');
+		$status=I('status');
+		$data['status'] = $status;
+		$data['gettime'] = time();
+		
+		$Eqtracking = D('Eqtracking')->where('id=%d',array($id))->setField($data);
+		if($Eqtracking){
+			$this->ajaxreturn(array('result'=>1,'msg'=>'领取成功'));
+		}else{
+			$this->ajaxreturn(array('result'=>0,'msg'=>'领取失败'));
+		}
+	}
+	
+	
     public function lookfpind(){
         $this->display();
     }

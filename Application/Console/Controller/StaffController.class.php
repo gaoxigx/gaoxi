@@ -209,7 +209,7 @@ class StaffController extends CommonController {
         if($id){
              $user = $model->where("id=".$id)->find(); 
          } 
-		
+		$eqtrack = $this->getEqtrack($id);
 		$Equipment = D('Equipment')->where('staffid='.$id)->select();
 		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
 		
@@ -229,19 +229,29 @@ class StaffController extends CommonController {
 		
 		$this->GetCateName();
 		$this->GetEducationName();
-		 $this->assign("stafftake",D('StaffTake')->tackfind(I("id")));
-         $this->assign('department',D('Category')->department());
-
-		 $this->assign('quarters',$quarters);
-		 $this->assign('subordinates',$subordinates);
-		 $this->assign('Equipment',$Equipment);
-		 $this->assign('order_nums',$order_nums);
-		 $this->assign('subordinatesUsers',$subordinatesUsers);
-         $this->assign('user',$user);
-         $this->assign('id',$id);
-         $this->display();
+		$this->assign("stafftake",D('StaffTake')->tackfind(I("id")));
+        $this->assign('department',D('Category')->department());
+		 
+		$this->assign('eqtrack',$eqtrack);
+		$this->assign('quarters',$quarters);
+		$this->assign('subordinates',$subordinates);
+		$this->assign('Equipment',$Equipment);
+		$this->assign('order_nums',$order_nums);
+		$this->assign('subordinatesUsers',$subordinatesUsers);
+        $this->assign('user',$user);
+        $this->assign('id',$id);
+        $this->display();
 
     }
+	
+	protected function getEqtrack($staff_id){
+		$data = D('Eqtracking')->where('staff_id=%d',array($staff_id))->select();
+		foreach($data as $k=>$v){
+			$Equipmentinfo = D('Equipment')->where('id='.$v['equipment_id'])->find();
+			$data[$k]['xinghao'] = $Equipmentinfo['xinghao'];
+		}
+		return $data;
+	}
 	
 	/**
 	 *所有类别名称，根据分类ID获取名称，键值为分类ID

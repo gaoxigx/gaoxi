@@ -137,7 +137,7 @@ $(document).ready(function(){
 							<h2>{$vo.xinghao} 使用详情</h2>
 							<ul>
 								<volist name="dataq" id="v">
-								<li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> 领取，{$vo.xinghao}，{$v.get|getorderget=###}，{$v.comment}。</li>
+								<li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> <if condition="$v.status == 1">已领取<elseif condition="$v.status == 2"/>领取<else/>未领取</if>，{$vo.xinghao}，{$v.get|getorderget=###}，{$v.comment}。</li>
 								</volist>
 							</ul>
 						</notempty>

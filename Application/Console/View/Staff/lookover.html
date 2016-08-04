@@ -324,7 +324,7 @@
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                     </table>
 
-                    <div class="formtext" style="line-height:76px;">设备信息</div>
+                    <div class="formtext" style="line-height:76px;">使用设备信息</div>
                     <div class="gwc" style=" margin:auto;">
                         <table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
                             <tr style="background:#d0e7fa;">
@@ -347,6 +347,43 @@
                                     <td class="tb2_td1" style="height:35px;">{$val.gongwei}</td>
                                     <td class="tb2_td1" style="height:35px;">{$val.stauts|getstautsnum=###}</td>
                                     <td class="tb2_td1" style="height:35px;">{$val.addtime|date='Y-m-d',###}</td>
+                                </tr>
+                            </foreach>
+                        </table>
+                    </div>
+					<div class="formtext" style="line-height:76px;">领取设备信息</div>
+                    <div class="gwc" style=" margin:auto;">
+                        <table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+                            <tr style="background:#d0e7fa;">
+                                <td class="tb1_td1" style="height:35px;">型号</td>
+                                <td class="tb1_td1" style="height:35px;">设备用途</td>
+                                <td class="tb1_td1" style="height:35px;">状态</td>
+								<td class="tb1_td1" style="height:35px;">备注</td>
+                                <td class="tb1_td1" style="height:35px;"> 领取时间</td>
+								<td class="tb1_td1" style="height:35px;"> 操作</td>
+                            </tr>
+                            <foreach name="eqtrack" item="val">
+                                <tr>
+                                    <td class="tb2_td1" style="height:35px;">{$val.xinghao}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.get}</td>
+                                    <td class="tb2_td1" style="height:35px;">
+										<if condition="$val.status == 1">
+										已领取
+										<elseif condition="$val.status == 2"/>
+										领取中
+										<else/>
+										未领取
+										</if>
+									</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.comment}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.gettime|date='Y-m-d H:i:s',###}</td>
+									<td class="tb2_td1" style="height:35px;">
+										<if condition="$val.status != 1">
+										<a href="javascript:;" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']});">确认领取</a>
+										<else/>
+										已领取
+										</if>					
+									</td>
                                 </tr>
                             </foreach>
                         </table>
@@ -431,5 +468,17 @@
             </div> 
         </div>
     </body>
-
+	<script>
+		function verify(obj,id){
+			var url = $(obj).attr('data_url');
+			if(confirm('确定领取吗')){
+				$.post(url,{id:id,status:1},function(data){
+					alert(data.msg);
+					if(data.result == 1){
+						window.location.reload();
+					}
+				})
+			}
+		}
+	</script>
 </html>
