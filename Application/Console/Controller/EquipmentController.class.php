@@ -169,10 +169,23 @@ class EquipmentController extends CommonController {
         $track=D('Equipment')->where($map)->find();
         $mapq['equipment_id']=I('get.id');
         $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select(); 
-        $this->assign('dataq',$trackeq);
+        $eqtrack = $this->getEqtrack();
+		
+		$this->assign('eqtrack',$eqtrack);
+		$this->assign('dataq',$trackeq);
         $this->assign('vo',$track);
         $this->display();
     }
+	
+	protected function getEqtrack(){
+		$data = D('Eqtracking')->where('status!=1')->select();
+		foreach($data as $k=>$v){
+			$Equipmentinfo = D('Equipment')->where('id='.$v['equipment_id'])->find();
+			$data[$k]['xinghao'] = $Equipmentinfo['xinghao'];
+		}
+		return $data;
+	}
+	
     public function staffequipment(){
         if(!I('get.id')){
             $this->error('请进入列表页，选择连接设备！');

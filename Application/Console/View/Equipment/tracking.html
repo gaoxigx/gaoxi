@@ -137,20 +137,74 @@ $(document).ready(function(){
 							<h2>{$vo.xinghao} 使用详情</h2>
 							<ul>
 								<volist name="dataq" id="v">
-								<li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> <if condition="$v.status == 1">已领取<elseif condition="$v.status == 2"/>领取<else/>未领取</if>，{$vo.xinghao}，{$v.get|getorderget=###}，{$v.comment}。</li>
+								<li>{$v.gettime|date="Y-m-d H:i",###}   <b>{$v.staff_name}</b> <if condition="$v.status == 1">已领取<elseif condition="$v.status == 2"/>领取中<else/>未领取</if>，{$vo.xinghao}，{$v.get|getorderget=###}，{$v.comment}。</li>
 								</volist>
 							</ul>
 						</notempty>
 					</div>
+					<if condition="$eqtrack">
+					<table class="tablelist">
+						<thead>
+							<tr>
+								<th colspan="6">待领取设备</th>
+							</tr>
+							<tr>      
+								<!--<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>-->
+								<th>待领取人</th>
+								<th>型号</th>
+                                <th>设备用途</th>
+                                <th>状态</th>
+								<th>备注</th>
+                                <th>领取时间</th>
+								<th>操作</th>		
+							</tr>
+						</thead>
+						<tbody>
+							<foreach name="eqtrack" item="val">
+                                <tr>
+                                    <td>{$val.staff_name}</td>
+									<td>{$val.xinghao}</td>
+                                    <td>{$val.get}</td>
+                                    <td>
+										<if condition="$val.status == 1">
+										已领取
+										<elseif condition="$val.status == 2"/>
+										领取中
+										<else/>
+										未领取
+										</if>
+									</td>
+                                    <td>{$val.comment}</td>
+                                    <td>{$val.gettime|date='Y-m-d H:i:s',###}</td>
+									<td>
+										<a href="javascript:;" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']});">确认领取</a>
+									</td>
+                                </tr>
+                            </foreach>
+						</tbody>
+					</table>
+					</if>
 					<div class="trackget">
 						<span id="trackeq" class="btn btn-info" style="line-height:35px; text-align:center;">转移</span>
 					</div>
-			   
+					
 				</div>
 			</div>
 		</div>
 	</div>
-   
+   <script>
+		function verify(obj,id){
+			var url = $(obj).attr('data_url');
+			if(confirm('确定领取吗')){
+				$.post(url,{id:id,status:1},function(data){
+					alert(data.msg);
+					if(data.result == 1){
+						window.location.reload();
+					}
+				})
+			}
+		}
+	</script>
 </body>
 
 </html>
