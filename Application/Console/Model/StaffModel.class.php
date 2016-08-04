@@ -15,7 +15,7 @@ class StaffModel extends Model {
         array('name','require','姓名必须填写'),     
         array('identity_card','15,18','请填写有效的身份证号码',2,'length'),
         array('mobile','require','联系方式必须填写'),
-        array('bank_account','16','银行卡号不正确',2,'length'),
+        //array('bank_account','16','银行卡号不正确',2,'length'),
         );
     // 定义自动完成
     protected $_auto = array( 

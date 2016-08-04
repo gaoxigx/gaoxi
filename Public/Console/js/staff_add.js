@@ -74,8 +74,6 @@ $(function(){
 				bankaddress:'required',
 				bank_account:{
 					required:true,
-					minlength:16,
-					maxlength:16
 				}
 			},
 			messages:{				
@@ -146,8 +144,6 @@ $(function(){
 				bankaddress:'请输入银行名称',
 				bank_account:{
 					required:'请输入银行卡号',
-					minlength:'16位银行卡号',
-					maxlength:'16位银行卡号'
 				},
 			},
 			errorClass:'cerror',
