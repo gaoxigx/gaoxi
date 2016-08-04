@@ -168,8 +168,16 @@ class EquipmentController extends CommonController {
         }
         $map['id']=I('get.id');
         $track=D('Equipment')->where($map)->find();
+		$staffinfo = D('Staff')->where('id='.$track['staffid'])->find();
+		$track['shiyongren'] = $staffinfo['username'];
+		
         $mapq['equipment_id']=I('get.id');
-        $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select(); 
+        $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select();
+		foreach($trackeq as $k=>$v){
+			$staffinfo = D('Staff')->where('id='.$v['shiftid'])->find();
+			$trackeq[$k]['shift_staffname'] = $staffinfo['username'];
+		}
+		
         $eqtrack = $this->getEqtrack($id);
 		
 		$this->assign('eqtrack',$eqtrack);
@@ -198,8 +206,15 @@ class EquipmentController extends CommonController {
         $this->display();
     }
     public function trackadd(){    
-        $stall=D('staff')->where('iswork!=4')->field('id,name')->select();   
+        $id = I('id');
+		$Equipmentinfo=D('Equipment')->where('id='.$id)->field('id,staffid')->find();
+		$staffinfo = D('Staff')->where('id='.$Equipmentinfo['staffid'])->find();
+		$Equipmentinfo['shift_staffname'] = $staffinfo['username'];
+		
+		$stall=D('staff')->where('iswork!=4')->field('id,name')->select(); 
+		
         $this->assign('staff',$stall);
+		$this->assign('Equipmentinfo',$Equipmentinfo);
         $this->display();
     }
     public function trackincrease(){
@@ -212,7 +227,17 @@ class EquipmentController extends CommonController {
                 $data['gettime']=time();
                 $data['status']=2;
                 $data['type']=1;
-                $result=$track->add($data);
+				
+				$shiftinfo_map['equipment_id'] = $data['equipment_id'];
+				$shiftinfo_map['staff_id'] = $data['shiftid'];
+				$shiftinfo = D('Eqtracking')->where($shiftinfo_map)->order('gettime desc')->find();
+				
+				if(!empty($shiftinfo) && $shiftinfo['status'] != 1){
+					$this->ajaxreturn(array('status'=>2,'msg'=>'此设备还有未领取的信息'));
+				}else{
+					$result=$track->add($data);
+				}
+				
                 $map['id']=$data['equipment_id'];
 
                 $update['staffid']=$data['staff_id'];

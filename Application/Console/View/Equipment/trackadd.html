@@ -25,6 +25,11 @@
     <form name="form1" id="formincrease" enctype="multipart/form-data"  method='post'   action="">        
      <ul class="forminfo">                     
         <li>
+            <label>转移人</label>    
+			<div class="dfinput" style="float:left;border:none;">{$Equipmentinfo.shift_staffname}</div>
+            <input class="dfinput" name="shiftid" type="hidden" value="{$Equipmentinfo.staffid}" />
+        </li> 
+		<li>
             <label>领取人</label>    
             <div class="vocation uew-select">                               
                 <select id="staffid" name="staff_id" class="uew-select-value">
@@ -61,17 +66,21 @@
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Console/js/layer/layer.js"></script>
 <script type="text/javascript">
-        $('#staffid').change(function(){
+        $(function(){
+			var default_staffname = $('#staffid option:first').text();
+			$('#staffname').val(default_staffname);
+		})
+		$('#staffid').change(function(){
             $('#staffname').val($(this).find('option:selected').text());
         });
 
         $('#sbbutton').click(function(){  
             var getinfo=$("#get").val();
-            if(getinfo.length<=0){
-                layer.msg('请输入用途');
+            if(getinfo == 0){
+                layer.msg('请选择用途');
                 return false;
             }
-
+			
             var url="{:U('Equipment/trackincrease')}"
             $.post(url,$("#formincrease").serialize(),function(data){
                 console.log(data);
