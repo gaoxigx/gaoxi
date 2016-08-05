@@ -100,7 +100,7 @@
 				var info_equipment = $('#info_equipment').val();
                 $.get(url,function(data){                 
                     $("#equipment").html("");                    
-                    var option="<option>请选择</option>";           
+                    var option="<option value='0'>请选择</option>";           
                     if(data!='0'){                                               
                         for( i in data){       
                             console.log(i);
@@ -154,8 +154,8 @@
                 $("#form1").validate({
                     rules: {
                         agent: 'required',
-                        equipment: 'required',
-                        payment_method: 'required',
+                        equipment: 'sel_required',
+                        payment_method: 'sel_required',
                         buyer_wechat: {
                             required: true,
                             minlength: 2
@@ -209,6 +209,15 @@
                     },
                     errorClass: 'cerror',
                 });
+				$.validator.addMethod("sel_required", function(value,element) {
+					if(value == 0 || value == ''){
+						//return this.optional(element);
+						return false;
+					}else{
+						return true;
+					}
+					
+				});
             });
         </script>
     

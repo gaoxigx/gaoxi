@@ -33,7 +33,7 @@ $(function(){
 					number:true,
 				},
 				department:'required',
-				post:'required',
+				nibs:'sel_required',
 				name:{
 					required:true,
 					minlength:2
@@ -50,7 +50,7 @@ $(function(){
 					minlength:11,
 					maxlength:11
 				},
-				education1:'required',
+				education1:'sel_required',
 				urgency:'required',
 				phone_ugy:{
 					required:true,
@@ -92,7 +92,7 @@ $(function(){
 					number:'请输入数字'
 				},	
 				department:'请选择部门',	
-				post:'请选择岗位',	
+				nibs:'请选择上司',	
 				name:{
 					required:'请输入姓名',
 					minlength:'用户名至少2个字符'
@@ -125,4 +125,23 @@ $(function(){
 			errorClass:'cerror',
 		});
 		
+		$.validator.addMethod("sel_required", function(value,element){
+			if(value == 0 || value == ''){
+				return false;
+			}else{
+				return true;
+			}
+			
+		});
+		
+		function val_department(){
+			var dep_val = $('#department').val();
+			if(dep_val == 0 || dep_val == ''){
+				$('#department').next().append('<label id="department-error" class="cerror" for="department">请选择部门</label>');
+				return false;
+			}else{
+				$('#department').next('cerror').remove();
+				return true;
+			}
+		}
 });

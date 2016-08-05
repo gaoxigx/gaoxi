@@ -25,8 +25,9 @@
 					rules:{
 						gh_id:'required',
 						name:'required',
-						bumen:'required',
-						count_month:'required',
+						bumen:'sel_required',
+						count_year:'required',
+						count_month:'sel_required',
 						hours_bz:'required',
 						hours_sj:'required',
 						turn:'required'
@@ -35,6 +36,7 @@
 						gh_id:'请输入工号',
 						name:'请输入姓名',
 						bumen:'请输入部门名称',
+						count_year:'请输入年份',
 						count_month:'请选择统计月份',
 						hours_bz:'请输入标准工作时数',
 						hours_sj:'请输入实际工作时数',
@@ -43,7 +45,14 @@
 					errorClass:'cerror',
 					
 				});
-				
+				$.validator.addMethod("sel_required", function(value,element){
+					if(value == 0 || value == ''){
+						return false;
+					}else{
+						return true;
+					}
+					
+				});
 			});
 
 		</script>

@@ -63,9 +63,7 @@
               
                 $("#form1").validate({
                     rules:{
-                        asset_id:{
-                            required:true,    
-                        },
+                        asset_id:'sel_required',
                         number:{
                             required:true,                            
                             digits:true,
@@ -83,9 +81,7 @@
                         },
                     },
                     messages:{
-                        asset_id:{
-                            required:'请选择办公用品'
-                        },
+                        asset_id:'请选择办公用品',
                         number:{
                              required:'请填写数量',
                              digits:'必须为整数',
@@ -104,6 +100,15 @@
                         layer.msg(msg);
                     }
                 });
+				
+				$.validator.addMethod("sel_required", function(value,element){
+					if(value == 0 || value == ''){
+						return false;
+					}else{
+						return true;
+					}
+					
+				});
             });
         </script>
         

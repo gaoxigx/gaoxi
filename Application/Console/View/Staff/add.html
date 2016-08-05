@@ -14,7 +14,7 @@
         <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
         <script type="text/javascript" src="__PUBLIC__/Console/js/staff_add.js"></script>
     </head>
-
+	
     <body>
         <div class="place">
             <span>位置：</span>
@@ -61,7 +61,7 @@
                             <li><label>岗位<b>*</b></label>  
                                 <div class="vocation uew-select" id="quarters_div">                 
                                     <select id="department" name="subordinates[]" class="uew-select-value">
-                                        <option>请选择部门</option>
+                                        <option value="0">请选择部门</option>
                                         <volist name="department" id="voo">
                                             <option value="{$voo.cate_id}" cate_haschild="{$voo.cate_haschild}">{$voo.cate_name}</option>
                                         </volist>
@@ -74,7 +74,7 @@
                             <li><label>上司<b>*</b></label>  
                                 <div class="vocation uew-select" >
                                     <select id="supervisor" name="nibs" class="uew-select-value">
-                                        <option>请选择上司</option>
+                                        <option value="0">请选择上司</option>
 
                                     </select>
                                 </div>
@@ -175,7 +175,7 @@
                             <li><label>备注说明<b></b></label><input name="comment" id="comment" type="text" class="dfinput" value=""/></li> 
 
                             <div class="col-md-offset-3 col-md-9">
-                                <button class="btn btn-info" type="submit"  ><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
+                                <button class="btn btn-info" type="submit" id="saveform" ><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
 
                                 &nbsp; &nbsp; &nbsp;
                                 <button class="btn" type="reset"><i class="ace-icon fa fa-undo bigger-110"></i> 取消</button>
