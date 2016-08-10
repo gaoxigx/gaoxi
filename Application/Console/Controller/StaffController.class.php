@@ -232,6 +232,8 @@ class StaffController extends CommonController {
 		$this->assign("stafftake",D('StaffTake')->tackfind(I("id")));
         $this->assign('department',D('Category')->department());
 		 
+		$login_user = session ('userid'); 
+		$this->assign('login_user',$login_user);
 		$this->assign('eqtrack',$eqtrack);
 		$this->assign('quarters',$quarters);
 		$this->assign('subordinates',$subordinates);

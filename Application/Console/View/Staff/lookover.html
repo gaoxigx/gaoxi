@@ -379,7 +379,7 @@
                                     <td class="tb2_td1" style="height:35px;">{$val.gettime|date='Y-m-d H:i:s',###}</td>
 									<td class="tb2_td1" style="height:35px;">
 										<if condition="$val.status != 1">
-										<a href="javascript:;" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']});">确认领取</a>
+										<span class="btn" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']},{$val['staff_id']});" style="line-height:35px;text-align:center;margin:0 auto;">确认领取</span>
 										<else/>
 										已领取
 										</if>					
@@ -467,10 +467,16 @@
                 </div>      
             </div> 
         </div>
+		<input id="login_user" type="hidden" value="{$login_user}" />
     </body>
 	<script>
-		function verify(obj,id){
+		function verify(obj,id,staff_id){
 			var url = $(obj).attr('data_url');
+			var login_user = $('#login_user').val();
+			if(login_user != staff_id){
+				alert('此设备未转移给您，您无权操作此项');
+				return false;
+			}
 			if(confirm('确定领取吗')){
 				$.post(url,{id:id,status:1},function(data){
 					alert(data.msg);

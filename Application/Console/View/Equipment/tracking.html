@@ -188,7 +188,7 @@ $(document).ready(function(){
                                     <td>{$val.comment}</td>
                                     <td>{$val.gettime|date='Y-m-d H:i:s',###}</td>
 									<td>
-										<span class="btn" href="javascript:;" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']});" style="text-align:center;">确认领取</span>
+										<span class="btn" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']},{$val['staff_id']});" style="text-align:center;">确认领取</span>
 									</td>
                                 </tr>
                             </foreach>
@@ -203,9 +203,15 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	<input id="login_user" type="hidden" value="{$login_user}" />
    <script>
-		function verify(obj,id){
+		function verify(obj,id,staff_id){
 			var url = $(obj).attr('data_url');
+			var login_user = $('#login_user').val();
+			if(login_user != staff_id){
+				alert('此设备未转移给您，您无权操作此项');
+				return false;
+			}
 			if(confirm('确定领取吗')){
 				$.post(url,{id:id,status:1},function(data){
 					alert(data.msg);

@@ -179,8 +179,11 @@ class EquipmentController extends CommonController {
 		}
 		
         $eqtrack = $this->getEqtrack($id);
+		$login_user = session ('userid');
+		
 		
 		$this->assign('eqtrack',$eqtrack);
+		$this->assign('login_user',$login_user);
 		$this->assign('dataq',$trackeq);
         $this->assign('vo',$track);
         $this->display();
