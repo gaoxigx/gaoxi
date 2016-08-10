@@ -365,7 +365,7 @@
                             <foreach name="eqtrack" item="val">
                                 <tr>
                                     <td class="tb2_td1" style="height:35px;">{$val.xinghao}</td>
-                                    <td class="tb2_td1" style="height:35px;">{$val.get}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.get|getorderget=###}</td>
                                     <td class="tb2_td1" style="height:35px;">
 										<if condition="$val.status == 1">
 										已领取
