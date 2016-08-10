@@ -364,9 +364,9 @@
                             </tr>
                             <foreach name="eqtrack" item="val">
                                 <tr>
-                                    <td class="tb2_td1" style="height:35px;">{$val.xinghao}</td>
-                                    <td class="tb2_td1" style="height:35px;">{$val.get|getorderget=###}</td>
-                                    <td class="tb2_td1" style="height:35px;">
+                                    <td class="tb2_td1" style="height:40px;">{$val.xinghao}</td>
+                                    <td class="tb2_td1" style="height:40px;">{$val.get|getorderget=###}</td>
+                                    <td class="tb2_td1" style="height:40px;">
 										<if condition="$val.status == 1">
 										已领取
 										<elseif condition="$val.status == 2"/>
@@ -375,9 +375,9 @@
 										未领取
 										</if>
 									</td>
-                                    <td class="tb2_td1" style="height:35px;">{$val.comment}</td>
-                                    <td class="tb2_td1" style="height:35px;">{$val.gettime|date='Y-m-d H:i:s',###}</td>
-									<td class="tb2_td1" style="height:35px;">
+                                    <td class="tb2_td1" style="height:40px;">{$val.comment}</td>
+                                    <td class="tb2_td1" style="height:40px;">{$val.gettime|date='Y-m-d H:i:s',###}</td>
+									<td class="tb2_td1" style="height:40px;">
 										<if condition="$val.status != 1">
 										<span class="btn" data_url="{:U('Equipment/verify')}" onclick="verify(this,{$val['id']},{$val['staff_id']});" style="line-height:35px;text-align:center;margin:0 auto;">确认领取</span>
 										<else/>
@@ -437,11 +437,11 @@
                             </tr>
                             <volist name="stafftake" id="vo">
                             <tr>
-                                <td class="tb2_td1" style="height:40px;">{$vo.id}</td>
-                                <td class="tb2_td1" style="height:40px;">{$vo.name}</td>
-                                <td class="tb2_td1" style="height:40px;">{$vo.number}</td>
-                                <td class="tb2_td1" style="height:40px;">{$vo.comment}</td>
-								<td class="tb2_td1" style="height:40px;">
+                                <td class="tb2_td1" style="height:35px;">{$vo.id}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.name}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.number}</td>
+                                <td class="tb2_td1" style="height:35px;">{$vo.comment}</td>
+								<td class="tb2_td1" style="height:35px;">
 									<if condition="$vo.status == 2">
 									已列为捐款设备
 									<else/>
