@@ -85,14 +85,14 @@
             $.post(url,$("#formincrease").serialize(),function(data){
                 console.log(data);
                 if(data.status==1){
-                    layer.msg('领取成功',function(){
+                    layer.msg('转移成功',function(){
                         layer.closeAll();
                         var index = parent.layer.getFrameIndex(window.name); 
                         parent.layer.close(index);
 
                     });
                 }else{
-                    layer.msg('领取失败,'+data.msg,function(){
+                    layer.msg('转移失败,'+data.msg,function(){
                        layer.closeAll(); 
                     });
                 }   
