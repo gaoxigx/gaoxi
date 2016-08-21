@@ -133,7 +133,7 @@ class OrderController extends CommonController {
 		$user_id = session("userid");
 		if($user_id > 0 ){
 			$where['id']=session("userid");
-			$where['username']=session("username");
+			$where['accounts']=session("username");
 			$count=M('controller')->where($where)->count();
 			if($count<=0){
 				$user=D('Staff')->getthislevel();
