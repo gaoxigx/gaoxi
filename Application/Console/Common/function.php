@@ -64,18 +64,38 @@ function getorderget($param){
     $name = $datagoods-> field('product,price2,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
 //    dump($name);
 //     echo M()->getLastSql();exit;
-     
-    echo "<tr>";
     foreach ($name as $k => $v) {
-        foreach($v as $key=>$value){
-        if($key=='product'){
-             echo '<td style="width:180px;">'.$value.'</td>';
-        }else{
-            echo '<td style="width:100px;">'.$value.'</td>';
-        }  
+        // foreach($v as $key=>$value){
+        // if($key=='product'){
+        //      echo '<td style="width:180px;">'.$value.'</td>';
+        // }else{
+        //     echo '<td style="width:100px;">'.$value.'</td>';
+        // }  
         
-        }
-        echo '</tr><tr>';
+        // }
+        echo '<tr>';
+        echo '<td style="width:180px;">'.$v['product'].'</td>';
+        echo '<td style="width:100px;">'.$v['price2'].'</td>';
+        echo '<td style="width:100px;">'.$v['discount'].'</td>';
+        echo '<td style="width:100px;">'.$v['buynum'].'</td>';
+        echo '<td style="width:100px;">'.$v['tollsprice'].'</td>';
+        echo '</tr>';
+        //}
+    }
+}
+
+    function get_orderno_to_proname($order_no){
+    $datagoods = D('order_goods');
+    $name = $datagoods-> field('product,price2,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
+//    dump($name);
+//     echo M()->getLastSql();exit;
+     
+   
+        foreach ($name as $k => $v) {
+             echo "<tr>";
+            echo '<td style="width:180px;">'.$v['product'].'</td>';
+            echo '<td style="width:80px;">数量:<b>'.$v['buynum'].'</b></td>';
+            echo '</tr>';
         }
     }
     //隐藏字段方法

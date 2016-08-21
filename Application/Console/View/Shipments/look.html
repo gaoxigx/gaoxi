@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+    </head>
+    <script>
+        $(function () {
+            $("#subordinates .dish:last").remove();
+        })
+    </script>
+    <body>
+
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">订单管理</a></li>
+            </ul>
+        </div>
+
+        <div class="formbody">
+            <div id="usual1" class="usual">
+                <if condition="$id">
+                    <input name="id" type="hidden"   value="{$id}"/>
+                </if> 
+
+                <div class="itab">
+                    <ul> 
+                        <li><a href="#tab1" class="selected">查看信息</a></li> 
+                    </ul>
+                </div> 
+
+                <div id="tab1" class="tabson">
+
+                    <div class="formtext">订单信息</div>
+                    <table style="margin-left:25px">
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>经纪人:</b></label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$staff[$info[agent]]}
+                            </td>
+                        </tr>   
+
+<!--                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>组长:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$staff[$info[assistant]]}
+                            </td>
+                        </tr>-->
+
+
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>买家微信号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.buyer_wechat}
+                            </td>   
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>物流单号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.numberno}
+                            </td>
+                        </tr>
+
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>产品列表:</b></label>  
+                            </td>  
+                            
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                <table>
+                                    <tr>
+                                        <th style="width:100px;text-align:center;padding:5px;">名称</th>
+                                        <th style="width:100px;text-align:center;padding:5px;">价格</th>
+                                        <th style="width:100px;text-align:center;padding:5px;">数量</th>
+                                    </tr>
+                                    <foreach name="products" item="val">
+                                    <tr>
+                                        <td style="text-align:center;padding:5px;">{$val.product}</td>
+                                        <td style="text-align:center;padding:5px;">{$val.price2}</td>
+                                        <td style="text-align:center;padding:5px;">{$val.buynum}</td>
+                                    </tr> 
+                                    </foreach>
+                                </table>
+                            </td>
+                        </tr>
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>支付方式:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">                                
+                                {$payment[$info[payment_method]]}
+                            </td> 
+                        </tr>
+                        
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单来源:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.source}
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单编号:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.order_no}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>下单时间:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.addtime}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单状态:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                <if condition="$info.status eq 2">
+								已发货
+								<else/>
+								未发货
+								</if>
+                            </td>
+                        </tr>
+
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人姓名:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.username|hiddenstr=###}
+                            </td> 
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人电话:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.mobile|hiddenstr=###}
+                            </td>       
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>收件人地址:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.address|hiddenstr=###}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label><b>订单备注:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.note}
+                            </td>
+                        </tr>
+
+						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+
+                    </table>
+                    
+                    <div class="formtext" style="line-height:76px;">设备信息</div>
+                    <div class="gwc" style=" margin:auto;">
+                        <table cellpadding="0" cellspacing="0" class="gwc_tb1" style="width:60%;background:#eef6ff;">
+                            <tr style="background:#d0e7fa;">
+                                <td class="tb1_td1" style="height:35px;">型号</td>
+                                <td class="tb1_td1" style="height:35px;">编号</td>
+                                <td class="tb1_td1" style="height:35px;">代言人</td>
+                                <td class="tb1_td1" style="height:35px;">负责人</td>
+                                <td class="tb1_td1" style="height:35px;">所在部门</td>
+                                <td class="tb1_td1" style="height:35px;">所在工位</td>
+                                <td class="tb1_td1" style="height:35px;">设备维护</td>
+                                <td class="tb1_td1" style="height:35px;"> 添加日期</td>
+                            </tr>
+                            <foreach name="Equipment" item="val">
+                                <tr>
+                                    <td class="tb2_td1" style="height:35px;">{$val.xinghao}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.bianhao}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.daiyanren}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.fuzeren}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.bumen}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.gongwei}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.stauts|getstautsnum=###}</td>
+                                    <td class="tb2_td1" style="height:35px;">{$val.addtime|date='Y-m-d',###}</td>
+                                </tr>
+                            </foreach>
+                        </table>
+                    </div>
+
+                    <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
+                        <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+                    </div>
+                </div>      
+            </div> 
+        </div>
+    </body>
+
+</html>

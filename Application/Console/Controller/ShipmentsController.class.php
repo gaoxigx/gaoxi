@@ -3,7 +3,7 @@ namespace Console\Controller;
 use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 
-class OrderController extends CommonController {
+class ShipmentsController extends CommonController {
 	 /**
 	 * 生成唯一订单号
 	 */
@@ -156,9 +156,64 @@ class OrderController extends CommonController {
 		$User = M('order_info'); // 实例化User对象 
 
 
+		$map['status']=1;
+		$map['payment_status']=1;
 
 	    
 		
+		$count = $User->where($map)->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+
+	  
+
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
+	
+		$staff=D('staff')->getfield('id,name',true);
+		$catdata=D('Category')->categoryone();      
+		
+		$this->assign('staff',$staff);
+		$this->assign('cat',$catdata);
+		$this->assign('list',$list);// 赋值数据集
+		$this->assign('page',$show);// 赋值分页输出
+		$this->display(); // 输出模板
+	}
+
+	//忆发货订单
+	public function ylist($name=''){
+		$username = I('username');
+
+		if($username){
+			$map['order_no']  = array('like','%'.trim($username).'%'); 
+		}
+
+		$user_id = session("userid");
+		if($user_id > 0 ){
+			$where['id']=session("userid");
+			$where['accounts']=session("username");
+			$count=M('controller')->where($where)->count();
+			if($count<=0){
+				$user=D('Staff')->getthislevel();
+				$map['agent']  = array('in',implode(',',$user));
+			}
+	    }
+		foreach( $map as $k=>$v){  
+			if( !$v )  
+				unset( $arr[$k] );  
+		}   
+
+		//分页跳转的时候保证查询条件
+		foreach($map as $key=>$val) {
+			if(!$val){
+				unset($map[$key]);
+			}else{
+			$Page->parameter[$key]   =   urlencode($val);
+			  }
+		}
+		$User = M('order_info'); // 实例化User对象 
+		$map['status']=2;
+
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
@@ -205,35 +260,6 @@ class OrderController extends CommonController {
 		$this->display();
 	}
 
-	//修改订单
-	public function edit($id){
-		 $this->getrolename('agent',38);
-
-		 $this->getrolename('assistant',46);
-		 $this->getequipment_name();
-		 $this->getpayment();
-		 $orderinfo = M('order_info');
-		 $orderinfolist = $orderinfo->where('id='.$id)->find();
-		 if($orderinfolist['status']==2){
-		 	$this->success('订单已确认发货，不允许修改');
-		 	exit();
-		 }
-
-		 $ordergoods = M('order_goods'); // 实例化User对象
-		$list = $ordergoods->alias('og')
-				 ->join('nico_product as np on np.id = og.proid ')
-				 ->field('og.*,np.pic as pic1')
-				 ->where("og.order_no=%s",array($orderinfolist['order_no']))
-				 ->order ('id')
-				 ->select();
-		
-		$this->assign('info',$orderinfolist);
-		$this->assign('prolist',$list);
-		$this->assign('staff',  getstaffname());
-
-		$this->display();
-
-	}
 
 
 	//查看页面
@@ -294,82 +320,9 @@ class OrderController extends CommonController {
 		return $products;            
     }
 
-	//插入数据
-	public function insert(){
-
-		$data = I('');
-		$data['order_no'] = $this->build_order_no();
-		$data['addtime'] = time();
-		$data['status'] = 1;
-		$data['payment_status'] = 1;
-		$roleList   =   D('order_info');
-
-		if($roleList->create()) {
-			$result =   $roleList->add($data);
-			if($result) {
-				foreach( $data['newslist'] as $k=>$v){  
-					$dataList[] = array(
-					'proid'=>$data["id".$v],
-					'protype'=>$data["protype".$v],
-					'pic'=>$data["pic".$v],
-					'pic1'=>$data["pics".$v],
-					'product'=>$data["product".$v],
-					'price2'=>$data["price".$v],
-					'buynum'=>$data["text_box".$v],
-					'discount'=>$data["zhekou".$v],
-					'tollsprice'=>$data["total".$v],
-					'order_no'=>$data["order_no"],
-					'addtime'=>time(),                
-					);
-				}
-
-				$jumpUrl =U('Console/Order/Plist');
-				$user=M('order_goods');
-				$user->addAll($dataList);
-				$this->success('订单表数据添加成功！',$jumpUrl);
-			}else{
-				$this->error('订单商表数据添加错误！');
-			}
-
-		}else{
-			$this->error($roleList->getError());
-		}
-	   
-	}
+	
 
 
-	//更新数据
-	public function update(){
-		$roleList   =   D('order_info');
-		$data=$roleList->create();
-		$jumpUrl =U('Console/Order/Plist');
-		
-		if($data) {
-			$order_no=$data['order_no'];
-			unset($data['order_no']);
-			$result = $roleList->where('order_no=%s',array($order_no))->save($data);
-			if($result) {
-				$this->success('操作成功！',$jumpUrl);
-			}else{
-				$this->error('写入错误！');
-			}
-		}else{
-			$this->error($roleList->getError());
-		}
-	}
-
-	//删除数据
-	public function delete(){
-		$id=i('id');
-		$role = M('order_info');
-		$result = $role->delete($id);
-
-		if($result) {
-			$this->success('数据删除成功！');
-		}else{
-			$this->error('数据删除错误！');
-		}
-	}
 
 
 	//查找下级经济人 ajax请求
