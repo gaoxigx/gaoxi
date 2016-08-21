@@ -181,16 +181,28 @@ class OrderController extends CommonController {
 
 	//提交订单
 	public function add(){
-		 $this->getrolename('agent',38);
-		 $this->getrolename('assistant', 46);
-		 $this->getequipment_name();
-		 $this->getpayment();
+            $map['id']=session('userid');
+            $map['accounts']=session('username');            
+            $count=M('controller')->where($map)->count();            
+            if($count<=0){                 
+                $userdata=D('Staff')->getthislevel();
+                $where['id']=array('in',implode(',',$userdata));
+            }      
+            $where['quarters']=array('in',"38,39,67");
+            $where['iswork']=array('neq',4);            
+            $staff=D('Staff')->where($where)->getField('id,name',true);
+   
+            
+//            
+//            $this->getrolename('agent',68);
+//            $this->getrolename('assistant', 67);
+           // $this->getequipment_name();
+            $this->getpayment();
 		$data = M('product'); // 实例化User对象
 		$list = $data->where('1=1')->order('id')->select();  
-		$this->assign('staff',getstaffname());
+	   $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 		$this->display();
-
 	}
 
 	//修改订单

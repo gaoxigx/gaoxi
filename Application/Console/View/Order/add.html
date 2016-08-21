@@ -41,22 +41,34 @@
                         <div class="formtext">请正确填写订单信息！</div>
                         <ul class="forminfo">
 
-                            <li><label>经纪人<b>*</b></label>  
+
+<!--                            <li><label>设备编号<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                    <select name="equipment" id="equipment" class="uew-select-value">
+                                        <volist name="equipment" id="vo3">
+                                            <option value="{$vo3.id}">{$vo3.xinghao}({$vo3.bianhao})</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </li>-->
+
+                            <li><label>组长姓名<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                    <select name="staffid" id="staffid" class="uew-select-value">
+                                        <volist name="staff" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </li>
+
+                            <li><label>销售客服<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <select id="agent" name="agent" class="uew-select-value">  
                                         <volist name="staff" id="vu">
                                             <option value="{$key}">{$vu}</option>
                                         </volist>
 
-                                    </select>
-                                </div>
-                            </li>
-                            <li><label>设备编号<b>*</b></label>  
-                                <div class="vocation uew-select">
-                                    <select name="equipment" id="equipment" class="uew-select-value">
-                                        <volist name="equipment" id="vo3">
-                                            <option value="{$vo3.id}">{$vo3.xinghao}({$vo3.bianhao})</option>
-                                        </volist>
                                     </select>
                                 </div>
                             </li>
@@ -71,6 +83,22 @@
                                 </div>
                             </li>
 
+<!--                            <li><label>销售价格<b>*</b></label>  
+                                <div class="vocation uew-select">
+                                    <div class="col-sm-9">
+                                        <select name="dengji" id="education" class="uew-select-value">
+                                            <option value="1">一级</option>
+                                            <option value="2">二级</option>
+                                            <option value="3">三级</option>                                        
+                                        </select>
+                                        <input name="educationtext" id="educationtext" type="hidden" value="未知" />
+                                    </div>
+                                </div>
+                                <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
+                            </li>-->
+
+                            <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li>
+                      
                             <li>
                                 <label>买家微信号<b>*</b></label>
                                 <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value=""  />
@@ -98,11 +126,18 @@
         
        <script>
                      
-            getJjQuipment($("#agent").val());
+           // getJjQuipment($("#agent").val());
+            getStaff($("#staffid").val());
             $(function(){
-                $("#agent").change(function(){                  
-                   getJjQuipment($(this).val());      
+             
+//                $("#agent").change(function(){                  
+//                   getJjQuipment($(this).val());      
+//                });
+            
+               $("#staffid").change(function(){                      
+                    getStaff($(this).val());
                 });
+              
             })
             function getJjQuipment(id){                  
                 var url="{:U('Order/getEquipment')}?id="+id;                
@@ -116,6 +151,21 @@
                         }       
                     }
                      $("#equipment").html(option);
+                })
+            }
+            
+            function getStaff(id){                  
+                var url="{:U('Order/getagent')}?id="+id;                
+                $.get(url,function(data){                 
+                    $("#agent").html("");                    
+                    var option="<option value='"+id+"'>"+$("#staffid").find("option:selected").text()+"</option>";           
+                    if(data!='0'){                                               
+                        for( i in data){       
+                            console.log(data);
+                            option+="<option value="+i+">"+data[i]+"("+data[i]+")"+"</option>"
+                        }       
+                    }
+                     $("#agent").html(option);
                 })
             }
         </script>
