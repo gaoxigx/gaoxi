@@ -67,7 +67,7 @@ class ProductController extends CommonController {
 	
 	//添加产品
     public function add(){
-        $this->getprotype(); 
+        $this->getprotype();         
         $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
         $this->assign('list',$list);
         $this->display();

@@ -72,26 +72,26 @@ $(function(){
 					required: "需要上传图片",
 				},
 				price1: {
-					required: "请填写成本价格",
+					required: "请给一级产品定价格",
 				},
 				price2:{
-					required: "请填写标准价格",
+					required: "请给二级产品定价格",
 				},	                            
 				price3:{
-					required: "请填写最高价格",
+					required: "请给三级产品定价格",
 				},	                        
-				discount: {
-					required: "确认折扣",
-				},
+//				discount: {
+//					required: "确认折扣",
+//				},
 				inputnum:{
 					required: "请填写进货数量",
 				},	                            
-				sortnum:{
-					required: "请确认剩余的库存",
-				},
-				salenum: {
-					required: "请核对销售的数量",
-				},
+//				sortnum:{
+//					required: "请确认剩余的库存",
+//				},
+//				salenum: {
+//					required: "请核对销售的数量",
+//				},
 				purchaseper:{
 					required: "请选择采购负责人",
 				}
@@ -161,10 +161,10 @@ $(document).ready(function(){
                         </li>
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value=""  /></li>
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" class="dfinput" value=""  /></li>
-                        <li><label>成本价格<b>*</b></label><input name="price1" type="text" class="dfinput" value=""  /></li>
-                        <li><label>标准价格<b>*</b></label><input name="price2" type="text" class="dfinput" value=""  /></li>
-                        <li><label>最高价格<b>*</b></label><input name="price3" type="text" class="dfinput" value=""  /></li>
-                        <li><label>最低折扣<b>*</b></label>
+                        <li><label>一级（价格）<b>*</b></label><input name="price1" type="text" class="dfinput" value=""  /></li>
+                        <li><label>二级（价格）<b>*</b></label><input name="price2" type="text" class="dfinput" value=""  /></li>
+                        <li><label>三级（价格）<b>*</b></label><input name="price3" type="text" class="dfinput" value=""  /></li>
+<!--                        <li><label>最低折扣<b>*</b></label>
                             <div class="vocation uew-select">
                                 <select name="discount"  class="uew-select-value">
                                     <for start="10" end="0" comparison="gt" step="-1">
@@ -172,11 +172,11 @@ $(document).ready(function(){
                                     </for>
                                 </select>
                             </div>
-                        </li>
-                        <li><label>进货数量<b>*</b></label><input name="inputnum" type="text" class="dfinput" value=""  /></li>
-                        <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value=""  /></li>
-                        <li><label>销售数量<b>*</b></label><input name="salenum" type="text" class="dfinput" value=""  /></li>  
-                <!--    <li><label>采购负责人<b>*</b></label><input name="purchaseper" type="text" class="dfinput" value=""  /></li>    -->
+                        </li>-->
+                        <li><label>数量（斤）<b>*</b></label><input name="inputnum" type="text" class="dfinput" value=""  /></li>
+<!--                        <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value=""  /></li>
+                            <li><label>销售数量<b>*</b></label><input name="salenum" type="text" class="dfinput" value=""  /></li>  
+                            <li><label>采购负责人<b>*</b></label><input name="purchaseper" type="text" class="dfinput" value=""  /></li>    -->
 
                         <li><label>采购负责人<b>*</b></label>          
                             <select id="purchaseper" name="purchaseper" type='text' class="sciselect">                           
@@ -186,7 +186,7 @@ $(document).ready(function(){
                             </select>
                             <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
                         </li>  
-						<li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+                        <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
                         <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
                     </ul>
                 </form>    
