@@ -6,12 +6,19 @@
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
-
-<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/editor/kindeditor.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
 <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+<style>
+    .fromadd{margin:0px; vertical-align: top; float: none;display: inline-block; line-height: 32px;width: 32px; overflow:hidden; height:32px; text-align: center; }
+    .fromadd img{padding-top: 5px;}
+    .pzprice{margin-left: 86px;}
+    .pzprice span{display: block;margin-top: 5px;}
+    .lhcl span{margin-left: 86px;display: block;margin-top: 5px;}
+    .pztext{display: inline-block;}
+</style>
 <script type="text/javascript">
 $(function(){
 		$.validator.setDefaults({
@@ -100,6 +107,13 @@ $(function(){
 			
 		});
 	});
+
+
+    KE.show({
+        id : 'content7',
+        cssPath : './index.css'
+    });
+
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -155,15 +169,26 @@ $(document).ready(function(){
                                     </volist>
                                 </select>
                             </div>
-                            <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
-                                <span> <img src="__PUBLIC__/Console/images/t01.png">新建分类</span>
-                            </div>
+                            <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
+                            
                         </li>
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value=""  /></li>
-                        <li><label>图片上传<b>*</b></label><input name="pic" type="file" class="dfinput" value=""  /></li>
-                        <li><label>一级（价格）<b>*</b></label><input name="price1" type="text" class="dfinput" value=""  /></li>
-                        <li><label>二级（价格）<b>*</b></label><input name="price2" type="text" class="dfinput" value=""  /></li>
-                        <li><label>三级（价格）<b>*</b></label><input name="price3" type="text" class="dfinput" value=""  /></li>
+                        <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
+                           
+                        <li><label>品质<b>*</b></label><p class="pztext"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  /></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                        </li>
+                        <li class="pzprice">
+                                <p>
+                                    <span>
+                                    <input name="grade0[]" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                    </span>               
+                                </p>
+                        </li>
+
+                        
+                        <li class="lhcl"><label>礼盒<b>*</b></label><input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                        </li> 
+
 <!--                        <li><label>最低折扣<b>*</b></label>
                             <div class="vocation uew-select">
                                 <select name="discount"  class="uew-select-value">
@@ -173,7 +198,8 @@ $(document).ready(function(){
                                 </select>
                             </div>
                         </li>-->
-                        <li><label>数量（斤）<b>*</b></label><input name="inputnum" type="text" class="dfinput" value=""  /></li>
+                        <li><label>采购数量<b>*</b></label><input name="inputnum" type="text" class="dfinput" value=""  /></li>
+                        <li><label>单位<b>*</b></label> <select type='text' name="pcs" class="sciselect"><option value="1">两</option><option value="2">个</option></select></li>
 <!--                        <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value=""  /></li>
                             <li><label>销售数量<b>*</b></label><input name="salenum" type="text" class="dfinput" value=""  /></li>  
                             <li><label>采购负责人<b>*</b></label><input name="purchaseper" type="text" class="dfinput" value=""  /></li>    -->
@@ -187,7 +213,11 @@ $(document).ready(function(){
                             <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
                         </li>  
                         <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+                        <li><label>产品详情</label>
+                            <textarea id="content7" name="detail" style="width:700px;height:250px;visibility:hidden;"></textarea>                            
+                        </li>
                         <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
+                      
                     </ul>
                 </form>    
             </div> 
@@ -212,6 +242,38 @@ $(document).ready(function(){
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        $(function(e){
+            $(".pzbtn").click(function(){
+                var nmb=$(".pztext input").length;            
+                 var pzhtml='<input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  />';
+                $(".pztext").append(pzhtml);
+                $(".pzprice p").hide();          
+                var pzhtml='<p><span><input name="grade'+nmb+'[]" v="'+nmb+'" placeholder="级别名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+nmb+'[]" v="'+nmb+'" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn" id="jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b></p>';
+                $(".pzprice").append(pzhtml);
+            });
+            $(document).on("click focus",".pzbtnt",function(){
+                 var index=$(this).index();
+                 $(".pzprice p").hide();
+                 $(".pzprice p").eq(index).show();
+            })
+
+            $(document).on("click",".jqbtn",function(){
+                var vl=$(this).prev().attr("v");
+                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
+                $(this).parent().append(jqbtn);
+            });
+
+            $(".lhbtn").on("click",function(){
+                var lhbtn='<span><input name="boxname[]" placeholder="礼盒名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
+                $(this).parent().append(lhbtn);
+            });
+
+
+           
+        });
+    </script>
 </body>
+
 
 </html>

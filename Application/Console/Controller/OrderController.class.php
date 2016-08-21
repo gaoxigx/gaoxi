@@ -181,26 +181,30 @@ class OrderController extends CommonController {
 
 	//提交订单
 	public function add(){
-            $map['id']=session('userid');
-            $map['accounts']=session('username');            
-            $count=M('controller')->where($map)->count();            
-            if($count<=0){                 
-                $userdata=D('Staff')->getthislevel();
-                $where['id']=array('in',implode(',',$userdata));
-            }      
-            $where['quarters']=array('in',"38,39,67");
-            $where['iswork']=array('neq',4);            
-            $staff=D('Staff')->where($where)->getField('id,name',true);
-   
-            
+        $map['id']=session('userid');
+        $map['accounts']=session('username');            
+        $count=M('controller')->where($map)->count();            
+        if($count<=0){                 
+            $userdata=D('Staff')->getthislevel();
+            $where['id']=array('in',implode(',',$userdata));
+        }      
+        $where['quarters']=array('in',"38,39,67");
+        $where['iswork']=array('neq',4);            
+        $staff=D('Staff')->where($where)->getField('id,name',true);
+
+        
 //            
 //            $this->getrolename('agent',68);
 //            $this->getrolename('assistant', 67);
            // $this->getequipment_name();
             $this->getpayment();
 		$data = M('product'); // 实例化User对象
-		$list = $data->where('1=1')->order('id')->select();  
-	   $this->assign('staff', $staff);
+
+		$promap['ct.uid']=session('userid');
+
+		$list = $data->alias('pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select();  
+	    $this->assign('staff', $staff);
+
 		$this->assign('prolist',$list);// 赋值数据集 
 		$this->display();
 	}
@@ -385,6 +389,34 @@ class OrderController extends CommonController {
 			$this->ajaxreturn(0);
 		}
 		
+	}
+
+	public function cart(){
+		$data['proid']=I('id');
+		if(!$data['proid']){
+			$this->error('您没有选择对应产品');
+			exit();
+		}
+		$map['proid']=$data['proid'];
+		$data['uid']=session('userid');
+		$data['craetetime']=time();
+		$map['status']=$data['status']=1;
+		$cart=M('cart');
+
+		$count=$cart->where($map)->count();
+		if($count>0){
+			$this->error('该产品您已加入');
+			exit();
+		}
+		$sul=$cart->add($data);
+		if($sul){
+			$this->success('已加入购物车');
+			exit();
+		}else{
+			$this->error('增加失败');
+			exit();
+		}
+
 	}
 
 

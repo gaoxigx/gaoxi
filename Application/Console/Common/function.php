@@ -38,6 +38,10 @@ function getorderget($param){
     }
 }
 
+function json_ary($json){
+    return json_decode($json,true);
+}
+
 //通过组ID值 ，取组名称
     function Getrolename($orleid){ 
     $data=D('role'); 

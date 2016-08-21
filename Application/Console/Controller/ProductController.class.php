@@ -77,12 +77,48 @@ class ProductController extends CommonController {
 	public function insert(){
 		$data = I('');
 		$data['addtime'] = time();
+		$data['sortnum'] =I('inputnum');
+
+
 		$uploadimg = $this->uploadimg();
-		$data['pic'] = $uploadimg['pic'];
-		$data['pic1'] = $uploadimg['pic1'];
+		if($uploadimg['pic'] != ''){
+			$data['pic'] = $uploadimg['pic'];
+		}
+		if($uploadimg['pic1'] != ''){
+			$data['pic1'] = $uploadimg['pic1'];
+		}
 		 
 		$jumpUrl =U('Console/Product/Plist');
 		$roleList   =   D('product');
+
+		
+		$quality=I('quality');
+		foreach ($quality as $k => $vo) {
+			$aryltmp=I('grade'.$k);
+			$arylm=I('money'.$k);
+			foreach ($aryltmp as $key => $vl) {
+					$grade[$vo][$vl]=$arylm[$key];	
+			}
+			unset($data['money'.$k]);
+			unset($data['grade'.$k]);
+		}
+		unset($data['quality'.$k]);
+
+		$data['grade']=json_encode($grade);
+		$data['quality']=json_encode($quality);
+
+
+		//礼盒数据
+		$boxname=I('boxname');
+		$boxvl=I('boxvl');
+		foreach ($boxname as $k => $vo) {
+			$box[$vo]=$boxvl[$k];	
+		}
+		unset($data['boxname']);
+		unset($data['boxvl']);
+		$data['box']=json_encode($box);
+
+		
 		if($roleList->create()) {
 			$result =   $roleList->add($data);
 			if($result) {
@@ -97,12 +133,15 @@ class ProductController extends CommonController {
 	}
 
 	//编辑    
-	public function edit($id = 0){
-		
+	public function edit($id = 0){		
 		$this->getprotype();
 		$controller = D('product');
 		//读取数据
 		$data = $controller->find($id);
+		$data['quality']=json_decode($data['quality'],true);
+		$data['grade']=json_decode($data['grade'],true);
+		$data['box']=json_decode($data['box'],true);
+		
 		if($data){
 			$this->assign('data',$data);
 			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
