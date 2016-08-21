@@ -30,7 +30,7 @@ class CategoryModel extends Model {
        return $data; 
     }
     public function postleave($id){
-      $map['cate_parent']=I('get.id');
+      $map['cate_parent']=$id;
       $map['status']=1;
       $data[]=D('Category')->where($map)->getfield('cate_id,cate_name',true);                    
       if($data){
