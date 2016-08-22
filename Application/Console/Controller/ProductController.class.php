@@ -141,6 +141,7 @@ class ProductController extends CommonController {
 		$data['quality']=json_decode($data['quality'],true);
 		$data['grade']=json_decode($data['grade'],true);
 		$data['box']=json_decode($data['box'],true);
+                $data['detail']=  json_decode($data['detail'],true);
 		
 		if($data){
 			$this->assign('data',$data);
@@ -164,6 +165,32 @@ class ProductController extends CommonController {
 		if($uploadimg['pic1'] != ''){
 			$data['pic1'] = $uploadimg['pic1'];
 		}
+                
+                $quality=I('quality');
+		foreach ($quality as $k => $vo) {
+			$aryltmp=I('grade'.$k);
+			$arylm=I('money'.$k);
+			foreach ($aryltmp as $key => $vl) {
+					$grade[$vo][$vl]=$arylm[$key];	
+			}
+			unset($data['money'.$k]);
+			unset($data['grade'.$k]);
+		}
+		unset($data['quality'.$k]);
+
+		$data['grade']=json_encode($grade);
+		$data['quality']=json_encode($quality);
+
+
+		//礼盒数据
+		$boxname=I('boxname');
+		$boxvl=I('boxvl');
+		foreach ($boxname as $k => $vo) {
+			$box[$vo]=$boxvl[$k];	
+		}
+		unset($data['boxname']);
+		unset($data['boxvl']);
+		$data['box']=json_encode($box);
 		
 		$roleList   =   D('product');
 		$jumpUrl =U('Console/Product/Plist');

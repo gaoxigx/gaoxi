@@ -180,7 +180,7 @@ $(document).ready(function(){
                         <li class="pzprice">
                                 <p>
                                     <span>
-                                    <input name="grade0[]" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                    <input name="grade0[]" placeholder="级别分类" v="0" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" v="0" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                     </span>               
                                 </p>
                         </li>
@@ -214,7 +214,7 @@ $(document).ready(function(){
                         </li>  
                         <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
                         <li><label>产品详情</label>
-                            <textarea id="content7" name="detail" style="width:700px;height:250px;visibility:hidden;"></textarea>                            
+                            <textarea id="content7" name="detail" type="text" style="width:700px;height:250px;visibility:hidden;"></textarea>                            
                         </li>
                         <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
                       
@@ -260,7 +260,7 @@ $(document).ready(function(){
 
             $(document).on("click",".jqbtn",function(){
                 var vl=$(this).prev().attr("v");
-                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
+                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+vl+'[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
                 $(this).parent().append(jqbtn);
             });
 
