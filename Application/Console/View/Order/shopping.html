@@ -187,7 +187,7 @@ function GetCount() {
                     <php>$pvo['grad']=json_ary($pvo['grade'])</php>
            
                     <if condition="pvo.grad neq null and pvo.grad neq ''">
-                        <select name="quality" id="quality{$i}" class="uew-select-value">
+                        <select name="quality{$i}" id="quality{$i}" class="uew-select-value">
                             <foreach name="pvo['grad']" key="gk" item="vol">                               
                                 <foreach name="vol" key="k" item="vg">                                    
                                     <option value="{$gk},{$k},{$vg}">{$gk}({$k})</option>
@@ -200,7 +200,7 @@ function GetCount() {
                 <td class="tb1_td4">
                    
                     <php>$pvo['box']=json_ary($pvo['box'])</php>                    
-                    <select name="box" id="box{$i}" class="uew-select-value">
+                    <select name="box{$i}" id="box{$i}" class="uew-select-value">
                      <foreach name="pvo['box']" key="gk" item="vol"> 
                          <option value="{$gk}:{$vol}">{$gk}</option>  
                      </foreach>            

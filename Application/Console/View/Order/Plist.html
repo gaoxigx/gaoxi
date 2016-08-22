@@ -24,20 +24,15 @@
                 </form>
             </ul>
         </div>
-   
-    
+
 		<table class="tablelist">
 			<thead>
 				<tr>
 					<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
 					<th>订单编辑</th>
 					<th>下单时间</th>
-                                        <th style="width:169px;">买家微信号</th>
-					<th style="width:180;">产品名称</th>
-					<th style="width:100px; text-align:center">销售单价</th>
-<!--					<th style="width:100px; text-align:center">折扣</th>-->
-					<th style="width:100px; text-align:center">数量</th>
-<!--					<th style="width:100px; text-align:center">优惠价</th>-->
+                    <th>买家微信号</th>
+					<th style="width:600;">产品信息</th>
 					<th>订单金额</th>
 					<th>销售客服</th>
 					<th>操作发货</th>
@@ -51,16 +46,12 @@
 					<td >{$vo.id}</td>
 					<td><a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a></td>      
 					<td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
-                                        <td>{$vo.buyer_wechat}</td>
-                                        <td>{$vo.product}</td>
-                                       <td>{$vo.price2}</td>等级
-                                       <td>{$vo.buynum}</td> 
-<!--					<td colspan="5">
-                                            <table class="tablelistpro" style="border:0px;">
-                                                {$vo.order_no|get_orderno_to_pro=###}
-                                            </table>
-					</td>-->
-
+                    <td>{$vo.buyer_wechat}</td>
+					<td >
+                        <table class="tablelistpro" >
+                            {$vo.order_no|get_orderno_to_pro=###}
+                        </table>
+					</td>
 					<td>{$vo.total_price}</td> 
 					<td>{$staff[$vo['agent']]}</td>
 					<td >

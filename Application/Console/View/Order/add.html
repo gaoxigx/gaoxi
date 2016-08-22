@@ -113,7 +113,7 @@
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value=""  /></li>
                             <li><label>订单备注<b></b></label><input name="note" type="text" class="dfinput" value=""  /></li>
-                            <li><label><b>购物车列表</b><a href="{:U('Product/Plist')}">去添加购物车</a></li>
+                            <li><a href="{:U('Product/Plist')}" ><b>去添加购物车-购物车列表</b></a></li>
                         </ul>
                         
                         <include file="./Application/Console/View/order/shopping.html" />
@@ -130,7 +130,8 @@
 
         
        <script>
-                     
+              
+            
            // getJjQuipment($("#agent").val());
             getStaff($("#staffid").val());
             $(function(){
@@ -150,8 +151,7 @@
                     $("#equipment").html("");                    
                     var option="<option value='0'>请选择</option>";           
                     if(data!='0'){                                               
-                        for( i in data){       
-                            console.log(i);
+                        for( i in data){   
                             option+="<option value="+data[i]['id']+">"+data[i]['xinghao']+"("+data[i]['bianhao']+")"+"</option>"
                         }       
                     }
@@ -283,4 +283,9 @@
 			});
 		});
 	</script>
+    <if condition="empty($prolist)">
+        <script type="text/javascript">
+            alert('请选要购买的产品,');
+        </script>
+    </if>
 </html>
