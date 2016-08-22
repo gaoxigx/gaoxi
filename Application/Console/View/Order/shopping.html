@@ -112,6 +112,7 @@ function GetCount() {
         <script>
             $(function () {
             //删除商品
+                GetCount();
                 $(".mya").click(function(){
                     $(this).parent().parent().parent().remove();
                     GetCount();
@@ -168,7 +169,7 @@ function GetCount() {
         <table cellpadding="0" cellspacing="0" class="gwc_tb2">
             <tr>
                 <td class="tb2_td1">
-                  <input type="checkbox" <if condition="$info.order_no gt 0" >checked="checked"</if> value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
+                  <input type="checkbox" checked="checked" <if condition="$info.order_no gt 0" ></if> value="{$i}" aajq="newslist" name="newslist[]" id="newslist-{$i}" />
                   <input type="hidden" name="tolnums" id="tolnums{$i}" value="">
                   <input type="hidden" name="id{$i}"  value="{$pvo.id}">
                   <input type="hidden" name="protype{$i}"  value="{$pvo.protype}">
