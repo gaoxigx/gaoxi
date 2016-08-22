@@ -399,7 +399,7 @@ class OrderController extends CommonController {
 		}
 		$map['proid']=$data['proid'];
 		$data['uid']=session('userid');
-		$data['craetetime']=time();
+		$data['catetime']=time();
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
 
@@ -416,10 +416,24 @@ class OrderController extends CommonController {
 			$this->error('增加失败');
 			exit();
 		}
-
 	}
 
-
+	public function cartdel(){
+		$map['proid']=I('id');		
+		if(!$map['proid']){
+			$this->error('您没有选择对应产品');
+			exit();
+		}	
+		$map['uid']=session('userid');
+		$sul=M('cart')->where($map)->delete();
+		if($sul){
+			$this->success('删除成功');
+			exit();
+		}else{
+			$this->error('删除失败');
+			exit();
+		}
+	}
 	//print打印页面
 	public function weixin_orders_print() {
 		$id = I ( 'id' );

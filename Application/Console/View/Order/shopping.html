@@ -96,6 +96,17 @@ function GetCount() {
           <td class="tb1_td7">操作</td>
         </tr>
     </table>
+    <if condition='empty($prolist)'>
+        <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+            <tr>
+                <td class="tb2_td1">
+                    请添加产品<a href="{:U('Product/Plist')}">去增加产品</a>
+                </td>
+            </tr>
+        </table>        
+    </if>
+
+    </if>
     <!---商品加减算总数---->
     <volist name="prolist" id="pvo">
         <script>
@@ -201,7 +212,8 @@ function GetCount() {
                 </td>
               <!--   <td class="tb1_td6"><input id="zhekou{$i}" name="zhekou{$i}" type="text" value="{$pvo.discount}" class="num" />折</td> -->
               <!--   <td class="tb1_td8">￥<input id="total{$i}"  name="total{$i}" type="text" value="" class="totnum" /></td> -->
-                <td class="tb1_td7"><a href="#" class="mya">删除</a></td>
+
+                <td class="tb1_td7"><a href="{:U('Order/cartdel',array('id'=>$pvo['proid']))}" class="mya">删除</a></td>
             </tr>
         </table>
     </volist>
