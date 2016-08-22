@@ -100,7 +100,7 @@ class LoginController extends Controller {
             session ('userid', null );
             session ('soleid', null );
             session_destroy (); // 清除服务器的sesion文件
-            $this->success ( '退出成功', '/Console/Login/login.html' );
+            $this->success ( '退出成功', U('Login/login'));
     }
 
     
