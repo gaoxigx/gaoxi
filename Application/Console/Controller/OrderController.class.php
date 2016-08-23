@@ -26,6 +26,12 @@ class OrderController extends CommonController {
 
 	}
 
+	public function catlist(){
+		$data=M('product')->select();
+		$this->assign('data',$data);
+		$this->display();	
+	}
+
 	//设备编号获取
 	public function getEquipment(){
 
@@ -300,20 +306,21 @@ class OrderController extends CommonController {
 
 	//插入数据
 	public function insert(){
-
 		$data = I('');
 		$data['order_no'] = $this->build_order_no();
 		$data['addtime'] = time();
 		$data['status'] = 1;
 		$data['payment_status'] = 1;
-		$roleList   =   D('order_info');
+		
+		$roleList   =  D('order_info');
 
-		if($roleList->create()) {
+		if($roleList->create()) {						
+			M()->startTrans();
 			$result =   $roleList->add($data);
 			if($result) {
 				foreach( $data['newslist'] as $k=>$v){  
 					$dataList[] = array(
-					'proid'=>$data["id".$v],
+					'proid'=>$data["id".$v],							
 					'protype'=>$data["protype".$v],
 					'pic'=>$data["pic".$v],
 					'pic1'=>$data["pics".$v],
@@ -322,21 +329,34 @@ class OrderController extends CommonController {
 					'buynum'=>$data["text_box".$v],
 					'discount'=>$data["zhekou".$v],
 					'tollsprice'=>$data["total".$v],
+
+					'quality'=>$data["quality".$v],
+					'box'=>$data["box".$v],
+
 					'order_no'=>$data["order_no"],
 					'addtime'=>time(),                
 					);
+				}		
+				
+				//删除购物车产品
+				M("cart")->where('uid=%d',session('userid'))->delete();						
+				
+				//增加产品图片
+				$result=M('order_goods')->addAll($dataList);
+				if($result){
+					M()->commit();	
+					$this->success('订单表数据添加成功！',U('Console/Order/Plist'));
+				}else{
+					$this->error('订单商表数据添加错误！'.M()->geterror());
+					M()->rollback();
 				}
-
-				$jumpUrl =U('Console/Order/Plist');
-				$user=M('order_goods');
-				$user->addAll($dataList);
-				$this->success('订单表数据添加成功！',$jumpUrl);
 			}else{
-				$this->error('订单商表数据添加错误！');
+				M()->rollback();
+				$this->error('订单商表数据添加错误！'.M()->geterror());
 			}
 
 		}else{
-			$this->error($roleList->getError());
+			$this->error('生成数据错误'.$roleList->getError());
 		}
 	   
 	}
@@ -400,6 +420,10 @@ class OrderController extends CommonController {
 		$map['proid']=$data['proid'];
 		$data['uid']=session('userid');
 		$data['catetime']=time();
+		$data['quality']=I('quality');
+		$data['grade']=I('grade');
+		$data['money']=I('money');
+
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
 

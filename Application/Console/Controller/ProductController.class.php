@@ -24,6 +24,15 @@ class ProductController extends CommonController {
             $this->error($data->getError());
         }
     }
+
+    public function details(){
+    	$proid=I('id');
+    	$map['id']=$proid;
+    	$data=M('product')->where($map)->find();
+    	$data['grade']=json_decode($data['grade'],true);    	
+    	$this->assign('data',$data);
+    	$this->display();
+    }
     
     //产品列表
     public function Plist($name=''){

@@ -65,7 +65,7 @@ function json_ary($json){
 //通过订单编号获取产品
     function get_orderno_to_pro($order_no){
     $datagoods = D('order_goods');
-    $name = $datagoods-> field('product,price2,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
+    $name = $datagoods-> field('product,price2,quality,box,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
 //    dump($name);
 //     echo M()->getLastSql();exit;
     foreach ($name as $k => $v) {
@@ -77,28 +77,39 @@ function json_ary($json){
         // }  
         
         // }
-        echo '<tr>';
-        echo '<td style="width:180px;">'.$v['product'].'</td>';
-        echo '<td style="width:100px;">'.$v['price2'].'</td>';
-        echo '<td style="width:100px;">'.$v['discount'].'</td>';
-        echo '<td style="width:100px;">'.$v['buynum'].'</td>';
-        echo '<td style="width:100px;">'.$v['tollsprice'].'</td>';
-        echo '</tr>';
+        // echo '<tr>';
+        // echo '<td style="width:180px;">'.$v['product'].'</td>';
+        // echo '<td style="width:100px;">'.$v['price2'].'</td>';
+        // echo '<td style="width:100px;">'.$v['discount'].'</td>';
+        // echo '<td style="width:100px;">'.$v['buynum'].'</td>';
+        // echo '<td style="width:100px;">'.$v['tollsprice'].'</td>';
+        // echo '</tr>';
         //}
+
+        echo "<tr>";
+        echo '<td >'.$v['product'].'</td>';
+        echo "<tr>";
+        echo '</tr>';
+        echo '<td>'.$v['quality'].'---'.$v['box'];
+        echo '&nbsp;&nbsp;&nbsp;&nbsp;数量:<b>'.$v['buynum'].'</b></td>';
+        echo '</tr>';
     }
 }
 
     function get_orderno_to_proname($order_no){
     $datagoods = D('order_goods');
-    $name = $datagoods-> field('product,price2,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
+    $name = $datagoods-> field('product,price2,quality,box,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select();
 //    dump($name);
 //     echo M()->getLastSql();exit;
      
    
         foreach ($name as $k => $v) {
-             echo "<tr>";
-            echo '<td style="width:180px;">'.$v['product'].'</td>';
-            echo '<td style="width:80px;">数量:<b>'.$v['buynum'].'</b></td>';
+            echo "<tr>";
+            echo '<td >'.$v['product'].'</td>';
+            echo "<tr>";
+            echo '</tr>';
+            echo '<td>'.$v['quality'].'---'.$v['box'];
+            echo '&nbsp;&nbsp;&nbsp;&nbsp;数量:<b>'.$v['buynum'].'</b></td>';
             echo '</tr>';
         }
     }
