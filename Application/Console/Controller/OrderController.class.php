@@ -308,31 +308,40 @@ class OrderController extends CommonController {
 		$data['payment_status'] = 1;
 		
 		$roleList   =  D('order_info');
+		$min['c.uid']=session('userid');
+
+
+		$catdata=M('cart')->alias('c')->field('c.*,p.id as proid,p.protype,p.pic,p.pic1,p.product')->join('__PRODUCT__ p on c.proid=p.id')->where($mid)->select();
+
+		if(!$catdata){
+			$this->error('请先添加购买产品',U('Order/catlist'));
+			exit();
+		}
+
 
 		if($roleList->create()) {						
 			M()->startTrans();
 			$result =   $roleList->add($data);
 			if($result) {
-				foreach( $data['newslist'] as $k=>$v){  
+				foreach( $catdata as $k=>$v){  
 					$dataList[] = array(
-					'proid'=>$data["id".$v],							
-					'protype'=>$data["protype".$v],
-					'pic'=>$data["pic".$v],
-					'pic1'=>$data["pics".$v],
-					'product'=>$data["product".$v],
-					'price2'=>$data["price".$v],
-					'buynum'=>$data["text_box".$v],
-					'discount'=>$data["zhekou".$v],
-					'tollsprice'=>$data["total".$v],
+					'proid'=>$v['proid'],							
+					'protype'=>$v['protype'],
+					'pic'=>$v['pic'],
+					'pic1'=>$v['pic1'],
+					'product'=>$v['product'],
+					'price2'=>$v['money'],
+					'buynum'=>I('nmb_'.$v['id']),
+					'discount'=>I('nmb_'.$v['id']),
+					'tollsprice'=>I('nmb_'.$v['id'])*$v['money'],
 
-					'quality'=>$data["quality".$v],
-					'box'=>$data["box".$v],
-
+					'quality'=>$v['quality'],
+					'box'=>$v['box'],
 					'order_no'=>$data["order_no"],
 					'addtime'=>time(),                
 					);
 				}		
-				
+
 				//删除购物车产品
 				M("cart")->where('uid=%d',session('userid'))->delete();						
 				

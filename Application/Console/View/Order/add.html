@@ -13,6 +13,8 @@
         <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
         <style>
             .delcart{float:right;}
+            .cerror{float: none;}
+            .forminfo li label.cerror, .forminfo li label.cerror_show{float: none; display: inline-block;}
         </style>
     </head>
 	
@@ -52,7 +54,7 @@
                                 <div class="lright">
                                 <h2>{$vo.product}</h2>
                                 <p>品质：{$vo['quality']}{$vo['grade']}{$vo['box']}<br />数量：<input id="min{$i}" name="" class="min" type="button" value="-" />
-                                     <input id="text_box{$i}" name="text_box{$i}" type="text" value="{$pvo.number|default=1}" class="num" />
+                                     <input id="text_box{$i}" name="nmb_{$vo.id}" type="text" value="{$vo.number|default=1}" class="num" />
                                      <input id="add{$i}" name="" class="add" type="button" value="+" />章<br />金额：￥{$vo.money}.00</p>
                                 <a class="enter">了解详情况课程</a>
                                 </div>
@@ -61,7 +63,7 @@
                             </volist>                        
                          </ul>
                         <else />
-                                <a href="{:U('Order/catlist')}"  style="text-align:left;display:block;height:158px; line-height:158px; padding-left:50px;" >去添加产品</a>
+                            <a href="{:U('Order/catlist')}"  style="text-align:left;display:block;height:158px; line-height:158px; padding-left:50px;" >去添加产品</a>
                         </if>
                        
                         <div class="clear"></div>
@@ -102,11 +104,7 @@
 
                             <li><label>支付方式<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <select name="payment_method" id="payment_method" class="uew-select-value">
-                                        <volist name="payment" id="vo4">
-                                            <option value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> selected="selected" </if>>{$vo4.payment}</option>
-                                        </volist>
-                                    </select>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> checked="checked" </if>>{$vo4.payment}</label></volist>
                                 </div>
                             </li>
 
@@ -123,8 +121,8 @@
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
                             </li>-->
-
-                            <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li>
+<!-- 
+                            <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->
                       
                             <li>
                                 <label>买家微信号<b>*</b></label>
@@ -135,11 +133,11 @@
                                 <input id="buyer_wechat" name="total_price" type="text" class="dfinput" value=""  />
                             </li>
 
-                            <li><label>订单来源<b>*</b></label><input id="source" name="source" type="text" class="dfinput" value="" /></li>
+                            <li><label>订单来源<b>*</b></label><input id="source" name="source" type="text" class="dfinput" value="微信" /></li>
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value=""  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value=""  /></li>
-                            <li><label>订单备注<b></b></label><input name="note" type="text" class="dfinput" value=""  /></li>
+                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value=""  ></textarea></li>
                           
                         </ul>
 
@@ -162,7 +160,18 @@
 
         
        <script>
-              
+            $('.min').click(function(){                
+                var val=$(this).parent().find('.num').val();
+                if(val>0){
+                    $(this).parent().find('.num').val(val-1);
+                }
+                
+            })
+
+            $('.add').click(function(){
+                 var val=$(this).parent().find('.num').val();
+                 $(this).parent().find('.num').val(parseInt(val)+1);
+            })
             
            // getJjQuipment($("#agent").val());
             getStaff($("#staffid").val());
@@ -177,19 +186,19 @@
                 });
               
             })
-            function getJjQuipment(id){                  
-                var url="{:U('Order/getEquipment')}?id="+id;                
-                $.get(url,function(data){                 
-                    $("#equipment").html("");                    
-                    var option="<option value='0'>请选择</option>";           
-                    if(data!='0'){                                               
-                        for( i in data){   
-                            option+="<option value="+data[i]['id']+">"+data[i]['xinghao']+"("+data[i]['bianhao']+")"+"</option>"
-                        }       
-                    }
-                     $("#equipment").html(option);
-                })
-            }
+            // function getJjQuipment(id){                  
+            //     var url="{:U('Order/getEquipment')}?id="+id;                
+            //     $.get(url,function(data){                 
+            //         $("#equipment").html("");                    
+            //         var option="<option value='0'>请选择</option>";           
+            //         if(data!='0'){                                               
+            //             for( i in data){   
+            //                 option+="<option value="+data[i]['id']+">"+data[i]['xinghao']+"("+data[i]['bianhao']+")"+"</option>"
+            //             }       
+            //         }
+            //          $("#equipment").html(option);
+            //     })
+            // }
             
             function getStaff(id){                  
                 var url="{:U('Order/getagent')}?id="+id;                
@@ -197,8 +206,7 @@
                     $("#agent").html("");                    
                     var option="<option value='"+id+"'>"+$("#staffid").find("option:selected").text()+"</option>";           
                     if(data!='0'){                                               
-                        for( i in data){       
-                            console.log(data);
+                        for( i in data){                                   
                             option+="<option value="+i+">"+data[i]+"("+data[i]+")"+"</option>"
                         }       
                     }
@@ -209,33 +217,7 @@
     </body>
     
     
-    <script>
-            $(function(){
-                function getequipment(obj,id){
-                        var url="{:U('Console/Equipment/add')}?catid="+id;
-                        $.get(url,function(data){
-                                            if(data.length == 0){
-                                                    return false;
-                                            }
-                                            var subordinates_html = '<select id="subordinatesdata" name="subordinates[]"  class="subordinates uew-select-value" style="margin-left:5px;">\
-                                                                                                    <option value="0">请选择岗位</option>\
-                                                                                            </select>';
-                                            if(!$('#subordinatesdata').html() && data.length > 0){
-                                                    $("#quarters_div").append(subordinates_html);
-                                            }
-                            $('#subordinatesdata').html('<option value="0">请选择岗位</option>');
-                                            for(i=0 ;i<data.length;i++){
-                                                    $('#subordinatesdata').append('<option value='+data[i].cate_id+'>'+data[i].cate_name+'</option'); 
-                                            }
 
-                        })            
-                    }
-
-            })
-
-      </script>
-    
-		
         
 	<script>
 		$(function (){
