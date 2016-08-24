@@ -184,31 +184,14 @@ function GetCount() {
                     ￥<input id="price{$i}"  name="price{$i}" type="text" value="{$pvo.price2}" class="totnum" />
                 </td>-->
                     <td  class="tb1_td4" >
-                    <php>$pvo['grad']=json_ary($pvo['grade'])</php>
-           
-                    <if condition="pvo.grad neq null and pvo.grad neq ''">
-                        <select name="quality{$i}" id="quality{$i}" class="uew-select-value">
-                            <foreach name="pvo['grad']" key="gk" item="vol">                               
-                                <foreach name="vol" key="k" item="vg">                                    
-                                    <option value="{$gk},{$k},{$vg}">{$gk}({$k})</option>
-                                </foreach>
-                            </foreach>
-                        </select>
-                    </if>
-                        <input name="educationtext" id="educationtext" type="hidden" value="未知" />
+                        {$pvo['quality']}{$pvo['grade']}{$pvo['box']}
                     </td>
                 <td class="tb1_td4">
-                   
-                    <php>$pvo['box']=json_ary($pvo['box'])</php>                    
-                    <select name="box{$i}" id="box{$i}" class="uew-select-value">
-                     <foreach name="pvo['box']" key="gk" item="vol"> 
-                         <option value="{$gk}:{$vol}">{$gk}</option>  
-                     </foreach>            
+                    {$pvo['money']}
                 </td>
-
                 <td class="tb1_td5">
                     <input id="min{$i}" name="" class="min" type="button" value="-" />
-                    <input id="text_box{$i}" name="text_box{$i}" type="text" <if condition="$pvo.buynum gt 1" >value="{$pvo.buynum}"<else />value="1"</if> class="num" />
+                    <input id="text_box{$i}" name="text_box{$i}" type="text" value="{$pvo.number|default=1}" class="num" />
                     <input id="add{$i}" name="" class="add" type="button" value="+" />
                 </td>
               <!--   <td class="tb1_td6"><input id="zhekou{$i}" name="zhekou{$i}" type="text" value="{$pvo.discount}" class="num" />折</td> -->

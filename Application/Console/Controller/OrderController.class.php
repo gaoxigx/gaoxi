@@ -159,17 +159,10 @@ class OrderController extends CommonController {
 			$Page->parameter[$key]   =   urlencode($val);
 			  }
 		}
-		$User = M('order_info'); // 实例化User对象 
-
-
-
-	    
-		
+		$User = M('order_info'); // 实例化User对象 		
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
-
-	  
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
@@ -208,10 +201,12 @@ class OrderController extends CommonController {
 
 		$promap['ct.uid']=session('userid');
 
-		$list = $data->alias('pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select();  
+		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
+		$list=M('cart')->alias('ct')->field('ct.*,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
 	    $this->assign('staff', $staff);
-
 		$this->assign('prolist',$list);// 赋值数据集 
+
+
 		$this->display();
 	}
 
@@ -423,6 +418,7 @@ class OrderController extends CommonController {
 		$data['quality']=I('quality');
 		$data['grade']=I('grade');
 		$data['money']=I('money');
+		$data['number']=I('nmb');
 
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
