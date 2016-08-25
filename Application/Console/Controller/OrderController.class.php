@@ -434,12 +434,12 @@ class OrderController extends CommonController {
 
 		$count=$cart->where($map)->count();
 		if($count>0){
-			$this->error('该产品您已加入');
+			$this->error('该产品已存在购物车');
 			exit();
 		}
 		$sul=$cart->add($data);
 		if($sul){
-			$this->success('已加入购物车');
+			$this->success('已加入购物车',U('Order/add'));
 			exit();
 		}else{
 			$this->error('增加失败');
