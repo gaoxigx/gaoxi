@@ -21,7 +21,7 @@ class PlistController extends \Think\Controller{
         }   
         
 		
-        $Page = new \Think\Page($count,6,$map);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $Page = new \Think\Page($count,100,$map);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
        
         
