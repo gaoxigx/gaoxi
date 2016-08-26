@@ -216,6 +216,15 @@ $(document).ready(function(){
                                     <input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
                             </cite>
                         </li>
+
+                        <li><label>单位<b>*</b></label>
+                        <select type='text' name="pcs" class="sciselect">
+                                <option  value="1" <if condition="data.pcs eq 1">selected="selected"</if>>两</option>
+                                <option  value="2" <if condition="data.pcs eq 2">selected="selected"</if>>个</option>
+                                <option  value="3" <if condition="$data.pcs eq 3">selected="selected"</if>>份</option>
+                        </select>
+                        </li>
+
                         <li><label>产品详情</label>
                             <textarea id="content7" name="detail" type="text" style="width:700px;height:250px;visibility:hidden;">{$data.detail}</textarea>                            
                         </li>
