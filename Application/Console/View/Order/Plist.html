@@ -51,9 +51,9 @@
                     <td>{$vo.buyer_wechat}</td>
 					<td >
                         <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
-                        <volist name="goods" id="vo">                        
-                            {$vo.product}   
-                            <p>{$vo.quality}{$vo.grade}</p>
+                        <volist name="goods" id="vl">                        
+                            {$vl.product}   
+                            <p>{$vl.quality}{$vl.grade}</p>
                         </volist>
 					</td>
 					<td>{$vo.total_price}</td> 
