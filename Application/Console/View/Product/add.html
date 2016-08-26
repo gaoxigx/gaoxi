@@ -174,10 +174,11 @@ $(document).ready(function(){
                         </li>
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value=""  /></li>
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
+                        <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"   checked="checked" value="1" name="pmleave">联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  class="pmleave2" value="0" name="pmleave">对等属性 <input type="radio"  class="pmleave3" value="1" name="pmleave"> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>        
                            
-                        <li><label>品质<b>*</b></label><p class="pztext"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  /></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                        <li class="jl1"><label>&nbsp;</label><p class="pztext"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  /></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
                         </li>
-                        <li class="pzprice">
+                        <li class="pzprice jl1">
                                 <p>
                                     <span>
                                     <input name="grade0[]" placeholder="级别分类" v="0" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" v="0" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
@@ -186,7 +187,7 @@ $(document).ready(function(){
                         </li>
 
                         
-                        <li class="lhcl"><label>礼盒<b>*</b></label><input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                        <li class="lhcl" style="display:none"><label>&nbsp;<b>*</b></label><input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                         </li> 
 
 <!--                        <li><label>最低折扣<b>*</b></label>
@@ -198,6 +199,8 @@ $(document).ready(function(){
                                 </select>
                             </div>
                         </li>-->
+                        <li class="jhmoney" style="display:none"><label>&nbsp;</label><input name="money" type="text" class="dfinput" value=""  placeholder="金额"  /></li>
+
                         <li><label>采购数量<b>*</b></label><input name="inputnum" type="text" class="dfinput" value=""  /></li>
                         <li><label>单位<b>*</b></label> 
                         <select type='text' name="pcs" class="sciselect">
@@ -247,6 +250,23 @@ $(document).ready(function(){
     </div>
     <script type="text/javascript">
         $(function(e){
+            $(".pmleave1").click(function(){
+                $('.jhmoney').hide();
+                $('.lhcl').hide();
+                $('.jl1').show();
+            })
+            $(".pmleave2").click(function(){                
+                $('.jhmoney').hide();
+                $('.jl1').hide();
+                $('.lhcl').show();
+                
+                
+            })
+            $(".pmleave3").click(function(){                
+                $('.lhcl').hide();
+                $('.jl1').hide();
+                $('.jhmoney').show();
+            })
             $(".pzbtn").click(function(){
                 var nmb=$(".pztext input").length;            
                  var pzhtml='<input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  />';
