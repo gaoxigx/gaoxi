@@ -53,7 +53,11 @@
                                 <span><img src="{$vo.pic1}" style="width:106px;" /></span>
                                 <div class="lright">
                                 <h2>{$vo.product}</h2>
-                                <p>品质：{$vo['quality']}{$vo['grade']}{$vo['box']}<br /><!-- 数量：<input id="min{$i}" name="" class="min" type="button" value="-" />
+                                <p>品质：{$vo['quality']}{$vo['grade']}{$vo['box']}<br />
+                                    <input type="hidden" name="quality_{$vo.id}" />
+                                    <input type="hidden" name="grade_{$vo.id}" />
+                                    <input type="hidden" name="box_{$vo.id}" />
+                                    <!-- 数量：<input id="min{$i}" name="" class="min" type="button" value="-" />
                                      <input id="text_box{$i}" name="nmb_{$vo.id}" type="text" value="{$vo.number|default=1}" class="num" />
                                      <input id="add{$i}" name="" class="add" type="button" value="+" />两<br /> -->金额：￥{$vo.money}.00</p>
                                 <a class="enter">了解详情况课程</a>
@@ -137,12 +141,8 @@
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value=""  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value=""  /></li>
-                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value=""  ></textarea></li>
-                          
+                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value=""  ></textarea></li>                          
                         </ul>
-
-                      
-                      
                       <ul class="forminfo">
                         <li>
                        

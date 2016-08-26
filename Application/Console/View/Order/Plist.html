@@ -25,16 +25,15 @@
             </ul>
         </div>
 
-		<table class="tablelist">
+		<table class="imgtable">
 			<thead>
 				<tr>
 					<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-					<th>订单编辑</th>
-					<th>下单时间</th>
+					<th>订单信息</th>		
                     <th>买家微信号</th>
-					<th style="width:600;">产品信息</th>
-					<th>订单金额</th>
-					<th>销售客服</th>
+					<th>产品信息</th>
+					<th>订单金额</th>		
+                    <th>订单备注</th>
 					<th>操作发货</th>
 <!--					<th>确认收款</th>-->
 					<th>操作</th>
@@ -44,16 +43,21 @@
 				<volist name="list" id="vo">
 				<tr>
 					<td >{$vo.id}</td>
-					<td><a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a></td>      
-					<td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+					<td>
+                        <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
+                        <p>发布时间：{$vo.addtime|date='Y-m-d H:i:s',###}</p>
+                        <p>销售客服：{$staff[$vo['agent']]}</p>
+                    </td>      
                     <td>{$vo.buyer_wechat}</td>
 					<td >
-                        <table class="tablelistpro" >
-                            {$vo.order_no|get_orderno_to_pro=###}
-                        </table>
+                        <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
+                        <volist name="goods" id="vo">                        
+                            {$vo.product}   
+                            <p>{$vo.quality}{$vo.grade}</p>
+                        </volist>
 					</td>
 					<td>{$vo.total_price}</td> 
-					<td>{$staff[$vo['agent']]}</td>
+                    <td>{$vo.note}</td>
 					<td >
                         <switch name="vo.payment_status">
                             <case value="0">已下单.</case>
@@ -67,6 +71,7 @@
                             <default />已下单
                         </switch>
 					</td>
+
 <!--					<td>
 						<if condition="$vo.payment_status eq 0">
 							<input name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall" value="点击确认" />
