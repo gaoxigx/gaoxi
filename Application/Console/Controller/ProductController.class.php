@@ -126,7 +126,7 @@ class ProductController extends CommonController {
 		unset($data['boxname']);
 		unset($data['boxvl']);
 		$data['box']=json_encode($box);	
-		$data['detail']=I('detail');
+		
 		if($roleList->create()) {
 			$result =   $roleList->add($data);
 			if($result) {
@@ -149,7 +149,6 @@ class ProductController extends CommonController {
 		$data['quality']=json_decode($data['quality'],true);
 		$data['grade']=json_decode($data['grade'],true);
 		$data['box']=json_decode($data['box'],true);
-        $data['detail']=  json_decode($data['detail'],true);
 		
 		if($data){
 			$this->assign('data',$data);
