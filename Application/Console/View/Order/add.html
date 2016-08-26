@@ -50,7 +50,7 @@
                             <volist name="prolist"  id="vo">
                             <li>
                                 <p class="delcart"><a href="{:U('Order/cartdel',array('id'=>$vo['proid']))}"><img src="__PUBLIC__/Console/images/t03.png" /></a></p>
-                                <span><img src="{$vo.pic1}" style="min-width:106px;" /></span>
+                                <span><img src="{$vo.pic1}" style="width:106px;" /></span>
                                 <div class="lright">
                                 <h2>{$vo.product}</h2>
                                 <p>品质：{$vo['quality']}{$vo['grade']}{$vo['box']}<br /><!-- 数量：<input id="min{$i}" name="" class="min" type="button" value="-" />
