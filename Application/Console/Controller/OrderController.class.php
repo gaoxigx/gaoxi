@@ -202,7 +202,7 @@ class OrderController extends CommonController {
 		$promap['ct.uid']=session('userid');
 
 		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
-		$list=M('cart')->alias('ct')->field('ct.*,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
+		$list=M('cart')->alias('ct')->field('ct.*,pro.pic1,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
 	    $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 
