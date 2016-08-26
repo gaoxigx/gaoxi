@@ -1,0 +1,15 @@
+body{max-width:980px;margin:0px auto; text-align: center;}
+* {text-align:left;}
+ul,li,a{margin:0px;padding:0px; list-style: none}
+
+img { border: 0 none; vertical-align: center; }
+body, input, select, button, textarea { font-size: 12px; font-family:"微软雅黑";  }
+button { cursor: pointer; }
+i, em, cite { font-style: normal; }
+aside section,.body{display:block; width:1000px; margin:0 auto;}
+a, a:link { color: #4e4e4e; text-decoration: none; }/*设置a标签基本样式与伪类选择器设置*/
+a:visited {}
+a:active, a:hover { text-decoration: none; color:#d00000; }
+a:focus { outline: none; } 
+
+
