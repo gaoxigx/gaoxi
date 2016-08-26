@@ -295,7 +295,7 @@ class OrderController extends CommonController {
     //根据订单号查找产品
     private function GetProdect($order_no){
 		$datagoods = D('order_goods');
-		$products = $datagoods-> field('product,price2,buynum')->where('order_no="'.$order_no.'"')->order('id desc')->select();  
+		$products = $datagoods->where('order_no="'.$order_no.'"')->order('id desc')->select();  
 		return $products;            
     }
 

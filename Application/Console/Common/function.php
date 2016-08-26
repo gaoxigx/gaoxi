@@ -91,7 +91,7 @@ function json_ary($json){
         echo "<tr>";
         echo '</tr>';
         echo '<td>'.$v['quality'].'---'.$v['box'];
-        echo '&nbsp;&nbsp;&nbsp;&nbsp;数量:<b>'.$v['buynum'].'</b></td>';
+       // echo '&nbsp;&nbsp;&nbsp;&nbsp;数量:<b>'.$v['buynum'].'</b></td>';
         echo '</tr>';
     }
 }

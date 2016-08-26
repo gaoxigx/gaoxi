@@ -80,6 +80,14 @@
                                 {$info.numberno}
                             </td>
                         </tr>
+                         <tr>
+                        <td style="height:20px;padding:5px;">
+                                <label><b>订单金额:</b></label>  
+                            </td>   
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$info.total_price}
+                            </td>
+                        </tr>
 
 						<tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
@@ -91,14 +99,14 @@
                                 <table>
                                     <tr>
                                         <th style="width:100px;text-align:center;padding:5px;">名称</th>
-                                        <th style="width:100px;text-align:center;padding:5px;">价格</th>
-                                        <th style="width:100px;text-align:center;padding:5px;">数量</th>
+                                  <!--       <th style="width:100px;text-align:center;padding:5px;">价格</th> -->
+                                        <th style="width:100px;text-align:center;padding:5px;">品质</th>
                                     </tr>
                                     <foreach name="products" item="val">
                                     <tr>
                                         <td style="text-align:center;padding:5px;">{$val.product}</td>
-                                        <td style="text-align:center;padding:5px;">{$val.price2}</td>
-                                        <td style="text-align:center;padding:5px;">{$val.buynum}</td>
+                                      <!--   <td style="text-align:center;padding:5px;">{$val.price2}</td> -->
+                                        <td style="text-align:center;padding:5px;">{$val.quality}-{$val.grade}</td>
                                     </tr> 
                                     </foreach>
                                 </table>
