@@ -64,7 +64,10 @@
                                 </div>
                                
                             </li>
-                            </volist>                        
+                            </volist>  
+                            <li>
+                                <a style="height:106px;width:106px; display:block;line-height:106px; text-align:center;font-size:50px;" href="{:U('Order/catlist')}">+</a>
+                            </li>                      
                          </ul>
                         <else />
                             <a href="{:U('Order/catlist')}"  style="text-align:left;display:block;height:158px; line-height:158px; padding-left:50px;" >去添加产品</a>
@@ -297,9 +300,5 @@
 			});
 		});
 	</script>
-    <if condition="empty($prolist)">
-        <script type="text/javascript">
-            alert('请选要购买的产品,');
-        </script>
-    </if>
+
 </html>
