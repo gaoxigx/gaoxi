@@ -460,6 +460,7 @@ class OrderController extends CommonController {
 
 	public function setstatu(){
 		$id=I('id');
+
 		$data['status']=0;
 		if(empty($id)){        			
 			$this->ajaxreturn($data);
@@ -468,13 +469,13 @@ class OrderController extends CommonController {
 
 		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
 		if($status==3){
-			$sul=D('order_info')->where('id=%d',array($id))->setField('status',2);
+			$sul=D('order_info')->where('id=%d',array($id))->setField('status',1);
 			if($sul){
 				$data['status']=1;
 			}
 		}
 
-		$this->ajaxreturn(0);
+		$this->ajaxreturn($data);
 		exit();
 
 	}
