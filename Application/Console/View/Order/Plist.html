@@ -41,7 +41,7 @@
 			</thead>
 			<tbody>
 				<volist name="list" id="vo">
-				<tr>
+				<tr style="border-bottom: dotted 1px #c7c7c7; ">
 					<td >{$vo.id}</td>
 					<td>
                         <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
@@ -52,7 +52,7 @@
 					<td >
                         <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
                         <volist name="goods" id="vl">                        
-                            {$vl.product}   
+                            <span href=""><php>echo trim($vl['product'])</php></span>
                             <p>{$vl.quality}{$vl.grade}</p>
                         </volist>
 					</td>
