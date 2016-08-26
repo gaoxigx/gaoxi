@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>产品列表</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link type="text/css" rel="stylesheet" href="/public/wap/css/common.css"/>
+	<link type="text/css" rel="stylesheet" href="/public/wap/css/Plist.css"/>
+        <link type="text/css" rel="stylesheet" href="/public/wap/css/Plist.css"/>
+        <script type="text/javascript" src="/public/wap/js/jquery.js" ></script>
+</head>
+<body>
+<!--====================================头部=====================================-->
+<div class="content_Af">
+    <div class="head_mid">
+        <div class="head_mid_inL">
+            <img src="/public/wap/images/Plist/logo.png" />
+        </div>
+        <form action="/index.php/wap/Plist/Plist" method="post" id="form1" name="form1">   
+            <div class="head_mid_inR">
+                    <span>
+                        <img src="/public/wap/images/Plist/ssk.png"/>	          
+                        <input class="Af_right_admin" type="text" size="16" placeholder=" 搜索关键字"  name="product_name" value=""/> 
+                        <input type="submit" value="查询" class="Af_right_submit"/>
+                    </span>					
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="content_Bf">
+	<div class="content_Bf_left">
+		<img src="/public/wap/images/Plist/classify.png" alt="" />
+	</div>
+    <form action="/index.php/wap/Plist/Plist" method="post" id="form2" name="form2">   
+        <p>
+            <select name="protype" class="content_Bf_right" onchange="$('#form2').submit();">
+                <option value="">全部</option>
+                <volist name="protype" id="voo">
+                    <option value="{$voo.id}">{$voo.typename}</option>
+                </volist>
+            </select>  
+        </p>   
+    </form>
+</div>
+
+
+<div class="content_Cf">
+    <volist name="data" id="voo">
+        <div class="Cf_resume">
+            <i><img src="{$voo.pic}"/></i>
+            <span>
+                <a href="#"><b>{$voo.product}</b></a>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;{$voo.detail}</p>
+            </span>
+        </div>  
+    </volist>
+    
+<!--    <div class="Gf_resume">
+    	<i><img src="/public/wap/images/Plist/wuyi.png"/></i>
+        <span>
+        	<a href="#"><b>武夷山大红袍</b></a>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;武夷山特技大红袍是新鲜采集，经过古法烘培、发酵所制成的特技贡茶。</p>
+        </span>
+    </div>
+    -->
+
+</div>
+<!--====================================end头部=====================================-->
+</body>
+</html>

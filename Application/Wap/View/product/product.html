@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>	
+	<title>产品详情</title>
+	<link type="text/css" rel="stylesheet" href="/public/wap/css/product.css" />
+	<link type="text/css" rel="stylesheet" href="/public/wap/css/common.css"/>
+	<script src="/public/wap/js/jquery.1.7.2.min.js"></script>
+	<script src="/public/wap/js/jquery.img_silder.js"></script>
+	<script>
+        $(function(){
+            $('#silder').imgSilder({
+				s_width:'100%', //容器宽度
+				s_height:245, //容器高度
+				is_showTit:true, // 是否显示图片标题 false :不显示，true :显示
+				s_times:2000, //设置滚动时间
+				css_link:'css/style.css'
+			});
+		});
+    </script>
+</head>
+<body>
+<!--====================================头部=====================================-->
+<div class="content_Af">
+	<div class="silder" id="silder">
+      <ul class="silder_list" id="silder_list">
+        <li> <img src="/public/wap/images/product/4.jpg" border="0"/> </li>
+        <li> <img src="/public/wap/images/product/2.jpg" border="0"/> </li>
+        <li> <img src="/public/wap/images/product/3.jpg" border="0"/> </li>
+      </ul>
+    </div>
+</div>
+
+<div class="content_Bf">
+	<div class="content_Bf_top"><a href="#" title="{$data.product}">{$data.product}</a></div>
+	<div class="content_Bf_con">
+            <div class="title">
+                <div class="title_name"><a>产品简介</a></div>
+                <volist name="grade"  id="vo">
+                    <ul class="job_list">
+                        <li>品质:&nbsp;&nbsp;&nbsp;<b>{$key}</b></li>
+                        <li>级别：<volist name="vo"  id="vl"><b>{$key}</b>:￥{$vl}&nbsp;&nbsp;&nbsp;&nbsp;</volist></li>
+                        <li>包装礼盒：<volist name="box"  id="box"><b>{$key}</b>&nbsp;&nbsp;&nbsp;:￥{$box}</volist></li>
+                    </ul>
+                </volist>
+            </div>
+	</div>
+</div>       
+
+<div class="content_Cf">
+	<div class="content_Cf_con">
+            <div class="title">
+                <div class="title_name"><a>产品简介</a></div>
+            </div>
+            <p>{$data.detail}</p>
+        </div>
+</div>
+
+
+
+
+<!--====================================end头部=====================================-->
+
+
+<!--====================================内容=====================================-->
+<div id="content"></div>
+<!--====================================end内容=====================================-->
+
+
+
+<div id="end"></div>
+
+</body>
+</html>
