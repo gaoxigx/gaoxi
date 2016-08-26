@@ -331,9 +331,9 @@ class OrderController extends CommonController {
 					'pic1'=>$v['pic1'],
 					'product'=>$v['product'],
 					'price2'=>$v['money'],
-					'buynum'=>I('nmb_'.$v['number']),
-					'discount'=>I('nmb_'.$v['number']),
-					'tollsprice'=>I('nmb_'.$v['id'])*$v['money'],
+					'buynum'=>$v['number'],
+					'discount'=>$v['number'],
+					'tollsprice'=>$v['number']*$v['money'],
 
 					'quality'=>$v['quality'],
 					'grade'=>$v['grade'],
