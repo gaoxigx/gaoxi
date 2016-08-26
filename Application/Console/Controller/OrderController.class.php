@@ -336,6 +336,7 @@ class OrderController extends CommonController {
 					'tollsprice'=>I('nmb_'.$v['id'])*$v['money'],
 
 					'quality'=>$v['quality'],
+					'grade'=>$v['grade'],
 					'box'=>$v['box'],
 					'order_no'=>$data["order_no"],
 					'addtime'=>time(),                
