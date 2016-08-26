@@ -170,9 +170,9 @@ $(document).ready(function(){
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
                         <li><label>图片预览</label><img src="{$data.pic1}"></li>
                          <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"   checked="checked" value="1" name="pmleave">联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  class="pmleave2" value="0" name="pmleave">对等属性 <input type="radio"  class="pmleave3" value="1" name="pmleave"> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>
-                         <li class="jl1" style="display:none"><label>&nbsp;&nbsp;<b>*</b></label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                         <li class="jl1" ><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
                         </li>
-                        <li class="pzprice jl1" style="display:none">
+                        <li class="pzprice jl1">
                        <php> <literal>$numbary=0</literal></php>
                         <foreach name="data['grade']"  item="vol"> 
                             <p> 
