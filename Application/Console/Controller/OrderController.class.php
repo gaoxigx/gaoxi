@@ -178,6 +178,57 @@ class OrderController extends CommonController {
 
 	}
 
+	//审核列表
+	public function shPlist($name=''){
+		$username = I('username');
+
+		if($username){
+			$map['order_no']  = array('like','%'.trim($username).'%'); 
+		}
+
+		$user_id = session("userid");
+		if($user_id > 0 ){
+			$where['id']=session("userid");
+			$where['accounts']=session("username");
+			$count=M('controller')->where($where)->count();
+			if($count<=0){
+				$user=D('Staff')->getthislevel();
+				$map['agent']  = array('in',implode(',',$user));
+			}
+	    }
+		foreach( $map as $k=>$v){  
+			if( !$v )  
+				unset( $arr[$k] );  
+		}   
+
+		//分页跳转的时候保证查询条件
+		foreach($map as $key=>$val) {
+			if(!$val){
+				unset($map[$key]);
+			}else{
+			$Page->parameter[$key]   =   urlencode($val);
+			  }
+		}
+		$map['status']=3;
+		$User = M('order_info'); // 实例化User对象 		
+		$count = $User->where($map)->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
+	
+		$staff=D('staff')->getfield('id,name',true);
+		$catdata=D('Category')->categoryone();      
+		
+		$this->assign('staff',$staff);
+		$this->assign('cat',$catdata);
+		$this->assign('list',$list);// 赋值数据集
+		$this->assign('page',$show);// 赋值分页输出
+		$this->display(); // 输出模板
+
+	}
+
 	//提交订单
 	public function add(){
         $map['id']=session('userid');
@@ -321,8 +372,7 @@ class OrderController extends CommonController {
 
 		if($roleList->create()) {						
 			M()->startTrans();
-			$result =   $roleList->add($data);
-			if($result) {
+				$tlm=0;
 				foreach( $catdata as $k=>$v){  
 					$dataList[] = array(
 					'proid'=>$v['proid'],							
@@ -331,17 +381,30 @@ class OrderController extends CommonController {
 					'pic1'=>$v['pic1'],
 					'product'=>$v['product'],
 					'price2'=>$v['money'],
+					'money'=>$v['money'],
 					'buynum'=>$v['number'],
 					'discount'=>$v['number'],
 					'tollsprice'=>$v['number']*$v['money'],
-
 					'quality'=>$v['quality'],
 					'grade'=>$v['grade'],
 					'box'=>$v['box'],
 					'order_no'=>$data["order_no"],
 					'addtime'=>time(),                
 					);
-				}		
+					$arm=explode('-',$v['money']);
+					$tlm=($arm[1])?$tlm+$arm[1]:$tlm+$arm[0];
+				}
+
+
+				if($data['total_price']<$tlm){
+					$data['status']=3;//订单异常
+				}	
+
+				$result =   $roleList->add($data);
+				if(!$result) {
+					M()->rollback();
+					$this->error('订单商表数据添加错误！'.M()->geterror());
+				}
 
 				//删除购物车产品
 				M("cart")->where('uid=%d',session('userid'))->delete();						
@@ -355,11 +418,6 @@ class OrderController extends CommonController {
 					$this->error('订单商表数据添加错误！'.M()->geterror());
 					M()->rollback();
 				}
-			}else{
-				M()->rollback();
-				$this->error('订单商表数据添加错误！'.M()->geterror());
-			}
-
 		}else{
 			$this->error('生成数据错误'.$roleList->getError());
 		}
@@ -398,6 +456,27 @@ class OrderController extends CommonController {
 		}else{
 			$this->error('数据删除错误！');
 		}
+	}
+
+	public function setstatu(){
+		$id=I('id');
+		$data['status']=0;
+		if(empty($id)){        			
+			$this->ajaxreturn($data);
+			exit();
+		}     
+
+		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
+		if($status==3){
+			$sul=D('order_info')->where('id=%d',array($id))->setField('status',2);
+			if($sul){
+				$data['status']=1;
+			}
+		}
+
+		$this->ajaxreturn(0);
+		exit();
+
 	}
 
 
