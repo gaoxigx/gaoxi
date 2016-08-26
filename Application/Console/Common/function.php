@@ -65,7 +65,7 @@ function json_ary($json){
 //通过订单编号获取产品
     function get_orderno_to_pro($order_no){
         $datagoods = D('order_goods');
-        $prolist = $datagoods-> field('product,price2,quality,box,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select(); 
+        $prolist = $datagoods-> field('product,price2,quality,grade,box,discount,buynum,tollsprice')->where('order_no="'.$order_no.'"')->order('id desc')->select(); 
         return $prolist;
     }
 
