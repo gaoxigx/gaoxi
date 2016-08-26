@@ -51,10 +51,10 @@
                         <p>{$vo.addtime|date='Y-m-d H:i:s',###}</p>
                     </td>                    
                     <td>
-                        <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
+                       <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
                         <volist name="goods" id="vl">                        
                             <span href=""><php>echo trim($vl['product'])</php></span>
-                           <p>数量:{$vl.buynum}&nbsp;&nbsp;&nbsp;&nbsp;{$vl.quality}{$vl.grade}&nbsp;</p> 
+                            <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
                         </volist>
                     </td>
                     <td>{$vo['username']}</td>
