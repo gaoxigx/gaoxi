@@ -97,6 +97,18 @@ function json_ary($json){
         return substr_replace($str,'***',3,strlen($str)-6);
 
     }
+
+    function pcsstr($index){
+        $pcsary=array(
+            1=>'两',
+            2=>'斤',
+            3=>'份',
+        );
+        return $pcsary[$index];
+
+
+
+    }
 /*
  * 时间搓转换成文本
  */
