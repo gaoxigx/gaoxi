@@ -57,19 +57,7 @@
 					<td>{$vo.total_price}</td> 
                     <td>{$vo.note}</td>
 					<td >
-                        <switch name="vo.payment_status">
-                            <case value="0">已下单.</case>
-                            <case value="1">
-                                    <switch name="vo.status">
-                                            <case value="1">已下单 </case>
-                                            <case value="2">已发货 {$vo.numberno} <!-- <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /> -->
-                                           
-                                            </case>
-                                             <case value="3">异常订单，请审核</case>
-                                    </switch>
-                            </case>
-                            <default />已下单
-                        </switch>
+                       <input name="{$vo.id}" data="{:U('Order/setstatu',array('id'=>$vo['id']))}" type="button"  class="statuscl" value="点击确认" />
 					</td>
 
 <!--					<td>
@@ -112,6 +100,17 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+
+    $(".statuscl").click(function(){
+        var url=$(this).attr('data');
+        $.get(url,function(data){
+            if(data.status==1){
+                window.location.href="{:U('Order/shPlist')}";
+            }else{
+                alert('修改成功');
+            }
+        })
+    })
     $(".suresmall").click(function(){
 
             var id = $(this).attr('name');

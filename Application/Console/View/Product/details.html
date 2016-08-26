@@ -12,7 +12,7 @@
     .grade,.box{display: inline-block;}
     .blockaction{background:#ff6537; border:1px solid #ff6537; color:#fff;}
 
-    .jinye{ cursor: pointer; display: inline-block; height: 34px; line-height: 34px; text-decoration: none;  width: 450px; text-align: center; }
+    .jinye{ cursor: pointer; display: inline-block; height: 34px; line-height: 34px; text-decoration: none;  text-align: center; }
     .jinye u{font-size:24px; color:#ff6537; text-decoration:none;}
 </style>
 </head>
@@ -75,24 +75,19 @@
                 </p>
             </foreach>        
         </li>
-<!--         <li class="jy"><label>金额</label>
-          
-            <p class="box" style="display:none;" >
-                
+        <li class="jy"><label>参考售价：</label>          
+            <p class="box" style="display:none;" >                
                 <span class="jinye" style="display:none;">
                     <u>
                     <foreach name="data['grade']" item="vo">
                         <foreach name="vo"  item="vl">
-                            ￥{$vl}.00
+                            ￥{$vl}.00 
                         </foreach>
                     </foreach>     
                     </u>
-                </span>
-           
-                
-             </p>
-            
-        </li> -->
+                </span>           
+             </p>(每{$data.pcs|pcsstr})
+        </li> 
        <li style="margin-top:30px;"><label>重量/数量</label><input style="width:80px" name="nmb" type="text" class="dfinput" value="1" /><i>({$data.pcs|pcsstr})</i></li>
 
         <li ><label>&nbsp;</label><input name="" type="button"   class="btn smbform" value="加入购物车"/></li>
@@ -100,7 +95,7 @@
     </form>
          <div class="formtitle"><span>详情描述</span></div>  
          <div>
-            {$data.details}
+            {$data.detail}
          </div>
     
     </div>
