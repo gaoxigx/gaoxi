@@ -3,10 +3,10 @@
 .head_mid {width:480px; height:96px; margin:0px auto;}
 .head_mid_inL {height:96px; line-height:96px; float:left;}
 .head_mid_inL img {max-width:136px; height:45px;margin:35px 20px 10px 16px;}
-.head_mid_inR{width:287px;height:49px;float:left;margin:35px 17px 10px 0px;background: #eeeeee;}
-.head_mid_inR span{width:287px;height:49px; line-height:49px; float:left;}
+.head_mid_inR{width:207px;height:49px;float:left;margin:35px 17px 10px 0px;background: #eeeeee;}
+.head_mid_inR span{width:207px;height:49px; line-height:49px; float:left;}
 .head_mid_inR img {width:25px; height:25px;margin:14px 14px; }
-.Af_right_admin {margin:14px 0px; position:absolute; width:184px; height:21px; border: none;background: #eeeeee;}
+.Af_right_admin {margin:14px 0px; position:absolute; width:104px; height:21px; border: none;background: #eeeeee;}
 .Af_right_submit{margin:14px 0px;float:right;}
 
 
@@ -23,7 +23,7 @@
 .content_Cf{width:100%;margin:0px auto;}
 .Cf_resume {width:50%; max-height:243px;margin:10px auto;}
 .Cf_resume i {max-width:223px;max-height:223px; display:block; float:left;margin:10px}
-.Cf_resume i img{width: 100%; }
+.Cf_resume i img{width:100%; float:left; }
 .Cf_resume span {max-width:243px;height:243px; display:block; float:left; }
-.Cf_resume p {height:195px; line-height:24px; font-size:13px; color:#666; float:left;overflow:hidden}
+.Cf_resume p {height:190px; line-height:24px; font-size:13px; color:#666; float:left;overflow:hidden}
 .Cf_resume b {height:21px;line-height:21px;  font-size:21px; color:#F60;  float:left;}
