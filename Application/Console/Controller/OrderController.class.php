@@ -479,6 +479,30 @@ class OrderController extends CommonController {
 		exit();
 
 	}
+	//撤消
+	public function withdraw(){
+		$id=I('id');
+
+		$data['status']=0;
+		if(empty($id)){        			
+			$this->ajaxreturn($data);
+			exit();
+		}     
+
+		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
+		if($status==1){
+			//撤消
+			$sul=D('order_info')->where('id=%d',array($id))->setField('status',4);
+			if($sul){
+				$data['status']=1;
+			}
+		}
+
+		$this->ajaxreturn($data);
+		exit();
+
+	}
+
 
 
 	//查找下级经济人 ajax请求
