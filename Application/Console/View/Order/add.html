@@ -134,7 +134,7 @@
                             <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->
                       
                             <li>
-                                <label>买家微信号<b>*</b></label>
+                                <label>买家微信号</label>
                                 <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value=""  />
                             </li>
                             <li>
@@ -237,10 +237,6 @@
 					agent: 'required',
 					equipment: 'sel_required',
 					payment_method: 'sel_required',
-					buyer_wechat: {
-						required: true,
-						minlength: 2
-					},
 					source: {
 						required: true,
 						minlength: 2
@@ -264,11 +260,7 @@
 				messages: {
 					agent: "请选择经纪人",
 					equipment: "请选择设备编号",
-					payment_method: "请选择支付方式",
-					buyer_wechat: {
-						required: "请输入买家微信号",
-						minlength: "不能少于2个字符",
-					},
+					payment_method: "请选择支付方式",					
 					source: {
 						required: "请输入订单来源",
 						minlength: "不能少于2个字符",
