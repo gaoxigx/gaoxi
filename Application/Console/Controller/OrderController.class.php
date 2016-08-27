@@ -537,9 +537,13 @@ class OrderController extends CommonController {
 		if(empty($id)){        			
 			$this->ajaxreturn($data);
 			exit();
-		}     
+		}
+		var_dump($id);
+		
 
 		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
+
+
 		if($status==1){
 			//撤消
 			$sul=D('order_info')->where('id=%d',array($id))->setField('status',4);
