@@ -21,9 +21,9 @@
 
 /*====================================Cf层=======================================*/
 .content_Cf{width:100%;margin:0px auto;}
-.Cf_resume { float:left;margin:0px auto;}
-.Cf_resume i {width:223px;height:223px; display:block; float:left;margin:10px}
-.Cf_resume i img{width:100%; float:left; }
-.Cf_resume span {width:223px;height:223px; display:block; float:left;margin:10px; }
-.Cf_resume p {max-width:190px; height:190px; line-height:24px; font-size:13px; color:#666; float:left;overflow:hidden}
+.Cf_resume { float:left;margin:10px 0px;background:#DBDBDB;}
+.Cf_resume i {width:223px;height:223px; display:block; float:left;margin:10px 0px 10px 40px;}
+.Cf_resume i img{width:100%; float:left;}
+.Cf_resume span {width:223px;height:223px; display:block; float:left;margin:10px 0px 10px 40px; }
+.Cf_resume p {max-width:190px; height:174px; line-height:24px; font-size:13px; color:#666; float:left;overflow:hidden;}
 .Cf_resume b {height:21px;line-height:21px;  font-size:21px; color:#F60;  float:left;}
