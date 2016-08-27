@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>详情</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<style>
+
+    .pzblock{border:1px solid #ccc; cursor: pointer; display: inline-block; height: 34px; line-height: 34px; text-decoration: none;  width: 120px; text-align: center; margin-right: 5px;background: #f1f1f1;}
+    .pzblock u{text-decoration: none; }
+    .grade,.box{display: inline-block;}
+    .blockaction{background:#ff6537; border:1px solid #ff6537; color:#fff;}
+
+    .jinye{ cursor: pointer; display: inline-block; height: 34px; line-height: 34px; text-decoration: none;  text-align: center; }
+    .jinye u{font-size:24px; color:#ff6537; text-decoration:none;}
+</style>
+</head>
+    
+<body>
+
+    <div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">产品详细</a></li>
+    </ul>
+    </div>
+
+    <div class="formbody">
+     <div class="tools">
+    
+        <ul class="toolbar">
+        <li class="click"><a href="{:U('Order/add')}"><span><img src="__PUBLIC__/Console/images/t01.png" /></span>购物车</a></li>
+        <li class="click"><a href="{:U('Order/catlist')}"><span><img src="__PUBLIC__/Console/images/t02.png" /></span>列表</a></li>
+         <!--     
+        <li><span><img src="__PUBLIC__/Console/images/t03.png" /></span>删除</li>
+        <li><span><img src="__PUBLIC__/Console/images/t04.png" /></span>统计</li> -->
+        </ul>
+        
+     <!--    <ul class="toolbar1">
+        <li><span><img src="__PUBLIC__/Console/images/t05.png" /></span>设置</li>
+        </ul> -->
+    
+    </div>
+    <form action="{:U('Order/productinfo')}" id="from1" method="post">
+        <input type="hidden" name="id" value="{$data.gid}" />
+        <input type="hidden" name="quality" id="qualityf" value="" />
+        <input type="hidden" name="grade" id="gradef" value="" />
+        <input type="hidden" name="money" id="moneyf" value="" />
+
+
+        <ul class="forminfo">
+            <li style="line-height:34px;"><label>文章标题 </label>{$data.product}</li>
+            <li><label>图片 </label><img src="{$data.pic1}" /></li>
+        </ul>
+  
+        <div class="formtitle"><span>添加到购物车</span></div>
+        
+        <ul class="forminfo">
+        <li class="qzinfo"><label>品质</label>
+            <foreach name="data['grade']" item="vo">
+                  <p class="quality pzblock" val="{$key}">   
+                        <u> {$key} </u>
+                  </p>
+            </foreach>        
+        <li class="zj"><label>级别</label>
+            <foreach name="data['grade']" item="vo">                
+                <p class="grade" style="display:none;">
+                <foreach name="vo"  item="vl">
+                    <span class="pzblock zjt" vl="{$vl}" >
+                    <u> {$key}</u>
+                    </span>
+                </foreach>
+                </p>
+            </foreach>        
+        </li>
+        <li class="jy"><label>参考售价：</label>          
+            <p class="box" style="display:none;" >                
+                <span class="jinye" style="display:none;">
+                    <u>
+                    <foreach name="data['grade']" item="vo">
+                        <foreach name="vo"  item="vl">
+                            ￥{$vl}.00 
+                        </foreach>
+                    </foreach>     
+                    </u>
+                </span>           
+             </p>(每{$data.pcs|pcsstr})
+        </li> 
+       <li style="margin-top:30px;"><label>重量/数量</label><input style="width:80px" name="nmb" type="text" class="dfinput" value="{$data.buynum|default=1}" /><i>({$data.pcs|pcsstr})</i></li>
+
+        <li ><label>&nbsp;</label><input name="" type="button"   class="btn smbform" value="确认  "/></li>
+        </ul>  
+    </form>
+         <div class="formtitle"><span>详情描述</span></div>  
+         <div>
+            {$data.detail}
+         </div>
+    
+    </div>
+    <div class="box"></div>
+
+<script type="text/javascript">
+    $('.zj p:first').show();
+    $('.qzinfo p:first').addClass('blockaction')
+
+    $('.zj p span:first').addClass('blockaction');
+    $('.jinye u').html('￥'+$('.zj p span:first').attr('vl')+'.00');
+
+    $('#qualityf').val($('.qzinfo p:first u').text());
+    $('#gradef').val($('.zj p span:first u').text());
+    $('#moneyf').val($('zj p span:first').attr('vl'));
+
+    $('.jy p:first').show();
+    $('.jy .box span:first').show();
+    // $('.jy .box span:first').addClass('blockaction');
+    $('.qzinfo p').click(function(){
+        $(".qzinfo p").removeClass('blockaction');
+        $(this).addClass('blockaction');
+        var index=$(this).index();
+        $('.zj p').hide();
+        $('.zj p').eq(index-1).show();
+        $('#qualityf').val($(this).attr('val'));
+        $('.zj p span').removeClass('blockaction');
+    });
+
+    $('.zjt').click(function(){
+        $('.zj p span').removeClass('blockaction');
+        $(this).addClass('blockaction');
+        var vl=$(this).attr('vl');
+        $('#moneyf').val(vl);
+        $('.jinye u').html('￥'+vl+'.00');
+    });
+
+    $(".smbform").click(function(){       
+        $("#from1").submit();
+    })
+
+</script>
+</body>
+
+</html>
