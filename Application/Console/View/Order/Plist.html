@@ -81,6 +81,7 @@
 					</td>-->
 					<td>
 						<a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
+                        <a href="" class="withdraw">&nbsp;撤消</a>
 						<a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>  
                         <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>
 					</td>         
@@ -112,6 +113,16 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $(".withdraw").click(function(){
+        var url="__URL__/withdraw/id/{$vo.id}";
+        $.get(url,functin(data){
+            if(data.status){
+                window.location.href="{:U('order/plist')}";
+            }else{
+                alert('撤消失败')；
+            }
+        });
+    });
     $(".suresmall").click(function(){
 
             var id = $(this).attr('name');

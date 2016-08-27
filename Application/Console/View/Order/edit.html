@@ -113,9 +113,10 @@
                                 </div>
                             </li>
 
-                            <li><label>支付方式<b>*</b></label>  
+                            <li><label>支付方式{$info['payment_method']}<b>*</b></label>                              
                                 <div class="vocation uew-select">
-                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_status']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                  
                                 </div>
                             </li>
 
@@ -148,7 +149,7 @@
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value="{$info.username}"  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="{$info.mobile}" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value="{$info.address}"  /></li>
-                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value="{$info.note}"  ></textarea></li>                          
+                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px" type="text" class="dfinput" value="{$info.note}"  ></textarea></li>                          
                         </ul>
                       <ul class="forminfo">
                         <li>
