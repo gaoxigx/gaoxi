@@ -545,9 +545,6 @@ class OrderController extends CommonController {
 			$this->ajaxreturn($data);
 			exit();
 		}
-		var_dump($id);
-
-
 		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
 
 
