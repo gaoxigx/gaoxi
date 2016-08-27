@@ -275,7 +275,7 @@ class OrderController extends CommonController {
 		 	exit();
 		 }
 
-		 $ordergoods = M('order_goods'); // 实例化User对象
+		$ordergoods = M('order_goods'); // 实例化User对象
 		$list = $ordergoods->alias('og')
 				 ->join('nico_product as np on np.id = og.proid ')
 				 ->field('og.*,np.pic as pic1,og.buynum as number')
@@ -521,6 +521,38 @@ class OrderController extends CommonController {
 		$sul=$cart->add($data);
 		if($sul){
 			$this->success('已加入购物车',U('Order/add'));
+			exit();
+		}else{
+			$this->error('增加失败');
+			exit();
+		}
+	}
+
+	public function productinfo(){
+		$data['id']=I('id');
+		if(!$data['id']){
+			$this->error('您没有选择对应产品');
+			exit();
+		}		
+		$data['catetime']=time();
+		$data['quality']=I('quality');
+		$data['grade']=I('grade');
+		$data['money']=I('money');
+		$data['number']=I('nmb');
+
+		$map['id']=$data['id'];
+		$orderGoodes=M('order_goods');
+
+		$result=$orderGoodes->where($map)->find();
+
+		if(!$result){
+			$this->error('该产品不存在订单中');
+			exit();
+		}
+		$sul=$orderGoodes->save($data);
+		
+		if($sul){
+			$this->success('修改完成',U('Order/edit',array('id'=>$result['proid'])));
 			exit();
 		}else{
 			$this->error('增加失败');
