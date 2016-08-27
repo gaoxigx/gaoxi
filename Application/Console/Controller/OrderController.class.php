@@ -307,10 +307,12 @@ class OrderController extends CommonController {
             $this->getpayment();
 		$data = M('product'); // 实例化User对象
 
+
 		$promap['ct.uid']=session('userid');
 
 		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
 		$list=M('cart')->alias('ct')->field('ct.*,pro.pic1,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
+
 	    $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 
@@ -416,9 +418,8 @@ class OrderController extends CommonController {
 		$data['payment_status'] = 1;
 		
 		$roleList   =  D('order_info');
-		$min['c.uid']=session('userid');
 
-
+		$mid['c.uid']=session('userid');
 		$catdata=M('cart')->alias('c')->field('c.*,p.id as proid,p.protype,p.pic,p.pic1,p.product')->join('__PRODUCT__ p on c.proid=p.id')->where($mid)->select();
 
 		if(!$catdata){
@@ -586,6 +587,10 @@ class OrderController extends CommonController {
 		}
 		
 		$data['uid']=session('userid');
+		If(!$data['uid']){
+			$this->error('请重新登入');
+			exit();
+		}
 		$data['catetime']=time();
 		$data['quality']=I('quality');
 		$data['grade']=I('grade');
@@ -595,9 +600,9 @@ class OrderController extends CommonController {
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
 		$map['proid']=$data['proid'];
-		$map['uid']=session('userid');
-		$map['quality']=session('quality');
-		$map['grade']=session('grade');
+		$map['uid']=session('userid');		
+		$map['quality']=I('quality');
+		$map['grade']=I('grade');
 		$count=$cart->where($map)->count();
 		if($count>0){
 			$this->error('该产品已存在购物车');
