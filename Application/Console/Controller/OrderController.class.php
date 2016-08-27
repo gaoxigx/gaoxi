@@ -584,7 +584,7 @@ class OrderController extends CommonController {
 			$this->error('您没有选择对应产品');
 			exit();
 		}
-		$map['proid']=$data['proid'];
+		
 		$data['uid']=session('userid');
 		$data['catetime']=time();
 		$data['quality']=I('quality');
@@ -594,7 +594,10 @@ class OrderController extends CommonController {
 
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
-
+		$map['proid']=$data['proid'];
+		$map['uid']=session('userid');
+		$map['quality']=session('quality');
+		$map['grade']=session('grade');
 		$count=$cart->where($map)->count();
 		if($count>0){
 			$this->error('该产品已存在购物车');
