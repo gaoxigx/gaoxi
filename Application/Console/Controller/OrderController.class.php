@@ -278,7 +278,7 @@ class OrderController extends CommonController {
 		 $ordergoods = M('order_goods'); // 实例化User对象
 		$list = $ordergoods->alias('og')
 				 ->join('nico_product as np on np.id = og.proid ')
-				 ->field('og.*,np.pic as pic1')
+				 ->field('og.*,np.pic as pic1,og.buynum as number')
 				 ->where("og.order_no=%s",array($orderinfolist['order_no']))
 				 ->order ('id')
 				 ->select();
