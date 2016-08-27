@@ -269,7 +269,7 @@ class OrderController extends CommonController {
 		 $this->getequipment_name();
 		 $this->getpayment();
 		 $orderinfo = M('order_info');
-		 $orderinfolist = $orderinfo->where('id='.$id)->find();
+		 $orderinfolist = $orderinfo->where('id='.$id)->find();	
 		 if($orderinfolist['status']==2){
 		 	$this->success('订单已确认发货，不允许修改');
 		 	exit();
@@ -540,10 +540,10 @@ class OrderController extends CommonController {
 		$data['money']=I('money');
 		$data['number']=I('nmb');
 
-		$map['id']=$data['id'];
+		$map['og.id']=$data['id'];
 		$orderGoodes=M('order_goods');
 
-		$result=$orderGoodes->where($map)->find();
+		$result=$orderGoodes->alias("og")->field('or.id')->join('__ORDER_INFO__ as `or` on or.order_no=og.order_no','left')->where($map)->find();
 
 		if(!$result){
 			$this->error('该产品不存在订单中');
@@ -552,7 +552,7 @@ class OrderController extends CommonController {
 		$sul=$orderGoodes->save($data);
 		
 		if($sul){
-			$this->success('修改完成',U('Order/edit',array('id'=>$result['proid'])));
+			$this->success('修改完成',U('Order/edit',array('id'=>$result['id'])));
 			exit();
 		}else{
 			$this->error('增加失败');
