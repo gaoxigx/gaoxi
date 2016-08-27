@@ -487,8 +487,7 @@ class OrderController extends CommonController {
 	public function update(){
 		$roleList   =   D('order_info');
 		$data=$roleList->create();
-		$jumpUrl =U('Console/Order/Plist');
-		
+		$jumpUrl =U('Console/Order/Plist');		
 		if($data) {
 			$order_no=$data['order_no'];
 			unset($data['order_no']);
