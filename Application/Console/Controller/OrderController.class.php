@@ -449,7 +449,7 @@ class OrderController extends CommonController {
 					'addtime'=>time(),                
 					);
 					$arm=explode('-',$v['money']);
-					$tlm=($arm[1])?$tlm+$arm[1]:$tlm+$arm[0];
+					$tlm=$arm[0]>$arm[1]?$tlm+$arm[1]:$tlm+$arm[0];
 				}
 
 
