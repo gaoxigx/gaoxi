@@ -130,6 +130,7 @@
         $(this).addClass('blockaction');
         var vl=$(this).attr('vl');
         $('#moneyf').val(vl);
+        $('#gradef').val($(this).find('u').text());  
         $('.jinye u').html('￥'+vl+'.00');
     });
 
