@@ -77,7 +77,6 @@ $(document).ready(function(){
 					</th>
 <!--					<th>产品等级</th>-->
 <!--					<th>最低折扣</th>-->
-					<th>剩余库存</th>
 					<th>销售数量</th>
 					<th>采购负责人</th>					
 					<th>操作</th>
@@ -96,7 +95,8 @@ $(document).ready(function(){
 
 						<td>
 							<a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a>
-							<p>{$vo.addtime|date='Y-m-d',###}</p>									
+							<p>{$vo.addtime|date='Y-m-d',###}</p>
+							<p>库存:{$vo.sortnum}</p>									
 						</td>
 						
 						<td>{$vo.protype|Getprotypename=###}
@@ -104,8 +104,7 @@ $(document).ready(function(){
 						</td>
 <!--						<td>{$vo.price2}</td>-->
                                                 
-<!--						<td>{$vo.discount}</td>-->						
-						<td>{$vo.sortnum}</td>
+<!--						<td>{$vo.discount}</td>-->	
 						<td>{$vo.salenum}</td>
 						<td>{$vo.purchaseper_name}<p>进货数:{$vo.inputnum}</p></td>
 				
