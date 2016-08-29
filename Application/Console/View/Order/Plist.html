@@ -114,7 +114,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $(".withdraw").click(function(){    
+    $(".withdraw").click(function(){  
         var url=$(this).attr("data");
         $.get(url,function(data){
             if(data.status==1){
