@@ -168,7 +168,7 @@ class ShipmentsController extends CommonController {
 	  
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
+		$list = $User->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();	
 	
 		$staff=D('staff')->getfield('id,name',true);
 		$catdata=D('Category')->categoryone();      
