@@ -22,9 +22,9 @@
 /*====================================Cf层=======================================*/
 .content_Cf{width:100%;margin:0px auto;}
 .Cf_resume { margin:10px 10px 5px 5px;background:#DBDBDB;display:inline-block;padding:0px; width:46%;}
-.Cf_resume i {width:38%;display:inline-block;margin-top: 10px;}
+.Cf_resume i {width:100%;display:inline-block;margin-top: 10px;}
 .Cf_resume i img{width:100%; float:left;}
 
-.Cf_resume span {width:60%; display:inline-block;margin:10px 0px 10px 0px;float:right;}
+.Cf_resume span {width:100%; display:inline-block;margin:10px 0px 10px 0px;}
 .Cf_resume p {height:174px; line-height:24px; font-size:13px; color:#666;overflow:hidden;}
 .Cf_resume b {height:21px;line-height:21px;  font-size:21px; color:#F60;  }
