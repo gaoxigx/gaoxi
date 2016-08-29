@@ -48,7 +48,7 @@
 <div class="content_Cf">
     <volist name="data" id="voo">
         <div class="Cf_resume">
-            <i><img src="{$voo.pic}"/></i>
+            <i><a href="{:U('wap/product/product',array('id'=>$voo['id']))}"><img src="{$voo.pic}"/></a></i>
             <span>
                 <a href="{:U('wap/product/product',array('id'=>$voo['id']))}"><b>{$voo.product}</b></a>
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;{$voo.detail}</p>

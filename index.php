@@ -21,7 +21,7 @@ define('APP_DEBUG',True);
 define('APP_PATH','./Application/');
 
 // 绑定入口文件到Admin模块访问
-// define('BIND_MODULE','Console');
+//define('BIND_MODULE','Wap');
 
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';

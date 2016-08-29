@@ -26,10 +26,12 @@
 .content_Bf_top{width:100%; height:80px; line-height:80px; background:url(../images/product/leftread.png) no-repeat left;}
 .content_Bf_top a {font-size:28px;margin-left:20px; color:#006dcc;text-decoration:none;}
 .content_Bf_con{width:100%;background:#eeeeee;float: left;}
-.job_list li {width:100%; height:57px; line-height:57px;float:left;list-style-type:none;border-bottom:1px #4e4e4e dashed;font-size:21px;overflow:hidden;}
-.job_list b {width:480px; height:57px;text-decoration:none;font-size:21px;color:#4e4e4e;margin:0px 20px;color:#F60;}
+.job_list li {width:100%; line-height:32px;float:left;list-style-type:none;border-bottom:1px #4e4e4e dashed;font-size:18px;}
+.job_list b {width:480px; height:57px;text-decoration:none;font-size:18px;color:#4e4e4e;margin:0px 20px;color:#F60;}
+.job_list p{margin: 0px; padding: 0px;}
+.job_list .left10{margin-left:10px;display:inline-block; vertical-align: top;}
 
 .content_Cf{width:100%;margin:0px auto;}
 .content_Cf_con{width:100%;height:258px;  float:left;background:#ede3d1;}
-.content_Cf_con p{height:176px; font-size: 24px; margin:20px;
+.content_Cf_con p{height:176px; font-size: 20px; margin:20px;
  line-height:25px; overflow:hidden}
