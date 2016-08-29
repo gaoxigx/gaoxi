@@ -53,8 +53,9 @@
                     <td>
                         <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
                         <volist name="goods" id="vl">                        
-                            <span href=""><php>echo trim($vl['product'])</php></span>
-                            <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
+                            <span href="">{$vl.quality}&nbsp;/&nbsp;{$vl.buynum}X&nbsp;&nbsp;<php>echo trim($vl['product'])</php>
+                            &nbsp;/&nbsp;{$vl.grade}&nbsp;&nbsp;
+                            </span>                       
                         </volist>
                     </td>
                     <td>{$vo['username']}</td>
