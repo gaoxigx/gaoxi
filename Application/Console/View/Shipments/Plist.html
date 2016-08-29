@@ -127,6 +127,7 @@ $(document).ready(function(){
 
     });
     $(".suresmall3").click(function(event) {
+         
             var id = $(this).attr('name');
             var data = $(this).attr('data');
             var numberno=$("#suresmall3"+id ).val();
@@ -136,10 +137,9 @@ $(document).ready(function(){
                 return false;
             } else{                          
                 var url="{:U('Shipments/updatenumberno')}";    
-                $.post(url,{'id':id,'numberno':numberno},function(data){
-                    console.log(data);
+                $.post(url,{'id':id,'numberno':numberno},function(data){                   
                     if(data.status==1){
-                       
+                       $(this).parent('td').html('已下单');
                     }else{
                         alert(data.msg);
                     }
