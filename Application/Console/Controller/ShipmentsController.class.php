@@ -214,7 +214,7 @@ class ShipmentsController extends CommonController {
 			if( !$v )  
 				unset( $arr[$k] );  
 		}   
-
+		
 		//分页跳转的时候保证查询条件
 		foreach($map as $key=>$val) {
 			if(!$val){
