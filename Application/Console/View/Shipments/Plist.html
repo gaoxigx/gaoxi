@@ -35,6 +35,7 @@
                     <th>收货人</th>
                     <th>收货电话</th>
                     <th>收货地址</th>
+                    <th>订单金额</th>
                     <th>订单备注</th>                          
                     <th>操作发货</th>
                     <th>操作</th>
@@ -53,13 +54,14 @@
                     <td>
                         <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
                         <volist name="goods" id="vl">                        
-                            <span href=""><php>echo trim($vl['product'])</php></span>
-                            <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
+                            <span  <if condition="$vl['buynum'] gt 1" >style="color:red"</if> href="">{$vl.quality}&nbsp;/&nbsp;<php>echo trim($vl['product'])</php>&nbsp;X&nbsp;{$vl['buynum']}&nbsp;/&nbsp;{$vl.grade}&nbsp;&nbsp;
+                            </span>                       
                         </volist>
                     </td>
                     <td>{$vo['username']}</td>
                     <td>{$vo['mobile']}</td>
                     <td>{$vo['address']}</td>
+                    <td>￥{$vo['total_price']}</td>
                     <td style="color:red">{$vo.note}</td>
                    <td>
                         <switch name="vo.payment_status">
@@ -86,8 +88,7 @@
                     </td>-->
                     <td>
                         <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>  
-                        <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>
+                        <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>                          
                     </td>         
                 </tr> 
             </volist>
@@ -123,18 +124,29 @@ $(document).ready(function(){
             var data = $(this).attr('data');
             $("#form2").attr("action", "Payment_status/id/"+id+"/status/"+data).submit();
 
-        });
-        $(".suresmall3").click(function(event) {
+    });
+    $(".suresmall3").click(function(event) {
+
             var id = $(this).attr('name');
             var data = $(this).attr('data');
+            var numberno=$("#suresmall3"+id ).val();
 
-    if($("#suresmall3"+id ).val()==''){
-        alert("物流单号不能为空！");
-        return false;
-    } else{
-        $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
+            if(numberno==''){
+                alert("物流单号不能为空！");
+                return false;
+            } else{                          
+                var url="{:U('Shipments/updatenumberno')}";    
+                $.post(url,{'id':id,'numberno':numberno},function(data){                   
+                    if(data.status==1){
+                       $(this).parent('td').html('已发货');
+                    }else{
+                        alert(data.msg);
+                    }
 
-    }
+                });
+               // $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
+
+            }
 
     });
 });

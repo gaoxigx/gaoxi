@@ -115,11 +115,11 @@ $(document).ready(function(){
 $(document).ready(function(){
     $(".withdraw").click(function(){
         var url="__URL__/withdraw/id/{$vo.id}";
-        $.get(url,functin(data){
+        $.get(url,function(data){
             if(data.status){
                 window.location.href="{:U('order/plist')}";
             }else{
-                alert('撤消失败')；
+                alert('撤消失败');
             }
         });
     });

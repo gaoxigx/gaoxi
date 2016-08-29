@@ -29,6 +29,8 @@ class ProductController extends CommonController {
     	$proid=I('id');
     	$map['id']=$proid;
     	$data=M('product')->where($map)->find();
+    	M('product')->where($map)->setInc("viewcount");
+
     	$data['grade']=json_decode($data['grade'],true);    	
     	$this->assign('data',$data);
     	$this->display();

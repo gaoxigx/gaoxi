@@ -109,15 +109,27 @@ class ShipmentsController extends CommonController {
 	 }
 
 	 //插入物流单号到订单表
-	public function updatenumberno($id,$numberno){
-		$data["numberno"] = $numberno;
+	public function updatenumberno(){
+		$data["numberno"] =I('post.numberno');		
 		$data["status"] = 2;
+		$id=I('post.id');
+		if(!$data["numberno"]&&!$id){
+			$sult['msg']='没有得到数据';
+			$sult['status']=0;
+			$this->ajaxreturn($sult);
+		}
 		$order_info = D('order_info');
 		 $name = $order_info->where('id='.$id)->save($data);
 		 if($name){
-			$this->success("物流单号更新成功");
+		 	$sult['msg']='成功发货';
+		 	$sult['status']=1;
+			$this->ajaxreturn($sult);
+			exit();
 		}else{
-			$this->error('更新数据出错');
+			$sult['msg']='数据错误';
+			$sult['status']=0;
+			$this->ajaxreturn($sult);
+			exit();
 		}
 	}
 
@@ -130,9 +142,9 @@ class ShipmentsController extends CommonController {
 			$map['order_no']  = array('like','%'.trim($username).'%'); 
 		}
 
-		$user_id = session("userid");
+		//$user_id = session("userid");
 		if($user_id > 0 ){
-			$where['id']=session("userid");
+		//	$where['id']=session("userid");
 			$where['accounts']=session("username");
 			$count=M('controller')->where($where)->count();
 			if($count<=0){
@@ -168,7 +180,7 @@ class ShipmentsController extends CommonController {
 	  
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
+		$list = $User->where($map)->order('id ')->limit($Page->firstRow.','.$Page->listRows)->select();	
 	
 		$staff=D('staff')->getfield('id,name',true);
 		$catdata=D('Category')->categoryone();      
@@ -188,9 +200,9 @@ class ShipmentsController extends CommonController {
 			$map['order_no']  = array('like','%'.trim($username).'%'); 
 		}
 
-		$user_id = session("userid");
+		//$user_id = session("userid");
 		if($user_id > 0 ){
-			$where['id']=session("userid");
+			//$where['id']=session("userid");
 			$where['accounts']=session("username");
 			$count=M('controller')->where($where)->count();
 			if($count<=0){
@@ -202,7 +214,7 @@ class ShipmentsController extends CommonController {
 			if( !$v )  
 				unset( $arr[$k] );  
 		}   
-
+		
 		//分页跳转的时候保证查询条件
 		foreach($map as $key=>$val) {
 			if(!$val){
