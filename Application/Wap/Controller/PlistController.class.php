@@ -4,10 +4,9 @@ class PlistController extends \Think\Controller{
     public function Plist(){
         $product_name = I('product_name');
         $protype=I('protype');
-		
-        if($protype){
-            $map['protype']  =$protype;
-//            $parameter['protype'] = $protype;
+	        
+        if($protype){           
+            $map['protype'] = $protype;
         }
 		
         if($product_name){
@@ -25,7 +24,7 @@ class PlistController extends \Think\Controller{
 		$show = $Page->show();// 分页显示输出
        
         
-        $data = M('Product')->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();    
+        $data = M('Product')->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();          
         
 //        echo M()->getLastSql();exit();
 //        var_dump($data);exit();

@@ -35,7 +35,7 @@
     <form action="/index.php/wap/Plist/Plist" method="post" id="form2" name="form2">   
         <p>
             <select name="protype" class="content_Bf_right" onchange="$('#form2').submit();">
-                <option value="">全部</option>
+                <option value="">请选择分类</option>
                 <volist name="protype" id="voo">
                     <option value="{$voo.id}">{$voo.typename}</option>
                 </volist>
