@@ -49,7 +49,7 @@
                           <ul class="classlist">                               
                             <volist name="prolist"  id="vo">
                             <li>
-                                <p class="delcart"><a href="{:U('Order/cartdel',array('id'=>$vo['proid']))}"><img src="__PUBLIC__/Console/images/t03.png" /></a></p>
+                              
                                 <span><img src="{$vo.pic1}" style="width:106px;" /></span>
                                 <div class="lright">
                                 <h2>{$vo.product}</h2>
@@ -61,15 +61,14 @@
                                      <input id="text_box{$i}" name="nmb_{$vo.id}" type="text" value="{$vo.number|default=1}" class="num" />
                                      <input id="add{$i}" name="" class="add" type="button" value="+" />两<br /> -->金额：￥{$vo.money}.00</p>
                                 <p>数量：{$vo.number}</p>
-
-                                <a class="enter">了解详情况课程</a>
+                                <a class="enter" href="{:U('Product/setOrderGoodsPage',array('id'=>$vo['id']))}">了解详情况课程</a>
                                 </div>
                                
                             </li>
-                            </volist>  
+                            </volist> <!--  
                             <li>
                                 <a style="height:106px;width:106px; display:block;line-height:106px; text-align:center;font-size:50px;" href="{:U('Order/catlist')}">+</a>
-                            </li>                      
+                            </li>          -->             
                          </ul>
                         <else />
                             <a href="{:U('Order/catlist')}"  style="text-align:left;display:block;height:158px; line-height:158px; padding-left:50px;" >去添加产品</a>
@@ -114,9 +113,10 @@
                                 </div>
                             </li>
 
-                            <li><label>支付方式<b>*</b></label>  
+                            <li><label>支付方式{$info['payment_method']}<b>*</b></label>                              
                                 <div class="vocation uew-select">
-                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_status']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                  
                                 </div>
                             </li>
 
@@ -137,7 +137,7 @@
                             <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->
 
                             <li>
-                                <label>买家微信号<b>*</b></label>
+                                <label>买家微信号</label>
                                 <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value="{$info.buyer_wechat}"  />
                             </li>
                             <li>
@@ -149,7 +149,7 @@
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value="{$info.username}"  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="{$info.mobile}" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="address" name="address" type="text" class="dfinput" value="{$info.address}"  /></li>
-                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value="{$info.note}"  ></textarea></li>                          
+                            <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px" type="text" class="dfinput" value="{$info.note}"  ></textarea></li>                          
                         </ul>
                       <ul class="forminfo">
                         <li>
@@ -240,10 +240,6 @@
                     agent: 'required',
                     equipment: 'sel_required',
                     payment_method: 'sel_required',
-                    buyer_wechat: {
-                        required: true,
-                        minlength: 2
-                    },
                     source: {
                         required: true,
                         minlength: 2
@@ -267,11 +263,7 @@
                 messages: {
                     agent: "请选择经纪人",
                     equipment: "请选择设备编号",
-                    payment_method: "请选择支付方式",
-                    buyer_wechat: {
-                        required: "请输入买家微信号",
-                        minlength: "不能少于2个字符",
-                    },
+                    payment_method: "请选择支付方式",             
                     source: {
                         required: "请输入订单来源",
                         minlength: "不能少于2个字符",

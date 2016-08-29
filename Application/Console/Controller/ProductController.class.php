@@ -33,6 +33,23 @@ class ProductController extends CommonController {
     	$this->assign('data',$data);
     	$this->display();
     }
+
+    public function setOrderGoodsPage(){
+    	$id=I('id');
+    	if(empty($id)){
+    		$this->success('订单没有出过该产品');
+    		exit();
+    	}
+    	$px="__PRODUCT__";
+    	$result=D('order_goods')->alias('og')->field("pr.*,og.buynum,og.id as gid")->join("$px as pr on pr.id=og.proid",'left')->where('og.id=%d',$id)->find();
+    	$result['grade']=json_decode($result['grade'],true);    	
+    	if(!$result){
+    		$this->success('产品已不存在');
+    		exit();
+    	}    	
+    	$this->assign('data',$result);
+    	$this->display();
+    }
     
     //产品列表
     public function Plist($name=''){

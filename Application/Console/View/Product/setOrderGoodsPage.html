@@ -43,8 +43,8 @@
         </ul> -->
     
     </div>
-    <form action="{:U('Order/cart')}" id="from1" method="post">
-        <input type="hidden" name="id" value="{$data.id}" />
+    <form action="{:U('Order/productinfo')}" id="from1" method="post">
+        <input type="hidden" name="id" value="{$data.gid}" />
         <input type="hidden" name="quality" id="qualityf" value="" />
         <input type="hidden" name="grade" id="gradef" value="" />
         <input type="hidden" name="money" id="moneyf" value="" />
@@ -88,9 +88,9 @@
                 </span>           
              </p>(每{$data.pcs|pcsstr})
         </li> 
-       <li style="margin-top:30px;"><label>重量/数量</label><input style="width:80px" name="nmb" type="text" class="dfinput" value="1" /><i>({$data.pcs|pcsstr})</i></li>
+       <li style="margin-top:30px;"><label>重量/数量</label><input style="width:80px" name="nmb" type="text" class="dfinput" value="{$data.buynum|default=1}" /><i>({$data.pcs|pcsstr})</i></li>
 
-        <li ><label>&nbsp;</label><input name="" type="button"   class="btn smbform" value="加入购物车"/></li>
+        <li ><label>&nbsp;</label><input name="" type="button"   class="btn smbform" value="确认  "/></li>
         </ul>  
     </form>
          <div class="formtitle"><span>详情描述</span></div>  
@@ -130,7 +130,7 @@
         $(this).addClass('blockaction');
         var vl=$(this).attr('vl');
         $('#moneyf').val(vl);
-        $('#gradef').val($(this).find('u').text());  
+         $('#gradef').val($(this).find('u').text());  
         $('.jinye u').html('￥'+vl+'.00');
     });
 

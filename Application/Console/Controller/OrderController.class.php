@@ -27,7 +27,14 @@ class OrderController extends CommonController {
 	}
 
 	public function catlist(){
-		$data=M('product')->select();
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性	
+		$count=M('product')->count();
+		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出	
+		
+		$data=M('product')->limit($Page->firstRow.','.$Page->listRows)->select();
+
+		$this->assign('page',$show);// 赋值分页输出
 		$this->assign('data',$data);
 		$this->display();	
 	}
@@ -178,6 +185,56 @@ class OrderController extends CommonController {
 
 	}
 
+	//
+	public function  withdrawList(){
+		$username = I('username');
+
+		if($username){
+			$map['order_no']  = array('like','%'.trim($username).'%'); 
+		}
+
+		$user_id = session("userid");
+		if($user_id > 0 ){
+			$where['id']=session("userid");
+			$where['accounts']=session("username");
+			$count=M('controller')->where($where)->count();
+			if($count<=0){
+				$user=D('Staff')->getthislevel();
+				$map['agent']  = array('in',implode(',',$user));
+			}
+	    }
+		foreach( $map as $k=>$v){  
+			if( !$v )  
+				unset( $arr[$k] );  
+		}   
+
+		//分页跳转的时候保证查询条件
+		foreach($map as $key=>$val) {
+			if(!$val){
+				unset($map[$key]);
+			}else{
+			$Page->parameter[$key]   =   urlencode($val);
+			  }
+		}
+		$map['status']=4;
+		$User = M('order_info'); // 实例化User对象 		
+		$count = $User->where($map)->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();	
+	
+		$staff=D('staff')->getfield('id,name',true);
+		$catdata=D('Category')->categoryone();      
+		
+		$this->assign('staff',$staff);
+		$this->assign('cat',$catdata);
+		$this->assign('list',$list);// 赋值数据集
+		$this->assign('page',$show);// 赋值分页输出
+		$this->display(); // 输出模板
+	}
+
 	//审核列表
 	public function shPlist($name=''){
 		$username = I('username');
@@ -250,10 +307,12 @@ class OrderController extends CommonController {
             $this->getpayment();
 		$data = M('product'); // 实例化User对象
 
+
 		$promap['ct.uid']=session('userid');
 
 		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
 		$list=M('cart')->alias('ct')->field('ct.*,pro.pic1,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
+
 	    $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 
@@ -269,13 +328,13 @@ class OrderController extends CommonController {
 		 $this->getequipment_name();
 		 $this->getpayment();
 		 $orderinfo = M('order_info');
-		 $orderinfolist = $orderinfo->where('id='.$id)->find();
+		 $orderinfolist = $orderinfo->where('id='.$id)->find();	
 		 if($orderinfolist['status']==2){
 		 	$this->success('订单已确认发货，不允许修改');
 		 	exit();
 		 }
 
-		 $ordergoods = M('order_goods'); // 实例化User对象
+		$ordergoods = M('order_goods'); // 实例化User对象
 		$list = $ordergoods->alias('og')
 				 ->join('nico_product as np on np.id = og.proid ')
 				 ->field('og.*,np.pic as pic1,og.buynum as number')
@@ -359,9 +418,8 @@ class OrderController extends CommonController {
 		$data['payment_status'] = 1;
 		
 		$roleList   =  D('order_info');
-		$min['c.uid']=session('userid');
 
-
+		$mid['c.uid']=session('userid');
 		$catdata=M('cart')->alias('c')->field('c.*,p.id as proid,p.protype,p.pic,p.pic1,p.product')->join('__PRODUCT__ p on c.proid=p.id')->where($mid)->select();
 
 		if(!$catdata){
@@ -392,7 +450,7 @@ class OrderController extends CommonController {
 					'addtime'=>time(),                
 					);
 					$arm=explode('-',$v['money']);
-					$tlm=($arm[1])?$tlm+$arm[1]:$tlm+$arm[0];
+					$tlm=$arm[0]>$arm[1]?$tlm+$arm[1]:$tlm+$arm[0];
 				}
 
 
@@ -429,8 +487,7 @@ class OrderController extends CommonController {
 	public function update(){
 		$roleList   =   D('order_info');
 		$data=$roleList->create();
-		$jumpUrl =U('Console/Order/Plist');
-		
+		$jumpUrl =U('Console/Order/Plist');		
 		if($data) {
 			$order_no=$data['order_no'];
 			unset($data['order_no']);
@@ -479,6 +536,31 @@ class OrderController extends CommonController {
 		exit();
 
 	}
+	//撤消
+	public function withdraw(){
+		$id=I('id');
+
+		$data['status']=0;
+		if(empty($id)){        			
+			$this->ajaxreturn($data);
+			exit();
+		}
+		$status= D('order_info')->where('id=%d',array($id))->getfield('status');
+
+
+		if($status==1){
+			//撤消
+			$sul=D('order_info')->where('id=%d',array($id))->setField('status',4);
+			if($sul){
+				$data['status']=1;
+			}
+		}
+
+		$this->ajaxreturn($data);
+		exit();
+
+	}
+
 
 
 	//查找下级经济人 ajax请求
@@ -502,8 +584,12 @@ class OrderController extends CommonController {
 			$this->error('您没有选择对应产品');
 			exit();
 		}
-		$map['proid']=$data['proid'];
+		
 		$data['uid']=session('userid');
+		If(!$data['uid']){
+			$this->error('请重新登入');
+			exit();
+		}
 		$data['catetime']=time();
 		$data['quality']=I('quality');
 		$data['grade']=I('grade');
@@ -512,7 +598,10 @@ class OrderController extends CommonController {
 
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
-
+		$map['proid']=$data['proid'];
+		$map['uid']=session('userid');		
+		$map['quality']=I('quality');
+		$map['grade']=I('grade');
 		$count=$cart->where($map)->count();
 		if($count>0){
 			$this->error('该产品已存在购物车');
@@ -521,6 +610,38 @@ class OrderController extends CommonController {
 		$sul=$cart->add($data);
 		if($sul){
 			$this->success('已加入购物车',U('Order/add'));
+			exit();
+		}else{
+			$this->error('增加失败');
+			exit();
+		}
+	}
+
+	public function productinfo(){
+		$data['id']=I('id');
+		if(!$data['id']){
+			$this->error('您没有选择对应产品');
+			exit();
+		}		
+		$data['catetime']=time();
+		$data['quality']=I('quality');
+		$data['grade']=I('grade');
+		$data['money']=I('money');
+		$data['number']=I('nmb');
+
+		$map['og.id']=$data['id'];
+		$orderGoodes=M('order_goods');
+
+		$result=$orderGoodes->alias("og")->field('or.id')->join('__ORDER_INFO__ as `or` on or.order_no=og.order_no','left')->where($map)->find();
+
+		if(!$result){
+			$this->error('该产品不存在订单中');
+			exit();
+		}
+		$sul=$orderGoodes->save($data);
+		
+		if($sul){
+			$this->success('修改完成',U('Order/edit',array('id'=>$result['id'])));
 			exit();
 		}else{
 			$this->error('增加失败');
