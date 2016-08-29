@@ -142,9 +142,9 @@ class ShipmentsController extends CommonController {
 			$map['order_no']  = array('like','%'.trim($username).'%'); 
 		}
 
-		$user_id = session("userid");
+		//$user_id = session("userid");
 		if($user_id > 0 ){
-			$where['id']=session("userid");
+		//	$where['id']=session("userid");
 			$where['accounts']=session("username");
 			$count=M('controller')->where($where)->count();
 			if($count<=0){
@@ -200,9 +200,9 @@ class ShipmentsController extends CommonController {
 			$map['order_no']  = array('like','%'.trim($username).'%'); 
 		}
 
-		$user_id = session("userid");
+		//$user_id = session("userid");
 		if($user_id > 0 ){
-			$where['id']=session("userid");
+			//$where['id']=session("userid");
 			$where['accounts']=session("username");
 			$count=M('controller')->where($where)->count();
 			if($count<=0){
