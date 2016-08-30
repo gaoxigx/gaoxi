@@ -142,7 +142,6 @@ class OrderController extends CommonController {
 		if($username){
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%'); 
-			$map1['username']  = array('like','%'.trim($username).'%'); 
 			$map1['_logic'] = 'OR';
 			$map['_complex'] = $map1;
 		}
@@ -194,7 +193,10 @@ class OrderController extends CommonController {
 		$username = I('username');
 
 		if($username){
-			$map['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['username']  = array('like','%'.trim($username).'%'); 
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
 		}
 
 		$user_id = session("userid");
@@ -244,8 +246,12 @@ class OrderController extends CommonController {
 		$username = I('username');
 
 		if($username){
-			$map['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['username']  = array('like','%'.trim($username).'%'); 
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
 		}
+
 
 		$user_id = session("userid");
 		if($user_id > 0 ){
@@ -318,7 +324,7 @@ class OrderController extends CommonController {
 		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
 		$list=M('cart')->alias('ct')->field('ct.*,pro.pic1,pro.product')->join('__PRODUCT__ as pro on ct.proid=pro.id','left')->where($promap)->order('ct.id')->select();
 
-	    $this->assign('staff', $staff);
+                $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 
 		$this->display();
@@ -570,6 +576,15 @@ class OrderController extends CommonController {
 	//查找下级经济人 ajax请求
 	public function getagent(){
 		$id=I('id');
+                
+ 		if($username){
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['username']  = array('like','%'.trim($username).'%'); 
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
+		}
+               
+                
 		if(empty($id)){        
 			$this->ajaxreturn(0);
 		}  

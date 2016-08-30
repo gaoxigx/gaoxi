@@ -139,7 +139,11 @@ class ShipmentsController extends CommonController {
 		$username = I('username');
 
 		if($username){
-			$map['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['username']  = array('like','%'.trim($username).'%');
+                        $map1['mobile'] =  array('like','%'.trim($username).'%');
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
 		}
 
 		//$user_id = session("userid");
@@ -197,8 +201,13 @@ class ShipmentsController extends CommonController {
 		$username = I('username');
 
 		if($username){
-			$map['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+			$map1['username']  = array('like','%'.trim($username).'%');
+                        $map1['mobile'] =  array('like','%'.trim($username).'%');
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
 		}
+
 
 		//$user_id = session("userid");
 		if($user_id > 0 ){
