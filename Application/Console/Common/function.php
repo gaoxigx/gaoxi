@@ -92,7 +92,7 @@ function json_ary($json){
             return substr_replace($str,'***',3,strlen($str)-6);
         }
         if(strlen($str)<=9){
-            return substr_replace($str,'**',0,strlen($str)-4);
+            return substr_replace($str,'**',0,strlen($str)-4,"utf-8");
         }
         
         return substr_replace($str,'******',9,strlen($str));
