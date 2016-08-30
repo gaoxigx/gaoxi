@@ -139,7 +139,7 @@ $(document).ready(function(){
                 var url="{:U('Shipments/updatenumberno')}";    
                 $.post(url,{'id':id,'numberno':numberno},function(data){                   
                     if(data.status==1){
-                       tinfo.html("已发货");
+                       tinfo.html("已发货: "+numberno);
                     }else{
                         alert(data.msg);
                     }
