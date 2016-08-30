@@ -589,7 +589,11 @@ class OrderController extends CommonController {
 			$this->ajaxreturn(0);
 		}  
                 
-		$data=D('staff')->where('nibs=%d',array($id))->getfield('id,name',true);
+        $map['nibs']=$id;
+        $map['iswork']=array("neq",4);
+
+		$data=D('staff')->where($map)->getfield('id,name',true);
+
 		if($data){
 			$this->ajaxreturn($data);    
 		}else{
