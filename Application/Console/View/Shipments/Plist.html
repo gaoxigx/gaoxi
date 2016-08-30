@@ -138,12 +138,12 @@ $(document).ready(function(){
                 var url="{:U('Shipments/updatenumberno')}";    
                 $.post(url,{'id':id,'numberno':numberno},function(data){                   
                     if(data.status==1){
-                       $(this).parent('td').html('已发货');
-                       
+                       $(this).parents('td').html('已发货');
+                   
+
                     }else{
                         alert(data.msg);
                     }
-
                 });
                // $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
 
