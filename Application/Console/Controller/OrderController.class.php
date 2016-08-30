@@ -122,10 +122,11 @@ class OrderController extends CommonController {
 	 }
 
 	 //插入物流单号到订单表
-	public function updatenumberno($id,$numberno){
+	public function updatenumberno(){
 
 		$id=I('post.id');
 		$data["numberno"] = I("post.numberno");
+		 
 		if(!$data["numberno"] && !$id){
 			$data['status']=0;
 			$data['msg']="数据错误";
