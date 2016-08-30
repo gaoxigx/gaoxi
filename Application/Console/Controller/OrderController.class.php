@@ -123,14 +123,24 @@ class OrderController extends CommonController {
 
 	 //插入物流单号到订单表
 	public function updatenumberno($id,$numberno){
-		$data["numberno"] = $numberno;
+
+		$id=I('post.id');
+		$data["numberno"] = I("post.numberno");
+		if(!$data["numberno"] && !$id){
+			$data['status']=0;
+			$data['msg']="数据错误";
+		}
+
 		$data["status"] = 2;
 		$order_info = D('order_info');
-		 $name = $order_info->where('id='.$id)->save($data);
-		 if($name){
-			$this->success("物流单号更新成功");
+		$name = $order_info->where('id='.$id)->save($data);
+		if($name){
+			 	$data['status']=1;
+			 	$data['msg']="发布加成功";
+
 		}else{
-			$this->error('更新数据出错');
+		 		$data['status']=0;
+			 	$data['msg']="发布数据错误";
 		}
 	}
 
