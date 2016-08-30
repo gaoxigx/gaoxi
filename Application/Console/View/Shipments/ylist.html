@@ -18,8 +18,8 @@
     <div class="rightinfo">
         <div class="tools">
             <ul class="seachform">
-                <form action="/index.php/Console/Order/Plist" method="post" id="form2" name="form2">            
-                    <li><label>订单号</label><input type="text" class="scinpute" name="username" value=""></li>
+                <form action="/index.php/Console/Shipments/ylist" method="post" id="form2" name="form2">            
+                    <li><label></label><input type="text" class="scinpute" name="username" value="" placeholder="订单编号/收货人/手机号码" style="width:180px"></li>
                     <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
                 </form>
             </ul>
@@ -57,9 +57,9 @@
                             <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
                         </volist>
                     </td>
-                    <td>{$vo['username']}</td>
-                    <td>{$vo['mobile']}</td>
-                    <td>{$vo['address']}</td>
+                    <td>{$vo['username']|hiddenstr=###}</td>
+                    <td>{$vo['mobile']|hiddenstr=###}</td>
+                    <td>{$vo['address']|hiddenstr=###}</td>
                     <td style="color:red">{$vo.note}</td>
                    <td>
                         <switch name="vo.payment_status">

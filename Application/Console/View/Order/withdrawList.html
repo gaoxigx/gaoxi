@@ -18,10 +18,10 @@
     <div class="rightinfo">
         <div class="tools">
             <ul class="seachform">
-                <form action="/index.php/Console/Order/Plist" method="post" id="form2" name="form2">            
+                <form action="/index.php/Console/Order/withdrawList" method="post" id="form2" name="form2">            
                     <li><label>订单号</label><input type="text" class="scinpute" name="username" value=""></li>
                     <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
-                </form>
+                </form>                
             </ul>
         </div>
 
@@ -32,7 +32,7 @@
 					<th>订单信息</th>
 					<th>产品信息</th>
 					<th>订单金额</th>		
-                    <th>订单备注</th>
+                                        <th>订单备注</th>
 					<th>操作发货</th>
 <!--					<th>确认收款</th>-->
 					<th>操作</th>
@@ -42,34 +42,34 @@
 				<volist name="list" id="vo">
 				<tr style="border-bottom: dotted 1px #c7c7c7; ">
 					<td >{$vo.id}</td>
-					<td>
-                        <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
-                        <p>发布时间：{$vo.addtime|date='Y-m-d H:i:s',###}</p>
-                        <p>销售客服：{$staff[$vo['agent']]}</p>
-                    </td>                    
-					<td width="30%">
-                        <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
-                        <volist name="goods" id="vl">                        
-                            <span href=""><php>echo trim($vl['product'])</php></span>
-                            <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
-                        </volist>
+                                        <td>
+                                            <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
+                                            <p>发布时间：{$vo.addtime|date='Y-m-d H:i:s',###}</p>
+                                            <p>销售客服：{$staff[$vo['agent']]}</p>
+                                        </td>                    
+                                        <td width="30%">
+                                            <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
+                                            <volist name="goods" id="vl">                        
+                                                <span href=""><php>echo trim($vl['product'])</php></span>
+                                                <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
+                                            </volist>
 					</td>
 					<td>{$vo.total_price}</td> 
-                    <td>{$vo.note}</td>
+                                        <td>{$vo.note}</td>
 					<td >
-                        <switch name="vo.payment_status">
-                            <case value="0">已下单.</case>
-                            <case value="1">
-                                    <switch name="vo.status">
-                                            <case value="1">已下单 </case>
-                                            <case value="2">已发货 {$vo.numberno} <!-- <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /> -->
-                                           
-                                            </case>
-                                             <case value="3">异常订单，请审核</case>
-                                    </switch>
-                            </case>
-                            <default />已下单
-                        </switch>
+                                            <switch name="vo.payment_status">
+                                                <case value="0">已下单.</case>
+                                                <case value="1">
+                                                        <switch name="vo.status">
+                                                                <case value="1">已下单 </case>
+                                                                <case value="2">已发货 {$vo.numberno} <!-- <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /> -->
+
+                                                                </case>
+                                                                 <case value="3">异常订单，请审核</case>
+                                                        </switch>
+                                                </case>
+                                                <default />已下单
+                                            </switch>
 					</td>
 
 <!--					<td>
@@ -80,10 +80,10 @@
 						</if>
 					</td>-->
 					<td>
-						<a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="" class="withdraw">&nbsp;撤消</a>
-						<a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>  
-                        <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>
+                                            <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
+                                            <a href="" class="withdraw">&nbsp;撤消</a>
+                                            <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>  
+                                            <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>
 					</td>         
 				</tr> 
 			</volist>
