@@ -110,14 +110,15 @@ class ShipmentsController extends CommonController {
 
 	 //插入物流单号到订单表
 	public function updatenumberno(){
-		$data["numberno"] =I('post.numberno');		
+		$data["numberno"] =I('post.numberno');	
 		$data["status"] = 2;
-		$id=I('post.id');
-		if(!$data["numberno"]&&!$id){
+		$id=I('post.id');		
+		if(empty($data["numberno"])&&!$id){			
 			$sult['msg']='没有得到数据';
 			$sult['status']=0;
 			$this->ajaxreturn($sult);
 		}
+
 		$order_info = D('order_info');
 		 $name = $order_info->where('id='.$id)->save($data);
 		 if($name){

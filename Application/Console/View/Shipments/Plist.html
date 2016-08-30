@@ -125,21 +125,20 @@ $(document).ready(function(){
             $("#form2").attr("action", "Payment_status/id/"+id+"/status/"+data).submit();
 
     });
-    $(".suresmall3").click(function(event) {
-        $(this).parents('td').html("已发货");
-        
+    $(".suresmall3").click(function(event) {        
             var id = $(this).attr('name');
-            var data = $(this).attr('data');
-            var numberno=$("#suresmall3"+id ).val();
+            var data = $(this).attr('data');     
+            var numberno=$("#suresmall3"+id ).val();      
             var tinfo=$(this).parents('td');
-            if(numberno==''){
+       
+            if(numberno.length <=0 || numberno=='undefined'){
                 alert("物流单号不能为空！");
                 return false;
             } else{                          
                 var url="{:U('Shipments/updatenumberno')}";    
                 $.post(url,{'id':id,'numberno':numberno},function(data){                   
                     if(data.status==1){
-                       tinfo.html("已发货:"+numberno);
+                       tinfo.html("已发货: "+numberno);
                     }else{
                         alert(data.msg);
                     }
