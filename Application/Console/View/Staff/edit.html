@@ -464,11 +464,11 @@
         var u_url = "{:U('Console/Staff/GetSupervisor')}";
         var old_nibs = $('#old_nibs').val();
         $.post(u_url, {cate_id: pid}, function (data) {
-            //console.log(data);
-
-            if (data != 0 && data != '' && data != null) {
+//            //console.log(data);
+//
+//            if (data != 0 && data != '' && data != null) {
                 var html = '';
-                $('#supervisor').html('<option value="0">请选择上司</option>');
+//                $('#supervisor').html('<option value="0">请选择上司</option>');
                 for (i in data) {
                     if (old_nibs == i) {
                         html += '<option value="' + i + '" selected="selected" >' + data[i] + '</option>';
@@ -478,10 +478,10 @@
 
                 }
                 $('#supervisor').append(html);
-            } else {
-                $('#supervisor').html('<option value="0">请选择上司</option>');
-            }
-
+//            }   else {
+//                $('#supervisor').html('<option value="0">请选择上司</option>');
+//            }
+//
         })
 
     }
