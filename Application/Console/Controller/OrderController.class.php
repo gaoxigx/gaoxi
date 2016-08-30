@@ -292,6 +292,7 @@ class OrderController extends CommonController {
 
 	//提交订单
 	public function add(){
+
         $map['id']=session('userid');
         $map['accounts']=session('username');            
         $count=M('controller')->where($map)->count();            
@@ -310,8 +311,8 @@ class OrderController extends CommonController {
            // $this->getequipment_name();
             $this->getpayment();
 		$data = M('product'); // 实例化User对象
-
-
+//                var_dump($data);exit();
+                 
 		$promap['ct.uid']=session('userid');
 
 		//$list = $data->alias('pro')->field('ct.*,pro')->join('__CART__ as ct on ct.proid=pro.id','left')->where($promap)->order('pro.id')->select(); 
@@ -319,7 +320,6 @@ class OrderController extends CommonController {
 
 	    $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
-
 
 		$this->display();
 	}
@@ -572,7 +572,8 @@ class OrderController extends CommonController {
 		$id=I('id');
 		if(empty($id)){        
 			$this->ajaxreturn(0);
-		}     
+		}  
+                
 		$data=D('staff')->where('nibs=%d',array($id))->getfield('id,name',true);
 		if($data){
 			$this->ajaxreturn($data);    

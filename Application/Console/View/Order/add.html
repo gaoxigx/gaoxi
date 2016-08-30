@@ -178,14 +178,15 @@
                  $(this).parent().find('.num').val(parseInt(val)+1);
             })
             
-           // getJjQuipment($("#agent").val());
+            getJjQuipment($("#agent").val());
+            
             getStaff($("#staffid").val());
             $(function(){
              
-//                $("#agent").change(function(){                  
-//                   getJjQuipment($(this).val());      
-//                });
-            
+                $("#agent").change(function(){                  
+                   getJjQuipment($(this).val());      
+                });
+         
                $("#staffid").change(function(){                      
                     getStaff($(this).val());
                 });
