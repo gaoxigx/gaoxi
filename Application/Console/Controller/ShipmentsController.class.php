@@ -83,6 +83,16 @@ class ShipmentsController extends CommonController {
 		$this->assign('payment',$name);
 
 	}
+        
+        //快递公司获取
+	private function getexpress(){
+		$data=D('express');
+		$name = $data->where('express<>""')->order('id')->select();
+		// dump($name);
+		$this->assign('express',$name);
+
+	}
+        
 	
 	//处理付款状态（确认和取消）
 	public function Payment_status($id,$status){
@@ -133,6 +143,45 @@ class ShipmentsController extends CommonController {
 			exit();
 		}
 	}
+
+        
+             //更新物流单号
+            public function updatenumbernoss(){
+            $roleList   =   D('order_info');
+            $data=$roleList->create();
+            if($data) {
+                $data['numberno']=strtotime(I('post.numberno'));
+                $data['express']=strtotime(I('post.express')); 
+                $data['fhnote']=strtotime(I('post.fhnote')); 
+                $result = $roleList->save($data);
+                if($result) {
+                    $this->success('操作成功！');
+                }else{
+                    $this->error('写入错误！');
+                }
+            }else{
+                $this->error($roleList->getError());
+            }
+         }   
+        
+        //添加数据（发货备注）
+        public function update(){
+                $roleList = D('order_info');
+		$data=$roleList->create();		
+		if($data) {
+			$fhnote=$data['fhnote'];
+			unset($data['fhnote']);
+			$result = $roleList->where('fhnote=%s',array($fhnote))->save($data);
+			if($result) {
+				$this->success('操作成功！');
+			}else{
+				$this->error('写入错误！');
+			}
+		}else{
+			$this->error($roleList->getError());
+		}
+        }
+        
 
 
 	//数据列表
@@ -197,7 +246,7 @@ class ShipmentsController extends CommonController {
 		$this->display(); // 输出模板
 	}
 
-	//忆发货订单
+	//已发货订单
 	public function ylist($name=''){
 		$username = I('username');
 
@@ -386,5 +435,34 @@ class ShipmentsController extends CommonController {
 		$this->display ( 'Weixin:weixin_orders_print' );// 显示模板
 	}
 	
+    //修改物流单号
+    public function editnote($id){
+        
+        $jumpUrl =U('Console/Shipments/ylist'); 
+        $id = (int)$id;
+        $model = D('order_info');
+        if (IS_POST) {                       
+            if ($id > 0) {
+                $data=$model->create();
+                $map['id']=$id;
+                $result=$model->where($map)->save($data);
+                if ($result){
+                    $this->success('修改成功', $jumpUrl);
+                } else {                    
+                    $this->error('修改失败', $jumpUrl);
+                }          
+            } 
+        } else {    
+          
+         if($id){
+             $user = $model->where("id=".$id)->find(); 
+         } 
+//        var_dump($user);
+         $this->assign('user',$user);
+         $this->assign('id',$id);            
+         $this->display();
+        }
+    }          
+        
 
 }

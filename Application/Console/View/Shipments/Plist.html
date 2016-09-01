@@ -29,16 +29,16 @@
         <table class="imgtable">
             <thead>
                 <tr>
-                    <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-                    <th>订单信息</th>
+                    <th>ID<!--<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i>--></th>
+                    <th style="width:190px;">订单信息</th>
                     <th>产品信息</th>
-                    <th>收货人</th>
+                    <th style="width: 80px;">收货人</th>
                     <th>收货电话</th>
                     <th>收货地址</th>
                     <th>订单金额</th>
-                    <th>订单备注</th>                          
-                    <th>操作发货</th>
-                    <th>操作</th>
+                    <th>订单备注</th>  
+                    <th style="width:280px;">操作发货</th>
+                    <th style="width: 120px;">操作</th>
 <!--                    <th>确认收款</th>-->                    
                 </tr>
             </thead>
@@ -63,21 +63,29 @@
                     <td>{$vo['address']}</td>
                     <td>￥{$vo['total_price']}</td>
                     <td style="color:red">{$vo.note}</td>
-                   <td>
-                        <switch name="vo.payment_status">
-                            <case value="0">已下单.</case>
-                            <case value="1">
-                                    <switch name="vo.status">
-                                            <case value="1">已下单 
-                                                    <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
-                                                    <input  name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall3" value="发货" />
-                                            </case>
-                                            <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" />
-                                            </case>
-                                    </switch>
-                            </case>
-                            <default />已下单
-                        </switch>
+      
+                   <td style="width:320px;">
+                            <switch name="vo.payment_status">
+                                <case value="0">已下单.</case>
+                                <case value="1">
+                                        <switch name="vo.status">
+                                                <case value="1">已下单 
+                                                        <select id="addr_id" name="express" type='text' class="">
+                                                               <option value="1">顺丰</option>
+                                                               <option value="2">圆通</option>
+                                                               <option value="3">中通</option>  
+                                                                <option value="4">韵达</option>
+                                                               <option value="5">邮政</option>   
+                                                        </select>
+                                                        <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
+                                                        <input  name="{$vo.id}" data="{$data.payment_status}" type="button"  class="suresmall3" value="发货" />
+                                                        <input name="numberno"  class="scinpute22{$vo.fhnote}" type="text" placeholder="发货备注" />
+                                                </case>
+                                                <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /></case>
+                                        </switch>
+                                </case>
+                                <default />已下单
+                            </switch>
                     </td>
 <!--                    <td>
                         <if condition="$vo.payment_status eq 0">
@@ -173,6 +181,7 @@ $(document).ready(function(){
             //setTotal();
         })
     </script>
+
 
 
 </body>
