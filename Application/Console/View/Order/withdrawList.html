@@ -28,11 +28,11 @@
 		<table class="imgtable">
 			<thead>
 				<tr>
-					<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-					<th>订单信息</th>
-					<th>产品信息</th>
+					<th>ID</th>
+					<th style="width:280px;">订单信息</th>
+					<th style="width:220px;">产品信息</th>
 					<th>订单金额</th>		
-                                        <th>订单备注</th>
+                                        <th style="width:480px;">订单备注</th>
 					<th>操作发货</th>
 <!--					<th>确认收款</th>-->
 					<th>操作</th>
@@ -47,7 +47,7 @@
                                             <p>发布时间：{$vo.addtime|date='Y-m-d H:i:s',###}</p>
                                             <p>销售客服：{$staff[$vo['agent']]}</p>
                                         </td>                    
-                                        <td width="30%">
+                                        <td>
                                             <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
                                             <volist name="goods" id="vl">                        
                                                 <span href=""><php>echo trim($vl['product'])</php></span>
