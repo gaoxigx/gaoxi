@@ -189,10 +189,18 @@ class ShipmentsController extends CommonController {
 			$sult['status']=0;
 			$this->ajaxreturn($sult);
 		}
+		$order_no=M('order_info')->where('id=%d',$id)->getField('order_no');
+
+		$pro=M('order_goods')->where("order_no='%s'",$order_no)->select();
+		foreach ($pro as $k => $v) {
+			$param['salenum']=array('exp',"salenum+".$v['buynum']);
+			M('product')->where("id=%d",$v['proid'])->save($param);			
+		}
 
 		$order_info = D('order_info');
-		 $name = $order_info->where('id='.$id)->save($data);
+		$name = $order_info->where('id='.$id)->save($data);
 		 if($name){
+		 	
 		 	$sult['msg']='成功发货';
 		 	$sult['status']=1;
 			$this->ajaxreturn($sult);

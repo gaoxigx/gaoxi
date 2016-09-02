@@ -96,7 +96,7 @@ $(document).ready(function(){
 						<td>
 							<a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a>
 							<p>{$vo.addtime|date='Y-m-d',###}</p>
-							<p>库存:{$vo.sortnum}</p>									
+							<p>库存:{$vo['sortnum']-$vo['salenum']}</p>									
 						</td>
 						
 						<td>{$vo.protype|Getprotypename=###}

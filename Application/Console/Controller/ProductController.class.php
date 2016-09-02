@@ -79,7 +79,7 @@ class ProductController extends CommonController {
         $Page = new \Think\Page($count,6,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
        
-        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('salenum desc')->select();
         foreach($list as $key=>$val){
             if($val['purchaseper'] >0){
                 $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
