@@ -73,9 +73,7 @@
                                                     <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
                                                     <input  name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall3" value="发货" />
                                             </case>
-                                            <case value="2">已发货 {$vo.numberno} 
-                                                <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" />
-<!--                                            <a href="__URL__/Shipments/kuaidi/no/{$vo.id}"><input type="button" value="查询"/><a/>-->
+                                            <case value="2">已发货 {$vo.numberno}<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查询物流<a/>
                                             </case>
                                     </switch>
                             </case>
