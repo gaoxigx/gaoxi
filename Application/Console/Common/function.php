@@ -111,9 +111,17 @@ function json_ary($json){
             3=>'份',
         );
         return $pcsary[$index];
+    }
 
-
-
+    function getexpresstext($index){
+        $express=array(
+            1=>'顺丰',
+            2=>'圆通',
+            3=>'中通',
+            4=>'韵达',
+            5=>'邮政'
+            );
+        return $express[$index];
     }
 /*
  * 时间搓转换成文本
