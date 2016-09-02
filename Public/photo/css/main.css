@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+#main{width:980px; min-height:600px; margin:30px auto 0 auto; border:1px solid #d3d3d3; background:#fff; -moz-border-radius:5px;-khtml-border-radius: 5px;-webkit-border-radius: 5px; border-radius:5px;}
+h2.top_title{margin:4px 20px; padding-top:15px; padding-left:20px; padding-bottom:10px; border-bottom:1px solid #d3d3d3; font-size:18px; color:#a84c10; background:url(../images/arrL.gif) no-repeat 2px 16px}
+
+#footer{height:60px;}
+#footer p{ padding:10px 2px; line-height:24px; text-align:center}
+#footer p a:hover{color:#51555C}
+#stat{display:none}
+
+.google_ad{width:728px; height:90px; margin:50px auto}
+.ad_76090,.ad_demo{width:760px; height:90px; margin:40px auto}
+.demo_topad{position:absolute; top:15px; right:0px; width:472px; height:60px;}
+

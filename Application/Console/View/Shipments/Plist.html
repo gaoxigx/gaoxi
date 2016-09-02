@@ -5,6 +5,20 @@
 <title>无标题文档</title>
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#camera{width:598px; height:525px; position:fixed; bottom:20%; left:50%; margin-left:-300px; border:1px solid #f0f0f0; background:url(__PUBLIC__/photo/images/cam_bg.jpg) repeat-y; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -moz-box-shadow:0 0 4px rgba(0,0,0,0.6); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.6); box-shadow:0 0 4px rgba(0,0,0,0.6);background: #f1f1f1;}
+#cam{width:100%; height:66px; display:block; position:absolute; top:0; left:0; background:url(__PUBLIC__/photo/images/cam.png) no-repeat center center; cursor:pointer}
+#webcam{width:520px; height:370px; margin:66px auto 22px; line-height:360px; background:#ccc; color:#666; text-align:center}
+.button_pane{text-align:center;}
+.btn_blue,.btn_green{width:99px; height:38px; line-height:32px; margin:0 4px; border:none; display:inline-block; text-align:center; font-size:14px; color:#fff !important; text-shadow:1px 1px 1px #277c9b; background:url(__PUBLIC__/photo/images/buttons.png) no-repeat}
+.btn_green{background:url(__PUBLIC__/photo/images/buttons.png) no-repeat right top;text-shadow:1px 1px 1px #498917;}
+.hidden{display:none}
+
+#photos{width:80%; margin:40px auto}
+#photos:hover a{opacity:0.5}
+#photos a:hover{opacity:1}
+#webcam{display:block;}
+</style>
 </head>
 <body>
 	<div class="place">
@@ -36,8 +50,10 @@
                     <th>收货电话</th>
                     <th>收货地址</th>
                     <th>订单金额</th>
+
                     <th>订单备注</th>  
                     <th style="width:280px;">操作发货</th>
+                    <th>快递图片</th>
                     <th style="width: 120px;">操作</th>
 <!--                    <th>确认收款</th>-->                    
                 </tr>
@@ -70,22 +86,33 @@
                                 <case value="1">
                                         <switch name="vo.status">
                                                 <case value="1">已下单 
-                                                        <select id="addr_id" name="express" type='text' class="">
+                                               
+                                                <p>
+                                                        <select id="addr_id" name="express" type='text' class="express">
                                                                <option value="1">顺丰</option>
                                                                <option value="2">圆通</option>
                                                                <option value="3">中通</option>  
                                                                 <option value="4">韵达</option>
                                                                <option value="5">邮政</option>   
                                                         </select>
-                                                        <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
-                                                        <input  name="{$vo.id}" data="{$data.payment_status}" type="button"  class="suresmall3" value="发货" />
-                                                        <input name="numberno"  class="scinpute22{$vo.fhnote}" type="text" placeholder="发货备注" />
+                                                        <input type="text" style="height:23px;width:160px" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
+                                                        <input  name="{$vo.id}" data="{$data.payment_status}" type="button"  class="suresmall3 " value="发货" />
+                                                </p>
+                                                <p style="margin-top:5px">
+                                                     <input name="fhnote" style="height:23px; width:200px;" class="fhnote scinpute" type="text" placeholder="发货备注" />
+                                                </p>
                                                 </case>
                                                 <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /></case>
                                         </switch>
                                 </case>
                                 <default />已下单
                             </switch>
+                    </td>
+                    <td>    
+                            <input  name="{$vo.id}"  type="button" class="photobtn eppbtn suresmall2" value="拍照" />
+                            <div id="img{$vo.id}" >
+                                
+                            </div>
                     </td>
 <!--                    <td>
                         <if condition="$vo.payment_status eq 0">
@@ -105,12 +132,23 @@
         </table>  
 		 {$page}
 	</div> 
+     <div class="tip" style="">
+        <div class="tiptop"><span>图片预览</span><a></a></div>
+           <img src="" class="picpic" width="100%" />
+    </div>
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
 <script type="text/javascript">
+  function showimg (img){
+
+    $(".picpic").attr('src',img);
+    $(".tip").fadeIn(200);
+    
+  }
 $(document).ready(function(){
   $(".click").click(function(){
-      $(".tip").fadeIn(200);
-      });
+       $(".tip").fadeIn(200);
+    });
+
   
   $(".tiptop a").click(function(){
       $(".tip").fadeOut(200);
@@ -123,6 +161,9 @@ $(document).ready(function(){
   $(".cancel").click(function(){
       $(".tip").fadeOut(100);
     });
+  $(".eppbtn").click(function(){
+   
+  })
 });
 
 $(document).ready(function(){
@@ -138,13 +179,15 @@ $(document).ready(function(){
             var data = $(this).attr('data');     
             var numberno=$("#suresmall3"+id ).val();      
             var tinfo=$(this).parents('td');
+            var express=$(this).parents('td').find('.express').val();
+            var fhnote=$(this).parents('td').find('.fhnote').val();
        
             if(numberno.length <=0 || numberno=='undefined'){
                 alert("物流单号不能为空！");
                 return false;
             } else{                          
                 var url="{:U('Shipments/updatenumberno')}";    
-                $.post(url,{'id':id,'numberno':numberno},function(data){                   
+                $.post(url,{'id':id,'numberno':numberno,'express':express,'fhnote':fhnote},function(data){                   
                     if(data.status==1){
                        tinfo.html("已发货: "+numberno);
                     }else{
@@ -181,8 +224,27 @@ $(document).ready(function(){
             //setTotal();
         })
     </script>
+<link rel="stylesheet" type="text/css" href="/public/photo/css/main.css" />
+ <div id="camera" style="display:none">
+       <input type="hidden" value="0" id="expressid" />
+       <div id="cam"></div>
+       <div id="webcam"></div>
+       <div id="buttons">
+          <div class="button_pane" id="shoot">
+            <a id="btn_shoot" href="" class="btn_blue">拍照</a>
+          </div>
+          <div class="button_pane hidden" id="upload">
+            <a id="btn_cancel" href="" class="btn_blue">取消</a> <a id="btn_upload" href="" class="btn_green">上传</a>
+          </div>
+       </div>
+   </div>   
 
-
+<link rel="stylesheet" type="text/css" href="/public/photo/fancybox/jquery.fancybox-1.3.4.css" />
+<script type="text/javascript" src="/public/photo/js/jquery.js"></script>
+<script type="text/javascript" src="/public/photo/js/jquery.easing.js"></script>
+<script type="text/javascript" src="/public/photo/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="/public/photo/js/webcam.js"></script>
+<script type="text/javascript" src="/public/photo/js/script.js"></script>
 
 </body>
 

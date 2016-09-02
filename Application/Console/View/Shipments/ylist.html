@@ -59,10 +59,10 @@
                             <p>{$vl.grade}&nbsp;&nbsp;{$vl.buynum}X{$vl.quality}&nbsp;&nbsp;&nbsp;&nbsp;</p>                            
                         </volist>
                     </td>
-                    <td>{$vo['username']|hiddenstr=###}</td>
-                    <td>{$vo['mobile']|hiddenstr=###}</td>
-                    <td>{$vo['address']|hiddenstr=###}</td>
-                    <td style="color:red">{$vo.note}</td>
+                    <td>{$vo['username']}</td>
+                    <td>{$vo['mobile']}</td>
+                    <td>{$vo['address']}</td>
+                    <td style="color:red">{$vo.note}<p style="color:red">{$vo.fhnote}</p></td>
                     <td>{$vo.express}</td>
                    <td>
                         <switch name="vo.payment_status">
@@ -75,6 +75,11 @@
                                             </case>
                                             <case value="2">已发货 {$vo.numberno} 
                                                 <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" />
+                                                  <if condition="$vo.expressimg neq '' ">                                                    
+                                                        <div class="click" style="float: left;" data="/{$vo.expressimgs}">
+                                                            <span> <img src="/{$vo.expressimg}" height="60"></span>
+                                                        </div>                                 
+                                                    </if>    
                                             </case>
                                     </switch>
                             </case>

@@ -58,14 +58,19 @@
                                     </td>
                                     <td>{$vo.total_price}</td> 
                                     <td>{$vo.username}</td>
-                                    <td>{$vo.note}</td>
+                                    <td>{$vo.note}<p style="color:red">{$vo.fhnote}</p></td>
                                     <td >
                                         <switch name="vo.payment_status">
                                             <case value="0">已下单.</case>
                                             <case value="1">
                                                 <switch name="vo.status">
                                                     <case value="1">已下单 </case>
-                                                    <case value="2">已发货 {$vo.numberno} <!-- <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /> -->
+                                                    <case value="2"><span>已发货 {$vo.numberno}</span>
+                                                    <if condition="$vo.expressimg neq '' ">                                                    
+                                                        <div class="click" style="float: left;" data="/{$vo.expressimgs}">
+                                                            <span> <img src="/{$vo.expressimg}" height="60"></span>
+                                                        </div>                                 
+                                                    </if>                  
 
                                                     </case>
                                                      <case value="3">异常订单，请审核</case>
@@ -95,12 +100,18 @@
 		</table>    
 		 {$page}
 	</div> 
+     <div class="tip" style="">
+        <div class="tiptop"><span>图片预览</span><a></a></div>
+           <img src="" class="picpic" width="100%" />
+    </div>
 <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   $(".click").click(function(){
       $(".tip").fadeIn(200);
-      });
+      var timg=$(this).attr('data');
+      $(".picpic").attr('src',timg);
+    });
   
   $(".tiptop a").click(function(){
       $(".tip").fadeOut(200);
