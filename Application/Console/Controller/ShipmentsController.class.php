@@ -90,7 +90,66 @@ class ShipmentsController extends CommonController {
 		$name = $data->where('express<>""')->order('id')->select();
 		// dump($name);
 		$this->assign('express',$name);
+	}
 
+	public function expressphoto(){
+		//date_default_timezone_set("PRC");   //使用北京时间
+		//只接受post请求
+		if(strtolower($_SERVER['REQUEST_METHOD']) != 'post'){
+			exit;
+		}
+
+		$folder = 'uploads/express/'.date('Ymd').'/';
+		if(!is_dir($folder)){
+			mkdir($folder);
+		}
+		$filename = date('YmdHis').rand().'.jpg';
+		$original = $folder.$filename;
+
+		$input = file_get_contents('php://input');
+		if(md5($input) == '7d4df9cc423720b7f1f3d672b89362be'){
+			exit;
+		}
+		$result = file_put_contents($original, $input);
+		if (!$result) {
+			echo '{"error":1,"message":"文件目录不可写";}';
+			exit;
+		}
+
+		$info = getimagesize($original);
+		if($info['mime'] != 'image/jpeg'){
+			unlink($original);
+			exit;
+		}
+
+
+		$origImage	= imagecreatefromjpeg($original);
+		$newImage	= imagecreatetruecolor(154,110);
+		imagecopyresampled($newImage,$origImage,0,0,0,0,154,110,520,370); 
+
+		//imagejpeg($newImage,'uploads/thumbs/'.$filename);
+		imagejpeg($newImage,$folder.'/small_'.$filename);
+
+		$id=I('request.id');
+		$imgpath=$data['expressimg']=$folder.'small_'.$filename;		
+		$param['expressimg']=$imgpath;
+		$param['expressimgs']=$folder.$filename;
+		$res=M('order_info')->where('id=%d',array($id))->setfield($param);		
+	    if($res){
+	    	$data['status']=1;
+			$data['status']="Success!";
+			$data['filename']=$imgpath;
+			$data['sfilename']=$original;
+			$data['id']=$id;
+
+	    	$this->ajaxreturn($data);
+		    //echo '{"status":1,"message":"Success!","filename":"'.$imgpath.'","sfilename":"'.$original.'"}';
+		}else{
+			$data['error']=1;
+			$data['message']="Sorry,something goes wrong.";
+			$this->ajaxreturn($data);
+		}
+		exit();
 	}
         
 	
@@ -121,6 +180,8 @@ class ShipmentsController extends CommonController {
 	 //插入物流单号到订单表
 	public function updatenumberno(){
 		$data["numberno"] =I('post.numberno');	
+		$data['fhnote']=I('post.fhnote');
+		$data['express']=I('post.express');
 		$data["status"] = 2;
 		$id=I('post.id');		
 		if(empty($data["numberno"])&&!$id){			
