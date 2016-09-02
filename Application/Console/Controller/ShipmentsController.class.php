@@ -113,9 +113,15 @@ class ShipmentsController extends CommonController {
 	
 	//物流单号查询
 	 public function numberno($no){
-		echo "物流信息查询：".$no;
+            require_once(ROOT_PATH."\ThinkPHP\Library\Lib\Kuaidi\KdApiSearchDemo.class.php");            
+             $kd=new \Kuaidiniao();       
+             $kd->setLogisticCode($no);
+             $sul=$kd->getOrderTracesByJson();        
+             $result=json_decode($sul,true)  ;          
+//            var_dump($result);
 		// $this->$this->display(??)
-		// $this->display('plist');
+            $this->assign('data',$result);
+            $this->display('kuaidi');
 	 }
 
 	 //插入物流单号到订单表
