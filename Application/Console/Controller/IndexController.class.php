@@ -28,4 +28,13 @@ class IndexController extends CommonController {
     private function hello3(){
         echo '这是private方法!';
     }
+     
+    public function defaultop(){
+        $user = M('order_info');
+        $list = $user->limit(6)->select();
+        var_dump($list); exit();
+        $this->assign('list',$list);
+        $this->display('default');
+    }
+    
 }
