@@ -65,7 +65,7 @@
                                             <case value="1">
                                                 <switch name="vo.status">
                                                     <case value="1">已下单 </case>
-                                                    <case value="2"><span>已发货 {$vo.numberno} &nbsp;<a href="{:U('Shipments/numberno',array('no'=>$vo['order_no']))}">查看物流</a></span>
+                                                    <case value="2"><span>已发货 {$vo.numberno} &nbsp;<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查看物流</a></span>
                                                     <if condition="$vo.expressimg neq '' ">                                                    
                                                         <div class="click" style="float: left;" data="/{$vo.expressimgs}">
                                                             <span> <img src="/{$vo.expressimg}" height="60"></span>
