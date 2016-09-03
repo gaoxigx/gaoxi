@@ -86,7 +86,6 @@ class ProductController extends CommonController {
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
             }
         }
-
         $this->getprotype();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -107,7 +106,6 @@ class ProductController extends CommonController {
 		$data['addtime'] = time();
 		$data['sortnum'] =I('inputnum');
 
-
 		$uploadimg = $this->uploadimg();
 		if($uploadimg['pic'] != ''){
 			$data['pic'] = $uploadimg['pic'];
@@ -124,9 +122,12 @@ class ProductController extends CommonController {
 		foreach ($quality as $k => $vo) {
 			$aryltmp=I('grade'.$k);
 			$arylm=I('money'.$k);
+			$weight=I('weight'.$k);			
 			foreach ($aryltmp as $key => $vl) {
-					$grade[$vo][$vl]=$arylm[$key];	
+				$tempary=array($arylm[$key],$weight[$key]);
+				$grade[$vo][$vl]=$tempary;	
 			}
+			unset($data['weight'.$k]);
 			unset($data['money'.$k]);
 			unset($data['grade'.$k]);
 		}
@@ -196,9 +197,13 @@ class ProductController extends CommonController {
 		foreach ($quality as $k => $vo) {
 			$aryltmp=I('grade'.$k);
 			$arylm=I('money'.$k);
+			$weight=I('weight'.$k);
+
 			foreach ($aryltmp as $key => $vl) {
-					$grade[$vo][$vl]=$arylm[$key];	
+					$tempary=array($arylm[$key],$weight[$key]);
+					$grade[$vo][$vl]=$tempary;	
 			}
+			unset($data['weight'.$k]);
 			unset($data['money'.$k]);
 			unset($data['grade'.$k]);
 		}
@@ -206,7 +211,6 @@ class ProductController extends CommonController {
 
 		$data['grade']=json_encode($grade);
 		$data['quality']=json_encode($quality);
-
 
 		//礼盒数据
 		$boxname=I('boxname');

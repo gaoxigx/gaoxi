@@ -13,6 +13,8 @@
 <script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
 <style>
     .fromadd{margin:0px; vertical-align: top; float: none;display: inline-block; line-height: 32px;width: 32px; overflow:hidden; height:32px; text-align: center; }
+    .frommin{margin-left:8px;display: inline-block; vertical-align:middle;}
+    .frommin img{width: 15px; height: 15px;}
     .fromadd img{padding-top: 5px;}
     .pzprice{margin-left: 86px;}
     .pzprice span{display: block;margin-top: 5px;}
@@ -181,7 +183,7 @@ $(document).ready(function(){
                         <li class="pzprice jl1">
                                 <p>
                                     <span>
-                                    <input name="grade0[]" placeholder="级别分类" v="0" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" v="0" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                    <input name="grade0[]" placeholder="级别分类" v="0" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" v="0" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:140px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                     </span>               
                                 </p>
                         </li>
@@ -271,7 +273,7 @@ $(document).ready(function(){
                  var pzhtml='<input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  />';
                 $(".pztext").append(pzhtml);
                 $(".pzprice p").hide();          
-                var pzhtml='<p><span><input name="grade'+nmb+'[]" v="'+nmb+'" placeholder="级别名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+nmb+'[]" v="'+nmb+'" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd jqbtn" id="jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b></p>';
+                var pzhtml='<p><span><input name="grade'+nmb+'[]" v="'+nmb+'" placeholder="级别名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+nmb+'[]" v="'+nmb+'" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight'+nmb+'[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:140px" value=""  /><b class="fromadd jqbtn" id="jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b></p>';
                 $(".pzprice").append(pzhtml);
             });
             $(document).on("click focus",".pzbtnt",function(){
@@ -282,9 +284,13 @@ $(document).ready(function(){
 
             $(document).on("click",".jqbtn",function(){
                 var vl=$(this).prev().attr("v");
-                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+vl+'[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
+                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+vl+'[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight'+vl+'[]" v="0" type="text" placeholder="分量 按两如：10两" class="dfinput" style="width:140px" value=""/><b class="frommin " id=""><img src="__PUBLIC__/Console/images/close.png" title="添加"></b></span>';
                 $(this).parent().append(jqbtn);
             });
+
+            $(document).on("click",".frommin",function(){
+                $(this).parent('span').remove();
+            })
 
             $(".lhbtn").on("click",function(){
                 var lhbtn='<span><input name="boxname[]" placeholder="礼盒名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
