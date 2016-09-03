@@ -470,8 +470,11 @@ class OrderController extends CommonController {
 					'order_no'=>$data["order_no"],
 					'addtime'=>time(),                
 					);
+			
 					$arm=explode('-',$v['money']);
 					$tlm=$arm[0]>$arm[1]?$tlm+$arm[1]:$tlm+$arm[0];
+					
+					
 				}
 
 

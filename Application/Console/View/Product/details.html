@@ -68,20 +68,20 @@
             <foreach name="data['grade']" item="vo">                
                 <p class="grade" style="display:none;">
                 <foreach name="vo"  item="vl">
-                    <span class="pzblock zjt" vl="{$vl}" >
+                    <span class="pzblock zjt" vl="<php>echo is_array($vl)?$vl[0]:$vl;</php>" >
                     <u> {$key}</u>
                     </span>
                 </foreach>
                 </p>
             </foreach>        
-        </li>
+        </li>   
         <li class="jy"><label>参考售价：</label>          
             <p class="box" style="display:none;" >                
                 <span class="jinye" style="display:none;">
-                    <u>
+                    <u>   
                     <foreach name="data['grade']" item="vo">
-                        <foreach name="vo"  item="vl">
-                            ￥{$vl}.00 
+                        <foreach name="vo"  item="vl">     
+                            ￥<php>echo is_array($vl)?$vl[0]:$vl;</php>.00                             
                         </foreach>
                     </foreach>     
                     </u>
@@ -110,7 +110,7 @@
 
     $('#qualityf').val($('.qzinfo p:first u').text());
     $('#gradef').val($('.zj p span:first u').text());
-    $('#moneyf').val($('zj p span:first').attr('vl'));
+    $('#moneyf').val($('.zj span:first').attr('vl'));  
 
     $('.jy p:first').show();
     $('.jy .box span:first').show();
