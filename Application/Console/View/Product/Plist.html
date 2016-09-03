@@ -73,7 +73,7 @@ $(document).ready(function(){
 					<th  width="140px" class="imgtd">图片</th>
 					<th >产品名称</th>
 					
-					<th><label>类别<b></b></label> 
+					<th><label>库存<b></b></label> 
 					</th>
 <!--					<th>产品等级</th>-->
 <!--					<th>最低折扣</th>-->
@@ -89,18 +89,19 @@ $(document).ready(function(){
 						<td>{$vo.id}</td>
 						<td >
 							<div class="click"  style="float: left;" data="{$vo.pic}">
-								<span> <img src="{$vo.pic1}" height=100></span>
+								<span> <img src="{$vo.pic1}" height="80	"></span>
 							</div>
 						</td>
 
 						<td>
 							<a href="{:U('Product/examine',array('id'=>$vo['id']))}" >{$vo.product}</a>
 							<p>{$vo.addtime|date='Y-m-d',###}</p>
-							<p>库存:{$vo['sortnum']-$vo['salenum']}</p>									
+							<p>分类：{$vo.protype|Getprotypename=###}</p>
+													
 						</td>
 						
-						<td>{$vo.protype|Getprotypename=###}
-						
+						<td>
+							{$vo['sortnum']-$vo['salenum']}
 						</td>
 <!--						<td>{$vo.price2}</td>-->
                                                 

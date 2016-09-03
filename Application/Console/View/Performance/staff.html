@@ -122,6 +122,12 @@
     <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
     <script src="__PUBLIC__/Console/js/Chart.js-master/dist/Chart.bundle.js"></script>
 	<script>
+    var td=new Date().Format("yyyy-MM-dd");
+
+    alert(td.getFullYear());
+    var t=32-new Data(td.getYear(),td.getMonth(),32).getData();
+
+    alert(t);
 		$(function(){
 			$('.left_staff_menu .out_li:first').addClass('unfold');
 			$('.left_staff_menu .out_li:first .staff_list').show();
@@ -332,9 +338,14 @@
 			var html_th = '<thead><tr>';
 			var html_val = '<tbody><tr>';
 			
-			var str = '时';
+			var str = '日';
 			var labelset = [];
+            var mydate = new Date();
+           
+ 
+
 			var labels_length = 24;
+            
 			if(datalist['total_ruleid'] == 2){
 				str = '月';
 				labels_length = 12;
@@ -343,8 +354,9 @@
 				str = '年';
 				labels_length = 3;
 			}
+            
 			
-			var mydate = new Date();
+			
 			var year = mydate.getFullYear();
 			
 			for (var index = 1; index <= labels_length; ++index) {
@@ -496,6 +508,8 @@
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myLine = new Chart(ctx, config);
     };    
+
+
     </script>
 
     <script type="text/javascript">

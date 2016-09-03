@@ -177,7 +177,7 @@ class ShipmentsController extends CommonController {
              $kd->setLogisticCode($no);
              $sul=$kd->getOrderTracesByJson();        
              $result=json_decode($sul,true)  ;          
-//            var_dump($result);
+         
 		// $this->$this->display(??)
             $this->assign('data',$result);
             $this->display('kuaidi');
