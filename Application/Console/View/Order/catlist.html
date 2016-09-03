@@ -58,7 +58,7 @@ $(function(){
     <li class="selected">
     <span style="overflow:hidden;"><a href="{:U('Product/details',array('id'=>$vo['id']))}"><img src="{$vo.pic1}" /></a></span>
     <h2><a href="{:U('Product/details',array('id'=>$vo.id))}">{$vo.product}</a></h2>
-    <p><a href="{:U('Product/edit',array('id'=>$vo['id']))}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)">数量:{$vo.discount}</a></p>
+    <p><a href="{:U('Product/edit',array('id'=>$vo['id']))}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)">销量:{$vo.salenum}</a></p>
     </li>
     </volist>
 
