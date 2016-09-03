@@ -25,6 +25,22 @@ class ProductController extends CommonController {
         }
     }
 
+    
+   //添加产品类别 
+    public function getaddclass(){
+      $data   =   D('protype');
+        if($data->create()) {
+            $result =   $data->add();
+            if($result) {
+               $this->success('新增成功', '../Product/classes');
+            }else{
+                $this->error('数据添加错误！');
+            }
+        }else{
+            $this->error($data->getError());
+        }
+    }
+    
     public function details(){
     	$proid=I('id');
     	$map['id']=$proid;
@@ -99,6 +115,7 @@ class ProductController extends CommonController {
         $this->assign('list',$list);
         $this->display();
     }
+    
 
 	//插入数据
 	public function insert(){
@@ -282,6 +299,27 @@ class ProductController extends CommonController {
 			$this->error('数据删除错误！');
 		}
     }
+    
+    
+     //删除产品分类
+    public function deletept(){
+        $id=i('id');
+        $controller   =   M('Product');
+        
+        $data =  $controller->where('protype=%d',$id)->find();
+        if($data ){
+            $this->error('分类里面有产品，不允许删除！');
+            exit();
+        }
+        $classes = M('protype');
+        $result = $classes->delete($id);
+        if($result) {
+                  $this->success('数据删除成功！');
+         }else{
+                  $this->error('数据删除错误！');
+          }
+
+    }
 
     public function examine(){
 		$id = I('id');
@@ -298,4 +336,47 @@ class ProductController extends CommonController {
         }
         $this->display();        
     }
+    
+    
+    //产品分类
+    public function classes(){
+        $product_name = i('product_name');
+		$protype=I('protype');
+		
+		if($protype){
+            $map['protype']  =$protype;
+			$parameter['protype'] = $protype;
+        }
+		
+		if($product_name){
+            $map['product']  = array('like','%'.trim($product_name).'%');
+			$parameter['product_name'] = $product_name;
+        }
+        
+        foreach( $map as $k=>$v){  
+            if( !$v )  
+                unset( $arr[$k] );  
+        }   
+
+        $User = M('protype'); // 实例化User对象
+        $count = $User->where($map)->count();// 查询满足要求的总记录数
+		
+        $Page = new \Think\Page($count,20,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+       
+        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('typename desc')->select();
+//        var_dump($list);exit();
+        foreach($list as $key=>$val){
+            if($val['purchaseper'] >0){
+                $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
+                $list[$key]['purchaseper_name'] = $purchaseper_name;
+            }
+        }
+
+        $this->getprotype();
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+    
 }
