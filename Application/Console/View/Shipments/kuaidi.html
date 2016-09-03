@@ -33,7 +33,7 @@
 
                 <div id="tab1" class="tabson">
 
-                    <div class="formtext"><b style="color:#38B1B9;size:18px;">物流状态：运输中</b></div>
+                    <div class="formtext"><b style="color:#38B1B9;font-size:18px;">物流状态：运输中</b></div>
                     <table style="margin-left:25px">                        
                         <tr>
                             <td style="height:20px;padding:5px;">
@@ -47,10 +47,11 @@
                             <td style="height:20px;padding:5px 50px 5px 5px;">
                                 <volist name="data" id="vo1">                                  
                                         <volist name="vo1" id="vo2">
-                                            <b style="color:#4ebc30; size: 16px;">{$vo2.AcceptStation}</b><br/>
-                                            <b style="size: 14px;">{$vo2.AcceptTime}</b><br/>
-                                                
+                                            <b style="font-size: 14px; line-height:24px; font-weight: normal; ">{$vo2.AcceptTime}</b><br/>
+                                            <b style="color:#4ebc30; font-size: 16px;line-height:50px; font-weight: normal;  border-bottom:1px solid #eee; display:block;">{$vo2.AcceptStation}</b><br/>
+                                                                                            
                                         </volist>
+
                                 </volist>
                             </td>  
                         </tr>
