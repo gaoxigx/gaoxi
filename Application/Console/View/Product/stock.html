@@ -173,7 +173,7 @@ $(document).ready(function(){
                             <option value="2">铁观音</option>
                             <option value="3">白茶</option>
                         </select></li>                        
-                         <li class="jl1" ><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                         <li class="jl1" ><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}" readonly="true" /></foreach></p></span><p>
                         </li>
                         <li class="pzprice jl1">
                        <php> <literal>$numbary=0</literal></php>
@@ -181,7 +181,7 @@ $(document).ready(function(){
                             <p> 
                             <foreach name="vol" item="vl">                                 
                                     <span>
-                                        <input name="grade{$numbary}[]" v="{$numbary}" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="money{$numbary}[]" type="text" v="{$numbary}" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>"/><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:100px" value="<php>echo is_array($vl)?$vl[1]:0;</php>"  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                        <input name="grade{$numbary}[]" v="{$numbary}" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value="{$key}" readonly="true" /><input readonly="true" name="money{$numbary}[]" type="text" v="{$numbary}" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>" readonly="true"/><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:100px" value="<php>echo is_array($vl)?$vl[1]:0;</php>"  />(进货数量)</b>
                                     </span>                                              
                             </foreach>
                              <php> <literal>$numbary++</literal></php>
@@ -192,7 +192,7 @@ $(document).ready(function(){
                             <php>$tnmb=0</php>
                             <foreach name="data['box']" item="vl">
                                 <if condition="tnmb eq 0">
-                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                    <input name="boxname[]" placeholder="包装名称" readonly="true" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                 <else/>
                                     <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  />
                                 </if>
