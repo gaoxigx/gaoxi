@@ -236,52 +236,40 @@ class ProductController extends CommonController {
 		if(IS_POST){					
 			$id = I('id');
 	        $quality=I('quality');
-			foreach ($quality as $k => $vo) {
-				$aryltmp=I('grade'.$k);
-				$arylm=I('money'.$k);
-				$weight=I('weight'.$k);
-
-				foreach ($aryltmp as $key => $vl) {
-						$tempary=array($arylm[$key],$weight[$key]);
-						$grade[$vo][$vl]=$tempary;	
-				}
-				unset($data['weight'.$k]);
-				unset($data['money'.$k]);
-				unset($data['grade'.$k]);
-			}
-			unset($data['quality'.$k]);
-
 			
-			$data['stock']=json_encode($quality);
-			//礼盒数据
-			$boxname=I('boxname');
-			$boxvl=I('boxvl');
-			foreach ($boxname as $k => $vo) {
-				$box[$vo]=$boxvl[$k];	
+	        $proid=I('proid');
+	        $purchaseper=I('purchaseper');
+	        $storck=I('storck');	        
+	        $storckname=I('storckname');	        
+
+
+
+			$stock=D('stock');
+			foreach($storckname as $key=>$vl){
+				$param['proid']=$proid;
+				$param['storck']=$storck[$key];
+				$param['storckname']=$vl;
+				$param['createtime']=time();
+				$param['purchaseper']=$purchaseper;
+				$param['status']=1;
+				$data[]=$param;
 			}
-			unset($data['boxname']);
-			unset($data['boxvl']);			
-			$data['proid']=$id;
-			$data['createtime']=time();
-			$data['purchaseper']=I('purchaseper');
-			
-			$roleList   =   D('stock');
-			$jumpUrl =U('Console/Product/Plist');
-			if($roleList->create()) {
-				$result = $roleList->where('id=%d',array($id))->add($data);
+
+			if($data){
+				$result = $stock->addAll($data);
 				if($result) {
-					$this->success('增加dnal成功！',$jumpUrl);
+					$this->success('增加成功！',U('Console/Product/aple'));
 				}else{
 					$this->error('写入错误！');
 				}
 			}else{
-				$this->error($roleList->getError());
+				$this->error($stock->getError());
 			}
 			exit();	
 	
 		}
 		$this->getprotype();
-		$controller = D('product');
+		
 		//读取数据
 		
 		$data['quality']=json_decode($data['quality'],true);
@@ -291,15 +279,11 @@ class ProductController extends CommonController {
 		$kind=M('kind')->select();
 		$this->assign('kind',$kind);
 
+		$controller = D('product');
+		$quality = $controller->where("atrtype=%d",$id)->getField('quality');
+		$quality=json_decode($quality,true);
 
-		$quality = $controller->where("id=%d",$id)->getField('quality');
-		
-		if($quality){
-			$this->assign('stock',json_encode($quality));
-			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
-		}elseif($id){
-			$this->error('数据错误');
-		}    
+		$this->assign('stock',$quality);
 		$this->assign('list',$list);
 		$this->display();
 	}

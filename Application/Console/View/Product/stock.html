@@ -156,7 +156,7 @@ $(document).ready(function(){
                     <div class="formtext">请正确填写发布信息！</div>
                     <input type="hidden" name ="id"   value="{$data.id}"/>
 					<ul class="forminfo">
-                        <li><label>产品</label><select id="proparent" name="proparent" type='text' class="sciselect">
+                        <li><label>产品</label><select id="proparent" name="proid" type='text' class="sciselect">
                             <voList name="kind"  id="kv">
                                 <option value="{$kv.id}">{$kv.kindname}</option>
                             </volist>
@@ -165,9 +165,12 @@ $(document).ready(function(){
                                      
                         <li class="lhcl"><label>进货数<b>*</b></label>
                             <php>$tnmb=0</php>
-                            <foreach name="stock" item="vl">                          
-                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  />  
-                            <endforeach>
+
+                            <volist name="stock" id="vl">    
+                            <span>                      
+                                    <input name="storckname[]" placeholder="品质" style="width:100px" type="text" class="dfinput" value="{$vl}" readonly="readonly"/><input name="storck[]" type="text" placeholder="进货数" class="dfinput" style="width:240px" value=""  />  
+                            </span>
+                            </volist>
                         </li> 
                         <li class="jhmoney" style="display:none"><label>&nbsp;</label><input name="money" type="text" class="dfinput" value=""  placeholder="金额"  /></li>
 
