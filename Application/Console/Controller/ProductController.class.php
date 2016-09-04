@@ -226,6 +226,8 @@ class ProductController extends CommonController {
 		}elseif($id){
 			$this->error('数据错误');
 		}    
+		$kind=M('kind')->select();
+		$this->assign('kind',$kind);
 		$this->assign('list',$list);
 		$this->display();
 	}
@@ -261,6 +263,7 @@ class ProductController extends CommonController {
 			unset($data['boxvl']);			
 			$data['proid']=$id;
 			$data['createtime']=time();
+			$data['purchaseper']=I('purchaseper');
 			
 			$roleList   =   D('stock');
 			$jumpUrl =U('Console/Product/Plist');
@@ -280,13 +283,19 @@ class ProductController extends CommonController {
 		$this->getprotype();
 		$controller = D('product');
 		//读取数据
-		$data = $controller->find($id);
+		
 		$data['quality']=json_decode($data['quality'],true);
 		$data['grade']=json_decode($data['grade'],true);
 		$data['box']=json_decode($data['box'],true);
 		
-		if($data){
-			$this->assign('data',$data);
+		$kind=M('kind')->select();
+		$this->assign('kind',$kind);
+
+
+		$quality = $controller->where("id=%d",$id)->getField('quality');
+		
+		if($quality){
+			$this->assign('stock',json_encode($quality));
 			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
 		}elseif($id){
 			$this->error('数据错误');
