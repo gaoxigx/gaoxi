@@ -11,6 +11,18 @@ class ProductController extends CommonController {
         $this->assign('protype',$name);
 
     }
+    
+    //产品类型
+    private function getkind(){
+        $data=D('kind');
+        $kind = $data->where('kindname<>""')->order('id desc')->select();
+       
+        $this->assign('kind',$kind);
+
+    }
+    
+    
+    
     public function getaddtype(){
       $data   =   D('protype');
         if($data->create()) {
@@ -40,6 +52,23 @@ class ProductController extends CommonController {
             $this->error($data->getError());
         }
     }
+    
+    
+    //添加产品类型
+    public function getaddaple(){
+      $data   =   D('kind');
+        if($data->create()) {
+            $result =   $data->add();
+            if($result) {
+               $this->success('新增成功', '../Product/aple');
+            }else{
+                $this->error('数据添加错误！');
+            }
+        }else{
+            $this->error($data->getError());
+        }
+    }
+    
     
     public function details(){
     	$proid=I('id');
@@ -103,6 +132,7 @@ class ProductController extends CommonController {
             }
         }
         $this->getprotype();
+        $this->getkind();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
@@ -110,8 +140,11 @@ class ProductController extends CommonController {
 	
 	//添加产品
     public function add(){
+        $this->getkind();
         $this->getprotype();         
         $list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
+//        $kind = M('kind')->field('id,kindname')->select();
+//        $this->assign('kind',$kind);
         $this->assign('list',$list);
         $this->display();
     }
@@ -355,7 +388,7 @@ class ProductController extends CommonController {
  //删除数据
     public function delete(){
 		$id=i('id');
-        $role = M('product');
+        $role = M('Product');
         $result = $role->delete($id);
 
          if($result) {
@@ -385,6 +418,28 @@ class ProductController extends CommonController {
           }
 
     }
+    
+    
+     //删除产品类型
+    public function deleteap(){
+        $id=i('id');
+        $product=('product');
+        $conaple  =   M('Product');
+        
+        $data =  $conaple->where('product=%d',$product)->find();
+        if($data ){
+            $this->error('类型里面有产品，不允许删除！');
+            exit();
+        }
+        $classes = M('kind');
+        $result = $classes->delete($id);
+        if($result) {
+                  $this->success('数据删除成功！');
+         }else{
+                  $this->error('数据删除错误！');
+          }
+
+    }
 
     public function examine(){
 		$id = I('id');
@@ -405,6 +460,15 @@ class ProductController extends CommonController {
     
     //产品分类
     public function classes(){
+        
+        $username = I('username');
+
+        if($username){
+                $map1['typename`']  = array('like','%'.trim($username).'%'); 
+                $map1['_logic'] = 'OR';
+                $map['_complex'] = $map1;
+        }
+
         $product_name = i('product_name');
 		$protype=I('protype');
 		
@@ -439,6 +503,50 @@ class ProductController extends CommonController {
         }
 
         $this->getprotype();
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display(); // 输出模板
+    }
+    
+    
+
+    //产品类型
+    public function aple(){
+        $product_name = i('product_name');
+		$kind=I('kind');
+		
+		if($kind){
+            $map['kind']  =$kind;
+			$parameter['kind'] = $kind;
+        }
+		
+		if($product_name){
+            $map['product']  = array('like','%'.trim($product_name).'%');
+			$parameter['product_name'] = $product_name;
+        }
+        
+        foreach( $map as $k=>$v){  
+            if( !$v )  
+                unset( $arr[$k] );  
+        }   
+
+        $User = M('kind'); // 实例化User对象
+        $count = $User->where($map)->count();// 查询满足要求的总记录数
+		
+        $Page = new \Think\Page($count,20,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+       
+        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('kindname desc')->select();
+//        var_dump($list);exit();
+        foreach($list as $key=>$val){
+            if($val['purchaseper'] >0){
+                $purchaseper_name = D('kind')->where('id='.$val['purchaseper'])->getField('kindname');
+                $list[$key]['purchaseper_name'] = $purchaseper_name;
+            }
+        }
+
+        $this->getprotype();
+        $this->getkind();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
         $this->display(); // 输出模板
