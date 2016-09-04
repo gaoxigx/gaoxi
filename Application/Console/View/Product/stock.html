@@ -165,13 +165,8 @@ $(document).ready(function(){
                                      
                         <li class="lhcl"><label>进货数<b>*</b></label>
                             <php>$tnmb=0</php>
-                            <foreach name="stock" item="vl">
-                                <if condition="tnmb eq 0">
-                                    <input name="boxname[]" placeholder="包装名称" readonly="true" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
-                                <else/>
-                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  />
-                                </if>
-                                <php>$tnmb++</php>
+                            <foreach name="stock" item="vl">                          
+                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  />  
                             <endforeach>
                         </li> 
                         <li class="jhmoney" style="display:none"><label>&nbsp;</label><input name="money" type="text" class="dfinput" value=""  placeholder="金额"  /></li>

@@ -161,7 +161,7 @@ $(document).ready(function(){
 
                                 <select name="protype" class="uew-select-value" autocomplete="off">
                                     <volist name="protype" id="voo">
-                                        <option value="{$voo.id}" <if condition="$vo['id'] eq $data['protype']">selected="selected"</if>>{$voo.typename}</option>
+                                        <option value="{$voo.id}" <if condition="$voo['id'] eq $data['protype']">selected="selected"</if>>{$voo.typename}</option>
                                     </volist>
                                 </select>
                             </div>
