@@ -158,13 +158,23 @@ $(document).ready(function(){
 					<ul class="forminfo">
                         <li><label>类别<b>*</b></label>  
                             <div class="vocation uew-select">
+
                                 <select name="protype" class="uew-select-value" autocomplete="off">
                                     <volist name="protype" id="voo">
-                                        <option value="{$voo.id}" <if condition="$voo.id == $data['protype']">selected="selected"</if>>{$voo.typename}</option>
+                                        <option value="{$voo.id}" <if condition="$vo['id'] eq $data['protype']">selected="selected"</if>>{$voo.typename}</option>
                                     </volist>
                                 </select>
                             </div>
                             <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
+                        </li>
+                          <li><label>类型<b>*</b></label>  
+                            <div class="vocation uew-select">
+                                <select name="atrtype" class="uew-select-value">
+                                    <volist name="kind" id="vo2">
+                                            <option <if condition="$vo2['id'] eq $data['atrtype']">selected="selected"</if> value="{$vo2.id}">{$vo2.kindname}</option>
+                                    </volist>
+                                </select>
+                            </div>
                         </li>
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value="{$data.product}"  /></li>
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>

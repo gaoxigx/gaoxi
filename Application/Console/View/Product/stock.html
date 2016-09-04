@@ -157,30 +157,15 @@ $(document).ready(function(){
                     <input type="hidden" name ="id"   value="{$data.id}"/>
 					<ul class="forminfo">
                         <li><label>产品</label><select id="proparent" name="proparent" type='text' class="sciselect">
-                            <option value="0">大红袍</option>
-                            <option value="1">金骏眉</option>
-                            <option value="2">铁观音</option>
-                            <option value="3">白茶</option>
+                            <voList name="kind"  id="kv">
+                                <option value="{$kv.id}">{$kv.kindname}</option>
+                            </volist>
                         </select></li>   
                         <li><label>采购人</label><input name="purchaseper" type="text" class="dfinput" value=""  /></li>                                              
-                         <li class="jl1" ><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}" readonly="true" /></foreach></p></span><p>
-                        </li>
-                        <li class="pzprice jl1">
-                       <php> <literal>$numbary=0</literal></php>
-                        <foreach name="data['grade']"  item="vol"> 
-                            <p> 
-                            <foreach name="vol" item="vl">                                 
-                                    <span>
-                                        <input name="grade{$numbary}[]" v="{$numbary}" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value="{$key}" readonly="true" /><input readonly="true" name="money{$numbary}[]" type="text" v="{$numbary}" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>" readonly="true"/><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:100px" value="<php>echo is_array($vl)?$vl[1]:0;</php>"  />(进货数量)</b>
-                                    </span>                                              
-                            </foreach>
-                             <php> <literal>$numbary++</literal></php>
-                             </p>                           
-                        </foreach>
-                        </li>                        
-                        <li class="lhcl" style="display:none"><label>&nbsp;&nbsp;<b>*</b></label>
+                                     
+                        <li class="lhcl"><label>进货数<b>*</b></label>
                             <php>$tnmb=0</php>
-                            <foreach name="data['box']" item="vl">
+                            <foreach name="stock" item="vl">
                                 <if condition="tnmb eq 0">
                                     <input name="boxname[]" placeholder="包装名称" readonly="true" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                 <else/>
