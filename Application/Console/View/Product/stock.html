@@ -156,17 +156,6 @@ $(document).ready(function(){
                     <div class="formtext">请正确填写发布信息！</div>
                     <input type="hidden" name ="id"   value="{$data.id}"/>
 					<ul class="forminfo">
-                        <li><label>类别<b>*</b></label>  
-                            <div class="vocation uew-select">                   
-                                    <volist name="protype" id="voo">
-                                       <if condition="$voo.id == $data['protype']">{$voo.typename}</if>
-                                    </volist>
-                            
-                            </div>
-                            <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
-                        </li>
-                        <li><label>产品名称<b>*</b></label>{$data.product}</li>                     
-                        <li><label>图片预览</label><img src="{$data.pic1}"></li>
                         <li><label>产品</label><select id="proparent" name="proparent" type='text' class="sciselect">
                             <option value="0">大红袍</option>
                             <option value="1">金骏眉</option>
