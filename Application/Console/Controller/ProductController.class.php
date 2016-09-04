@@ -197,6 +197,71 @@ class ProductController extends CommonController {
 		$this->display();
 	}
 
+	public function stock($id=0){
+		if(IS_POST){					
+			$id = I('id');
+	        $quality=I('quality');
+			foreach ($quality as $k => $vo) {
+				$aryltmp=I('grade'.$k);
+				$arylm=I('money'.$k);
+				$weight=I('weight'.$k);
+
+				foreach ($aryltmp as $key => $vl) {
+						$tempary=array($arylm[$key],$weight[$key]);
+						$grade[$vo][$vl]=$tempary;	
+				}
+				unset($data['weight'.$k]);
+				unset($data['money'.$k]);
+				unset($data['grade'.$k]);
+			}
+			unset($data['quality'.$k]);
+
+			
+			$data['stock']=json_encode($quality);
+			//礼盒数据
+			$boxname=I('boxname');
+			$boxvl=I('boxvl');
+			foreach ($boxname as $k => $vo) {
+				$box[$vo]=$boxvl[$k];	
+			}
+			unset($data['boxname']);
+			unset($data['boxvl']);			
+			$data['proid']=$id;
+			$data['createtime']=time();
+			
+			$roleList   =   D('stock');
+			$jumpUrl =U('Console/Product/Plist');
+			if($roleList->create()) {
+				$result = $roleList->where('id=%d',array($id))->add($data);
+				if($result) {
+					$this->success('增加dnal成功！',$jumpUrl);
+				}else{
+					$this->error('写入错误！');
+				}
+			}else{
+				$this->error($roleList->getError());
+			}
+			exit();	
+	
+		}
+		$this->getprotype();
+		$controller = D('product');
+		//读取数据
+		$data = $controller->find($id);
+		$data['quality']=json_decode($data['quality'],true);
+		$data['grade']=json_decode($data['grade'],true);
+		$data['box']=json_decode($data['box'],true);
+		
+		if($data){
+			$this->assign('data',$data);
+			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
+		}elseif($id){
+			$this->error('数据错误');
+		}    
+		$this->assign('list',$list);
+		$this->display();
+	}
+
     
 	//更新数据
     public function update(){
@@ -210,7 +275,7 @@ class ProductController extends CommonController {
 			$data['pic1'] = $uploadimg['pic1'];
 		}
                 
-                $quality=I('quality');
+        $quality=I('quality');
 		foreach ($quality as $k => $vo) {
 			$aryltmp=I('grade'.$k);
 			$arylm=I('money'.$k);
