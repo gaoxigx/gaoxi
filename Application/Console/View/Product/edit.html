@@ -178,7 +178,7 @@ $(document).ready(function(){
                             <p> 
                             <foreach name="vol" item="vl">                                 
                                     <span>
-                                        <input name="grade{$numbary}[]" v="{$numbary}" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="money{$numbary}[]" type="text" v="{$numbary}" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>"/><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:100px" value="<php>echo is_array($vl)?$vl[1]:0;</php>"  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                        <input name="grade{$numbary}[]" v="{$numbary}" placeholder="级别分类" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="money{$numbary}[]" type="text" v="{$numbary}" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>"/><input name="weight{$numbary}[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:100px" value="<php>echo is_array($vl)?$vl[1]:0;</php>"  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                     </span>                                              
                             </foreach>
                              <php> <literal>$numbary++</literal></php>

@@ -228,6 +228,7 @@ class ProductController extends CommonController {
 			unset($data['boxvl']);			
 			$data['proid']=$id;
 			$data['createtime']=time();
+			$data['purchaseper']=I('purchaseper');
 			
 			$roleList   =   D('stock');
 			$jumpUrl =U('Console/Product/Plist');
