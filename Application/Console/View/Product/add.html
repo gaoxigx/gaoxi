@@ -163,7 +163,7 @@ $(document).ready(function(){
                 <form name="form1" id="form1" enctype="multipart/form-data" method='post' action="__URL__/insert">
                     <div class="formtext">请正确填写发布信息！</div>
                     <ul class="forminfo">
-                        <li><label>类别<b>*</b></label>  
+                        <li><label>分类<b>*</b></label>  
                             <div class="vocation uew-select">
                                 <select name="protype" class="uew-select-value">
                                     <volist name="protype" id="voo">
@@ -172,6 +172,15 @@ $(document).ready(function(){
                                 </select>
                             </div>
                             <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
+                        </li>
+                        <li><label>类型<b>*</b></label>  
+                            <div class="vocation uew-select">
+                                <select name="kind" class="uew-select-value">
+                                    <volist name="kind" id="vo2">
+                                            <option value="{$vo2.id}">{$vo2.kindname}</option>
+                                    </volist>
+                                </select>
+                            </div>
                         </li>
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value=""  /></li>
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
