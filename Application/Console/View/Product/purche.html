@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+</head>
+
+
+<body>
+
+<div class="formbody">
+    
+    
+    <div class="usual" id="usual1"> 
+    
+    <div class="itab">
+  	<ul> 
+            <li><a href="#tab2" class="selected">进货详情</a></li> 
+  	</ul>
+    </div> 
+       
+    <div class="tabson" id="tab2" style="display: block;">
+   
+        <ul class="seachform">
+            <li><label></label><input type="text" class="scinput" name=""></li>
+            <li><label>&nbsp;</label><input type="button" value="查询" class="scbtn" name=""></li>
+        </ul>
+
+    
+    <table class="tablelist">
+        <thead>
+            <tr>
+                <th style="width:10%;">ID</th>
+                <th style="width:15%;">产品类型</th>
+                <th style="width:15%;">品质</th>
+                <th style="width:15%;">采购人</th>
+                <th style="width:15%;">进货数量</th>
+                <th style="width:20%;">采购时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="vo">
+                <tr>
+                    <td>{$vo.id}</td>                   
+                    <td>{$vo.kindname}</td>  
+                    <td><b style="color:#077ee3;">{$vo.storckname}</b></td>
+                    <td>{$vo.purchaseper}</td>
+                    <td>{$vo.storck}</td>
+                    <td>{$vo.createtime|date='Y-m-d',###}</td>
+                    <td>
+<!--                        <a href="__URL__/editxg/id/{$vo.id}"  class="tablelink">修改</a> -->
+                        <a href="__URL__/deletecp/id/{$vo.id}"  class="tablelink"> 删除</a>
+<!--                        <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>-->          
+                    </td>
+                </tr> 
+            </volist>
+        </tbody>
+    </table>
+    
+   
+  
+    
+    </div>  
+       
+	</div> 
+ 
+	<script type="text/javascript"> 
+      $("#usual1 ul").idTabs(); 
+    </script>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+    
+    
+    
+    
+    
+    </div>
+</body>
+
+</html>

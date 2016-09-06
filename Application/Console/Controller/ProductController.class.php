@@ -545,4 +545,38 @@ class ProductController extends CommonController {
         $this->display(); // 输出模板
     }
     
+    
+    //进货列表
+    public function purche(){
+        $stock = M('stock');
+        
+        $list = $stock->limit(20)->where('status=1')->select();
+        
+        foreach($list as $key=>$val){
+            if($val['proid']>0){
+                $kind = D('kind')->where('id='.$val['proid'])->getField('kindname');
+                $list[$key]['kindname'] = $kind;
+            }    
+        }
+
+        $this->assign('list',$list);
+        $this->display();
+    }
+    
+
+     //删除进货产品
+    public function deletecp(){
+        $id=i('id');
+        $stock  =   M('stock');
+
+        $result = $stock->where('id=%d',$id)->save(array('status'=>2));
+        if($result) {
+                  $this->success('数据删除成功！');
+         }else{
+                  $this->error('数据删除错误！');
+          }
+
+    }
+    
+    
 }
