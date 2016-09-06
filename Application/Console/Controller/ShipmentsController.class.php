@@ -264,6 +264,7 @@ class ShipmentsController extends CommonController {
 		$username = I('username');
 
 		if($username){
+                        $map1['id'] =  array('like','%'.trim($username).'%');
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
@@ -309,7 +310,7 @@ class ShipmentsController extends CommonController {
 	  
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $User->where($map)->order('id ')->limit($Page->firstRow.','.$Page->listRows)->select();	
+		$list = $User->where($map)->order('id desc ')->limit($Page->firstRow.','.$Page->listRows)->select();	
 	
 		$staff=D('staff')->getfield('id,name',true);
 		$catdata=D('Category')->categoryone();      
@@ -326,6 +327,7 @@ class ShipmentsController extends CommonController {
 		$username = I('username');
 
 		if($username){
+			$map1['id']  = array('like','%'.trim($username).'%'); 
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');

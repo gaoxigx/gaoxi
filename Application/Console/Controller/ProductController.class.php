@@ -100,7 +100,7 @@ class ProductController extends CommonController {
     
     //产品列表
     public function Plist($name=''){
-        $product_name = i('product_name');
+        $product_name = I('product_name');
 		$protype=I('protype');
 		
 		if($protype){
@@ -109,8 +109,10 @@ class ProductController extends CommonController {
         }
 		
 		if($product_name){
-            $map['product']  = array('like','%'.trim($product_name).'%');
-			$parameter['product_name'] = $product_name;
+            $map1['id']  = array('like','%'.trim($product_name).'%');
+            $map1['product']  = array('like','%'.trim($product_name).'%');
+            $map1['_logic'] = 'OR';
+            $map['_complex'] = $map1;
         }
         
         foreach( $map as $k=>$v){  
@@ -453,26 +455,23 @@ class ProductController extends CommonController {
     
     //产品分类
     public function classes(){
-        
-        $username = I('username');
-
-        if($username){
-                $map1['typename`']  = array('like','%'.trim($username).'%'); 
+   
+        $protype=I('protype');
+        if($protype){
+                $map1['id']  = trim($protype);//array('like',"%".."%"); 
+                $map1['typename'] =  array('like','%'.trim($protype).'%');
                 $map1['_logic'] = 'OR';
                 $map['_complex'] = $map1;
         }
-
-        $product_name = i('product_name');
-		$protype=I('protype');
 		
-		if($protype){
-            $map['protype']  =$protype;
-			$parameter['protype'] = $protype;
-        }
-		
-		if($product_name){
-            $map['product']  = array('like','%'.trim($product_name).'%');
-			$parameter['product_name'] = $product_name;
+        if($user_id > 0 ){
+        //	$where['id']=session("userid");
+                $where['accounts']=session("username");
+                $count=M('controller')->where($where)->count();
+                if($count<=0){
+                        $user=D('Staff')->getthislevel();
+                        $map['agent']  = array('in',implode(',',$user));
+                }
         }
         
         foreach( $map as $k=>$v){  
@@ -482,7 +481,7 @@ class ProductController extends CommonController {
 
         $User = M('protype'); // 实例化User对象
         $count = $User->where($map)->count();// 查询满足要求的总记录数
-		
+   
         $Page = new \Think\Page($count,20,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
        
@@ -505,18 +504,25 @@ class ProductController extends CommonController {
 
     //产品类型
     public function aple(){
+        
+        $product_name = I('product_name');
+
+        if($product_name){
+                $map1['id'] =  array('like','%'.trim($product_name).'%');
+                $map1['kindname']  = array('like','%'.trim($product_name).'%'); 
+                $map1['_logic'] = 'OR';
+                $map['_complex'] = $map1;
+        }
+        
+        
         $product_name = i('product_name');
 		$kind=I('kind');
 		
-		if($kind){
+        if($kind){
             $map['kind']  =$kind;
-			$parameter['kind'] = $kind;
+                    $parameter['kind'] = $kind;
         }
-		
-		if($product_name){
-            $map['product']  = array('like','%'.trim($product_name).'%');
-			$parameter['product_name'] = $product_name;
-        }
+
         
         foreach( $map as $k=>$v){  
             if( !$v )  
@@ -548,17 +554,62 @@ class ProductController extends CommonController {
     
     //进货列表
     public function purche(){
-        $stock = M('stock');
         
-        $list = $stock->limit(20)->where('status=1')->select();
+        $username = I('username');
+
         
+        if($username){
+                $map1['id'] = trim($username);
+                $map1['purchaseper'] =  array('like','%'.trim($username).'%');
+                $map1['storckname'] =  array('like','%'.trim($username).'%');
+                $map1['_logic'] = 'OR';
+                $map['_complex'] = $map1;
+        }
+
+
+        if($user_id > 0 ){
+        //	$where['id']=session("userid");
+                $where['accounts']=session("username");
+                $count=M('controller')->where($where)->count();
+                if($count<=0){
+                        $user=D('Staff')->getthislevel();
+                        $map['agent']  = array('in',implode(',',$user));
+                }
+        }   
+        
+        foreach( $map as $k=>$v){  
+                if( !$v )  
+                        unset( $arr[$k] );  
+        }   
+
+        //分页跳转的时候保证查询条件
+        foreach($map as $key=>$val) {
+                if(!$val){
+                        unset($map[$key]);
+                }else{
+                $Page->parameter[$key]   =   urlencode($val);
+                  }
+        }
+        
+        $stock=M('stock');
+        $map['status']=1;
+
+        $count = $stock->where($map)->count();// 查询满足要求的总记录数
+        $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show = $Page->show();// 分页显示输出
+
+        
+        $list = $stock->where($map)->order('id desc ')->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        //循环输出二维数组（proid =产品类型）
         foreach($list as $key=>$val){
             if($val['proid']>0){
                 $kind = D('kind')->where('id='.$val['proid'])->getField('kindname');
                 $list[$key]['kindname'] = $kind;
             }    
         }
-
+        
+        $this->assign('page',$show);// 赋值分页输出
         $this->assign('list',$list);
         $this->display();
     }

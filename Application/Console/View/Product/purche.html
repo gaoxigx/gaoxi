@@ -26,8 +26,10 @@
     <div class="tabson" id="tab2" style="display: block;">
    
         <ul class="seachform">
-            <li><label></label><input type="text" class="scinput" name=""></li>
-            <li><label>&nbsp;</label><input type="button" value="查询" class="scbtn" name=""></li>
+            <form action="/index.php/Console/Product/purche" method="post" id="form2" name="form2">   
+                <li><label></label><input type="text" class="scinput" name="username"  value="" /></li>
+                <li><label>&nbsp;</label><input type="button" value="查询" class="scbtn" name=""></li>
+            </form>
         </ul>
 
     
@@ -62,8 +64,7 @@
         </tbody>
     </table>
     
-   
-  
+    {$page}
     
     </div>  
        
