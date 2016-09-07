@@ -546,9 +546,21 @@ class ProductController extends CommonController {
 
         $this->getprotype();
         $this->getkind();
+
+        $kind=M('kind')->where('id=%d','kindname')->select();
+        var_dump($kind);
+       
+        
+
+//        $controller = M('product');
+//        $quality = $controller->where("atrtype=%d",$id)->getField('quality');
+//        $quality=json_decode($quality,true);
+//
+//        $this->assign('stock',$quality);
+        $this->assign('kind',$kind);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
-        $this->display(); // 输出模板
+        $this->display('aple'); // 输出模板
     }
     
     

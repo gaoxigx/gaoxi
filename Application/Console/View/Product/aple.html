@@ -36,7 +36,10 @@
                     <thead>
                             <tr>
                                     <th><p>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></p></th>
-                                    <th>产品类型</th>	
+                                    <th>产品类型</th>
+                                    <th>进货数量</th>
+                                    <th>销售量</th>
+                                    <th>库存量</th>
                                     <th>操作</th>
                             </tr>
                     </thead>
@@ -45,6 +48,26 @@
                                     <tr style="border: dotted 1px #c7c7c7;height:40px;">
                                             <td>{$vo.id}</td>
                                             <td>{$vo.kindname}</td>
+                                            <td>
+                                                <p>{$vo.kindname}A：1111</p>
+                                                <p>{$vo.kindname}B：1111</p>
+                                                <p>{$vo.kindname}C：1111</p>
+                                            </td>   
+                                            <td>
+                                                <volist name="stock" id="vl">    
+                                                    <span>                      
+                                                         <p>
+                                                             <input name="storckname[]" placeholder="品质" style="width:100px" type="text" class="dfinput" value="{$vl}" readonly="readonly"/>
+                                                             <input name="storck[]" type="text" placeholder="进货数" class="dfinput" style="width:240px" value=""  />
+                                                         </p> 
+                                                    </span>
+                                                </volist>                                               
+                                            </td>  
+                                            <td>
+                                                <p>{$vo.kindname}A：3333</p>
+                                                <p>{$vo.kindname}B：3333</p>
+                                                <p>{$vo.kindname}C：3333</p>
+                                            </td>  
                                             <td>
                                                 <a href="{:U('Product/stock',array('id'=>$vo['id']))}" class="tablelink" >采购&nbsp;</a>
                                                 <a href="__URL__/deleteap/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> &nbsp;删除</a>
