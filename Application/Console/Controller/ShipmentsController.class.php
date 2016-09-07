@@ -264,7 +264,7 @@ class ShipmentsController extends CommonController {
 		$username = I('username');
 
 		if($username){
-                        $map1['id'] =  array('like','%'.trim($username).'%');
+            $map1['id'] =  array('like','%'.trim($username).'%');
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
@@ -299,10 +299,7 @@ class ShipmentsController extends CommonController {
 
 
 		$map['status']=1;
-		$map['payment_status']=1;
-
-	    
-		
+		//$map['payment_status']=1;
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
@@ -310,8 +307,7 @@ class ShipmentsController extends CommonController {
 	  
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $User->where($map)->order('id desc ')->limit($Page->firstRow.','.$Page->listRows)->select();	
-	
+		$list = $User->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();		
 		$staff=D('staff')->getfield('id,name',true);
 		$catdata=D('Category')->categoryone();      
 		

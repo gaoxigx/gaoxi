@@ -6,7 +6,7 @@ class productModel extends Model {
     protected $_validate    =   array(
         //array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
         array('protype','require','类别必须填写'),
-        array('product','require','产品名称必须填写'),
+        array('product','require','产品名称必须填写'),      
         array('price1','require','成本价格必须填写'),
         array('price2','require','标准价格必须填写'),
         array('price3','require','最高价格必须填写'),

@@ -179,10 +179,10 @@ $(document).ready(function(){
                         <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value="{$data.product}"  /></li>
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
                         <li><label>图片预览</label><img src="{$data.pic1}"></li>
-                         <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"   checked="checked" value="1" name="pmleave">联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  class="pmleave2" value="0" name="pmleave">对等属性 <input type="radio"  class="pmleave3" value="1" name="pmleave"> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>
-                         <li class="jl1" ><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                         <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"  value="1" name="pmleave" <eq name="data.pmleave" value="1"> checked="checked" </eq> >联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"   class="pmleave2" value="2" name="pmleave" <eq name="data.pmleave" value="2"> checked="checked" </eq>>对等属性 <input type="radio"  class="pmleave3"  value="3" name="pmleave" <eq name="data.pmleave" value="3"> checked="checked" </eq>> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>
+                         <li class="jl1" <eq name="data.pmleave" value="1"> style="display:block" <else/>style="display:none"</eq>><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
                         </li>
-                        <li class="pzprice jl1">
+                        <li class="pzprice jl1" <eq name="data.pmleave" value="1"> style="display:block" <else/>style="display:none"</eq> >
                        <php> <literal>$numbary=0</literal></php>
                         <foreach name="data['grade']"  item="vol"> 
                             <p> 
@@ -195,18 +195,18 @@ $(document).ready(function(){
                              </p>                           
                         </foreach>
                         </li>                        
-                        <li class="lhcl" style="display:none"><label>&nbsp;&nbsp;<b>*</b></label>
+                        <li class="lhcl" <eq name="data.pmleave" value="2"> style="display:block" <else/>style="display:none"</eq>><label>&nbsp;&nbsp;</label>
                             <php>$tnmb=0</php>
                             <foreach name="data['box']" item="vl">
                                 <if condition="tnmb eq 0">
-                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>"  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
                                 <else/>
-                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="{$vl}"  />
+                                    <input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value="{$key}"  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value="<php>echo is_array($vl)?$vl[0]:$vl;</php>"  />
                                 </if>
                                 <php>$tnmb++</php>
                             <endforeach>
                         </li> 
-                        <li class="jhmoney" style="display:none"><label>&nbsp;</label><input name="money" type="text" class="dfinput" value=""  placeholder="金额"  /></li>
+                        <li class="jhmoney" <eq name="data.pmleave" value="3">style="display:block" <else/>style="display:none"</eq>><label>&nbsp;</label><input name="price" type="text" class="dfinput" value="{$data.price}"  placeholder="金额"  /></li>
 
                         <li><label>进货数量<b>*</b></label><input name="inputnum" type="text" class="dfinput" value="{$data.inputnum}"  /></li>
                         <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value="{$data.sortnum}"  /></li>

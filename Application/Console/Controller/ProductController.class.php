@@ -188,7 +188,7 @@ class ProductController extends CommonController {
 		$data['grade']=json_encode($grade);
 		$data['quality']=json_encode($quality);
 
-
+		
 		//礼盒数据
 		$boxname=I('boxname');
 		$boxvl=I('boxvl');
@@ -198,6 +198,7 @@ class ProductController extends CommonController {
 		unset($data['boxname']);
 		unset($data['boxvl']);
 		$data['box']=json_encode($box);	
+		$data['price']=I('price');
 		
 		if($roleList->create()) {
 			$result =   $roleList->add($data);
@@ -220,8 +221,8 @@ class ProductController extends CommonController {
 		$data = $controller->find($id);
 		$data['quality']=json_decode($data['quality'],true);
 		$data['grade']=json_decode($data['grade'],true);
-		$data['box']=json_decode($data['box'],true);
-		
+		$data['box']=json_decode($data['box'],true);	
+
 		if($data){
 			$this->assign('data',$data);
 			$list = D('staff')->where('iswork!=%d',array(4))->field('id,name')->select();
@@ -272,11 +273,10 @@ class ProductController extends CommonController {
 		}
 		$this->getprotype();
 		
-		//读取数据
-		
-		$data['quality']=json_decode($data['quality'],true);
-		$data['grade']=json_decode($data['grade'],true);
-		$data['box']=json_decode($data['box'],true);
+		//读取数据		
+		// $data['quality']=json_decode($data['quality'],true);
+		// $data['grade']=json_decode($data['grade'],true);
+		// $data['box']=json_decode($data['box'],true);
 		
 		$kind=M('kind')->select();
 		$this->assign('kind',$kind);
@@ -321,7 +321,7 @@ class ProductController extends CommonController {
 
 		$data['grade']=json_encode($grade);
 		$data['quality']=json_encode($quality);
-
+		
 		//礼盒数据
 		$boxname=I('boxname');
 		$boxvl=I('boxvl');
@@ -331,15 +331,15 @@ class ProductController extends CommonController {
 		unset($data['boxname']);
 		unset($data['boxvl']);
 		$data['box']=json_encode($box);
-		
+		$data['price']=I('price');	
 		$roleList   =   D('product');
 		$jumpUrl =U('Console/Product/Plist');
-		if($roleList->create()) {
-			$result = $roleList->where('id=%d',array($id))->save($data);
+		if($prodata=$roleList->create($data)) {	
+			$result = $roleList->where('id=%d',array($id))->save($$prodata);
 			if($result) {
 				$this->success('修改成功！',$jumpUrl);
 			}else{
-				$this->error('写入错误！');
+				$this->error('写入错误！'.$roleList.getError());
 			}
 		}else{
 			$this->error($roleList->getError());
