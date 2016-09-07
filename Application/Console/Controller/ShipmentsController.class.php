@@ -266,6 +266,7 @@ class ShipmentsController extends CommonController {
 		if($username){
             $map1['id'] =  array('like','%'.trim($username).'%');
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+                        $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id');
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
 			$map1['_logic'] = 'OR';
@@ -324,6 +325,7 @@ class ShipmentsController extends CommonController {
 
 		if($username){
 			$map1['id']  = array('like','%'.trim($username).'%'); 
+                        $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id');
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
