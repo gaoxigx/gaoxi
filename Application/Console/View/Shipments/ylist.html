@@ -29,17 +29,17 @@
         <table class="imgtable">
             <thead>
                 <tr>
-                    <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-                    <th>订单信息</th>
-                    <th>产品信息</th>
-                    <th>收货人</th>
-                    <th>收货电话</th>
-                    <th>收货地址</th>
-                    <th>订单备注</th>
-                    <th>快递公司</th>
-                    <th>操作发货</th>
-                    <th>发货备注</th>
-                    <th>操作</th>
+                    <th style="width:5%;">ID</th>
+                    <th style="width:10%;">订单信息</th>
+                    <th style="width:10%;">产品信息</th>
+                    <th style="width:5%;">收货人</th>
+                    <th style="width:10%;">收货电话</th>
+                    <th style="width:15%;">收货地址</th>
+                    <th style="width:15%;">备注：订单（红）/发货（灰）</th>
+                    <th style="width:5%;">快递公司</th>
+                    <th style="width:15%;">操作发货</th>
+<!--                    <th>发货备注</th>-->
+                    <th style="width:10%;">操作</th>
 <!--                    <th>确认收款</th>-->                    
                 </tr>
             </thead>
@@ -80,7 +80,7 @@
                             <default />已下单
                         </switch>
                     </td>
-                    <td>{$vo.fhnote}</td>
+<!--                    <td>{$vo.fhnote}</td>-->
 <!--                    <td>
                         <if condition="$vo.payment_status eq 0">
                             <input name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall" value="点击确认" />
