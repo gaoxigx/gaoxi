@@ -108,7 +108,7 @@ class ProductController extends CommonController {
 			$parameter['protype'] = $protype;
         }
 		
-		if($product_name){
+            if($product_name){
             $map1['id']  = array('like','%'.trim($product_name).'%');
             $map1['product']  = array('like','%'.trim($product_name).'%');
             $map1['_logic'] = 'OR';
