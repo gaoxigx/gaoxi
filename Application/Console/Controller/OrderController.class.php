@@ -278,6 +278,7 @@ class OrderController extends CommonController {
 		$username = I('username');
 
 		if($username){
+                        $map1['id']  = trim($username); 
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%'); 
 			$map1['_logic'] = 'OR';
@@ -331,6 +332,7 @@ class OrderController extends CommonController {
 		$username = I('username');
 
 		if($username){
+			$map1['id']  = trim($username); 
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%'); 
 			$map1['_logic'] = 'OR';
