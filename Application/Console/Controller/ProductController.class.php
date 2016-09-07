@@ -548,7 +548,7 @@ class ProductController extends CommonController {
         $this->getkind();
 
         $kind=M('kind')->where('id=%d','kindname')->select();
-        var_dump($kind);
+
        
         
 
