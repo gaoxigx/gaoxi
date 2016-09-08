@@ -49,24 +49,19 @@
                                             <td>{$vo.id}</td>
                                             <td>{$vo.kindname}</td>
                                             <td>
-                                                <p>{$vo.kindname}A：1111</p>
-                                                <p>{$vo.kindname}B：1111</p>
-                                                <p>{$vo.kindname}C：1111</p>
+                                                <volist name="vo['count']" id="vl">                                                    
+                                                     <p>{$vl.storckname}：{$vl.sum}</p>
+                                                </volist>
                                             </td>   
-                                            <td>
-                                                <volist name="stock" id="vl">    
-                                                    <span>                      
-                                                         <p>
-                                                             <input name="storckname[]" placeholder="品质" style="width:100px" type="text" class="dfinput" value="{$vl}" readonly="readonly"/>
-                                                             <input name="storck[]" type="text" placeholder="进货数" class="dfinput" style="width:240px" value=""  />
-                                                         </p> 
-                                                    </span>
-                                                </volist>                                               
+                                            <td>                                      
+                                                <volist name="vo['count']" id="vl">                                                    
+                                                     <p>{$vl.storckname}：{$vl.sum}</p>
+                                                </volist>                                           
                                             </td>  
                                             <td>
-                                                <p>{$vo.kindname}A：3333</p>
-                                                <p>{$vo.kindname}B：3333</p>
-                                                <p>{$vo.kindname}C：3333</p>
+                                                <volist name="vo['count']" id="vl">                                                    
+                                                     <p>{$vl.storckname}：{$vl.sum}</p>
+                                                </volist>
                                             </td>  
                                             <td>
                                                 <a href="{:U('Product/stock',array('id'=>$vo['id']))}" class="tablelink" >采购&nbsp;</a>

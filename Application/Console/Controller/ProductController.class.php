@@ -132,7 +132,10 @@ class ProductController extends CommonController {
                 $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
             }
+
         }
+
+
         $this->getprotype();
         $this->getkind();
         $this->assign('list',$list);// 赋值数据集
@@ -542,6 +545,10 @@ class ProductController extends CommonController {
                 $purchaseper_name = D('kind')->where('id='.$val['purchaseper'])->getField('kindname');
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
             }
+
+            $stock=M('stock')->field('storckname,sum(storck) as sum')->where('proid=%d',$val['id'])->group('storckname')->select();            
+
+            $list[$key]['count']=$stock;
         }
 
         $this->getprotype();
