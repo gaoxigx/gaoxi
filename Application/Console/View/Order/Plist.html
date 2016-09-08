@@ -60,9 +60,7 @@
                                     <td>{$vo.username}</td>
                                     <td>{$vo.note}<p style="color:red">{$vo.fhnote}</p></td>
                                     <td >
-                                        <switch name="vo.payment_status">
-                                            <case value="0">已下单.</case>
-                                            <case value="1">
+                                
                                                 <switch name="vo.status">
                                                     <case value="1">已下单 </case>
                                                     <case value="2"><span>已发货 {$vo.numberno} &nbsp;<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查看物流</a></span>
@@ -76,10 +74,14 @@
                                                     </case>
                                                      <case value="3">异常订单，请审核</case>
                                                      <case value="4">订单已撤消</case>
+                                                      <default />已下单
                                                 </switch>
+                                       <!--  <switch name="vo.payment_status">
+                                            <case value="0">已下单.</case>
+                                            <case value="1">
                                             </case>
                                             <default />已下单
-                                        </switch>
+                                        </switch> -->
                                     </td>
 
 <!--					<td>
