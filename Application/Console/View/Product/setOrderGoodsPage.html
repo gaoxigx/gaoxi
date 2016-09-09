@@ -48,6 +48,7 @@
         <input type="hidden" name="quality" id="qualityf" value="" />
         <input type="hidden" name="grade" id="gradef" value="" />
         <input type="hidden" name="money" id="moneyf" value="" />
+        <input type="hidden" name="numkg" id="numkg" value="" />
 
 
         <ul class="forminfo">
@@ -68,7 +69,7 @@
             <foreach name="data['grade']" item="vo">                
                 <p class="grade" style="display:none;">
                 <foreach name="vo"  item="vl">
-                    <span class="pzblock zjt" vl="{$vl}" >
+                    <span class="pzblock zjt"  vl="<php>echo is_array($vl)?$vl[0]:$vl;</php>" vk="<php>echo is_array($vl)?$vl[1]:$vl;</php>"  >
                     <u> {$key}</u>
                     </span>
                 </foreach>
@@ -81,7 +82,7 @@
                     <u>
                     <foreach name="data['grade']" item="vo">
                         <foreach name="vo"  item="vl">
-                            ￥{$vl}.00 
+                            ￥<php>echo is_array($vl)?$vl[0]:$vl;</php>.00 
                         </foreach>
                     </foreach>     
                     </u>
@@ -130,6 +131,7 @@
         $(this).addClass('blockaction');
         var vl=$(this).attr('vl');
         $('#moneyf').val(vl);
+         $('#numkg').val($(this).attr('vk'));  
          $('#gradef').val($(this).find('u').text());  
         $('.jinye u').html('￥'+vl+'.00');
     });
