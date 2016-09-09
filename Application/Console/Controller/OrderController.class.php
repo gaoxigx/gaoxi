@@ -563,11 +563,12 @@ class OrderController extends CommonController {
 					M()->rollback();
 					$this->error('订单商表数据添加错误！'.M()->geterror());
 				}
-
+	
 				//删除购物车产品
 				M("cart")->where('uid=%d',session('userid'))->delete();	
 				//增加产品图片
 				$result=M('order_goods')->addAll($dataList);
+		
 
 				if($result){
 					M()->commit();	

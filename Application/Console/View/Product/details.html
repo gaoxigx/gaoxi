@@ -48,6 +48,7 @@
         <input type="hidden" name="quality" id="qualityf" value="" />
         <input type="hidden" name="grade" id="gradef" value="" />
         <input type="hidden" name="money" id="moneyf" value="" />
+        <input type="hidden" name="numkg" id="numkg" value="" />
 
 
         <ul class="forminfo">
@@ -68,8 +69,8 @@
             <foreach name="data['grade']" item="vo">                
                 <p class="grade" style="display:none;">
                 <foreach name="vo"  item="vl">
-                    <span class="pzblock zjt" vl="<php>echo is_array($vl)?$vl[0]:$vl;</php>" >
-                    <u> {$key}</u>
+                    <span class="pzblock zjt" vl="<php>echo is_array($vl)?$vl[0]:$vl;</php>" vk="<php>echo is_array($vl)?$vl[1]:$vl;</php>"  >
+                        <u> {$key}</u>
                     </span>
                 </foreach>
                 </p>
@@ -111,6 +112,8 @@
     $('#qualityf').val($('.qzinfo p:first u').text());
     $('#gradef').val($('.zj p span:first u').text());
     $('#moneyf').val($('.zj span:first').attr('vl'));  
+    $('#moneyf').val($('.zj span:first').attr('vl'));  
+    $('#numkg').val($('.zj span:first').attr('vk'));
 
     $('.jy p:first').show();
     $('.jy .box span:first').show();
@@ -130,6 +133,7 @@
         $(this).addClass('blockaction');
         var vl=$(this).attr('vl');
         $('#moneyf').val(vl);
+        $('#numkg').val($(this).attr('vk'));
         $('#gradef').val($(this).find('u').text());  
         $('.jinye u').html('￥'+vl+'.00');
     });

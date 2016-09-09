@@ -100,24 +100,24 @@ $(document).ready(function(){
 						</td>
 						
 						<td>
-                                                    <p style="color:#024c68;">大红袍A:{$vo['storck']}</p>
-                                                    <p style="color:#0776a0;">大红袍B:{$vo['storck']}</p>
-                                                    <p style="color:#3aa6d0;">大红袍C:{$vo['storck']}</p>
+							<volist name="vo.stnum" id="sn">
+                                <p style="color:#024c68;">{$sn.storckname}:{$sn.storck}kg</p>
+                            </volist>
 						</td>
                                                 
 						<td>
-                                                    <p style="color:#024c68;">大红袍A:{$vo['sortnum']-$vo['salenum']+$vo['storck']}</p>
-                                                    <p style="color:#0776a0;">大红袍B:{$vo['sortnum']-$vo['salenum']+$vo['storck']}</p>
-                                                    <p style="color:#3aa6d0;">大红袍C:{$vo['sortnum']-$vo['salenum']+$vo['storck']}</p>
+                            <volist name="vo.stnum" id="sn">
+                                <p style="color:#024c68;">{$sn.storckname}:{$sn.storck}kg</p>
+                            </volist>
 						</td>
 <!--						<td>{$vo.price2}</td>-->
                                                 
 <!--						<td>{$vo.discount}</td>-->	
 						<td>
-                                                    <p style="color:#024c68;">大红袍A:{$vo.salenum}</p>
-                                                    <p style="color:#0776a0;">大红袍B:{$vo.salenum}</p>
-                                                    <p style="color:#3aa6d0;">大红袍C:{$vo.salenum}</p>
-                                                </td>
+							<volist name="vo.stk" id="st">
+                                <p style="color:#024c68;">{$st.quality}:{$st.cont}单({$st.numkg}kg)</p>
+                            </volist>
+                        </td>
 <!--						<td>{$vo.purchaseper_name}<p>进货数:{$vo.inputnum}</p></td>-->
 				
 						<td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return 
