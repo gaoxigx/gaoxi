@@ -35,12 +35,16 @@
                     </div> 
 
                     <div id="tab1" class="tabson">
-                        <div class="formtext">请正确填写个人信息！</div>
                         <ul class="forminfo">
                             <li><label>用户名<b>*</b></label><input name="username" id="username" type="text" class="dfinput" value=""  /></li>
                             <li><label>密码<b>*</b></label><input name="password" id="password" type="password" class="dfinput"  value="" /></li>
                             <li><label>确认密码<b>*</b></label><input name="passwordConfirm" id="passwordConfirm" type="password" class="dfinput" value=""  /></li>                            
                             <li><label>昵称<b>*</b></label><input name="nickname" id="nickname" type="text" class="dfinput" value=""  /></li>
+                            
+        <div class="formtitle"><span>必填项</span></div>
+                            
+                            <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
+                            <li><label>性别<b>*</b></label><cite><input id="sex" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
                             <li>
                                 <label>岗位状态<b>*</b></label>
                                 <cite>
@@ -58,6 +62,7 @@
                                     <input type="radio" value="4" name="iswork">&nbsp;离职
                                 </cite>
                             </li>
+                                             
                             <li><label>岗位<b>*</b></label>  
                                 <div class="vocation uew-select" id="quarters_div">                 
                                     <select id="department" name="subordinates[]" class="uew-select-value">
@@ -82,8 +87,7 @@
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;line">
                             </li> 
                             
-                            <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
-                            <li><label>性别<b>*</b></label><cite><input id="sex" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
+
                             <li><label>学历<b>*</b></label>  
                                 <div class="vocation uew-select">
                                     <div class="col-sm-9">
@@ -102,10 +106,26 @@
                                     </div>
                                 </div>
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
-                            </li>                                
+                            </li>  
+                                            
+                                               
+                                            
+                                            
                             <li><label>身份证<b>*</b></label><input name="identity_card" id="identity_card" type="text" class="dfinput" value=""  /></li>
                             <li><label>出身日期<b></b></label><input name="birth_date" id="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
-                            <li><label>电话<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>                            
+                            <li><label>电话<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>    
+                            <li>
+                                <label>紧急联系人<b>*</b></label>
+                                <input name="urgency" id="urgency" type="text" class="dfinput_left" value=""  />
+                                <label class="pl10">电话<b>*</b></label>
+                                <input name="phone_ugy" id="phone_ugy" type="text" class="dfinput_left" value=""  />
+                            </li>   
+                            <li><label>银行名称<b>*</b></label><input name="bankaddress" id="bankaddress" type="text" class="dfinput" value=""  /></li>                             
+                            <li><label>银行账号<b>*</b></label><input name="bank_account" id="bank_account" type="text" class="dfinput" value=""  /></li>        
+                            
+                            
+         <div class="formtitle"><span>基本信息</span></div>  
+                            
                             <li><label>开始时间<b></b></label><input onClick="WdatePicker()" name="starttime" id="starttime" type="text" class="dfinput" value=""  /></li>  
                             <li><label>结束时间<b></b></label><input onClick="WdatePicker()" name="endtime" id="endtime" type="text" class="dfinput" value=""  /></li>  
                             <li><label>转正时间<b></b></label><input onClick="WdatePicker()" name="positivetime" id="positivetime" type="text" class="dfinput" value=""  /></li>  
@@ -149,12 +169,6 @@
                             <li><label>家庭住址<b></b></label><input name="homeadd" id="homeadd" type="text" class="dfinput" value=""  /></li>     
                             <li><label>现居住址<b></b></label><input name="homenow" id="homenow" type="text" class="dfinput" value=""  /></li>   
 
-                            <li>
-								<label>紧急联系人<b>*</b></label>
-                                <input name="urgency" id="urgency" type="text" class="dfinput_left" value=""  />
-                                <label class="pl10">电话<b>*</b></label>
-                                <input name="phone_ugy" id="phone_ugy" type="text" class="dfinput_left" value=""  />
-                            </li>                   
 							<!--
                             <li><label>开户行<b></b></label>  
                                 <div class="vocation uew-select">
@@ -169,9 +183,7 @@
                                         <input id="banckaddresstext" type="hidden" name="banckaddresstext" />
                                     </div>
                                 </div>
-                            </li>-->
-							<li><label>银行名称<b>*</b></label><input name="bankaddress" id="bankaddress" type="text" class="dfinput" value=""  /></li>                             
-                            <li><label>银行账号<b>*</b></label><input name="bank_account" id="bank_account" type="text" class="dfinput" value=""  /></li>                             
+                            </li>-->           
                             <li><label>备注说明<b></b></label><input name="comment" id="comment" type="text" class="dfinput" value=""/></li> 
 
                             <div class="col-md-offset-3 col-md-9">
