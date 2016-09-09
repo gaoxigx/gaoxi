@@ -534,45 +534,41 @@ class OrderController extends CommonController {
 				$tlm=0;
 				foreach( $catdata as $k=>$v){  
 					$dataList[] = array(
-					'proid'=>$v['proid'],							
-					'protype'=>$v['protype'],
-					'pic'=>$v['pic'],
-					'pic1'=>$v['pic1'],
-					'product'=>$v['product'],
-					'price2'=>$v['money'],
-					'money'=>$v['money'],
-					'buynum'=>$v['number'],
-					'discount'=>$v['number'],
-					'tollsprice'=>$v['number']*$v['money'],
-					'quality'=>$v['quality'],
-					'grade'=>$v['grade'],
-					'box'=>$v['box'],
-					'order_no'=>$data["order_no"],
-					'addtime'=>time(),                
+						'proid'=>$v['proid'],							
+						'protype'=>$v['protype'],
+						'pic'=>$v['pic'],
+						'pic1'=>$v['pic1'],
+						'product'=>$v['product'],
+						'price2'=>$v['money'],
+						'money'=>$v['money'],
+						'buynum'=>$v['number'],
+						'discount'=>$v['number'],
+						'tollsprice'=>$v['number']*$v['money'],
+						'quality'=>$v['quality'],
+						'grade'=>$v['grade'],
+						'box'=>$v['box'],
+						'order_no'=>$data["order_no"],
+						'addtime'=>time(),   
+						'numkg'=>$v['numkg']             
 					);
-			
 					$arm=explode('-',$v['money']);
 					$tlm=$arm[0]>$arm[1]?$tlm+$arm[1]:$tlm+$arm[0];
-					
-					
-				}
-
-
+				}	
 				if($data['total_price']<$tlm){
 					$data['status']=3;//订单异常
 				}	
 
-				$result =   $roleList->add($data);
+				$result=$roleList->add($data);
 				if(!$result) {
 					M()->rollback();
 					$this->error('订单商表数据添加错误！'.M()->geterror());
 				}
 
 				//删除购物车产品
-				M("cart")->where('uid=%d',session('userid'))->delete();						
-				
+				M("cart")->where('uid=%d',session('userid'))->delete();	
 				//增加产品图片
 				$result=M('order_goods')->addAll($dataList);
+
 				if($result){
 					M()->commit();	
 					$this->success('订单表数据添加成功！',U('Console/Order/Plist'));
@@ -621,7 +617,6 @@ class OrderController extends CommonController {
 
 	public function setstatu(){
 		$id=I('id');
-
 		$data['status']=0;
 		if(empty($id)){        			
 			$this->ajaxreturn($data);
@@ -713,6 +708,7 @@ class OrderController extends CommonController {
 		$data['grade']=I('grade');
 		$data['money']=I('money');
 		$data['number']=I('nmb');
+		$data['numkg']=I('numkg');
 
 		$map['status']=$data['status']=1;
 		$cart=M('cart');
@@ -720,6 +716,7 @@ class OrderController extends CommonController {
 		$map['uid']=session('userid');		
 		$map['quality']=I('quality');
 		$map['grade']=I('grade');
+
 		$count=$cart->where($map)->count();
 		if($count>0){
 			$this->error('该产品已存在购物车');
@@ -745,7 +742,8 @@ class OrderController extends CommonController {
 		$data['quality']=I('quality');
 		$data['grade']=I('grade');
 		$data['money']=I('money');
-		$data['number']=I('nmb');
+		$data['numkg']=I('numkg');		
+		$data['buynum']=I('nmb');
 
 		$map['og.id']=$data['id'];
 		$orderGoodes=M('order_goods');
@@ -756,8 +754,10 @@ class OrderController extends CommonController {
 			$this->error('该产品不存在订单中');
 			exit();
 		}
+
 		$sul=$orderGoodes->save($data);
-		
+
+
 		if($sul){
 			$this->success('修改完成',U('Order/edit',array('id'=>$result['id'])));
 			exit();
