@@ -135,6 +135,8 @@ class ProductController extends CommonController {
             $list[$key]['stk']=M('order_goods')->field("quality,count(*) as cont,sum(`numkg`) as numkg")->where("proid=%d",array($val['id']))->group('quality')->select();
 
             $list[$key]['stnum']=M('stock')->field("storckname,sum(storck) as storck")->where("proid=%d",array($val['atrtype']))->group('storckname')->select();
+
+            
         }
 
      
