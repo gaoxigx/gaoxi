@@ -62,7 +62,7 @@
         <li class="qzinfo"><label>品质</label>
             <foreach name="data['grade']" item="vo">
                   <p class="quality pzblock" val="{$key}">   
-                        <u> {$key} </u>
+                        <u>{$key}</u>
                   </p>
             </foreach>        
         <li class="zj"><label>级别</label>
@@ -70,7 +70,7 @@
                 <p class="grade" style="display:none;">
                 <foreach name="vo"  item="vl">
                     <span class="pzblock zjt"  vl="<php>echo is_array($vl)?$vl[0]:$vl;</php>" vk="<php>echo is_array($vl)?$vl[1]:$vl;</php>"  >
-                    <u> {$key}</u>
+                    <u>{$key}</u>
                     </span>
                 </foreach>
                 </p>

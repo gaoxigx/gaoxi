@@ -705,8 +705,8 @@ class OrderController extends CommonController {
 			exit();
 		}
 		$data['catetime']=time();
-		$data['quality']=I('quality');
-		$data['grade']=I('grade');
+		$data['quality']==trim(I('quality'));
+		$data['grade']=trim(I('grade'));
 		$data['money']=I('money');
 		$data['number']=I('nmb');
 		$data['numkg']=I('numkg');
