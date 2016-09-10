@@ -177,4 +177,8 @@ function json_ary($json){
         return $tmpstr;
         }
     }
+    //两换成kg
+    function psckg($param){
+        return $param*50/1000;
+    }
 ?>

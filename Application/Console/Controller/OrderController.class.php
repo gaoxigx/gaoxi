@@ -563,11 +563,12 @@ class OrderController extends CommonController {
 					M()->rollback();
 					$this->error('订单商表数据添加错误！'.M()->geterror());
 				}
-
+	
 				//删除购物车产品
 				M("cart")->where('uid=%d',session('userid'))->delete();	
 				//增加产品图片
 				$result=M('order_goods')->addAll($dataList);
+		
 
 				if($result){
 					M()->commit();	
@@ -704,8 +705,8 @@ class OrderController extends CommonController {
 			exit();
 		}
 		$data['catetime']=time();
-		$data['quality']=I('quality');
-		$data['grade']=I('grade');
+		$data['quality']==trim(I('quality'));
+		$data['grade']=trim(I('grade'));
 		$data['money']=I('money');
 		$data['number']=I('nmb');
 		$data['numkg']=I('numkg');

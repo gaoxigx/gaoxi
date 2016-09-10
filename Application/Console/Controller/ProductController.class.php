@@ -131,10 +131,15 @@ class ProductController extends CommonController {
             if($val['purchaseper'] >0){
                 $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
-            }
+            }            
+            $list[$key]['stk']=M('order_goods')->field("quality,count(*) as cont,sum(`numkg`) as numkg")->where("proid=%d",array($val['id']))->group('quality')->select();
 
+            $list[$key]['stnum']=M('stock')->field("storckname,sum(storck) as storck")->where("proid=%d",array($val['atrtype']))->group('storckname')->select();
+
+            
         }
 
+     
 
         $this->getprotype();
         $this->getkind();
