@@ -107,7 +107,11 @@ $(document).ready(function(){
                                                 
 						<td>
                             <volist name="vo.stnum" id="kc">
-                                <p style="color:#024c68;">{$kc.storckname}:{:$kc['storck']-psckg($vo['stk'][$key][numkg])}kg</p>
+								<volist name="vo.stk" id="sk">
+									<if condition="$sk['quality'] eq $kc['storckname']">
+                                		<p style="color:#024c68;">{$kc.storckname}:{:$kc['storck']-psckg($vo['stk'][$key][numkg])}kg</p>
+                                	</if>
+                                </volist>
                             </volist>
 						</td>
 <!--						<td>{$vo.price2}</td>-->
