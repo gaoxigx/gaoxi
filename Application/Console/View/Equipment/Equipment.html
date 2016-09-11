@@ -75,39 +75,35 @@ $(document).ready(function(){
     
     
     
-		<table class="tablelist">
+		<table class="imgtable">
 			<thead>
 				<tr>
-				<th><input name="" type="checkbox" value="" checked="checked"/></th>
-				<th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
-				<th>序列号/手机号</th>
-				<th>型号/编号</th>
-				<th>代言人</th>
-				<th>设备地址</th>
-				<th>开机密码</th>
-				<th>通讯信息</th>
-				<th>负责人</th>
-				<th>使用人</th>
-				<th>部门与岗位</th>
-				<th>设备状态</th>
-				<th>用途</th>
-				<th>添加日期</th>
-				<th>操作</th>
+                                    <th><input name="" type="checkbox" value="" checked="checked"/></th>
+                                    <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
+                                    <th>手机信息</th>
+                                    <th>代言人</th>
+                                    <th>设备地址</th>
+                                    <th>开机密码</th>
+                                    <th>通讯信息</th>
+                                    <th>负责人</th>
+                                    <th>部门与岗位</th>
+                                    <th>设备状态</th>
+                                    <th>用途</th>
+                                    <th>添加日期</th>
+                                    <th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<volist name="list" id="vo">
-				<tr>
+                                    <tr  style="border-bottom: dotted 1px #c7c7c7; ">
 					<td><input name="" type="checkbox" value="" /></td>
 					<td>{$vo.id}</td>
       					<td>
                                             <p style="color:#004974;">序列号：{$vo.cdkey}</p>
-                                            <p>手机号码：{$vo.mobile}</p>
-                                        </td>                                             
-                                        <td>
+                                            <p style="color:#009ceb;">手机号码：{$vo.mobile}</p>
                                             <p>型号：{$vo.xinghao}</p>
                                             <p>编号：{$vo.bianhao}</p>
-                                        </td>       
+                                        </td>                                                  
 					<td>{$vo.daiyanren}</td>
 					<td>
                                             <if condition="$vo.addr_id eq 1">
@@ -120,15 +116,15 @@ $(document).ready(function(){
                                         
                                         <td>
                                             <p>微信：{$vo.weixinhao}</p>
-                                            <p>淘宝：{$vo.taobaohao}</p>                            
+                                            <p style="color:#404040;">淘宝：{$vo.taobaohao}</p>                            
                                             <p>QQ：{$vo.qqhao}</p> 
-                                            <p>微博：{$vo.weibohao}</p>
+                                            <p  style="color:#404040;">微博：{$vo.weibohao}</p>
                                         </td>                                        
                                         
 					<td>{$staff[$vo["fuzerenid"]]}<!-- {$vo.fuzeren} --></td>
-					<td><a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"><!-- {$vo.shiyongren} -->{$staff[$vo["staffid"]]}</a></td>
                                         
 					<td>
+                                            <p>使用人：<a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"  style="color:#009ceb;">{$staff[$vo["staffid"]]}</a></p>
                                             <p>部门：{$vo.departmenttext}</p>
                                             <p style="color:#404040;">岗位：{$vo.posttext}</p>
                                         </td>
