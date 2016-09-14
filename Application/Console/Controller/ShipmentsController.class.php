@@ -221,7 +221,7 @@ class ShipmentsController extends CommonController {
 
         
              //更新物流单号
-            public function updatenumbernoss(){
+    public function updatenumbernoss(){
             $roleList   =   D('order_info');
             $data=$roleList->create();
             if($data) {
@@ -255,7 +255,7 @@ class ShipmentsController extends CommonController {
 		}else{
 			$this->error($roleList->getError());
 		}
-        }
+    }
         
 
 
@@ -293,19 +293,73 @@ class ShipmentsController extends CommonController {
 			if(!$val){
 				unset($map[$key]);
 			}else{
-			$Page->parameter[$key]   =   urlencode($val);
-			  }
+				$Page->parameter[$key]   =   urlencode($val);
+			 }
 		}
 		$User = M('order_info'); // 实例化User对象 
-
 
 		$map['status']=1;
 		//$map['payment_status']=1;
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
-		$show = $Page->show();// 分页显示输出
+		$show = $Page->show();// 分页显示输出	  	
 
-	  
+		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+		$list = $User->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();		
+		$staff=D('staff')->getfield('id,name',true);
+		$catdata=D('Category')->categoryone();      
+		
+		$this->assign('staff',$staff);
+		$this->assign('cat',$catdata);
+		$this->assign('list',$list);// 赋值数据集
+		$this->assign('page',$show);// 赋值分页输出
+		$this->display(); // 输出模板
+	}
+
+	//数据列表
+	public function printOrder($name=''){
+		$username = I('username');
+
+		if($username){
+            $map1['id'] =  array('like','%'.trim($username).'%');
+			$map1['order_no']  = array('like','%'.trim($username).'%'); 
+                        $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id');
+			$map1['username']  = array('like','%'.trim($username).'%');
+                        $map1['mobile'] =  array('like','%'.trim($username).'%');
+			$map1['_logic'] = 'OR';
+			$map['_complex'] = $map1;
+		}
+
+		//$user_id = session("userid");
+		if($user_id > 0 ){
+		//	$where['id']=session("userid");
+			$where['accounts']=session("username");
+			$count=M('controller')->where($where)->count();
+			if($count<=0){
+				$user=D('Staff')->getthislevel();
+				$map['agent']  = array('in',implode(',',$user));
+			}
+	    }
+		foreach( $map as $k=>$v){  
+			if( !$v )  
+				unset( $arr[$k] );  
+		}   
+
+		//分页跳转的时候保证查询条件
+		foreach($map as $key=>$val) {
+			if(!$val){
+				unset($map[$key]);
+			}else{
+				$Page->parameter[$key]   =   urlencode($val);
+			 }
+		}
+		$User = M('order_info'); // 实例化User对象 
+
+		$map['status']=1;
+		//$map['payment_status']=1;
+		$count = $User->where($map)->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出	  	
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $User->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();		
@@ -325,7 +379,7 @@ class ShipmentsController extends CommonController {
 
 		if($username){
 			$map1['id']  = array('like','%'.trim($username).'%'); 
-                        $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id');
+            $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id');
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
@@ -382,31 +436,27 @@ class ShipmentsController extends CommonController {
 
 	//提交订单
 	public function add(){
-            $map['id']=session('userid');
-            $map['accounts']=session('username');            
-            $count=M('controller')->where($map)->count();            
+        $map['id']=session('userid');
+        $map['accounts']=session('username');            
+        $count=M('controller')->where($map)->count();            
             if($count<=0){                 
                 $userdata=D('Staff')->getthislevel();
                 $where['id']=array('in',implode(',',$userdata));
             }      
-            $where['quarters']=array('in',"38,39,67");
-            $where['iswork']=array('neq',4);            
-            $staff=D('Staff')->where($where)->getField('id,name',true);
-   
-            
+        $where['quarters']=array('in',"38,39,67");
+        $where['iswork']=array('neq',4);            
+        $staff=D('Staff')->where($where)->getField('id,name',true);           
 //            
 //            $this->getrolename('agent',68);
 //            $this->getrolename('assistant', 67);
            // $this->getequipment_name();
-            $this->getpayment();
+        $this->getpayment();
 		$data = M('product'); // 实例化User对象
 		$list = $data->where('1=1')->order('id')->select();  
-	   $this->assign('staff', $staff);
+	    $this->assign('staff', $staff);
 		$this->assign('prolist',$list);// 赋值数据集 
 		$this->display();
 	}
-
-
 
 	//查看页面
     public function look(){
