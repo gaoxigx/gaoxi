@@ -43,11 +43,15 @@ class EquipmentController extends CommonController {
             }
         }
         $User = M('Equipment'); // 实例化User对象
-        
-        if(session('roleidstaff')){ 
+        if(session('roleidstaff')){
+
             $strmap=implode(',', $staffid);            
-            if(!empty($strmap)&&isset($strmap)&&strlen($strmap)>0){                
-                $where['staffid']=array("in",implode(',', $staffid));//session('userid');    
+            if(!empty($strmap)&&isset($strmap)&&strlen($strmap)>0){ 
+                if(session('userid')==107){
+
+                }else{
+                    $where['staffid']=array("in",implode(',', $staffid));//  
+                }
             }else{
                 $where['staffid']=$staffid;//session('userid');
             }
