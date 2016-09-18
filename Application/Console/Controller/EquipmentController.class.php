@@ -29,6 +29,9 @@ class EquipmentController extends CommonController {
             $where['shiyongren']  = array('like','%'.trim($username).'%');                    
             $where['_logic'] = 'or';
         }
+      
+ 
+        
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
@@ -39,7 +42,7 @@ class EquipmentController extends CommonController {
             if(!$val){
                 unset($map[$key]);
             }else{
-				$Page->parameter[$key]   =   urlencode($val);
+                $Page->parameter[$key]   =   urlencode($val);
             }
         }
         $User = M('Equipment'); // 实例化User对象
@@ -58,7 +61,10 @@ class EquipmentController extends CommonController {
             
         }    
 
+//        var_dump($where);exit();
+        
         $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
+        
         $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
@@ -66,6 +72,7 @@ class EquipmentController extends CommonController {
         $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
                 ->join('nico_staff as sf on sf.id=et.staffid','left')->where($where)
                 ->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+        
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
 		$this->assign('count',$count);

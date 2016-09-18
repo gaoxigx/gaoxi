@@ -23,9 +23,9 @@ $(function(){
 			rules:{
 				shiyongrenid:'required',
 				addr_id:'required',
-				bianhao: {
-					required: true,
-				},
+//				bianhao: {
+//					required: true,
+//				},
 				mobile: {
 					required: true,
 					number:true,
@@ -46,9 +46,9 @@ $(function(){
 			messages: {				
 				shiyongrenid: "请选择设备使用人",
 				addr_id:'请选择设备地址',
-				bianhao: {
-					required: "须填写编号",
-				},	
+//				bianhao: {
+//					required: "须填写编号",
+//				},	
 				mobile: {
 					required: "请输入手机号",
 					minlength: "11位手机号",
@@ -118,7 +118,7 @@ $(function(){
 										<label>设备类型</label>
 										<input type="" class="dfinput" value="5s" />
 									</li>
-									<li><label>设备编号<b>*</b></label><input name="bianhao" id="bianhao" type="text" class="dfinput" value=""/></li>
+									<li><label>设备编号<b></b></label><input name="bianhao" id="bianhao" type="text" class="dfinput" value=""/></li>
 									<li><label>设备号码<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>
 									<li><label>设备号码1</label><input name="mobile1" type="text" class="dfinput" value=""  />(手机号)</li>
 									<li><label>序列号<b>*</b></label><input name="cdkey" id="cdkey" type="text" class="dfinput" value=""  /></li>
