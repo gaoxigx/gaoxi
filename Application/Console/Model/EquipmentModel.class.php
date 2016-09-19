@@ -6,8 +6,8 @@ class EquipmentModel extends Model {
     protected $_validate    =   array(
     	//array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
         array('xinghao','require','设备型号必须选择'),
-        array('bianhao','require','设备编号必须填写'),
-        array('daiyanren','require','设备绑定代言人必须填写'),
+//        array('bianhao','require','设备编号必须填写'),
+//        array('daiyanren','require','设备绑定代言人必须填写'),
         array('sex','require','性别名必须填写'),
         array('mobile','require','设备号码(手机)必须填写'),
         // array('kaijipassword','require','开机密码必须填写'),

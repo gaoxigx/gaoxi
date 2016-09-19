@@ -101,27 +101,23 @@ $(document).ready(function(){
 						
 						<td>
 							<volist name="vo.stnum" id="sn">
-                                <p style="color:#024c68;">{$sn.storckname}:{$sn.storck}kg</p>
-                            </volist>
+                                                            <p style="color:#024c68;">{$sn.storckname}:{$sn.storck}kg</p>
+                                                        </volist>
 						</td>
                                                 
 						<td>
-                            <volist name="vo.stnum" id="kc">
-								<volist name="vo.stk" id="sk">
-									<if condition="$sk['quality'] eq $kc['storckname']">
-                                		<p style="color:#024c68;">{$kc.storckname}:{:$kc['storck']-psckg($vo['stk'][$key][numkg])}kg</p>
-                                	</if>
-                                </volist>
-                            </volist>
+                                                        <volist name="vo.stnum" id="kc">
+                                                            <p style="color:#024c68;">{$kc.storckname}:{:$kc['storck']-psckg($vo['stk'][$key][numkg])}kg</p>
+                                                        </volist>
 						</td>
 <!--						<td>{$vo.price2}</td>-->
                                                 
 <!--						<td>{$vo.discount}</td>-->	
 						<td>
 							<volist name="vo.stk" id="st">
-                                <p style="color:#024c68;">{$st.quality}:{$st.cont}单({$st.numkg|psckg=###}kg)</p>
-                            </volist>
-                        </td>
+                                                            <p style="color:#024c68;">{$st.quality}:{$st.cont}单({$st.numkg|psckg=###}kg)</p>
+                                                        </volist>
+                                                </td>
 						<!-- <td>{$vo.purchaseper_name}<p>进货数:{$vo.inputnum}</p></td>--> 				
 						<td><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改</a><a href="__URL__/delete/id/{$vo.id}" class="tablelink" onclick="return 
 						confirm('是否确认删除？');"> 删除</a>

@@ -520,46 +520,53 @@ class ProductController extends CommonController {
                 $map1['kindname']  = array('like','%'.trim($product_name).'%'); 
                 $map1['_logic'] = 'OR';
                 $map['_complex'] = $map1;
-        }
-        
+        }   
         
         $product_name = i('product_name');
-		$kind=I('kind');
+        $kind=I('kind');
 		
         if($kind){
             $map['kind']  =$kind;
-                    $parameter['kind'] = $kind;
-        }
-
-        
+            $parameter['kind'] = $kind;
+        }        
         foreach( $map as $k=>$v){  
             if( !$v )  
                 unset( $arr[$k] );  
         }   
-
         $User = M('kind'); // 实例化User对象
-        $count = $User->where($map)->count();// 查询满足要求的总记录数
-		
+        $count = $User->where($map)->count();// 查询满足要求的总记录数		
         $Page = new \Think\Page($count,20,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
-		$show = $Page->show();// 分页显示输出
-       
-        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('kindname desc')->select();
-//        var_dump($list);exit();
+	$show = $Page->show();// 分页显示输出      
+                
+        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('id desc')->select();
+        
+        
         foreach($list as $key=>$val){
             if($val['purchaseper'] >0){
-                $purchaseper_name = D('kind')->where('id='.$val['purchaseper'])->getField('kindname');
+                $purchaseper_name = D('staff')->where('id='.$val['purchaseper'])->getField('name');
+
                 $list[$key]['purchaseper_name'] = $purchaseper_name;
             }
-
-            $stock=M('stock')->field('storckname,sum(storck) as sum')->where('proid=%d',$val['id'])->group('storckname')->select();            
-
-            $list[$key]['count']=$stock;
-        }
+            $list[$key]['stk']=M('order_goods')->alias('og')->field("og.quality,count(*) as cont,sum(og.`numkg`) as numkg")->join('__PRODUCT__ as pro on  pro.id=og.proid')->where("pro.atrtype=%d",array($val['id']))->group('og.quality')->select();
+            $list[$key]['stnum']=M('stock')->field("storckname,sum(storck) as storck")->where("proid=%d",array($val['id']))->group('storckname')->select();
+        }        
+       // $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->order('kindname desc')->select();
+//        var_dump($list);exit();
+//        foreach($list as $key=>$val){
+//            if($val['purchaseper'] >0){
+//                $purchaseper_name = D('kind')->where('id='.$val['purchaseper'])->getField('kindname');
+//                $list[$key]['purchaseper_name'] = $purchaseper_name;
+//            }
+//
+//            $stock=M('stock')->field('storckname,sum(storck) as sum')->where('proid=%d',$val['id'])->group('storckname')->select();            
+//
+//            $list[$key]['count']=$stock;
+//        }
 
         $this->getprotype();
         $this->getkind();
 
-        $kind=M('kind')->where('id=%d','kindname')->select();
+       // $kind=M('kind')->where('id=%d','kindname')->select();
 
        
         
@@ -569,6 +576,7 @@ class ProductController extends CommonController {
 //        $quality=json_decode($quality,true);
 //
 //        $this->assign('stock',$quality);
+        
         $this->assign('kind',$kind);
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出

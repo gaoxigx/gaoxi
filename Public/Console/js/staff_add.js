@@ -72,10 +72,10 @@ $(function(){
 					minlength:11,
 					maxlength:11
 				},
-				bankaddress:'required',
-				bank_account:{
-					required:true,
-				}
+//				bankaddress:'required',
+//				bank_account:{
+//					required:true,
+//				}
 			},
 			messages:{				
 				username:{
@@ -142,10 +142,10 @@ $(function(){
 					minlength:'11位手机号码',
 					maxlength:'11位手机号码'
 				},
-				bankaddress:'请输入银行名称',
-				bank_account:{
-					required:'请输入银行卡号',
-				},
+//				bankaddress:'请输入银行名称',
+//				bank_account:{
+//					required:'请输入银行卡号',
+//				},
 			},
 			errorClass:'cerror',
 			
