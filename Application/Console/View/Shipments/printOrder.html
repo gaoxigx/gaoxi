@@ -131,7 +131,8 @@
                     </td>-->
                     <td>
                         <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>                          
+                        <a href="{:U('Express/printOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;打印快递单</a>
+                        <!-- <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印快递单</a>                           -->
                     </td>         
                 </tr> 
             </volist>

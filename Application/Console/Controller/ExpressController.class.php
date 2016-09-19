@@ -38,7 +38,7 @@ class ExpressController extends CommonController  {
 
 			if($proOrder){
 				
-		  		$post_data['orderid']=$orderinfo['order_no'];//订单号
+		  		$post_data['orderid']='gx'.$orderinfo['order_no'];//订单号
 		  		$post_data['express_type']=1;//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
 		  		$post_data['j_company']=$sender['j_company'];//寄件方公司
 		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
@@ -96,15 +96,14 @@ class ExpressController extends CommonController  {
 		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){
 		        		
 
-		        		$jnorder=$this->saveOrder($post_data['orderid']);
+		        		$jnorder=$this->OrderSearchService($post_data['orderid']);
+
 		        		$daohuo=json_decode($jnorder,true);
-		 
+		 		
 		        		if($daohuo){
-		        			//$daohuo=json_decode($jnorder,true);
-		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs']['attr']['mailno'];
-		        			$jnorder=$daohuo['data'][0]['childs'][1]['childs']['attr']['orderid'];
+		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+		        			$jnorder=$orderinfo['order_no'];
 		        			$param['status']=2;
-		        			dump($param);
 		        			$odsul=$this->saveOrder($jnorder,$param);
 		        			if($odsul){
 		        				$this->error('已成功下单');		
@@ -118,10 +117,16 @@ class ExpressController extends CommonController  {
 		        	}
 		        	
 		        }
+		  
+		        //$param['numberno']=
+		        $param['status']=2;
+		        $odsul=$this->saveOrder($jnorder,$param);
+    			if($odsul){
+    				$this->error('已成功下单');		
+    			}
+		        		
 
-		        
-				var_dump($sul);
-				exit();
+		  
 
 			}else{
 				$this->error('订单存在异常,请联系管理员审核');
@@ -135,11 +140,8 @@ class ExpressController extends CommonController  {
 
 	//下单成功保存运单号
 	public function saveOrder($order_no,$param){
-		if($order_no){
-			dump($param);
-			$sul=M('order_info')->where('order_no=%s',$order_no)->save($param);
-			echo M()->getLastSql();
-			exit();
+		if($order_no){		
+			$sul=M('order_info')->where('order_no=%s',$order_no)->save($param);	
 			return $sul;
 			
 		}else{
@@ -168,6 +170,9 @@ class ExpressController extends CommonController  {
 		define('_ROOT', str_replace("\\", '/', dirname(__FILE__)));
 		require_once (_ROOT . "/class/SFforHttpPost.class.php");
 		Vendor('Express/sf/class/SFforHttpPost');
+		
+		require_once (_ROOT . "/class/SFprinter.class.php");
+		require_once (_ROOT . "/class/Pclzip.class.php");
 
 		$action = $_POST["action"];
 		if (empty($action)) {

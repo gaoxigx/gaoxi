@@ -1,4 +1,4 @@
-var ajax_url = "/ajax_print.php";
+var ajax_url = "/public/express/sf/ajax_print.php";
 function PrintOrd(){
     $.ajax({
         url:ajax_url,

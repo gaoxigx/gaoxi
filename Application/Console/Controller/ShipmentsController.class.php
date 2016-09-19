@@ -355,7 +355,7 @@ class ShipmentsController extends CommonController {
 		}
 		$User = M('order_info'); // 实例化User对象 
 
-		$map['status']=1;
+		$map['status']=2;
 		//$map['payment_status']=1;
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
