@@ -1,9 +1,0 @@
-D:\user\062088\桌面\demo\demo\bin\Debug\demo.exe.config
-D:\user\062088\桌面\demo\demo\bin\Debug\demo.exe
-D:\user\062088\桌面\demo\demo\bin\Debug\demo.pdb
-D:\user\062088\桌面\demo\demo\obj\Debug\ResolveAssemblyReference.cache
-D:\user\062088\桌面\demo\demo\obj\Debug\demo.Form1.resources
-D:\user\062088\桌面\demo\demo\obj\Debug\demo.Properties.Resources.resources
-D:\user\062088\桌面\demo\demo\obj\Debug\demo.csproj.GenerateResource.Cache
-D:\user\062088\桌面\demo\demo\obj\Debug\demo.exe
-D:\user\062088\桌面\demo\demo\obj\Debug\demo.pdb

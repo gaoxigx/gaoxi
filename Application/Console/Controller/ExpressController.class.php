@@ -30,6 +30,7 @@ class ExpressController extends CommonController  {
 			$this->error('订单不存在');
 			exit();
 		}
+
 		$sender=C('SENDER');
 		$orderinfo=M('order_info')->where('id=%d',$orderid)->find();
 
@@ -48,12 +49,12 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_qu']=$sender['j_qu'];//寄件省市区区
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
-		  		$post_data['d_company']=$orderinfo['username'];//到件方公司
+		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
 		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
-		  		$post_data['d_province']="广东省";//到件省市区省
-		  		$post_data['d_city']="广州";//到件省市区市
-		  		$post_data['d_qu']=$orderinfo['address'];//到件省市区
+		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
+		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
+		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		  		
 
 		  		$post_data['pay_method']=1;//付款方式 1寄付月结  2收方付款
@@ -93,20 +94,21 @@ class ExpressController extends CommonController  {
 
 		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
-		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){
-		        		
+		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
 
-		        		$jnorder=$this->OrderSearchService($post_data['orderid']);
-
+		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
 		        		$daohuo=json_decode($jnorder,true);
-		 		
+		 				
 		        		if($daohuo){
 		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
 		        			$jnorder=$orderinfo['order_no'];
 		        			$param['status']=2;
 		        			$odsul=$this->saveOrder($jnorder,$param);
 		        			if($odsul){
-		        				$this->error('已成功下单');		
+		        				//$this->success('已成功下单',U('Shipments/Plist'));	
+
+		        				$this->printOrder($orderid);
+		        				exit();	
 		        			}
 		        		}
 		        		
@@ -122,7 +124,9 @@ class ExpressController extends CommonController  {
 		        $param['status']=2;
 		        $odsul=$this->saveOrder($jnorder,$param);
     			if($odsul){
-    				$this->error('已成功下单');		
+    				$this->printOrder($orderid);
+    				exit();
+    				$this->success('已成功下单',U('Shipments/Plist'));		
     			}
 		        		
 
@@ -246,13 +250,14 @@ class ExpressController extends CommonController  {
 		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\SFprinter.class.php");
 		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\Pclzip.class.php");
 
-		$action = $_POST["action"];
+		 
 		if (empty($id)) {
 			$this->error("请选择打印订单");
 		    exit();
 		}
 
 		$orderdata=M('order_info')->find($id);
+
 		if(!$orderdata){
 			$this->error("订单不存了");
 			exit();
@@ -271,7 +276,7 @@ class ExpressController extends CommonController  {
 
         $pic = "Public/order/old_no" . time() . ".png";
         $olderpic =ROOT_PATH . "/" . $pic;
-
+     
         $SF = new \SFprinter();
 
         $sender=C('SENDER');
@@ -288,27 +293,42 @@ class ExpressController extends CommonController  {
             "j_address" => $sender['j_address'],//寄件方地址
             "j_number" => '000000',//寄件地编号
 
-            "d_company" => $proOrder[''],//到件方公司
-            "d_contact" =>$proOrder['username'],//到件方姓名
-            "d_tel" => $proOrder['mobile'],//到件方电话
-            "d_province" =>$proOrder[''],//到件省市区
-            "d_city" => $proOrder[''],//到件省市区
-            "d_qu" => $proOrder[''],//到件省市区
-            "d_address" =>$proOrder['address'],//到件方地址
-            "d_number" => $post_data["d_number"],//到件地编号
+            "d_company" => $orderdata['company'],//到件方公司
+            "d_contact" =>$orderdata['username'],//到件方姓名
+            "d_tel" => $orderdata['mobile'],//到件方电话
+            "d_province" =>$orderdata['province'],//到件省市区
+            "d_city" => $orderdata['city'],//到件省市区
+            "d_qu" => $orderdata['qu'],//到件省市区
+            "d_address" =>$orderdata['address'],//到件方地址
+            "d_number" => $orderdata["d_number"],//到件地编号
             "pay_method" => 1,//付款方式
             "custid" => $post_data["custid"],//付款帐号
             "daishou" => $post_data["daishou"], //代收款项
             "remark" => $post_data["remark"],//备注
             "things" => $post_data["things"]//物件
         );
+
         $SF->SFdata($data)->SFprint($olderpic);
-        $zipurl = "Public/order/" . time() . ".zip";
+        $zipurl = "Public/order/" .$orderdata['order_no'] . ".zip";
         $archive = new \PclZip($zipurl);
 		//$v_list = $archive->create($olderpic, PCLZIP_OPT_REMOVE_PATH, '', PCLZIP_OPT_ADD_PATH, '');
-        $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'save', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
-        echo $zipurl;
-        die;
+        $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'Public/order', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
+        if ($v_list == 0) {
+        	die("Error : ".$archive->errorInfo(true));
+     	}
+
+     	$param['mailnoimg']=$pic;
+     	$param['mailnozip']=$zipurl;
+     	if($id>0)
+     		$sul=M("order_info")->where("id=%d",$id)->save($param);
+     
+       
+       
+        if($sul){
+        	$this->success('生成打印图片');
+        }else{
+        	$this->error('请重新生成图片');
+        }
 	}
 }
 

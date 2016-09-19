@@ -60,6 +60,7 @@
                     <th>订单备注</th>  
                     <th style="width:280px;">操作发货</th>
                     <th>快递图片</th>
+                    <th>电子快递单</th>
                     <th style="width: 120px;">操作</th>
 <!--                    <th>确认收款</th>-->                    
                 </tr>
@@ -121,6 +122,10 @@
                             <div id="img{$vo.id}" >
                                 
                             </div>
+                    </td>
+                    <td>
+                      <a target="_blank" href="/{$vo.mailnoimg}"><img src="/{$vo.mailnoimg}" height="60px"/></a><a target="_blank" href="/{$vo.mailnozip}"><span>下载zip</span></a>
+
                     </td>
 <!--                    <td>
                         <if condition="$vo.payment_status eq 0">
