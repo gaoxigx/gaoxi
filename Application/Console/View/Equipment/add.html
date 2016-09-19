@@ -38,7 +38,7 @@ $(function(){
 				xinghao:{
 						required:true,
 				},
-				daiyanren:'required',
+//				daiyanren:'required',
 				endtime:'required',
 				fuzerenid:'required'
 				
@@ -61,7 +61,7 @@ $(function(){
 				xinghao: {
 					required: "须填写编号",
 				},
-				daiyanren:'须填写代言人',
+//				daiyanren:'须填写代言人',
 				endtime:'须填写登记日期',
 				fuzerenid:'须选择设备负责人'
 			},
@@ -114,18 +114,14 @@ $(function(){
 											<option value="2">山东省</option>
 										</select>
 									</li>
-									<li>
-										<label>设备类型</label>
-										<input type="" class="dfinput" value="5s" />
-									</li>
+									<li><label>设备类型<b>*</b></label><input type="" class="dfinput" value="5s" /></li>
 									<li><label>设备编号<b></b></label><input name="bianhao" id="bianhao" type="text" class="dfinput" value=""/></li>
 									<li><label>设备号码<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>
 									<li><label>设备号码1</label><input name="mobile1" type="text" class="dfinput" value=""  />(手机号)</li>
 									<li><label>序列号<b>*</b></label><input name="cdkey" id="cdkey" type="text" class="dfinput" value=""  /></li>
 									<li><label>设备型号<b>*</b></label><input name="xinghao" type="text" class="dfinput" value=""  /></li>
-									<li><label>设备代言人<b>*</b></label><input name="daiyanren" type="text" class="dfinput" value=""  /></li>               
-									<li><label>绑定银行卡</label><input name="eqbank" type="text" class="dfinput" value=""  /></li>
-									<li><label>银行账号名</label><input name="bankname" type="text" class="dfinput" value=""  /></li>
+<!--									<li><label>设备代言人<b></b></label><input name="daiyanren" type="text" class="dfinput" value=""  /></li>               -->
+
 								   <!--  <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value="{$data.bumen}"  /></li>    
 									<li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value="{$data.gongwei}"  /></li>  -->
 									<li><label>登记日期<b>*</b></label><input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime('+3 month'))}"  onClick="WdatePicker()" style="width:187px;"/></li>                   
@@ -137,11 +133,19 @@ $(function(){
 										</select>
 										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
 									</li>
-									  
+                                                                        
+									<li><label>绑定银行卡</label><input name="eqbank" type="text" class="dfinput" value=""  /></li>
+									<li><label>银行账号名</label><input name="bankname" type="text" class="dfinput" value=""  /></li>
+                                                                        
 									<li><label>登陆微信号</label>
 										<input name="weixinhao" type="text" class="dfinput_left" value=""  />
 										<label class="pl10">微信密码</label>
 										<input name="weixinpass" type="text" class="dfinput_left" value=""  />
+									</li>
+									<li><label>绑定邮箱</label>
+										<input name="yxemail" type="text" class="dfinput_left" value=""  />
+										<label class="pl10">邮箱密码</label>
+										<input name="emailpass" type="text" class="dfinput_left" value=""  />
 									</li>
 									<li><label>登陆淘宝账号</label>
 										<input name="taobaohao" type="text" class="dfinput_left" value=""  />
@@ -168,7 +172,7 @@ $(function(){
 										</div>
 									</li>-->
 
-									<li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
+									<li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value="没有密码"  /></li>
 									<li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
 									<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="保&nbsp;&nbsp;存"/></li>
 								</ul>

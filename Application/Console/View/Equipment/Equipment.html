@@ -58,11 +58,11 @@ $(document).ready(function(){
             </ul>
             <ul class="seachform">
                 <form action="/index.php/Console/Equipment/Equipment" method="post" id="form2" name="form2">            
-                    <li><label>搜索</label><input type="text" class="scinpute" name="username" value="" title="请输入序列号/型号/编号/代言人/设备号码/微信号/负责人/使用人"></li>
+                    <li><label>搜索</label><input type="text" class="scinpute" name="username" value="" title="请输入序列号/型号/编号/代言人/设备号码/微信号/负责人/使用人"placeholder="综合搜索" style="width:220px"></li>
                     <li>
 						<label>设备地址</label>
 						<select name="addr_id" type='text' class="sciselect">                           
-							<option value="0">请选择地址</option>
+							<option value="0">请选择</option>
 							<option value="1" <if condition="$param.addr_id eq 1">selected="selected"</if>>广东省</option>
 							<option value="2" <if condition="$param.addr_id eq 2">selected="selected"</if>>山东省</option>
 						</select>
@@ -81,9 +81,10 @@ $(document).ready(function(){
                                     <th><input name="" type="checkbox" value="" checked="checked"/></th>
                                     <th>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></th>
                                     <th>手机信息</th>
-                                    <th>代言人</th>
+<!--                                    <th>代言人</th>-->
                                     <th>设备地址</th>
                                     <th>开机密码</th>
+                                    <th>微信</th>
                                     <th>通讯信息</th>
                                     <th>负责人</th>
                                     <th>部门与岗位</th>
@@ -104,7 +105,7 @@ $(document).ready(function(){
                                             <p>型号：{$vo.xinghao}</p>
                                             <p>编号：{$vo.bianhao}</p>
                                         </td>                                                  
-					<td>{$vo.daiyanren}</td>
+<!--					<td>{$vo.daiyanren}</td>-->
 					<td>
                                             <if condition="$vo.addr_id eq 1">
                                             广东省
@@ -113,9 +114,11 @@ $(document).ready(function(){
                                             </if>
 					</td>
 					<td>{$vo.kaijipassword}</td>
-                                        
+      					<td>
+                                            <p style="color:#009ceb;">微信：{$vo.weixinhao}</p>
+                                            <p style="color:#404040;">绑定邮箱：{$vo.yxemail}</p>      
+                                        </td> 
                                         <td>
-                                            <p>微信：{$vo.weixinhao}</p>
                                             <p style="color:#404040;">淘宝：{$vo.taobaohao}</p>                            
                                             <p>QQ：{$vo.qqhao}</p> 
                                             <p  style="color:#404040;">微博：{$vo.weibohao}</p>

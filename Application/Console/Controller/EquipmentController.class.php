@@ -25,6 +25,7 @@ class EquipmentController extends CommonController {
             $where['daiyanren']  = array('like','%'.trim($username).'%');
             $where['et.mobile']  = array('like','%'.trim($username).'%');
             $where['weixinhao']  = array('like','%'.trim($username).'%');
+            $where['yxemail']  = array('like','%'.trim($username).'%');
             $where['fuzeren']  = array('like','%'.trim($username).'%');            
             $where['shiyongren']  = array('like','%'.trim($username).'%');                    
             $where['_logic'] = 'or';

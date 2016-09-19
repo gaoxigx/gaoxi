@@ -76,17 +76,17 @@ function reset_pass(id){
                 <ul class="seachform">
 
                     <form action="/index.php/Console/Staff/Staff" method="post" id="form2" name="form2">            
-                        <li><label>部门</label>
+                        <li><label><b style="color:#009ceb;">部门</b></label>
                             <select class="sciselect" name="department" id="department">
-                                <option value="0">请选择岗位</option>
+                                <option value="0">请选择</option>
 								<volist name="department"  id="vo">
                                     <option <if condition="$key eq $section">selected="selected"</if> value="{$key}">{$vo}</option>
                                 </volist>
                             </select>
                         </li>
-                        <li><label>岗位</label>
+                        <li><label><b style="color:#009ceb;">岗位</b></label>
                             <select class="sciselect" name="quarters" id="quarters">                            
-                                <option>请选择岗位</option>
+                                <option>请选择</option>
                             </select>
                         </li>
                         <li><label>搜索</label><input type="text" class="scinpute" name="username" value="" title="请输入账号/昵称/姓名/手机号"></li>
