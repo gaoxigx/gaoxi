@@ -54,13 +54,13 @@ function reset_pass(id){
 
 <body>
 
-	<div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">员工组</a></li>
-    <li><a href="#">员工管理</a></li>
-    </ul>
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">员工组</a></li>
+            <li><a href="#">员工管理</a></li>
+        </ul>
     </div>
     
     <div class="rightinfo">
@@ -229,7 +229,7 @@ function reset_pass(id){
     function ajxpost(catid,nb){
         var url="{:U('Staff/allcate')}?catid="+catid;        
         $.get(url,function(data){            
-            var option="<option value=''>请选择岗位</option>";
+            var option="<option value=''>选择岗位</option>";
             for(itme in data){
                 if(nb==data[itme]['cate_id']&&nb.length>0){
                     option+="<option selected='selected' value="+data[itme]['cate_id']+">"+data[itme]['cate_name']+"</option>";
@@ -251,6 +251,7 @@ function reset_pass(id){
 		})
 	})
 	</script>
+   
 
 </body>
 

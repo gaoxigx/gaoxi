@@ -100,6 +100,39 @@ $(function(){
 						<tr>
 							<td>
 								<ul class="forminfo">
+                                                                    
+                                                                        <li><label>设备负责人<b>*</b></label>  
+                                                                            <div class="vocation uew-select">
+                                                                                <select name="fuzerenid" id="fuzerenid" class="uew-select-value">
+                                                                                    <volist name="staff" id="vo">
+                                                                                        <option value="{$key}">{$vo}</option>
+                                                                                    </volist>
+                                                                                </select>
+                                                                                <input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+                                                                            </div>
+                                                                            
+                                                                        </li>
+
+                                                                        <li><label>设备使用人<b>*</b></label>  
+                                                                            <div class="vocation uew-select">
+                                                                                <select id="staffid" name="staffid" class="uew-select-value">  
+                                                                                    <volist name="staff" id="vu">
+                                                                                        <option value="{$key}">{$vu}</option>
+                                                                                    </volist>
+
+                                                                                </select>                                                                      
+                                                                                <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+                                                                            </div>
+                                                                        </li>
+                                                                    
+<!--									<li><label>设备负责人<b>*</b></label>
+										<select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
+											<volist name="staff" id='vo'>
+												<option value="{$vo.id}" >{$vo.name}</option>
+											</volist>
+										</select>
+										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+									</li>
 									<li><label>设备使用人<b>*</b></label>          
 										<select id="shiyongrenid" name="staffid" type='text' class="sciselect">                           
 											<volist name="staff" id='vo'>
@@ -107,7 +140,8 @@ $(function(){
 											</volist>
 										</select>
 										<input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-									</li> 
+									</li> -->
+
 									<li><label>设备地址<b>*</b></label>          
 										<select id="addr_id" name="addr_id" type='text' class="sciselect">
 											<option value="1">广东省</option>
@@ -125,14 +159,7 @@ $(function(){
 								   <!--  <li><label>所在部门<b>*</b></label><input name="bumen" type="text" class="dfinput" value="{$data.bumen}"  /></li>    
 									<li><label>所在工位<b>*</b></label><input name="gongwei" type="text" class="dfinput" value="{$data.gongwei}"  /></li>  -->
 									<li><label>登记日期<b>*</b></label><input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime('+3 month'))}"  onClick="WdatePicker()" style="width:187px;"/></li>                   
-									<li><label>设备负责人<b>*</b></label>
-										<select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
-											<volist name="staff" id='vo'>
-												<option value="{$vo.id}" >{$vo.name}</option>
-											</volist>
-										</select>
-										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-									</li>
+
                                                                         
 									<li><label>绑定银行卡</label><input name="eqbank" type="text" class="dfinput" value=""  /></li>
 									<li><label>银行账号名</label><input name="bankname" type="text" class="dfinput" value=""  /></li>
@@ -172,7 +199,7 @@ $(function(){
 										</div>
 									</li>-->
 
-									<li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value="没有密码"  /></li>
+									<li><label>开机密码</label><input name="kaijipassword" type="text" class="dfinput" value=""  /></li>
 									<li><label>是否使用</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
 									<li><label>&nbsp;</label><input name="" type="submit" class="btn" value="保&nbsp;&nbsp;存"/></li>
 								</ul>
@@ -200,6 +227,67 @@ $(function(){
 			</div> 
 		</div> 
 	</div>
+    
+       <script>
+            $('.min').click(function(){                
+                var val=$(this).parent().find('.num').val();
+                if(val>0){
+                    $(this).parent().find('.num').val(val-1);
+                }
+                
+            })
+
+            $('.add').click(function(){
+                 var val=$(this).parent().find('.num').val();
+                 $(this).parent().find('.num').val(parseInt(val)+1);
+            });
+            
+          //  getJjQuipment($("#agent").val());
+            
+            getStaff($("#fuzerenid").val());
+            $(function(){
+             
+                $("#staffid").change(function(){  
+                   $('#shiyongrentext').val($(this).find('option:selected').text());
+                   getJjQuipment($(this).val());  
+                });
+         
+               $("#fuzerenid").change(function(){                      
+                    getStaff($(this).val());
+                     $('#fuzerntext').val($(this).find('option:selected').text());
+                });
+              
+            })
+            // function getJjQuipment(id){                  
+            //     var url="{:U('Order/getEquipment')}?id="+id;                
+            //     $.get(url,function(data){                 
+            //         $("#equipment").html("");                    
+            //         var option="<option value='0'>请选择</option>";           
+            //         if(data!='0'){                                               
+            //             for( i in data){   
+            //                 option+="<option value="+data[i]['id']+">"+data[i]['xinghao']+"("+data[i]['bianhao']+")"+"</option>"
+            //             }       
+            //         }
+            //          $("#equipment").html(option);
+            //     })
+            // }
+            
+            function getStaff(id){                  
+                var url="{:U('Order/getagent')}?id="+id;                
+                $.get(url,function(data){                 
+                    $("#staffid").html("");                    
+                    var option="<option value='"+id+"'>"+$("#fuzerenid").find("option:selected").text()+"</option>";           
+                    if(data!='0'){                                               
+                        for( i in data){                                   
+                            option+="<option value="+i+">"+data[i]+"</option>"
+                        }       
+                    }
+                     $("#staffid").html(option);
+                })
+            }
+        </script>
+    
+    
 <script type="text/javascript">
     $('#fuzernid').change(function(){
         $('#fuzerntext').val($(this).find('option:selected').text());
@@ -235,6 +323,7 @@ $(function(){
                           
             })            
         }
+        
 </script>
 
 </body>

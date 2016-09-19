@@ -30,7 +30,7 @@
                 <form name="form1" id="form1" method='post' action="__URL__/insert">
                     <div class="itab">
                         <ul> 
-                            <li><a href="#tab1" class="selected">员工信息</a></li> 
+                            <li><a href="#tab1" class="selected">用户信息</a></li> 
                         </ul>
                     </div> 
 
@@ -41,7 +41,7 @@
                             <li><label>确认密码<b>*</b></label><input name="passwordConfirm" id="passwordConfirm" type="password" class="dfinput" value=""  /></li>                            
                             <li><label>昵称<b>*</b></label><input name="nickname" id="nickname" type="text" class="dfinput" value=""  /></li>
                             
-        <div class="formtitle"><span>必填项</span></div>
+        <div class="formtitle"><span>个人信息</span></div>
                             
                             <li><label>姓名<b>*</b></label><input name="name" id="name" type="text" class="dfinput" value=""  /></li>
                             <li><label>性别<b>*</b></label><cite><input id="sex" type="radio" <if condition="$user.sex == 1">checked="checked"</if>  checked="checked" value="1" name="sex">男&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  <if condition="$user.sex == 2">checked="checked"</if> value="2" name="sex">女</cite></li>
@@ -119,7 +119,7 @@
                             <li><label>出身日期<b>*</b></label><input name="birth_date" id="birth_date" onClick="WdatePicker()" type="text" class="dfinput" value=""  /></li>      
                             <li><label>电话<b>*</b></label><input name="mobile" id="mobile" type="text" class="dfinput" value=""  /></li>    
                             
-         <div class="formtitle"><span>基本信息</span></div>  
+         <div class="formtitle"><span>入职信息</span></div>  
                             
                             <li><label>开始时间<b></b></label><input onClick="WdatePicker()" name="starttime" id="starttime" type="text" class="dfinput" value=""  /></li>  
                             <li><label>结束时间<b></b></label><input onClick="WdatePicker()" name="endtime" id="endtime" type="text" class="dfinput" value=""  /></li>  

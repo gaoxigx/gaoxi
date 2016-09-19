@@ -99,6 +99,14 @@ $(function(){
 						<tr>
 							<td>
 								 <ul class="forminfo">
+									<li><label>设备负责人<b>*</b></label>
+										<select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
+											<volist name="staff" id='vo'>
+												<option value="{$vo.id}" <if condition="$vo['id'] eq $data['fuzerenid']"> selected="selected"</if>>{$vo.name}</option>
+											</volist>
+										</select>
+										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+									</li>
 									<li><label>设备使用人<b>*</b></label>
 										<select id="shiyongrenid" name="staffid" type='text' class="sciselect">
 											<volist name="staff" id='vo'>
@@ -106,7 +114,8 @@ $(function(){
 											</volist>
 										</select>
 										<input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-									</li> 
+									</li>                                                         
+                                                                     
 									<li><label>设备地址</label>          
 										<select name="addr_id" type='text' class="sciselect">
 											<option value="1" <if condition="$data.addr_id eq 1">selected="selected"</if>>广东省</option>
@@ -167,14 +176,7 @@ $(function(){
 										<label>登记日期<b>*</b></label>
 										<input name="endtime" type="text" class="Wdate" value="{:date('Y-m-d',strtotime('+3 month'))}"  onClick="WdatePicker()" style="width:187px;"/>
 									</li>                   
-									<li><label>设备负责人<b>*</b></label>
-										<select id="fuzernid" name="fuzerenid" type='text' class="sciselect">
-											<volist name="staff" id='vo'>
-												<option value="{$vo.id}" <if condition="$vo['id'] eq $data['fuzerenid']"> selected="selected"</if>>{$vo.name}</option>
-											</volist>
-										</select>
-										<input id="fuzerntext" name="fuzeren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
-									</li>
+
 									<li>
 										<label>是否使用</label>
 										<cite>
@@ -207,8 +209,8 @@ $(function(){
 				</form>    
 			</div> 
 		</div>
-    </div>
-
+    </div>    
+    
 <script type="text/javascript">
     $('#fuzernid').change(function(){
         $('#fuzerntext').val($(this).find('option:selected').text());
