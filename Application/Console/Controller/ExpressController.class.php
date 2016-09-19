@@ -48,13 +48,13 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_qu']=$sender['j_qu'];//寄件省市区区
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
-		  		$post_data['d_company']=$orderinfo[''];//到件方公司
-		  		$post_data['d_contact']="西瓜";//到件方姓名
-		  		$post_data['d_tel']="15818618500";//到件方电话
+		  		$post_data['d_company']=$orderinfo['username'];//到件方公司
+		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
+		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
 		  		$post_data['d_province']="广东省";//到件省市区省
 		  		$post_data['d_city']="广州";//到件省市区市
-		  		$post_data['d_qu']="天河区";//到件省市区
-		  		$post_data['d_address']="额太多的地方可以让你去";//到件方地址		  		
+		  		$post_data['d_qu']=$orderinfo['address'];//到件省市区
+		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		  		
 
 		  		$post_data['pay_method']=1;//付款方式 1寄付月结  2收方付款
 		  		$post_data['custid']="5322059827";//付款帐号
@@ -241,63 +241,74 @@ class ExpressController extends CommonController  {
 	}
 
 	//打印订单
-	public function printOrder(){
-		define('_ROOT', str_replace("\\", '/', dirname(__FILE__)));
-		require_once (_ROOT . "/class/SFprinter.class.php");
-		require_once (_ROOT . "/class/Pclzip.class.php");
+	public function printOrder($id){
+		
+		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\SFprinter.class.php");
+		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\Pclzip.class.php");
+
 		$action = $_POST["action"];
-		if (empty($action)) {
+		if (empty($id)) {
+			$this->error("请选择打印订单");
 		    exit();
 		}
 
-		switch ($action) {
-		//    下订单接口
-		    case "Printer":
-		        $post_data = $_POST;
-		        unset($post_data["action"]);
-
-		        $pic = "save/old_no" . time() . ".png";
-		        $olderpic = _ROOT . "/" . $pic;
-
-		        $SF = new SFprinter();
-		        $data = array(
-		            "express_type" => $post_data["express_type"],
-		            "mailno" => $post_data["mailno"],
-		            "orderid" => $post_data["orderid"],
-		            "j_company" => $post_data["j_company"],
-		            "j_contact" => $post_data["j_contact"],
-		            "j_tel" => $post_data["j_tel"],
-		            "j_province" => $post_data["j_province"],
-		            "j_city" => $post_data["j_city"],
-		            "j_qu" => $post_data["j_qu"],
-		            "j_address" => $post_data["j_address"],
-		            "j_number" => $post_data["j_number"],
-		            "d_company" => $post_data["d_company"],
-		            "d_contact" => $post_data["d_contact"],
-		            "d_tel" => $post_data["d_tel"],
-		            "d_province" => $post_data["d_province"],
-		            "d_city" => $post_data["d_city"],
-		            "d_qu" => $post_data["d_qu"],
-		            "d_address" => $post_data["d_address"],
-		            "d_number" => $post_data["d_number"],
-		            "pay_method" => $post_data["pay_method"],
-		            "custid" => $post_data["custid"],
-		            "daishou" => $post_data["daishou"], //代收款项
-		            "remark" => $post_data["remark"],
-		            "things" => $post_data["things"]
-		        );
-		        $SF->SFdata($data)->SFprint($olderpic);
-		        $zipurl = "save/order" . time() . ".zip";
-		        $archive = new PclZip($zipurl);
-		//        $v_list = $archive->create($olderpic, PCLZIP_OPT_REMOVE_PATH, '', PCLZIP_OPT_ADD_PATH, '');
-		        $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'save', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
-		        echo $zipurl;
-		        die;
-
-		        break;
-		    default:
-		        break;
+		$orderdata=M('order_info')->find($id);
+		if(!$orderdata){
+			$this->error("订单不存了");
+			exit();
 		}
+
+
+		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
+		if(!$proOrder){
+			$this->error("订单没有产品请核实");
+			exit();
+		}
+
+		
+        $post_data = $orderdata;
+        unset($post_data["action"]);
+
+        $pic = "Public/order/old_no" . time() . ".png";
+        $olderpic =ROOT_PATH . "/" . $pic;
+
+        $SF = new \SFprinter();
+
+        $sender=C('SENDER');
+        $data = array(
+            "express_type" =>'标准快递',//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+            "mailno" => $orderdata['numberno'],//运单号
+            "orderid" =>'gx'.$orderdata['order_no'],//订单号
+            "j_company" => $sender['j_company'],//寄件方公司
+            "j_contact" => $sender['j_contact'],//寄件方姓名
+            "j_tel" => $sender['j_tel'],//寄件方电话
+            "j_province" => $sender['j_province'],
+            "j_city" =>$sender['j_city'],
+            "j_qu" => $sender['j_qu'],//寄件省市区            
+            "j_address" => $sender['j_address'],//寄件方地址
+            "j_number" => '000000',//寄件地编号
+
+            "d_company" => $proOrder[''],//到件方公司
+            "d_contact" =>$proOrder['username'],//到件方姓名
+            "d_tel" => $proOrder['mobile'],//到件方电话
+            "d_province" =>$proOrder[''],//到件省市区
+            "d_city" => $proOrder[''],//到件省市区
+            "d_qu" => $proOrder[''],//到件省市区
+            "d_address" =>$proOrder['address'],//到件方地址
+            "d_number" => $post_data["d_number"],//到件地编号
+            "pay_method" => 1,//付款方式
+            "custid" => $post_data["custid"],//付款帐号
+            "daishou" => $post_data["daishou"], //代收款项
+            "remark" => $post_data["remark"],//备注
+            "things" => $post_data["things"]//物件
+        );
+        $SF->SFdata($data)->SFprint($olderpic);
+        $zipurl = "Public/order/" . time() . ".zip";
+        $archive = new \PclZip($zipurl);
+		//$v_list = $archive->create($olderpic, PCLZIP_OPT_REMOVE_PATH, '', PCLZIP_OPT_ADD_PATH, '');
+        $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'save', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
+        echo $zipurl;
+        die;
 	}
 }
 
