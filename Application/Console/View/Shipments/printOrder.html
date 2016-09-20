@@ -124,7 +124,7 @@
                             </div>
                     </td>
                     <td>
-                      <a target="_blank" href="/{$vo.mailnoimg}"><img src="/{$vo.mailnoimg}" height="60px"/></a><a target="_blank" href="/{$vo.mailnozip}"><span>下载zip</span></a>
+                      <a target="_blank" href="/{$vo.mailnoimg}" id="imgt{$vo.id}"><img src="/{$vo.mailnoimg}" height="60px"/></a><a target="_blank" href="/{$vo.mailnozip}"><span>下载zip</span></a>
 
                     </td>
 <!--                    <td>
@@ -136,8 +136,8 @@
                     </td>-->
                     <td>
                         <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="{:U('Express/printOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;打印快递单</a>
-                        <!-- <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印快递单</a>                           -->
+                        <a href="{:U('Express/printOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;生成快递单</a>
+                        <a href="javascript:void(0)" class="print" onclick="myPreview({$vo.id})">&nbsp;打印快递单</a>
                     </td>         
                 </tr> 
             </volist>
@@ -258,7 +258,65 @@ $(document).ready(function(){
 <script type="text/javascript" src="/public/photo/js/jquery.easing.js"></script>
 <script type="text/javascript" src="/public/photo/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <script type="text/javascript" src="/public/photo/js/webcam.js"></script>
-<script type="text/javascript" src="/public/photo/js/script.js"></script>
+<script language="javascript" src="/Public/express/Lp/LodopFuncs.js"></script>
+<script language="javascript" type="text/javascript"> 
+        var LODOP; //声明为全局变量
+  function CreateImage() {
+    LODOP=getLodop();  
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片1");
+    LODOP.ADD_PRINT_IMAGE(30,150,400,400,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    //LODOP.ADD_PRINT_IMAGE(200,150,260,150,"C:/test.jpg"); //本地图片
+  };  
+  function myPreview1() {   
+    CreateImage();
+    LODOP.PREVIEW();    
+  };  
+  function myPrint1() {   
+    CreateImage();
+    LODOP.PRINT();    
+  };  
+  function myPrintSetup1() {    
+    CreateImage();
+    LODOP.PRINT_SETUP();    
+  };    
+
+  function myPreview2() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片2");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,250,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690'width='100%' height='250'/>");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",1);//(可变形)扩展缩放模式
+    LODOP.PREVIEW();
+  };  
+  function myPreview3() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,600,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",1);//按原图比例(不变形)缩放模式
+    LODOP.PREVIEW();    
+  }; 
+  function myPreview(id) {
+  alert(id);
+  alert("#imgt"+id);
+    var str =$("#imgt"+id).html();
+    alert(str);
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,600,str);
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",1);//按原图比例(不变形)缩放模式
+    LODOP.PREVIEW();    
+  }; 
+  function myPreview4() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片4");
+    LODOP.ADD_PRINT_TEXT(56,56,200,20,"公章底下的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",13);
+    LODOP.ADD_PRINT_IMAGE(28,49,171,153,"<img border='0' src='http://static15.photo.sina.com.cn/middle/4fe4ba17t993d651b55ce&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"TransColor","#FFFFFF");
+    LODOP.ADD_PRINT_TEXT(120,53,200,20,"公章上面的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",15);
+    LODOP.PREVIEW();
+  };      
+</script> 
 
 </body>
 
