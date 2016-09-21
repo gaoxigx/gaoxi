@@ -49,7 +49,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_qu']=$sender['j_qu'];//寄件省市区区
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
-		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
+		  		$post_data['d_company']=empty($orderinfo['company'])?$orderinfo['username']:$orderinfo['company'];//到件方公司
 		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
 		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
@@ -76,7 +76,7 @@ class ExpressController extends CommonController  {
 		      
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
-		       
+		       	dump($post_data);
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
 		 		
 		 		if(!$data){		 			
