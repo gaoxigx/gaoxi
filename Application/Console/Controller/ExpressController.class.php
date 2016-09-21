@@ -91,12 +91,8 @@ class ExpressController extends CommonController  {
 		       		$this->error('没有得到订单信息');
 		       		exit();
 		    	}
-		    	
-		        if($Mode="JSON"){
-		        	$sul=json_decode($data,true);
-		        }else{
-		        	$data= json_decode(json_encode($xml),TRUE);
-		        }
+		    		
+		       
 
 		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
@@ -118,10 +114,10 @@ class ExpressController extends CommonController  {
 		        			}
 		        		}
 		        		
-		        		$this->error($sul['data'][0]['childs'][1]['childs']['0']['text']);		
+		        		$this->error($data['data'][0]['childs'][1]['childs']['0']['text']);		
 		        	}else{
 		        			
-		        		$this->error($sul['data'][0]['childs'][1]['childs']['0']['text']);	
+		        		$this->error($data['data'][0]['childs'][1]['childs']['0']['text']);	
 		        	}
 		        	
 		        }
@@ -210,23 +206,25 @@ class ExpressController extends CommonController  {
 		        $Mode = $post_data["OrderService_Mode"];
 		        unset($post_data["OrderService_Mode"]);
 
-		    	$data = $SF->OrderService($post_data)->Send();
-		    
-		        if ($Mode == "JSON") {
-		            $data = $SF->OrderService($post_data)->Send()->readJSON();
-		        } else {
-		            $data = $SF->OrderService($post_data)->Send()->webView();
-		        }
+		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
+		
 
-		        if($Mode="JSON"){
-		        	$sul=json_decode($data,true);
-		        }else{
-		        	$sul= json_decode(json_encode($xml),TRUE);
-		        }
+		        if(!$data){		 			
+		 			$this->error('没有得到得运订单号');
+		       		exit();
+		 		}
 
-		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
+		 
+		 		$data=json_decode($data,true);
+
+		       if(empty($data['data'])){
+		       		$this->error('没有得到订单信息');
+		       		exit();
+		    	}
+
+		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
-		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
+		        	if($data['data'][0]['childs'][1]['attr']['code']==8016){		        		
 
 		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
 		        		$daohuo=json_decode($jnorder,true);
@@ -235,6 +233,7 @@ class ExpressController extends CommonController  {
 		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
 		        			$jnorder=$orderinfo['order_no'];
 		        			$param['status']=2;
+		        			$param['express']=1;
 		        			$odsul=$this->saveOrder($jnorder,$param);
 		        			if($odsul){
 		        				//$this->success('已成功下单',U('Shipments/Plist'));	
@@ -260,6 +259,7 @@ class ExpressController extends CommonController  {
 		        }
 		  		
 		        //$param['numberno']=
+		        $param['express']=1;
 		        $param['status']=2;
 		        $odsul=$this->saveOrder($jnorder,$param);
     			if($odsul){

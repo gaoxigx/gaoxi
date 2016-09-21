@@ -343,13 +343,15 @@ $(document).ready(function(){
   function myPreview(id) {
     var str =$("#imgt"+id).html();
     var url="{:U('Shipments/orderstatus')}";
+    url=url+"?id="+id;
     $.get(url,function(data){
-       if(data.status==1){
+       if(data==1){
           LODOP=getLodop();   
           LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
           LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,str);
           LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
           LODOP.PREVIEW(); 
+          location.reload();
         }else{
            alert('没有数据');
         }   

@@ -620,7 +620,7 @@ class ShipmentsController extends CommonController {
     	if($data){
     		$this->ajaxreturn($result['status']=1);
     		exit();
-    	}
+    	}    
     	$this->ajaxreturn($result['status']=0);
     	exit();
     }
