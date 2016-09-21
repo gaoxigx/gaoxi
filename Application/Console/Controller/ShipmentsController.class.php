@@ -609,10 +609,12 @@ class ShipmentsController extends CommonController {
     }
 
     public function orderstatus($id){
-    	if($id){
+
+    	if(empty($id)){
     		$this->ajaxreturn($result['status']=0);
     		exit();
     	}
+    	$map['id']=$id;
     	$data=M('order_info')->where($map)->setField('status',2);
 
     	if($data){

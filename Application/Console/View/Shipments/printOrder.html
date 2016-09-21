@@ -83,7 +83,7 @@ td p{display: block;text-indent: 0; padding: 0px 21px;}
                     </td>
                     <td><p style="color:#000">{$vo['username']}</p><p style="color:#000">{$vo['mobile']}</p><p style="color:#000">{$vo['address']}</p></td>
                     <td>￥{$vo['total_price']}</td>
-                    <td style="color:red">{$vo.note}</td>
+                    <td style="color:red" id="note{$vo.note}">{$vo.note}</td>
       
                          <td >
               
@@ -282,12 +282,24 @@ $(document).ready(function(){
 
     $(".imginfo").each(function(){
         var t=$(this).html();
-      
-        LODOP=getLodop();   
-        LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
-            LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,t);
-            LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
-            LODOP.PRINT();  
+        var url="{:U('Shipments/orderstatus')}";
+        var id=$(this).attr('v');
+        url=url+"?id="+id;
+     
+        $.get(url,function(data){
+
+          if(data.status==1){
+             LODOP=getLodop();   
+             LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+             LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,t);
+             LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+             LODOP.PRINT();  
+             return;
+          }else{
+            $('#note'+id).append('打印异常');
+             return;
+          }
+        });
 
     }); 
   };
@@ -298,17 +310,14 @@ $(document).ready(function(){
     $.get(url,function(data){
         if(data.status==1){
           var order=data.data;
-          for( var t in order){
-         
-              var str="<img src=\"/"+order[t]+"\" />";
-          
+          for( var t in order){         
+              var str="<img src=\"/"+order[t]+"\" />";          
               LODOP=getLodop();   
               LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
               LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,t);
               LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
               LODOP.PRINT();            
           }
-
         }else{
           alert('没有数据');
         }
