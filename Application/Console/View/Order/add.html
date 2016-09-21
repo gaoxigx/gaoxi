@@ -111,7 +111,7 @@
 
                             <li><label>支付方式<b>*</b></label>  
                                 <div class="vocation uew-select">
-                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_method']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status[{$vo4['id']}]" type="checkbox" value="{$vo4.payment}" <if condition="$vo4['id'] eq $info['payment_method']"> checked="checked" </if>>{$vo4.payment}</label></volist>
                                 </div>
                             </li>
 
@@ -129,12 +129,8 @@
                                 <div class="click" style="float: left;padding-left: 20px; width: 80px;padding-top:5px;"></div>
                             </li>-->
 <!-- 
-                            <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->
-                      
-                            <li>
-                                <label>买家微信号</label>
-                                <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value=""  />
-                            </li>
+                            <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->                     
+                            
                             <li>
                                 <label>订单金额<b>*</b></label>
                                 <input id="buyer_wechat" name="total_price" type="text" class="dfinput" value=""  />
@@ -144,6 +140,10 @@
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value=""  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="" /></li>
                             <li><label>收件人地址<b>*</b></label><input id="province" style="width:80px" placeholder="省" name="province" type="text" class="dfinput" value=""  /><input style="width:80px"  id="city" placeholder="城市" name="city" type="text" class="dfinput" value=""  /><input  style="width:80px"  id="qu" placeholder="区域" name="qu" type="text" class="dfinput" value=""  /><input  id="address" placeholder="详细地址" name="address" type="text" class="dfinput" value=""  /></li>
+                            <li>
+                                <label>买家微信号</label>
+                                <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value=""  />
+                            </li>
                             <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px"type="text" class="dfinput" value=""  ></textarea></li>                          
                         </ul>
                       <ul class="forminfo">

@@ -63,11 +63,9 @@
                     <td>{$vo['mobile']}</td>
                     <td>{$vo['address']}</td>
                     <td style="color:red">{$vo.note}<p>{$vo.fhnote}</p></td>
-                    <td>{$vo.express|getexpresstext=###}</td>
+                    <td><div style="display:none" id="imgt{$vo.id}"><img src="/{$vo.mailnoimg}" /></div><a target="_blank" href="/{$vo.mailnoimg}" >{$vo.express|getexpresstext=###}快递单</a></td>
                    <td>
-                        <switch name="vo.payment_status">
-                            <case value="0">已下单.</case>
-                            <case value="1">
+                    
                                     <switch name="vo.status">
                                             <case value="1">已下单 
                                                     <input type="text" style="height:23px;boder:1px;" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
@@ -76,9 +74,12 @@
                                             <case value="2">已发货 {$vo.numberno}<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查询物流<a/>
                                             </case>
                                     </switch>
+                        <!--     <switch name="vo.payment_status">
+                            <case value="0">已下单.</case>
+                            <case value="1">
                             </case>
                             <default />已下单
-                        </switch>
+                        </switch> -->
                     </td>
 <!--                    <td>{$vo.fhnote}</td>-->
 <!--                    <td>
@@ -90,7 +91,7 @@
                     </td>-->
                     <td>
                         <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>  
+                        <a href="javascript:void(0)" onclick="myPreview({$vo['id']})" class="tablelink">&nbsp;打印</a>  
 <!--                        <if condition="$vo.status neq 2"><a href="__URL__/edit/id/{$vo.id}" class="tablelink">修改&nbsp;</a></if>-->
                         <a href="__URL__/editnote/id/{$vo.id}" class="tablelink">修改&nbsp;</a>
                     </td>         
@@ -167,6 +168,63 @@ $(document).ready(function(){
             //setTotal();
         })
     </script>
+
+    <script language="javascript" src="/Public/express/Lp/LodopFuncs.js"></script>
+<script language="javascript" type="text/javascript"> 
+        var LODOP; //声明为全局变量
+  function CreateImage() {
+    LODOP=getLodop();  
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片1");
+    LODOP.ADD_PRINT_IMAGE(30,150,400,400,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    //LODOP.ADD_PRINT_IMAGE(200,150,260,150,"C:/test.jpg"); //本地图片
+  };  
+  function myPreview1() {   
+    CreateImage();
+    LODOP.PREVIEW();    
+  };  
+  function myPrint1() {   
+    CreateImage();
+    LODOP.PRINT();    
+  };  
+  function myPrintSetup1() {    
+    CreateImage();
+    LODOP.PRINT_SETUP();    
+  };    
+
+  function myPreview2() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片2");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,250,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690'width='100%' height='250'/>");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",1);//(可变形)扩展缩放模式
+    LODOP.PREVIEW();
+  };  
+  function myPreview3() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,600,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+    LODOP.PREVIEW();    
+  }; 
+  function myPreview(id) {
+    var str =$("#imgt"+id).html();
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+    LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,str);
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+    LODOP.PREVIEW();    
+  }; 
+  function myPreview4() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片4");
+    LODOP.ADD_PRINT_TEXT(56,56,200,20,"公章底下的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",13);
+    LODOP.ADD_PRINT_IMAGE(28,49,171,153,"<img border='0' src='http://static15.photo.sina.com.cn/middle/4fe4ba17t993d651b55ce&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"TransColor","#FFFFFF");
+    LODOP.ADD_PRINT_TEXT(120,53,200,20,"公章上面的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",15);
+    LODOP.PREVIEW();
+  };      
+</script> 
 
 
 </body>

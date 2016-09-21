@@ -113,7 +113,9 @@
                             </li>
                             <li><label>支付方式{$info['payment_method']}<b>*</b></label>                              
                                 <div class="vocation uew-select">
-                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_status']"> checked="checked" </if>>{$vo4.payment}</label></volist>
+                                    <php>$paymentst=json_decode($info['payment_status'],true);var_dump($paymentst);</php>
+                                    <php>var_dump(in_array('微信红包',$paymentst))</php>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status[{$vo4.id}]" type="checkbox" value="{$vo4.payment}"  checked="checked" >{$vo4.payment}</label></volist>
                                 </div>
                             </li>
 
