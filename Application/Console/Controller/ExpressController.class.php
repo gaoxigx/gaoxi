@@ -78,7 +78,8 @@ class ExpressController extends CommonController  {
 		        $Mode = $post_data["OrderService_Mode"];
 		        unset($post_data["OrderService_Mode"]);
 
-		    	$data = $SF->OrderService($post_data)->Send();
+		    	//$data = $SF->OrderService($post_data)->Send();
+		 
 		    
 		        if ($Mode == "JSON") {
 		            $data = $SF->OrderService($post_data)->Send()->readJSON();
@@ -86,12 +87,16 @@ class ExpressController extends CommonController  {
 		            $data = $SF->OrderService($post_data)->Send()->webView();
 		        }
 
+		       if(!$data){
+		       		$this->error('没有得到订单信息');
+		    	}
+
 		        if($Mode="JSON"){
 		        	$sul=json_decode($data,true);
 		        }else{
 		        	$sul= json_decode(json_encode($xml),TRUE);
 		        }
-		    
+
 		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
 		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
