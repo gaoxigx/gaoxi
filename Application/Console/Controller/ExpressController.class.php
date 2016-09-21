@@ -91,8 +91,7 @@ class ExpressController extends CommonController  {
 		        }else{
 		        	$sul= json_decode(json_encode($xml),TRUE);
 		        }
-		        var_dump($sul);
-		        exit();
+		    
 		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
 		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
