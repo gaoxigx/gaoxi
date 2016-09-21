@@ -450,7 +450,7 @@ class ExpressController extends CommonController  {
             "j_city" =>$sender['j_city'],
             "j_qu" => $sender['j_qu'],//寄件省市区            
             "j_address" => $sender['j_address'],//寄件方地址
-            "j_number" => '000000',//寄件地编号
+            "j_number" => $sender['j_number'],//寄件地编号
 
             "d_company" => $orderdata['company'],//到件方公司
             "d_contact" =>$orderdata['username'],//到件方姓名
