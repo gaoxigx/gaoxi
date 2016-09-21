@@ -88,8 +88,11 @@ class ExpressController extends CommonController  {
 		        }
 
 		       if(!$data){
+
 		       		$this->error('没有得到订单信息');
 		    	}
+		    	var_dump($data);
+		    	exit();
 
 		        if($Mode="JSON"){
 		        	$sul=json_decode($data,true);
