@@ -80,7 +80,8 @@ class ExpressController extends CommonController  {
 
 		    	//$data = $SF->OrderService($post_data)->Send();
 		 
-		    
+		    	var_dump($post_data);
+		    	exit();
 		        if ($Mode == "JSON") {
 		            $data = $SF->OrderService($post_data)->Send()->readJSON();
 		        } else {
@@ -88,7 +89,6 @@ class ExpressController extends CommonController  {
 		        }
 
 		       if(!$data['data']){
-
 		       		$this->error('没有得到订单信息');
 		    	}
 		    	var_dump($data);
