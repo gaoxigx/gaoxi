@@ -76,6 +76,15 @@
                                                     </case>
                                                      <case value="3">异常订单，请审核</case>
                                                      <case value="4">订单已撤消</case>
+                                                     <case value="5"><span>已发货 {$vo.numberno} &nbsp;<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查看物流</a></span>
+                                                    <if condition="$vo.expressimg neq '' ">                                                    
+                                                        <div class="click" style="float: left;" data="/{$vo.expressimgs}">
+                                                            <span> <img src="/{$vo.expressimg}" height="60"></span>
+                                                        </div>                                 
+                                                    </if>                  
+
+                                                    </case>
+
                                                       <default />已下单
                                                 </switch>
                                        <!--  <switch name="vo.payment_status">
