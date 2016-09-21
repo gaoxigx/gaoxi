@@ -77,7 +77,8 @@ class ExpressController extends CommonController  {
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
 		        unset($post_data["OrderService_Mode"]);
-
+		       	dump($post_data);
+		       	exit();
 		    	$data = $SF->OrderService($post_data)->Send();//->readJSON();
 		 
 		 		if(!$data){		 			
