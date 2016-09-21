@@ -87,7 +87,7 @@ class ExpressController extends CommonController  {
 		            $data = $SF->OrderService($post_data)->Send()->webView();
 		        }
 
-		       if(!$data){
+		       if(!$data['data']){
 
 		       		$this->error('没有得到订单信息');
 		    	}
