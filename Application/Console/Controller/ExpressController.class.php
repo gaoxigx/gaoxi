@@ -84,6 +84,9 @@ class ExpressController extends CommonController  {
 		       		exit();
 		 		}
 
+		 		dump($data);
+		 		exit();
+
 		 		$data=json_decode($data,true);
 
 		       if(empty($data['data'])){
