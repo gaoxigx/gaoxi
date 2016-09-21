@@ -76,7 +76,7 @@ class ExpressController extends CommonController  {
 		      
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
-		       	dump($post_data);
+	
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
 		 		
 		 		if(!$data){		 			
@@ -84,9 +84,7 @@ class ExpressController extends CommonController  {
 		       		exit();
 		 		}
 
-		 		dump($data);
-		 		exit();
-
+		 
 		 		$data=json_decode($data,true);
 
 		       if(empty($data['data'])){
