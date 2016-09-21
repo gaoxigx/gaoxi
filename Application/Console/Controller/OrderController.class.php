@@ -516,8 +516,8 @@ class OrderController extends CommonController {
 		$data['order_no'] = $this->build_order_no();
 		$data['addtime'] = time();
 		$data['status'] = 1;
-		$data['payment_status'] = 1;
-		
+		$data['payment_status'] = json_encode(I('payment_status'));
+	
 		$roleList   =  D('order_info');
 
 		$mid['c.uid']=session('userid');

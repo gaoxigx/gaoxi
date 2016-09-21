@@ -119,14 +119,16 @@ class ExpressController extends CommonController  {
 		        	}
 		        	
 		        }
-		  
+		  	    dump($data);
+		  	    var_dump($data);
+		  	    exit();
 		        //$param['numberno']=
 		        $param['status']=2;
 		        $odsul=$this->saveOrder($jnorder,$param);
     			if($odsul){
-    				$this->printOrder($orderid);
+    				$this->printOrder($orderid,0);
     				exit();
-    				$this->success('已成功下单',U('Shipments/Plist'));		
+    				//$this->success('已成功下单',U('Shipments/Plist'));		
     			}
 		        		
 
@@ -138,6 +140,146 @@ class ExpressController extends CommonController  {
 
 		}else{
 			$this->error("订单不存在");
+		}		
+		
+	}
+
+	//批量生成订单
+	public function batchOrder(){
+		set_time_limit(0);
+		$sender=C('SENDER');
+		$oMap['status']=1;
+		$orderinfo=M('order_info')->where($oMap)->find();
+	
+		$return['status']=0;
+		if(!$orderinfo){	
+			$return['status']=3;	
+			$this->ajaxreturn($return);
+			exit();
+		}
+
+		if($orderinfo){
+
+			$orderid=$orderinfo['id'];
+			$proOrder=M('order_goods')->where('order_no=%s',$orderinfo['order_no'])->select();
+
+			if($proOrder){
+				
+		  		$post_data['orderid']='gx'.$orderinfo['order_no'];//订单号
+		  		$post_data['express_type']=1;//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
+		  		$post_data['j_company']=$sender['j_company'];//寄件方公司
+		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
+		  		$post_data['j_tel']=$sender['j_tel'];//寄件方电话
+		  		$post_data['j_province']=$sender['j_province'];//寄件省市区省
+		  		$post_data['j_city']=$sender['j_city'];//寄件省市区市
+		  		$post_data['j_qu']=$sender['j_qu'];//寄件省市区区
+		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
+
+		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
+		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
+		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
+		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
+		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
+		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
+		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		  		
+
+		  		$post_data['pay_method']=1;//付款方式 1寄付月结  2收方付款
+		  		$post_data['custid']="5322059827";//付款帐号
+		  		$post_data['daishou']="0";//代收金额
+
+		  		//得到物品信息
+		  		$things="";
+		  		foreach ($proOrder as $k => $vl) {
+		  			$things.=$vl['product'].' '.$vl['buynum'].'份';
+		  		}
+
+		  		$post_data['things']=$things;//物品
+		  		$post_data['things_num']=1;//数量
+		  		$post_data['remark']=$orderinfo['note'];//备注
+		  		$post_data['OrderService_Mode']="JSON";//数据格式		
+		 
+		        unset($post_data["action"]);
+		      
+		        $SF = new \SFapi();
+		        $Mode = $post_data["OrderService_Mode"];
+		        unset($post_data["OrderService_Mode"]);
+
+		    	$data = $SF->OrderService($post_data)->Send();
+		    
+		        if ($Mode == "JSON") {
+		            $data = $SF->OrderService($post_data)->Send()->readJSON();
+		        } else {
+		            $data = $SF->OrderService($post_data)->Send()->webView();
+		        }
+
+		        if($Mode="JSON"){
+		        	$sul=json_decode($data,true);
+		        }else{
+		        	$sul= json_decode(json_encode($xml),TRUE);
+		        }
+
+		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
+		        
+		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
+
+		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
+		        		$daohuo=json_decode($jnorder,true);
+		 				
+		        		if($daohuo){
+		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+		        			$jnorder=$orderinfo['order_no'];
+		        			$param['status']=2;
+		        			$odsul=$this->saveOrder($jnorder,$param);
+		        			if($odsul){
+		        				//$this->success('已成功下单',U('Shipments/Plist'));	
+
+		        				$sulprint=$this->printOrder($orderid,$ajax=1);
+		        				if($sulprint){
+			    					$return['status']=1;
+			    					$return['msg']='生成订单成功';
+			    					$return['order_no']=$param['numberno'];
+			    					$return['mailno']=$orderinfo['order_no'];
+			    				}
+			    				$this->ajaxreturn($return);	
+			    				exit();
+		        			}
+		        		}
+		        		
+		        		$this->error($sul['data'][0]['childs'][1]['childs']['0']['text']);		
+		        	}else{
+		        			
+		        		$this->error($sul['data'][0]['childs'][1]['childs']['0']['text']);	
+		        	}
+		        	
+		        }
+		  		
+		        //$param['numberno']=
+		        $param['status']=2;
+		        $odsul=$this->saveOrder($jnorder,$param);
+    			if($odsul){
+    				$sulprint=$this->printOrder($orderid,$ajax=1);
+    				if($sulprint){
+    					$return['status']=1;
+    					$return['msg']='生成订单成功';
+    					$return['order_no']=$param['numberno'];
+    					$return['mailno']=$orderinfo['order_no'];
+    				}
+    				$this->ajaxreturn($return);	
+    				exit();
+    			}
+
+			}else{
+				$return['status']=1;
+				$return['msg']="订单存在异常,请联系管理员审核";
+				$this->ajaxreturn($return);
+				exit();
+			}
+
+		}else{
+			$return['status']=1;
+			$return['msg']="订单不存在";
+			$this->ajaxreturn($return);
+			exit();
 		}		
 		
 	}
@@ -245,7 +387,7 @@ class ExpressController extends CommonController  {
 	}
 
 	//打印订单
-	public function printOrder($id){
+	public function printOrder($id,$ajax=0){
 		
 		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\SFprinter.class.php");
 		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\Pclzip.class.php");
@@ -259,15 +401,26 @@ class ExpressController extends CommonController  {
 		$orderdata=M('order_info')->find($id);
 
 		if(!$orderdata){
-			$this->error("订单不存了");
-			exit();
+			if($ajax==1){
+				return false;
+			}else{
+				$this->error("订单不存了");
+				exit();
+			}
+			
+			
 		}
 
 
 		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
 		if(!$proOrder){
-			$this->error("订单没有产品请核实");
-			exit();
+			if($ajax==1){
+				return false;
+			}else{
+				$this->error("订单没有产品请核实");
+				exit();
+			}
+			
 		}
 
 		
@@ -319,15 +472,26 @@ class ExpressController extends CommonController  {
 
      	$param['mailnoimg']=$pic;
      	$param['mailnozip']=$zipurl;
+     	$param['status']=5;
      	if($id>0)
      		$sul=M("order_info")->where("id=%d",$id)->save($param);
-     
-       
        
         if($sul){
-        	$this->success('生成打印图片');
+        	if($ajax==1){
+				return true;
+			}else{
+				$this->success('生成打印图片');
+				exit();
+			}
+        	
         }else{
-        	$this->error('请重新生成图片');
+        	if($ajax==1){
+				return false;
+			}else{
+				$this->error('请重新生成图片');
+				exit();
+			}
+        	
         }
 	}
 }

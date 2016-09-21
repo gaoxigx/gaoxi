@@ -355,14 +355,14 @@ class ShipmentsController extends CommonController {
 		}
 		$User = M('order_info'); // 实例化User对象 
 
-		$map['status']=2;
+		$map['status']=5;
 		//$map['payment_status']=1;
 		$count = $User->where($map)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出	  	
 
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $User->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();		
+		$list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();		
 		$staff=D('staff')->getfield('id,name',true);
 		$catdata=D('Category')->categoryone();      
 		
@@ -587,7 +587,40 @@ class ShipmentsController extends CommonController {
          $this->assign('id',$id);            
          $this->display();
         }
-    }          
+    } 
+    public function bacthprint(){
+    	$this->display();
+    }         
         
+
+    public function orderPrint(){
+    	$map['status']=5;
+    	$map['mailnoimg']=array('neq','');
+    	$data=M('order_info')->where($map)->getField('id,mailnoimg',true);
+
+    	if($data){
+    		$return['status']=1;
+    		$return['data']=$data;
+    		$this->ajaxreturn($return);
+    	}else{
+    		$return['status']=0;
+    		$this->ajaxreturn($return);
+    	}
+    }
+
+    public function orderstatus($id){
+    	if($id){
+    		$this->ajaxreturn($result['status']=0);
+    		exit();
+    	}
+    	$data=M('order_info')->where($map)->setField('status',2);
+
+    	if($data){
+    		$this->ajaxreturn($result['status']=1);
+    		exit()
+    	}
+    	$this->ajaxreturn($result['status']=0);
+    	exit()
+    }
 
 }
