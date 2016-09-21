@@ -78,8 +78,9 @@ class ExpressController extends CommonController  {
 		        $Mode = $post_data["OrderService_Mode"];
 		        unset($post_data["OrderService_Mode"]);
 
-		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
-		 		
+		    	$data = $SF->OrderService($post_data)->Send();//->readJSON();
+		 		dump($data);
+		 		exit();
 
 		 		if(!$data){		 			
 		 			$this->error('没有得到订单信息');
