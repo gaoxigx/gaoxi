@@ -40,7 +40,7 @@ class ExpressController extends CommonController  {
 			if($proOrder){
 				
 		  		$post_data['orderid']=$orderinfo['order_no'];//订单号
-		  		$post_data['express_type']=1;//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
+		  		$post_data['express_type']=$sender['express_type'];//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
 		  		$post_data['j_company']=$sender['j_company'];//寄件方公司
 		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
 		  		$post_data['j_tel']=$sender['j_tel'];//寄件方电话
@@ -168,7 +168,7 @@ class ExpressController extends CommonController  {
 			if($proOrder){
 				
 		  		$post_data['orderid']=$orderinfo['order_no'];//订单号
-		  		$post_data['express_type']=1;//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
+		  		$post_data['express_type']=$sender['express_type'];//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
 		  		$post_data['j_company']=$sender['j_company'];//寄件方公司
 		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
 		  		$post_data['j_tel']=$sender['j_tel'];//寄件方电话
@@ -439,10 +439,10 @@ class ExpressController extends CommonController  {
         $SF = new \SFprinter();
 
         $sender=C('SENDER');
-        $data = array(
-            "express_type" =>'标准快递',//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+        $data = array(           
             "mailno" => $orderdata['numberno'],//运单号
-            "orderid" =>'gx'.$orderdata['order_no'],//订单号
+            "express_type" =>$sender['express_type'],//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+            "orderid" =>$orderdata['order_no'],//订单号
             "j_company" => $sender['j_company'],//寄件方公司
             "j_contact" => $sender['j_contact'],//寄件方姓名
             "j_tel" => $sender['j_tel'],//寄件方电话
