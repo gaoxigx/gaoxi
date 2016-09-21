@@ -72,37 +72,36 @@ class ExpressController extends CommonController  {
 		  		$post_data['remark']=$orderinfo['note'];//备注
 		  		$post_data['OrderService_Mode']="JSON";//数据格式		
 		 
-		        unset($post_data["action"]);
+					
 		      
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
 		        unset($post_data["OrderService_Mode"]);
 
-		    	//$data = $SF->OrderService($post_data)->Send();
-		 
-		    	var_dump($post_data);
-		    	exit();
-		        if ($Mode == "JSON") {
-		            $data = $SF->OrderService($post_data)->Send()->readJSON();
-		        } else {
-		            $data = $SF->OrderService($post_data)->Send()->webView();
-		        }
+		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
+		 		
 
-		       if(!$data['data']){
+		 		if(!$data){		 			
+		 			$this->error('没有得到订单信息');
+		       		exit();
+		 		}
+
+		 		$data=json_decode($data,true);
+
+		       if(empty($data['data'])){
 		       		$this->error('没有得到订单信息');
+		       		exit();
 		    	}
-		    	var_dump($data);
-		    	exit();
-
+		    	
 		        if($Mode="JSON"){
 		        	$sul=json_decode($data,true);
 		        }else{
-		        	$sul= json_decode(json_encode($xml),TRUE);
+		        	$data= json_decode(json_encode($xml),TRUE);
 		        }
 
-		        if($sul['data'][0]['childs'][1]['tag']=="ERROR"){
+		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){
 		        
-		        	if($sul['data'][0]['childs'][1]['attr']['code']==8016){		        		
+		        	if($data['data'][0]['childs'][1]['attr']['code']==8016){		        		
 
 		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
 		        		$daohuo=json_decode($jnorder,true);
