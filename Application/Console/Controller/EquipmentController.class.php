@@ -3,7 +3,7 @@ namespace Console\Controller;
 use Think\Controller;
 header("Content-type:text/html;charset=utf-8");
 class EquipmentController extends CommonController {
-
+    
     //数据列表
     public function Equipment($name=''){
          $staff=D('staff')->where('iswork!=4')->getField('id,name',true);
@@ -13,12 +13,15 @@ class EquipmentController extends CommonController {
 		$addr_id = i('addr_id');
 		$username = i('username');
 		if($addr_id != 0 && $addr_id != ''){
-			$where['addr_id'] = $addr_id;
+			//$where['addr_id'] = $addr_id;
 			$parameter['addr_id'] = $addr_id;
 		}
-		
-        if($username){
+
+	
+        if($username){            
+            
             $parameter['username'] = $username;
+           
 			$where['cdkey']  = array('like','%'.trim($username).'%');
 			$where['xinghao']  = array('like','%'.trim($username).'%');
             $where['bianhao']  = array('like','%'.trim($username).'%');
@@ -27,11 +30,18 @@ class EquipmentController extends CommonController {
             $where['weixinhao']  = array('like','%'.trim($username).'%');
             $where['yxemail']  = array('like','%'.trim($username).'%');
             $where['fuzeren']  = array('like','%'.trim($username).'%');            
-            $where['shiyongren']  = array('like','%'.trim($username).'%');                    
+            $where['shiyongren']  = array('like','%'.trim($username).'%');   
             $where['_logic'] = 'or';
+            $tw=$where;
         }
-      
- 
+        
+        if($addr_id){
+            $where1['_complex'] = $where;
+            
+            $where1['addr_id'] = $addr_id;
+            $tw=$where1;
+        }
+       
         
         foreach( $map as $k=>$v){  
             if( !$v )  
@@ -64,15 +74,15 @@ class EquipmentController extends CommonController {
 
 //        var_dump($where);exit();
         
-        $count = $User->alias('et')->where($where)->count();// 查询满足要求的总记录数
+        $count = $User->alias('et')->where($tw)->count();// 查询满足要求的总记录数
         
         $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $Page->setConfig('header','个会员');
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
-                ->join('nico_staff as sf on sf.id=et.staffid','left')->where($where)
-                ->order('id')->limit($Page->firstRow.','.$Page->listRows)->select();
+                ->join('nico_staff as sf on sf.id=et.staffid','left')->where($tw)
+                ->order('fuzerenid desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
@@ -88,10 +98,14 @@ class EquipmentController extends CommonController {
     public function add(){
 
         //得到所有职员
-        $staff=D('staff')->where('iswork!=4')->select();
+        $where['quarters']=array('in',"38,39,67");
+        $where['iswork']=array('neq',4);   
+//        $staff=D('staff')->where('iswork!=4')->select();
+        $staff=D('Staff')->where($where)->getField('id,name',true);
         $this->assign('staff',$staff);
         //得到所有部门
         $department=D('Category')->department();
+        $this->assign('staff', $staff);
         $this->assign('department',$department);
         $this->assign('userid',session('userid'));
         $this->display();
@@ -120,6 +134,7 @@ class EquipmentController extends CommonController {
         
         $data =   $controller->find($id);
         if($data) {
+            
             $staff=D('staff')->where('iswork!=4')->select();
             $department=D('Category')->department();
 			
