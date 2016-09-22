@@ -100,7 +100,7 @@ $(document).ready(function(){
                                     <tr  style="border-bottom: dotted 1px #c7c7c7; ">
 					<td><input name="" type="checkbox" value="" /></td>
 					<td>{$vo.id}</td>
-                                        <td>组别：<b style="color:#d15b47;">{$staff[$vo["fuzerenid"]]}</b><!-- {$vo.fuzeren} --></td>
+                                        <td>组别：<b style="color:#d15b47;">{$staff[$vo["fuzerenid"]]} </b><!-- {$vo.fuzeren} --></td>
       				<td>
                                     
                                     <p style="color:#004974;"><a href="{:U('Equipment/eqlook',array('id'=>$vo['id']))}" >序列号：{$vo.cdkey}</a></p>
@@ -130,7 +130,7 @@ $(document).ready(function(){
 					
                                         
 					<td>
-                        <p>使用人：<a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"  style="color:#009ceb;">{$staff[$vo["staffid"]]}</a></p>
+                        <p>使用人：<a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"  style="color:#009ceb;">{$vo['shiyongren']}</a></p>
                         <p>部门：{$vo.departmenttext}</p>
                         <p style="color:#404040;">岗位：{$vo.posttext}</p>
                     </td>
