@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#camera{width:598px; height:525px; position:fixed; bottom:20%; left:50%; margin-left:-300px; border:1px solid #f0f0f0; background:url(__PUBLIC__/photo/images/cam_bg.jpg) repeat-y; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -moz-box-shadow:0 0 4px rgba(0,0,0,0.6); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.6); box-shadow:0 0 4px rgba(0,0,0,0.6);background: #f1f1f1;}
+#cam{width:100%; height:66px; display:block; position:absolute; top:0; left:0; background:url(__PUBLIC__/photo/images/cam.png) no-repeat center center; cursor:pointer}
+#webcam{width:520px; height:370px; margin:66px auto 22px; line-height:360px; background:#ccc; color:#666; text-align:center}
+.button_pane{text-align:center;}
+.btn_blue,.btn_green{width:99px; height:38px; line-height:32px; margin:0 4px; border:none; display:inline-block; text-align:center; font-size:14px; color:#fff !important; text-shadow:1px 1px 1px #277c9b; background:url(__PUBLIC__/photo/images/buttons.png) no-repeat}
+.btn_green{background:url(__PUBLIC__/photo/images/buttons.png) no-repeat right top;text-shadow:1px 1px 1px #498917;}
+.hidden{display:none}
+
+#photos{width:80%; margin:40px auto}
+td p{display: block;text-indent: 0; padding: 0px 21px;}
+#photos:hover a{opacity:0.5}
+#photos a:hover{opacity:1}
+#webcam{display:block;}
+.seachform{float: left;}
+</style>
+</head>
+<body>
+	<div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">订单管理</a></li>
+            <li><a href="#">订单列表</a></li>
+        </ul>
+        
+    </div>
+    <div class="rightinfo">
+        <div class="tools">
+            <ul class="seachform ">
+                <form action="/index.php/Console/Shipments/Plist" method="get" id="form2" name="form2">            
+                    <li><label></label><input type="text" class="scinpute" name="username" value="" placeholder="ID/订单编号/收货人/手机号码/销售客服" style="width:240px"></li>
+                    <li><label></label><input type="submit" value="查询" class="scbtn" name=""></li>
+                </form>
+            </ul>
+             <ul class="toolbar1">
+              <!-- <li class="csorder"><a href="javascript:void(0)" class="bacthorder" onclick="myBacthPrint()">&nbsp;&nbsp;批量打印所有订单</a></li> -->
+              <li class="csorder"><a href="javascript:void(0)" class="bacthorder" onclick="myBacthPrintPage()">&nbsp;&nbsp;打印当前页</a></li>
+            </ul>
+        </div>
+   
+        
+        <table class="imgtable">
+            <thead>
+                <tr>
+                    <th><input class="allcheck" type="checkbox" value="" /></th>
+                    <th>ID<!--<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i>--></th>
+                    <th style="width:190px;">订单信息</th>
+                    <th style="width:250px;">产品信息</th>
+                    <th style="width:250px;">收货人信息</th>
+                    <th>订单金额</th>
+                    <th style="min-width:120px;">订单备注</th>  
+                    <th style="width:190px;">操作发货</th>
+                    <th>快递图片</th>
+                    <th>电子快递单</th>
+                    <th style="width: 120px;">操作</th>
+<!--                    <th>确认收款</th>-->                    
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="vo">
+                <tr style="border-bottom: dotted 1px #c7c7c7; ">
+                    <td><p><input class="check" name="id[]" type="checkbox" value=""/><p></td>
+                    <td >{$vo.id}</td>
+                    <td>
+                        <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>                        
+                        <p>销售客服：{$staff[$vo['agent']]}</p>
+                        <p>{$vo.addtime|date='Y-m-d H:i:s',###}</p>
+                    </td>                    
+                    <td>
+                        <php>$goods=get_orderno_to_pro($vo['order_no'])</php>
+                        <volist name="goods" id="vl">                        
+                            <span  <if condition="$vl['buynum'] gt 1" >style="color:red"</if> href="">{$vl.quality}&nbsp;/&nbsp;<php>echo trim($vl['product'])</php>&nbsp;X&nbsp;{$vl['buynum']}&nbsp;/&nbsp;{$vl.grade}&nbsp;&nbsp;
+                            </span>                       
+                        </volist>
+                    </td>
+                    <td><p style="color:#000">{$vo['username']}</p><p style="color:#000">{$vo['mobile']}</p><p style="color:#000">{$vo['address']}</p></td>
+                    <td>￥{$vo['total_price']}</td>
+                    <td style="color:red" id="note{$vo.note}">{$vo.note}</td>
+      
+                         <td >
+              
+                                        <switch name="vo.status">
+                                                <case value="1">已下单
+                                                <p>
+                                                        <select id="addr_id" name="express" type='text' class="express">
+                                                               <option value="1">顺丰</option>
+                                                               <option value="2">圆通</option>
+                                                               <option value="3">中通</option>  
+                                                                <option value="4">韵达</option>
+                                                               <option value="5">邮政</option>   
+                                                        </select>
+                                                        <input type="text" style="height:23px;width:160px" id="suresmall3{$vo.id}" class="scinpute" name="numberno"> 
+                                                        <input  name="{$vo.id}" data="{$data.payment_status}" type="button"  class="suresmall3 " value="发货" />
+                                                </p>
+                                                <p style="margin-top:5px">
+                                                     <input name="fhnote" style="height:23px; width:200px;" class="fhnote scinpute" type="text" placeholder="发货备注" />
+                                                </p>
+                                                </case>
+                                                <case value="2">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /></case>
+                                                 <case value="5">已发货 {$vo.numberno} <input onclick="javascript:window.location='numberno/no/{$vo.numberno}'" type="button"   value="查询" /></case>
+                                                 <default />已下单
+                                        </switch>
+                                         <!--         <switch name="vo.payment_status">
+                                <case value="0">已下单.</case>
+                                <case value="1"> -->
+                               <!--   </case>
+                               <default />已下单
+                            </switch> -->
+                    </td>
+                    <td>    
+                            <input  name="{$vo.id}"  type="button" class="photobtn eppbtn suresmall2" value="拍照" />
+                            <div id="img{$vo.id}" >
+                                
+                            </div>
+                    </td>
+                    <td>
+                      <div style="display:none" id="imgt{$vo.id}" class="imginfo" v="{$vo.id}"><img src="/{$vo.mailnoimg}" /></div>
+                      <a target="_blank" href="/{$vo.mailnoimg}" ><img src="/{$vo.mailnoimg}" height="60px"/></a><a target="_blank" href="/{$vo.mailnozip}"><span>下载zip</span></a>
+
+                    </td>
+<!--                    <td>
+                        <if condition="$vo.payment_status eq 0">
+                            <input name="{$vo.id}" data="{$vo.payment_status}" type="button"  class="suresmall" value="点击确认" />
+                            <else/>
+                            <input  type="button"  class="suresmall2" value="已付款" />
+                        </if>
+                    </td>-->
+                    <td>
+                        <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a><br/>
+                        <a href="{:U('Express/printOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;生成快递单</a><br/>
+                        <a href="javascript:void(0)" class="print" onclick="myPreview({$vo.id})">&nbsp;打印快递单</a><br/>
+                    </td>         
+                </tr> 
+            </volist>
+            
+            </tbody>
+        </table>  
+		 {$page}
+	</div> 
+     <div class="tip" style="">
+        <div class="tiptop"><span>图片预览</span><a></a></div>
+           <img src="" class="picpic" width="100%" />
+    </div>
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript">
+  function showimg (img){
+
+    $(".picpic").attr('src',img);
+    $(".tip").fadeIn(200);
+    
+  }
+$(document).ready(function(){
+  $(".click").click(function(){
+       $(".tip").fadeIn(200);
+    });
+
+  
+  $(".tiptop a").click(function(){
+      $(".tip").fadeOut(200);
+    });
+
+  $(".sure").click(function(){
+      $(".tip").fadeOut(100);
+    });
+
+  $(".cancel").click(function(){
+      $(".tip").fadeOut(100);
+    });
+  $(".eppbtn").click(function(){
+   
+  })
+});
+
+$(document).ready(function(){
+    $(".suresmall").click(function(){
+
+            var id = $(this).attr('name');
+            var data = $(this).attr('data');
+            $("#form2").attr("action", "Payment_status/id/"+id+"/status/"+data).submit();
+
+    });
+    $(".suresmall3").click(function(event) {        
+            var id = $(this).attr('name');
+            var data = $(this).attr('data');     
+            var numberno=$("#suresmall3"+id ).val();      
+            var tinfo=$(this).parents('td');
+            var express=$(this).parents('td').find('.express').val();
+            var fhnote=$(this).parents('td').find('.fhnote').val();
+       
+            if(numberno.length <=0 || numberno=='undefined'){
+                alert("物流单号不能为空！");
+                return false;
+            } else{                          
+                var url="{:U('Shipments/updatenumberno')}";    
+                $.post(url,{'id':id,'numberno':numberno,'express':express,'fhnote':fhnote},function(data){                   
+                    if(data.status==1){
+                       tinfo.html("已发货: "+numberno);
+                    }else{
+                        alert(data.msg);
+                    }
+                });
+               // $("#form2").attr("action", "updatenumberno/id/"+id+"/numberno/"+$("#suresmall3"+id ).val()).submit();
+
+            }
+
+    });
+});
+ 
+</script>
+
+  <!---总数---->
+    <script>
+        $(function () {
+            $(".quanxun").click(function () {
+                setTotal();
+                //alert($(lens[0]).text());
+            });
+            function setTotal() {
+                var len = $(".tot");
+                var num = 0;
+                for (var i = 0; i < len.length; i++) {
+                    num = parseInt(num) + parseInt($(len[i]).text());
+
+                }
+                //alert(len.length);
+                $("#zong{$i}").text(parseInt(num));
+                $("#shuliang").text(len.length);
+            }
+            //setTotal();
+        })
+    </script>
+<link rel="stylesheet" type="text/css" href="/public/photo/css/main.css" />
+ <div id="camera" style="display:none">
+       <input type="hidden" value="0" id="expressid" />
+       <div id="cam"></div>
+       <div id="webcam"></div>
+       <div id="buttons">
+          <div class="button_pane" id="shoot">
+            <a id="btn_shoot" href="" class="btn_blue">拍照</a>
+          </div>
+          <div class="button_pane hidden" id="upload">
+            <a id="btn_cancel" href="" class="btn_blue">取消</a> <a id="btn_upload" href="" class="btn_green">上传</a>
+          </div>
+       </div>
+   </div>   
+
+<link rel="stylesheet" type="text/css" href="/public/photo/fancybox/jquery.fancybox-1.3.4.css" />
+<script type="text/javascript" src="/public/photo/js/jquery.js"></script>
+<script type="text/javascript" src="/public/photo/js/jquery.easing.js"></script>
+<script type="text/javascript" src="/public/photo/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="/public/photo/js/webcam.js"></script>
+<script language="javascript" src="/Public/express/Lp/LodopFuncs.js"></script>
+<script language="javascript" type="text/javascript"> 
+        var LODOP; //声明为全局变量
+  function CreateImage() {
+    LODOP=getLodop();  
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片1");
+    LODOP.ADD_PRINT_IMAGE(30,150,400,400,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    //LODOP.ADD_PRINT_IMAGE(200,150,260,150,"C:/test.jpg"); //本地图片
+  };  
+  function myPreview1() {   
+    CreateImage();
+    LODOP.PREVIEW();    
+  };  
+  function myPrint1() {   
+    CreateImage();
+    LODOP.PRINT();    
+  };  
+  function myPrintSetup1() {    
+    CreateImage();
+    LODOP.PRINT_SETUP();    
+  }; 
+
+  function myBacthPrintPage(){
+
+    $(".imginfo").each(function(){
+        var t=$(this).html();
+        var url="{:U('Shipments/orderstatus')}";
+        var id=$(this).attr('v');
+        url=url+"?id="+id;
+     
+        $.get(url,function(data){
+
+          if(data.status==1){
+             LODOP=getLodop();   
+             LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+             LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,t);
+             LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+             LODOP.PRINT();  
+             return;
+          }else{
+            $('#note'+id).append('打印异常');
+             return;
+          }
+        });
+
+    }); 
+  };
+
+  function myBacthPrint(){
+    var url="{:U('Shipments/orderPrint')}";
+
+    $.get(url,function(data){
+        if(data.status==1){
+          var order=data.data;
+          for( var t in order){         
+              var str="<img src=\"/"+order[t]+"\" />";          
+              LODOP=getLodop();   
+              LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+              LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,t);
+              LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+              LODOP.PRINT();            
+          }
+        }else{
+          alert('没有数据');
+        }
+    });
+      
+  }   
+
+  function myPreview2() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片2");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,250,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690'width='100%' height='250'/>");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",1);//(可变形)扩展缩放模式
+    LODOP.PREVIEW();
+  };  
+  function myPreview3() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+    LODOP.ADD_PRINT_IMAGE(30,20,600,600,"<img border='0' src='http://s1.sinaimg.cn/middle/4fe4ba17hb5afe2caa990&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+    LODOP.PREVIEW();    
+  }; 
+  function myPreview(id) {
+    var str =$("#imgt"+id).html();
+    var url="{:U('Shipments/orderstatus')}";
+    url=url+"?id="+id;
+    $.get(url,function(data){
+       if(data==1){
+          LODOP=getLodop();   
+          LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片3");
+          LODOP.ADD_PRINT_IMAGE(5,5,1181,1772,str);
+          LODOP.SET_PRINT_STYLEA(0,"Stretch",2);//按原图比例(不变形)缩放模式
+          LODOP.PREVIEW(); 
+          location.reload();
+        }else{
+           alert('没有数据');
+        }   
+    });
+  }; 
+  function myPreview4() { 
+    LODOP=getLodop();   
+    LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印图片4");
+    LODOP.ADD_PRINT_TEXT(56,56,200,20,"公章底下的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",13);
+    LODOP.ADD_PRINT_IMAGE(28,49,171,153,"<img border='0' src='http://static15.photo.sina.com.cn/middle/4fe4ba17t993d651b55ce&690' />");
+    LODOP.SET_PRINT_STYLEA(0,"TransColor","#FFFFFF");
+    LODOP.ADD_PRINT_TEXT(120,53,200,20,"公章上面的文字");
+    LODOP.SET_PRINT_STYLEA(0,"FontSize",15);
+    LODOP.PREVIEW();
+  };      
+</script> 
+
+</body>
+
+</html>

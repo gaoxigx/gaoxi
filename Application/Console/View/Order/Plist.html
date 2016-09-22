@@ -22,12 +22,14 @@
                     <li><input type="text" class="scinpute" name="username" value="" placeholder="ID/订单编号/收货人/销售客服" style="width:180px"></li>
                     <li><input type="submit" value="查询" class="scbtn" name=""></li>
                 </form>
+                
             </ul>
         </div>
 
 		<table class="imgtable">
                     <thead>
                             <tr>
+                                <th><input class="allcheck" type="checkbox" value="" /></th>
                                 <th>ID<!--<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i>--></th>
                                 <th style="width:280px;">订单信息</th>
                                 <th style="width:220px;">产品信息</th>
@@ -35,7 +37,7 @@
                                 <th>收货人</th>		
                                 <th  style="width:480px;">订单备注</th>
                                 <th>操作发货</th>
-<!--					<th>确认收款</th>-->
+                            <!--<th>确认收款</th>-->
                                 <th>操作</th>
                             </tr>
                     </thead>
@@ -43,6 +45,7 @@
                     <tbody>
                         <volist name="list" id="vo">
                             <tr style="border-bottom: dotted 1px #c7c7c7; ">
+                                    <td><input class="check" name="id[]" type="checkbox" value=""/></td>
                                     <td >{$vo.id}</td>
                                     <td>
                                         <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
@@ -67,13 +70,21 @@
                                                     <if condition="$vo.expressimg neq '' ">                                                    
                                                         <div class="click" style="float: left;" data="/{$vo.expressimgs}">
                                                             <span> <img src="/{$vo.expressimg}" height="60"></span>
-
                                                         </div>                                 
                                                     </if>                  
 
                                                     </case>
                                                      <case value="3">异常订单，请审核</case>
                                                      <case value="4">订单已撤消</case>
+                                                     <case value="5"><span>已发货 {$vo.numberno} &nbsp;<a href="{:U('Shipments/numberno',array('no'=>$vo['numberno']))}">查看物流</a></span>
+                                                    <if condition="$vo.expressimg neq '' ">                                                    
+                                                        <div class="click" style="float: left;" data="/{$vo.expressimgs}">
+                                                            <span> <img src="/{$vo.expressimg}" height="60"></span>
+                                                        </div>                                 
+                                                    </if>                  
+
+                                                    </case>
+
                                                       <default />已下单
                                                 </switch>
                                        <!--  <switch name="vo.payment_status">

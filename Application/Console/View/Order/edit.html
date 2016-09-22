@@ -108,15 +108,14 @@
                                         <volist name="staff" id="vu">
                                             <option  <if condition="$key eq $info['agent']" >selected="selected" </if> value="{$key}">{$vu}</option>
                                         </volist>
-
                                     </select>
                                 </div>
                             </li>
-
                             <li><label>支付方式{$info['payment_method']}<b>*</b></label>                              
                                 <div class="vocation uew-select">
-                                    <volist name="payment" id="vo4"><label><input name="payment_status" type="radio" value="{$vo4.id}" <if condition="$vo4['id'] eq $info['payment_status']"> checked="checked" </if>>{$vo4.payment}</label></volist>
-                                  
+                                    <php>$paymentst=json_decode($info['payment_status'],true);var_dump($paymentst);</php>
+                                    <php>var_dump(in_array('微信红包',$paymentst))</php>
+                                    <volist name="payment" id="vo4"><label><input name="payment_status[{$vo4.id}]" type="checkbox" value="{$vo4.payment}"  checked="checked" >{$vo4.payment}</label></volist>
                                 </div>
                             </li>
 
@@ -135,7 +134,6 @@
                             </li>-->
 <!-- 
                             <li><label>配送礼盒<b>*</b></label><cite><input type="radio" checked="checked" value="1" name="lihe">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="lihe">否</cite></li> -->
-
                             <li>
                                 <label>买家微信号</label>
                                 <input id="buyer_wechat" name="buyer_wechat" type="text" class="dfinput" value="{$info.buyer_wechat}"  />
@@ -144,7 +142,6 @@
                                 <label>订单金额<b>*</b></label>
                                 <input id="buyer_wechat" name="total_price" type="text" class="dfinput" value="{$info.total_price}"  />
                             </li>
-
                             <li><label>订单来源<b>*</b></label><input id="source" name="source" type="text" class="dfinput" value="{$info.source}" /></li>
                             <li><label>收件人姓名<b>*</b></label><input id="username" name="username" type="text" class="dfinput" value="{$info.username}"  /></li>
                             <li><label>收件人电话<b>*</b></label><input id="mobile" name="mobile" type="text" class="dfinput" value="{$info.mobile}" /></li>
@@ -152,8 +149,7 @@
                             <li><label>订单备注<b></b></label><textarea name="note" rows="3" cols="20" style="height:108px" type="text" class="dfinput" >{$info.note}</textarea></li>                          
                         </ul>
                       <ul class="forminfo">
-                        <li>
-                       
+                        <li>                       
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>提交</button>  
                             &nbsp; &nbsp; &nbsp;

@@ -18,6 +18,8 @@
 #photos:hover a{opacity:0.5}
 #photos a:hover{opacity:1}
 #webcam{display:block;}
+.seachform{float: left;}
+.center{text-align: center; }
 </style>
 </head>
 <body>
@@ -28,14 +30,19 @@
             <li><a href="#">订单管理</a></li>
             <li><a href="#">订单列表</a></li>
         </ul>
+        
     </div>
     <div class="rightinfo">
         <div class="tools">
-            <ul class="seachform">
-                <form action="/index.php/Console/Shipments/Plist" method="get" id="form2" name="form2">            
+            <ul class="seachform ">                 
+                <form action="/index.php/Console/Shipments/Plist" method="get" id="form2" name="form2">
                     <li><label></label><input type="text" class="scinpute" name="username" value="" placeholder="ID/订单编号/收货人/手机号码/销售客服" style="width:240px"></li>
                     <li><label></label><input type="submit" value="查询" class="scbtn" name=""></li>
                 </form>
+            </ul>
+            <ul class="toolbar1">
+             <li class="csorder"><a href="{:U('Shipments/bacthprint')}">&nbsp;&nbsp;批量生成快递订单</a></li>
+              <li class="dumpexl"><a href="">&nbsp;&nbsp;导出exl文档</a></li>              
             </ul>
         </div>
    
@@ -43,6 +50,7 @@
         <table class="imgtable">
             <thead>
                 <tr>
+                    <th><input class="allcheck" type="checkbox" value="" /></th>
                     <th>ID<!--<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i>--></th>
                     <th style="width:190px;">订单信息</th>
                     <th>产品信息</th>
@@ -61,6 +69,7 @@
             <tbody>
                 <volist name="list" id="vo">
                 <tr style="border-bottom: dotted 1px #c7c7c7; ">
+                    <td class="center"><input class="allcheck" type="checkbox" value="" /></td>
                     <td >{$vo.id}</td>
                     <td>
                         <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>                        
@@ -76,7 +85,7 @@
                     </td>
                     <td>{$vo['username']}</td>
                     <td>{$vo['mobile']}</td>
-                    <td>{$vo['address']}</td>
+                    <td>{$vo['province']}{$vo['city']}{$vo['qu']}{$vo['address']}</td>
                     <td>￥{$vo['total_price']}</td>
                     <td style="color:red">{$vo.note}</td>
       
@@ -123,8 +132,8 @@
                         </if>
                     </td>-->
                     <td>
-                        <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a>
-                        <a href="__URL__/printlook/id/{$vo.id}" class="tablelink">&nbsp;打印</a>                          
+                       <p> <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a><br/></p>                     
+                       <p> <a href="{:U('Express/oneOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;生成订单</a></p>                          
                     </td>         
                 </tr> 
             </volist>

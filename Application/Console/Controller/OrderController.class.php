@@ -438,7 +438,7 @@ class OrderController extends CommonController {
 
 		$ordergoods = M('order_goods'); // 实例化User对象
 		$list = $ordergoods->alias('og')
-				 ->join('nico_product as np on np.id = og.proid ')
+				 ->join('nico_product as np on np.id = og.proid')
 				 ->field('og.*,np.pic as pic1,og.buynum as number')
 				 ->where("og.order_no=%s",array($orderinfolist['order_no']))
 				 ->order ('id')
@@ -447,7 +447,6 @@ class OrderController extends CommonController {
 		$this->assign('info',$orderinfolist);
 		$this->assign('prolist',$list);
 		$this->assign('staff',  getstaffname());
-
 		$this->display();
 
 	}
@@ -517,8 +516,8 @@ class OrderController extends CommonController {
 		$data['order_no'] = $this->build_order_no();
 		$data['addtime'] = time();
 		$data['status'] = 1;
-		$data['payment_status'] = 1;
-		
+		$data['payment_status'] = json_encode(I('payment_status'));
+	
 		$roleList   =  D('order_info');
 
 		$mid['c.uid']=session('userid');
@@ -808,5 +807,9 @@ class OrderController extends CommonController {
 		$this->display ( 'Weixin:weixin_orders_print' );// 显示模板
 	}
 	
+	public function issue(){
+		$url="https://{domain}/rest/v1.0/order/access_token/{access_token}/sf_appid/{sf_appid}/sf_appkey/{sf_appkey}";
+		$this->display();
+	}
 
 }

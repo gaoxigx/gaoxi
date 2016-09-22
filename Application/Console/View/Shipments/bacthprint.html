@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+  <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">打印</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    
+    <div class="formtitle"><span>批量生成订单</span></div>
+    
+    <ul class="forminfo">
+     <li><label>&nbsp;</label><input name="" type="button" onclick="t()" class="btn" value="开始处理"/></li>
+    <li><label>执行详情内容</label><p class="textinput"></p></li>
+   
+    </ul>
+    
+    
+    </div>
+<script src="__PUBLIC__/Console/js/validation/lib/jquery-1.7.2.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script>
+
+
+     function t(){
+
+        var url="{:U('Express/batchOrder')}";
+        $.get(url,function(data){
+            switch(data.status){
+                case 1:
+                    $('.textinput').append('订单编号:'data.order_no+'订单-发货运单号:'+data.mailno+'<br/>');
+                break;
+                case 3:
+                    $('.textinput').append('订单号码 数据处理完成<br/>');
+                break;
+                default:                
+                    $('.textinput').append('数据处理完成'+'<br/>');
+                    t();
+            }
+            
+        })
+     }
+</script>
+</body>
+
+</html>
