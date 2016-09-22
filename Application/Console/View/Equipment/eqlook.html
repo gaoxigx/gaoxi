@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>无标题文档</title>
+        <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+        <link href="__PUBLIC__/Console/css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+    </head>
+    <script>
+        $(function () {
+            $("#subordinates .dish:last").remove();
+        })
+    </script>
+    <body>
+
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+
+                <li><a href="#">首页</a></li>
+                <li><a href="#">设备管理</a></li>
+            </ul>
+        </div>
+
+        <div class="formbody">
+            <div id="usual1" class="usual">
+                <if condition="$id">
+                    <input name="id" type="hidden"   value="{$id}"/>
+                </if> 
+
+                <div class="itab">
+
+                    <ul> 
+                        <li><a href="#tab1" class="selected">设备详情</a></li> 
+                    </ul>
+                </div> 
+
+                <div id="tab1" class="tabson">
+
+                    <div class="formtext">个人信息</div>
+                    <table style="margin-left:25px">
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>序列号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.cdkey}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>手机号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.mobile}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>开机密码：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.kaijipassword}
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>型号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.xinghao}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>编号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.bianhao}
+                            </td>
+                        </tr>
+                        <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>微信号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.weixinhao}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>微信登录密码：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.weixinpass}
+                            </td>                            
+                        </tr>
+                        <tr> 
+                            <td style="height:20px;padding:5px;">
+                                <label>绑定邮箱：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.yxemail}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>邮箱登录密码：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.emailpass}
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>绑定微信手机号：</label>  
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.bdphone}
+                            </td>
+                        </tr>
+                        <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>淘宝帐号：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.taobaohao}
+                            </td>
+                            <td style="height:20px;padding:5px;">
+                                <label>淘宝登录密码：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.taobaopass}
+                            </td>
+                        </tr>
+                            
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>QQ帐号：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.qqhao}
+                            </td>
+                            <td style="height:20px;padding:5px;">
+                                <label>QQ录密码：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.qqpass}
+                            </td>     
+                        </tr>   
+                            
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>微博帐号：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.weibohao}
+                            </td>
+                            <td style="height:20px;padding:5px;">
+                                <label>微博登录密码：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 80px 5px 5px;">
+                                {$user.weibopass}
+                            </td>
+                            
+                        </tr>
+
+                        <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>负责人（组别）：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.fuzeren}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>使用人：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.shiyongren} 
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>部门：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.departmenttext} 
+                            </td>
+                            
+                            <td style="height:20px;padding:5px;">
+                                <label>岗位：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.posttext} 
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td style="height:20px;padding:5px;">
+                                <label>开户行：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.eqbank}
+                            </td>
+                            <td style="height:20px;padding:5px;">
+                                <label>银行账号：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.bankname}
+                            </td>  
+
+                        </tr>
+
+<!--                        <tr>
+                            <td style="padding:5px;">
+                                <label>开户行：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                <if condition="$user.education eq 1" >中国工商银行
+                                    <elseif condition="$user.education eq 2" />中国银行
+                                    <elseif condition="$user.education eq 3" />中国建设银行
+                                    <elseif condition="$user.education eq 4" />中国农业银行</if> 
+                            </td>
+                            <td style="height:20px;padding:5px;">
+                                <label>银行账号：</label>
+                            </td>	
+                            <td style="height:20px;padding:5px 50px 5px 5px;">
+                                {$user.bank_account}
+                            </td>
+                        </tr>-->
+                        <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
+
+                    </table>
+
+
+                    <div class="col-md-offset-3 col-md-9" style="margin-top:30px;">
+                        <a style="width:137px; height:35px; display:block; text-align:center; line-height:35px;float:left;" class="btn btn-info" href="javascript:history.back(-1);">返回</a>
+                    </div>
+                </div>      
+            </div> 
+        </div>
+		<input id="login_user" type="hidden" value="{$login_user}" />
+    </body>
+
+</html>

@@ -83,7 +83,6 @@ class EquipmentController extends CommonController {
         $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
                 ->join('nico_staff as sf on sf.id=et.staffid','left')->where($tw)
                 ->order('fuzerenid desc')->limit($Page->firstRow.','.$Page->listRows)->select();
-        
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
 		$this->assign('count',$count);
@@ -313,4 +312,44 @@ class EquipmentController extends CommonController {
     public function lookfpind(){
         $this->display();
     }
+    
+//查看设备详情页面
+    public function eqlook(){
+        $id=I('get.id');        
+        $model = D('Equipment');     
+
+        if($id){
+             $user = $model->alias('et')->where("et.id=".$id)->join('nico_staff as sf on sf.id=et.staffid','left')->find(); 
+         } 
+		$eqtrack = $this->getEqtrack($id);
+		$Equipment = D('Equipment')->where('staffid='.$id)->select();
+		$order_nums = D('OrderInfo')->where('agent='.$id)->count();
+		
+		if($user['quarters'] > 0){
+			$section_map['cate_id']=$user['quarters'];
+			$quarters = D('Category')->field('cate_name')->where($section_map)->find();
+			
+			$map['cate_parent']=$user['quarters'];
+			$subordinates = D('Category')->categoryone($map);
+			
+			$ids = D('Staff')->getotherlevel($id);
+			$ids = implode($ids,',');
+			if($ids !=''){
+				$subordinatesUsers = D('Staff')->where('id in ('.$ids.')')->select();
+			}
+		}               
+
+		$login_user = session ('userid'); 
+		$this->assign('login_user',$login_user);
+		$this->assign('eqtrack',$eqtrack);
+		$this->assign('quarters',$quarters);
+		$this->assign('subordinates',$subordinates);
+		$this->assign('Equipment',$Equipment);
+		$this->assign('subordinatesUsers',$subordinatesUsers);
+        $this->assign('user',$user);
+        $this->assign('id',$id);
+        $this->display();
+
+    }
+    
 }
