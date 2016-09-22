@@ -196,7 +196,6 @@ class EquipmentController extends CommonController {
         $track=D('Equipment')->where($map)->find();
 		$staffinfo = D('Staff')->where('id='.$track['staffid'])->find();
 		$track['shiyongren'] = $staffinfo['username'];
-		
         $mapq['equipment_id']=I('get.id');
         $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select();
 		foreach($trackeq as $k=>$v){
@@ -337,9 +336,17 @@ class EquipmentController extends CommonController {
 			if($ids !=''){
 				$subordinatesUsers = D('Staff')->where('id in ('.$ids.')')->select();
 			}
-		}               
+		}             
+                
+            $mapq['equipment_id']=I('get.id');
+            $trackeq=D('Eqtracking')->where($mapq)->order('gettime asc')->select();
+                    foreach($trackeq as $k=>$v){
+                            $staffinfo = D('Staff')->where('id='.$v['shiftid'])->find();
+                            $trackeq[$k]['shift_staffname'] = $staffinfo['username'];
+                    }
 
 		$login_user = session ('userid'); 
+		$this->assign('dataq',$trackeq);
 		$this->assign('login_user',$login_user);
 		$this->assign('eqtrack',$eqtrack);
 		$this->assign('quarters',$quarters);

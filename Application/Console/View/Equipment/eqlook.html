@@ -10,12 +10,17 @@
         <script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
         <script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+        
+        
+        <script>
+            $(function () {
+                $("#subordinates .dish:last").remove();
+            })
+        </script>    
+        
     </head>
-    <script>
-        $(function () {
-            $("#subordinates .dish:last").remove();
-        })
-    </script>
+
+
     <body>
 
         <div class="place">
@@ -46,124 +51,124 @@
                     <table style="margin-left:25px">
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>序列号：</label>  
+                                <label><b>序列号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.cdkey}</b>
+                                {$user.cdkey}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>手机号：</label>  
+                                <label><b>手机号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.mobile}</b>
+                                {$user.mobile}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>开机密码：</label>  
+                                <label><b>开机密码：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.kaijipassword}</b>
+                                {$user.kaijipassword}
                             </td>
                             
                         </tr>
 
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>型号：</label>  
+                                <label><b>型号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.xinghao}</b>
+                                {$user.xinghao}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>编号：</label>  
+                                <label><b>编号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.bianhao}</b>
+                                {$user.bianhao}
                             </td>
                         </tr>
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>微信号：</label>  
+                                <label><b>微信号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.weixinhao}</b>
+                                {$user.weixinhao}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>微信登录密码：</label>  
+                                <label><b>微信登录密码：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.weixinpass}</b>
+                                {$user.weixinpass}
                             </td>                            
                         </tr>
                         <tr> 
                             <td style="height:20px;padding:5px;">
-                                <label>绑定邮箱：</label>  
+                                <label><b>绑定邮箱：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.yxemail}</b>
+                                {$user.yxemail}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>邮箱登录密码：</label>  
+                                <label><b>邮箱登录密码：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.emailpass}</b>
+                                {$user.emailpass}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>绑定微信手机号：</label>  
+                                <label><b>绑定微信手机号：</b></label>  
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.bdphone}</b>
+                                {$user.bdphone}
                             </td>
                         </tr>
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>淘宝帐号：</label>
+                                <label><b>淘宝帐号：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.taobaohao}</b>
+                                {$user.taobaohao}
                             </td>
                             <td style="height:20px;padding:5px;">
-                                <label>淘宝登录密码：</label>
+                                <label><b>淘宝登录密码：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.taobaopass}</b>
+                                {$user.taobaopass}
                             </td>
                         </tr>
                             
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>QQ帐号：</label>
+                                <label><b>QQ帐号：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.qqhao}</b>
+                                {$user.qqhao}
                             </td>
                             <td style="height:20px;padding:5px;">
-                                <label>QQ录密码：</label>
+                                <label><b>QQ录密码：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.qqpass}</b>
+                                {$user.qqpass}
                             </td>     
                         </tr>   
                             
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>微博帐号：</label>
+                                <label><b>微博帐号：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.weibohao}</b>
+                                {$user.weibohao}
                             </td>
                             <td style="height:20px;padding:5px;">
-                                <label>微博登录密码：</label>
+                                <label><b>微博登录密码：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 80px 5px 5px;">
-                                <b style="color:#08C;">{$user.weibopass}</b>
+                                {$user.weibopass}
                             </td>
                             
                         </tr>
@@ -171,46 +176,46 @@
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>负责人（组别）：</label>
+                                <label><b>负责人（组别）：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.fuzeren}</b>
+                                {$user.fuzeren}
                             </td>
                         </tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>使用人：</label>
+                                <label><b>使用人：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.shiyongren}</b>
+                                {$user.shiyongren}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>部门：</label>
+                                <label><b>部门：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.departmenttext}</b> 
+                                {$user.departmenttext}
                             </td>
                             
                             <td style="height:20px;padding:5px;">
-                                <label>岗位：</label>
+                                <label><b>岗位：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.posttext}</b>
+                                {$user.posttext}
                             </td>  
                         </tr>
                         <tr>
                             <td style="height:20px;padding:5px;">
-                                <label>开户行：</label>
+                                <label><b>开户行：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.eqbank}</b>
+                                {$user.eqbank}
                             </td>
                             <td style="height:20px;padding:5px;">
-                                <label>银行账号：</label>
+                                <label><b>银行账号：</b></label>
                             </td>	
                             <td style="height:20px;padding:5px 50px 5px 5px;">
-                                <b style="color:#08C;">{$user.bankname}</b>
+                                {$user.bankname}
                             </td>  
 
                         </tr>
@@ -233,7 +238,32 @@
                             </td>
                         </tr>-->
                         <tr><td colspan="8" style="padding:10px 0;"><hr style="width:100%;height:1px;border-top:1px #d0e7fa solid;"/></td></tr>
-
+                        <tr>
+                            <td>
+                                <div class="gettrack">           
+                                        <notempty  name="dataq">
+                                                <div class="formtitle"><span>使用详情</span></div>
+                                                <ul>
+                                                        <volist name="dataq" id="v">
+                                                            <li style="margin-top: 10px;">
+                                                                    {$v.gettime|date="Y-m-d H:i",###}   
+                                                                    {$v.shift_staffname} 转移给 <b style="color:red;">{$v.staff_name}</b> 
+                                                                    <if condition="$v.status == 1">
+                                                                    转移完成，
+                                                                    <elseif condition="$v.status == 2"/>
+                                                                    转移中，
+                                                                    <else/>
+                                                                    未转移，
+                                                                    </if>
+                                                                    {$vo.xinghao},{$v.get|getorderget=###},{$v.comment}。
+                                                            </li>
+                                                        </volist>
+                                                </ul>
+                                        </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                      
                     </table>
 
 
