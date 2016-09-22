@@ -61,7 +61,7 @@
                     </td>
                     <td>{$vo['username']}</td>
                     <td>{$vo['mobile']}</td>
-                    <td>{$vo['address']}</td>
+                    <td>{$vo['province']}{$vo['city']}{$vo['qu']}{$vo['address']}</td>
                     <td style="color:red">{$vo.note}<p>{$vo.fhnote}</p></td>
                     <td><div style="display:none" id="imgt{$vo.id}"><img src="/{$vo.mailnoimg}" /></div><a target="_blank" href="/{$vo.mailnoimg}" >{$vo.express|getexpresstext=###}快递单</a></td>
                    <td>
