@@ -397,12 +397,16 @@ class OrderController extends CommonController {
         if($count<=0){                 
             $userdata=D('Staff')->getthislevel();
             $where['id']=array('in',implode(',',$userdata));
-        }      
-        $where['quarters']=array('in',"38,39,67");
-        $where['iswork']=array('neq',4);            
-        $staff=D('Staff')->where($where)->getField('id,name',true);
+        }
+    
 
-        
+            $where['quarters']=array('in',"38,39,67");
+            $where['iswork']=array('neq',4);
+            $staff=D('Staff')->where($where)->getField('id,name',true);
+            if(!$staff){
+                  $staff=D('Staff')->getField('id,name',true);
+            }
+  
 //            
 //            $this->getrolename('agent',68);
 //            $this->getrolename('assistant', 67);
