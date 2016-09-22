@@ -82,7 +82,7 @@ class EquipmentController extends CommonController {
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
         $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
                 ->join('nico_staff as sf on sf.id=et.staffid','left')->where($tw)
-                ->order('fuzerenid desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+                ->order('et.storzd desc,et.fuzerenid desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
 		$this->assign('count',$count);
