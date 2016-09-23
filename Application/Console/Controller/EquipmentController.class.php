@@ -133,11 +133,9 @@ class EquipmentController extends CommonController {
         
         $data =   $controller->find($id);
         if($data) {
-            
             $staff=D('staff')->where('iswork!=4')->select();
-            $department=D('Category')->department();
-			
-			$this->assign('staff',$staff);
+            $department=D('Category')->department();		
+            $this->assign('staff',$staff);
             $this->assign('department',$department);
             $this->assign('data',$data);
         }else{
