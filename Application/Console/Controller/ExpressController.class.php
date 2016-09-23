@@ -323,7 +323,7 @@ class ExpressController extends CommonController  {
 		require_once (_ROOT . "/class/SFforHttpPost.class.php");
 		Vendor('Express/sf/class/SFforHttpPost');
 		
-		require_once (_ROOT . "/class/SFprinter.class.php");
+		require_once (_ROOT . "/class/MySFprinter.class.php");
 		require_once (_ROOT . "/class/Pclzip.class.php");
 
 		$action = $_POST["action"];
@@ -395,7 +395,7 @@ class ExpressController extends CommonController  {
 	//打印订单
 	public function printOrder($id,$ajax=0){
 		
-		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\SFprinter.class.php");
+		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\MySFprinter.class.php");
 		require_once (ROOT_PATH . "\ThinkPHP\Library\Vendor\Express\sf\class\Pclzip.class.php");
 
 		 
@@ -476,6 +476,8 @@ class ExpressController extends CommonController  {
         	die("Error : ".$archive->errorInfo(true));
      	}
 
+     	
+
      	$param['mailnoimg']=$pic;
      	$param['mailnozip']=$zipurl;
      	$param['status']=5;
@@ -486,7 +488,8 @@ class ExpressController extends CommonController  {
         	if($ajax==1){
 				return true;
 			}else{
-				$this->success('生成打印图片');
+				//$this->success('生成打印图片');
+				echo '<img src="/'.$pic.'" />';
 				exit();
 			}
         	
