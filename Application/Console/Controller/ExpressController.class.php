@@ -41,7 +41,7 @@ class ExpressController extends CommonController  {
 				
 		  		$post_data['orderid']=$orderinfo['order_no'];//订单号
 		  		$post_data['express_type']=$sender['express_type'];//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
-		  		$post_data['j_company']=$sender['j_company'];//寄件方公司
+		  		$post_data['j_company']=$sender['j_contact'];//寄件方公司
 		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
 		  		$post_data['j_tel']=$sender['j_tel'];//寄件方电话
 		  		$post_data['j_province']=$sender['j_province'];//寄件省市区省
@@ -74,9 +74,9 @@ class ExpressController extends CommonController  {
 		
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
-	
+			
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();
-		 		
+
 		 		if(!$data){		 			
 		 			$this->error('没有得到得运订单号');
 		       		exit();
@@ -101,9 +101,13 @@ class ExpressController extends CommonController  {
 		        		$daohuo=json_decode($jnorder,true);
 		 				
 		        		if($daohuo){
-		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+		        			
 		        			$jnorder=$orderinfo['order_no'];
 		        			$param['status']=2;
+		        			$param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+					        $param['filter_result']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['filter_result'];
+					        $param['destcode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['destcode'];
+					        $param['origincode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['origincode'];
 		        			$odsul=$this->saveOrder($jnorder,$param);
 		        			if($odsul){
 		        				//$this->success('已成功下单',U('Shipments/Plist'));	
@@ -120,10 +124,34 @@ class ExpressController extends CommonController  {
 		        	}
 		        	
 		        }
-		  	    dump($data);
-		  	    var_dump($data);
-		  	    exit();
-		        //$param['numberno']=
+
+		        if($data['data'][0]['childs'][1]['tag']!="Body"){		        	
+		        	$this->error($data['data'][0]['childs'][1]['childs']['0']['text']);	
+		        	exit();
+		        }
+
+
+		        $param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+    			$jnorder=$orderinfo['order_no'];
+    			$param['status']=2;
+    			$odsul=$this->saveOrder($jnorder,$param);
+    			if($odsul){
+    				//$this->success('已成功下单',U('Shipments/Plist'));	
+
+    				$this->printOrder($orderid);
+    				exit();	
+    			}
+
+		       
+
+		  	   
+		
+		        $param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+		        $param['filter_result']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['filter_result'];
+		        $param['destcode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['destcode'];
+		        $param['origincode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['origincode'];
+
+		        $jnorder=$orderinfo['order_no'];
 		        $param['status']=2;
 		        $odsul=$this->saveOrder($jnorder,$param);
     			if($odsul){
@@ -438,7 +466,7 @@ class ExpressController extends CommonController  {
         $SF = new \SFprinter();
 
         $sender=C('SENDER');
-        $data = array(           
+        $data = array(
             "mailno" => $orderdata['numberno'],//运单号
             "express_type" =>$sender['express_type'],//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
             "orderid" =>$orderdata['order_no'],//订单号
@@ -458,7 +486,7 @@ class ExpressController extends CommonController  {
             "d_city" => $orderdata['city'],//到件省市区
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
-            "d_number" => $orderdata["d_number"],//到件地编号
+            "d_number" => $orderdata["destcode"],//到件地编号
             "pay_method" => 1,//付款方式
             "custid" => $post_data["custid"],//付款帐号
             "daishou" => $post_data["daishou"], //代收款项

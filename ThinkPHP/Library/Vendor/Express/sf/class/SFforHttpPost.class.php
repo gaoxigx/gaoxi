@@ -101,8 +101,7 @@ class SFapi {
             $PostData = array(
                 "xml" => $this->_XML,
                 "verifyCode" => $verifyCode
-            );         
-
+            );
             $this->_RES = $this->HTTP_POST($this->_URL, $PostData);
             return $this;
         }
