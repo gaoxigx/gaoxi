@@ -219,8 +219,8 @@ class SFprinter {
         imagefttext($this->_PIC, $this->dpi300(10), 0, 535, 2065, self::BLACK, $this->_FONT, "收");
         imagefttext($this->_PIC, $this->dpi300(10), 0, 535, 2124, self::BLACK, $this->_FONT, "件");
         imagefttext($this->_PIC, $this->dpi300(6), 0, 590, 2065, self::BLACK, $this->_FONT, $SSQ);
-        imagefttext($this->_PIC, $this->dpi300(6), 0, 590, 2065, self::BLACK, $this->_FONT, $data["d_address"]);
-        imagefttext($this->_PIC, $this->dpi300(6), 0, 590, 2100, self::BLACK, $this->_FONT, $data["d_contact"] . "（收） " . $data["d_tel"]);
+        imagefttext($this->_PIC, $this->dpi300(6), 0, 590, 2100, self::BLACK, $this->_FONT, $data["d_address"]);
+        imagefttext($this->_PIC, $this->dpi300(6), 0, 590, 2140, self::BLACK, $this->_FONT, $data["d_contact"] . "（收） " . $data["d_tel"]);
 
         imagefttext($this->_PIC, $this->dpi300(6), 0, 545, 2210, self::BLACK, $this->_FONT, "订单号：" . $data["orderid"]);
 

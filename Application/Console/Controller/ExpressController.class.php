@@ -71,9 +71,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['things_num']=1;//数量
 		  		$post_data['remark']=$orderinfo['note'];//备注
 		  		$post_data['OrderService_Mode']="JSON";//数据格式		
-		 
-					
-		      
+		
 		        $SF = new \SFapi();
 		        $Mode = $post_data["OrderService_Mode"];
 	
@@ -92,6 +90,7 @@ class ExpressController extends CommonController  {
 		       		exit();
 		    	}
 		    		
+
 		       
 
 		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){
