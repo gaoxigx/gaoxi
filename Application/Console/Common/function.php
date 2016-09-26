@@ -183,6 +183,7 @@ function json_ary($json){
     }
     
     function outExcel($dataArr, $fileName = '', $sheet = false) {
+        
         ob_end_clean();        
         require_once VENDOR_PATH . 'download-xlsx.php';
         export_csv ( $dataArr, $fileName, $sheet );
