@@ -2,6 +2,7 @@
 require_once dirname(__FILE__) . '/PHPExcel.php';
 
 function export_csv($data = '', $filename = '',$sheet = false) {
+    
     // Create new PHPExcel object
     $objPHPExcel = new PHPExcel();
 	// Set document properties
@@ -14,12 +15,11 @@ function export_csv($data = '', $filename = '',$sheet = false) {
 								 ->setCategory("Test result file");					 
 	$filename = empty ( $filename ) ? date ( 'YmdHis' ) : $filename ;
 	// Redirect output to a client’s web browser (Excel5)
-	header('Content-Type: application/vnd.ms-excel');
-	header('Content-Disposition: attachment;filename='.$filename.'.xls');
+	header('Content-Type: application/vnd.ms-excel;charset=utf-8');
+	header('Content-Disposition: attachment;charset=utf-8;filename='.$filename.'.xls');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');
-	
 	// If you're serving to IE over SSL, then the following may be needed
 	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
@@ -40,11 +40,11 @@ function export_csv($data = '', $filename = '',$sheet = false) {
 		    }  
 	  } 
 
-		/*// Miscellaneous glyphs, UTF-8
-		$objPHPExcel->setActiveSheetIndex(0)
-		            ->setCellValue('A4', 'Miscellaneous glyphs')
-		            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
-		*/
+		/// Miscellaneous glyphs, UTF-8
+//		$objPHPExcel->setActiveSheetIndex(0)
+//		            ->setCellValue('A4', 'Miscellaneous glyphs')
+//		            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
+//		
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('Simple');
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet

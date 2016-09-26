@@ -383,6 +383,7 @@ class ShipmentsController extends CommonController {
 			$map1['order_no']  = array('like','%'.trim($username).'%'); 
 			$map1['username']  = array('like','%'.trim($username).'%');
                         $map1['mobile'] =  array('like','%'.trim($username).'%');
+                        $map1['numberno'] =  array('like','%'.trim($username).'%');
 			$map1['_logic'] = 'OR';
 			$map['_complex'] = $map1;
 		}

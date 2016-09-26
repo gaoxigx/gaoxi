@@ -815,5 +815,74 @@ class OrderController extends CommonController {
 		$url="https://{domain}/rest/v1.0/order/access_token/{access_token}/sf_appid/{sf_appid}/sf_appkey/{sf_appkey}";
 		$this->display();
 	}
+        
 
+        
+//        public function exportExcel($expTitle,$expCellName,$expTableData){
+//        $xlsTitle = iconv('utf-8', 'gb2312', $expTitle);//文件名称
+//        $fileName = $_SESSION['account'].date('_YmdHis');//or $xlsTitle 文件名称可根据自己情况设定
+//        $cellNum = count($expCellName);
+//        $dataNum = count($expTableData);
+//        vendor("PHPExcel.PHPExcel");
+//       
+//        $objPHPExcel = new PHPExcel();
+//        $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+//        
+//        $objPHPExcel->getActiveSheet(0)->mergeCells('A1:'.$cellName[$cellNum-1].'1');//合并单元格
+//       // $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', $expTitle.'  Export time:'.date('Y-m-d H:i:s'));  
+//        for($i=0;$i<$cellNum;$i++){
+//            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$i].'2', $expCellName[$i][1]); 
+//        } 
+//          // Miscellaneous glyphs, UTF-8   
+//        for($i=0;$i<$dataNum;$i++){
+//          for($j=0;$j<$cellNum;$j++){
+//            $objPHPExcel->getActiveSheet(0)->setCellValue($cellName[$j].($i+3), $expTableData[$i][$expCellName[$j][0]]);
+//          }             
+//        }  
+//        
+//        header('pragma:public');
+//        header('Content-type:application/vnd.ms-excel;charset=utf-8;name="'.$xlsTitle.'.xls"');
+//        header("Content-Disposition:attachment;filename=$fileName.xls");//attachment新窗口打印inline本窗口打印
+//        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  
+//        $objWriter->save('php://output'); 
+//        exit;   
+//    }    
+
+/**
+     *
+     * 导出Excel
+     */
+    function expUser(){//导出Excel
+        
+        //$dataAry=M('order_info')->where('id<100')->find();
+        $dataAry[0][0]="sdfsdfsd";
+        $dataAry[0][1]="sdfsdfsd";
+        $dataAry[0][2]="sdfsdfsd";
+        $dataAry[0][3]="sdfsdfsd";
+        $dataAry[0][4]="sdfsdfsd";
+        outExcel($dataAry);
+        
+//        $xlsName  = "User";
+//        $xlsCell  = array(
+//        array('addtime','成交日期'),
+//        array('total_price','金额'),
+//        array('payment_method','支付方式'),
+//        array('username','联系人'),
+//        array('mobile','联系人电话'),
+//        array('address','联系人地址'),
+//        array('note','备注'),
+//        array('agent','开单人')
+//        );
+//        $xlsModel = M('order_info');
+//    
+//        $xlsData  = $xlsModel->Field('id,addtime,total_price,payment_method,username,mobile,address,note,agent')->select();
+//        
+//        foreach ($xlsData as $k => $v)
+//        {
+//            $xlsData[$k]['payment_method']=$v['payment_method']==1?'微信':'其他支付方式';
+//        }
+//        $this->exportExcel($xlsName,$xlsCell,$xlsData);
+         
+    }
+        
 }
