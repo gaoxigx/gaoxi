@@ -137,8 +137,7 @@ class getpage {
     }
     //导出xlsx表格
     /*
-
-
+     * *
     */
     function outExcel($dataArr, $fileName = '', $sheet = false) {
         require_once VENDOR_PATH . 'download-xlsx.php';

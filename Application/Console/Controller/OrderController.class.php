@@ -854,7 +854,17 @@ class OrderController extends CommonController {
      */
     function expUser(){//导出Excel
         
-        //$dataAry=M('order_info')->where('id<100')->find();
+//$dataAry = array(
+//    array(NULL, 2010, 2011, 2012),
+//    array('Q1',   12,   15,   21),
+//    array('Q2',   56,   73,   86),
+//    array('Q3',   52,   61,   69),
+//    array('Q4',   30,   32,    0),
+//   );
+// 
+//create_xls($dataAry);
+//        
+//        $dataAry=M('order_info')->where('id<100')->find();
         $dataAry[0][0]="sdfsdfsd";
         $dataAry[0][1]="sdfsdfsd";
         $dataAry[0][2]="sdfsdfsd";
