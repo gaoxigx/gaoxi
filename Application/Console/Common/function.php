@@ -181,4 +181,12 @@ function json_ary($json){
     function psckg($param){
         return $param*50/1000;
     }
+    
+    function outExcel($dataArr, $fileName = '', $sheet = false) {
+        ob_end_clean();        
+        require_once VENDOR_PATH . 'download-xlsx.php';
+        export_csv ( $dataArr, $fileName, $sheet );
+        unset ( $sheet );
+        unset ( $dataArr );
+    }
 ?>

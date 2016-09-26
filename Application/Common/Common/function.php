@@ -139,12 +139,7 @@ class getpage {
     /*
 
 
-    */
-    function outExcel($dataArr, $fileName = '', $sheet = false) {
-        require_once VENDOR_PATH . 'download-xlsx.php';
-        export_csv ( $dataArr, $fileName, $sheet );
-        unset ( $sheet );
-        unset ( $dataArr );
+  
     }
     /*导入xlsx表格
         对应

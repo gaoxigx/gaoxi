@@ -28,15 +28,20 @@ function export_csv($data = '', $filename = '',$sheet = false) {
 	$Line = array(
 	'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ'
 	);
+
 	if(!$sheet){
 		foreach ( $data as $k=>$v ) {
 		    $u=$k+1;
 		    $s = count($v);
 		    for($i=0;$i<$s;$i++){
 		    	    $n = $Line[$i].$u;
+		    	
+
 		    	    $va = array_values($v);
+		    
 		    		$objPHPExcel->setActiveSheetIndex(0)
 		            ->setCellValue($n,$va[$i]);
+                           
 		    }  
 	  } 
 
