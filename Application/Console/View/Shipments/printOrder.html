@@ -136,6 +136,7 @@ td p{display: block;text-indent: 0; padding: 0px 21px;}
                     <td>
                         <a href="__URL__/look/id/{$vo.id}" class="tablelink">&nbsp;查看</a><br/>
                         <a href="{:U('Express/printOrder',array('id'=>$vo['id']))}" class="tablelink">&nbsp;生成快递单</a><br/>
+                        <a href="{:U('Express/printWebOrder',array('id'=>$vo['id']))}">生成Web订单</a><br/>
                         <a href="javascript:void(0)" class="print" onclick="myPreview({$vo.id})">&nbsp;打印快递单</a><br/>
                     </td>         
                 </tr> 

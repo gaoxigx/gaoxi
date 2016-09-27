@@ -421,6 +421,77 @@ class ExpressController extends CommonController  {
 		}
 	}
 
+	public function printWebOrder($id,$ajax=0){
+		if (empty($id)) {
+			$this->error("请选择打印订单");
+		    exit();
+		}
+
+		$orderdata=M('order_info')->find($id);
+
+		if(!$orderdata){
+			if($ajax==1){
+				return false;
+			}else{
+				$this->error("订单不存了");
+				exit();
+			}
+			
+			
+		}
+
+
+		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
+		if(!$proOrder){
+			if($ajax==1){
+				return false;
+			}else{
+				$this->error("订单没有产品请核实");
+				exit();
+			}
+			
+		}
+
+		
+        $post_data = $orderdata;
+        unset($post_data["action"]);
+
+        $pic = "Public/order/old_no" . time() . ".png";
+        $olderpic =ROOT_PATH . "/" . $pic;
+     
+        $SF = new \SFprinter();
+        $pay_method=array(1=>'寄付月结',2=>'收方付款');
+		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
+        $sender=C('SENDER');
+        $data = array(
+            "mailno" => $orderdata['numberno'],//运单号
+            "express_type" =>$sender['express_type'],//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+            "orderid" =>$orderdata['order_no'],//订单号
+            "j_company" => $sender['j_company'],//寄件方公司
+            "j_contact" => $sender['j_contact'],//寄件方姓名
+            "j_tel" => $sender['j_tel'],//寄件方电话
+            "j_province" => $sender['j_province'],
+            "j_city" =>$sender['j_city'],
+            "j_qu" => $sender['j_qu'],//寄件省市区            
+            "j_address" => $sender['j_address'],//寄件方地址
+            "j_number" => $sender['j_number'],//寄件地编号
+
+            "d_company" => $orderdata['company'],//到件方公司
+            "d_contact" =>$orderdata['username'],//到件方姓名
+            "d_tel" => $orderdata['mobile'],//到件方电话
+            "d_province" =>$orderdata['province'],//到件省市区
+            "d_city" => $orderdata['city'],//到件省市区
+            "d_qu" => $orderdata['qu'],//到件省市区
+            "d_address" =>$orderdata['address'],//到件方地址
+            "d_number" => $orderdata["destcode"],//到件地编号
+            "pay_method" => $pay_method[1],//付款方式
+            "custid" => $post_data["custid"],//付款帐号
+            "daishou" => $post_data["daishou"], //代收款项
+            "remark" => $post_data["remark"],//备注
+            "things" => $post_data["things"]//物件
+        );
+	}
+
 	//打印订单
 	public function printOrder($id,$ajax=0){
 		
