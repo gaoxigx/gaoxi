@@ -122,7 +122,7 @@ class ExpressController extends CommonController  {
 					      
 
 		        			$odsul=$this->saveOrder($jnorder,$param);
-		        		
+
 		        			if($odsul){
 		        				//$this->success('已成功下单',U('Shipments/Plist'));
 		        				$this->printOrder($orderid);
@@ -143,26 +143,17 @@ class ExpressController extends CommonController  {
 		        	exit();
 		        }
 
-
-		        $param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
-    			$jnorder=$orderinfo['order_no'];
-    			$param['status']=2;
-    			$odsul=$this->saveOrder($jnorder,$param);
-    			if($odsul){
-    				//$this->success('已成功下单',U('Shipments/Plist'));	
-
-    				$this->printOrder($orderid);
-    				exit();	
-    			}
-		
-		        $param['numberno']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
-		        $param['filter_result']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['filter_result'];
-		        $param['destcode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['destcode'];
-		        $param['origincode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['origincode'];
+	
+		        $param['status']=2;
+    			$param['numberno']=$data['data'][0]['childs'][1]['childs'][0]['attr']['mailno'];
+		        $param['filter_result']=$data['data'][0]['childs'][1]['childs'][0]['attr']['filter_result'];
+		        $param['destcode']=$data['data'][0]['childs'][1]['childs'][0]['attr']['destcode'];
+		        $param['origincode']=$data['data'][0]['childs'][1]['childs'][0]['attr']['origincode'];
 
 		        $jnorder=$orderinfo['order_no'];
-		        $param['status']=2;
+		
 		        $odsul=$this->saveOrder($jnorder,$param);
+		   
     			if($odsul){
     				$this->printOrder($orderid,0);
     				exit();
@@ -195,7 +186,9 @@ class ExpressController extends CommonController  {
 			$this->ajaxreturn($return);
 			exit();
 		}
-
+		
+		$pay_method=array(1=>'1寄付月结',2=>'2收方付款');
+		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
 		if($orderinfo){
 
 			$orderid=$orderinfo['id'];
@@ -221,7 +214,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		  		
 
-		  		$post_data['pay_method']=1;//付款方式 1寄付月结  2收方付款
+		  		$post_data['pay_method']=$pay_method[1];//付款方式 1寄付月结  2收方付款
 		  		$post_data['custid']="5322059827";//付款帐号
 		  		$post_data['daishou']="0";//代收金额
 
@@ -473,7 +466,8 @@ class ExpressController extends CommonController  {
         $olderpic =ROOT_PATH . "/" . $pic;
      
         $SF = new \SFprinter();
-
+        $pay_method=array(1=>'寄付月结',2=>'收方付款');
+		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
         $sender=C('SENDER');
         $data = array(
             "mailno" => $orderdata['numberno'],//运单号
@@ -496,7 +490,7 @@ class ExpressController extends CommonController  {
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
             "d_number" => $orderdata["destcode"],//到件地编号
-            "pay_method" => 1,//付款方式
+            "pay_method" => $pay_method[1],//付款方式
             "custid" => $post_data["custid"],//付款帐号
             "daishou" => $post_data["daishou"], //代收款项
             "remark" => $post_data["remark"],//备注
