@@ -853,47 +853,28 @@ class OrderController extends CommonController {
      * 导出Excel
      */
     function expUser(){//导出Excel
-        
-//$dataAry = array(
-//    array(NULL, 2010, 2011, 2012),
-//    array('Q1',   12,   15,   21),
-//    array('Q2',   56,   73,   86),
-//    array('Q3',   52,   61,   69),
-//    array('Q4',   30,   32,    0),
-//   );
-// 
-//create_xls($dataAry);
         ob_end_clean();
-        $dataAry=M('order_info')->where('id<100')->select();
-        // $dataAry[0][0]="sdfsdfsd";
-        // $dataAry[0][1]="sdfsdfsd";
-        // $dataAry[0][2]="sdfsdfsd";
-        // $dataAry[0][3]="sdfsdfsd";
-        // $dataAry[0][4]="sdfsdfsd";
-        outExcel($dataAry);
-
-      
+        $dataAry = M('order_info')->field("nico_staff.username,CONCAT(order_no,' ') as order_no ,from_unixtime(addtime) as addtime,total_price,nico_order_info.username as un,nico_order_info.mobile,nico_order_info.address,note")
+                ->join('nico_staff ON nico_staff.id = nico_order_info.agent','left' )->order('nico_order_info.id desc')->select();
+       
+     //  var_dump($dataAry);exit();
+        $ht = array (
+                        '销售客服',
+                        '订单号',
+                        '下单时间',
+                        '订单金额',
+                        '联系人',
+                        '联系人电话',
+                        '收获地址',
+                        '备注'
+        );
         
-//        $xlsName  = "User";
-//        $xlsCell  = array(
-//        array('addtime','成交日期'),
-//        array('total_price','金额'),
-//        array('payment_method','支付方式'),
-//        array('username','联系人'),
-//        array('mobile','联系人电话'),
-//        array('address','联系人地址'),
-//        array('note','备注'),
-//        array('agent','开单人')
-//        );
-//        $xlsModel = M('order_info');
-//    
-//        $xlsData  = $xlsModel->Field('id,addtime,total_price,payment_method,username,mobile,address,note,agent')->select();
-//        
-//        foreach ($xlsData as $k => $v)
-//        {
-//            $xlsData[$k]['payment_method']=$v['payment_method']==1?'微信':'其他支付方式';
-//        }
-//        $this->exportExcel($xlsName,$xlsCell,$xlsData);
+        $data [0] = $ht;
+
+        $dataArr = array_merge ( $data, ( array ) $dataAry );
+        
+        outExcel($dataArr);
+
          
     }
         
