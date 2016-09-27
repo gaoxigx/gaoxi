@@ -69,8 +69,6 @@ class ExpressController extends CommonController  {
 		  		$post_data['things']=$things;//物品
 		  		$post_data['things_num']="1";//数量
 		  		$post_data['remark']=$orderinfo['note'];//备注
-		  		//$post_data['OrderService_Mode']="JSON";//数据格式		
-				//dump($post_data);
 				// $at=array( 
 				// 	"orderid"=> "32432432" ,
 				// 	"express_type"=>  "1" ,
@@ -95,7 +93,7 @@ class ExpressController extends CommonController  {
 				// 	"things_num"=>"1" ,
 				// 	"remark"=>"精密仪器，小心轻拿轻放~" 
 				// 	);
-				//dump($at);
+				
 		
 		        $SF = new \SFapi();		   
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();		    
@@ -121,7 +119,10 @@ class ExpressController extends CommonController  {
 					        $param['filter_result']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['filter_result'];
 					        $param['destcode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['destcode'];
 					        $param['origincode']=$daohuo['data'][0]['childs'][1]['childs'][0]['attr']['origincode'];
+					      
+
 		        			$odsul=$this->saveOrder($jnorder,$param);
+		        		
 		        			if($odsul){
 		        				//$this->success('已成功下单',U('Shipments/Plist'));
 		        				$this->printOrder($orderid);
