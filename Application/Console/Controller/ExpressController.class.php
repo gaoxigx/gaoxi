@@ -459,7 +459,7 @@ class ExpressController extends CommonController  {
         $pic = "Public/order/old_no" . time() . ".png";
         $olderpic =ROOT_PATH . "/" . $pic;
      
-        $SF = new \SFprinter();
+      
         $pay_method=array(1=>'寄付月结',2=>'收方付款');
 		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
         $sender=C('SENDER');
@@ -490,6 +490,8 @@ class ExpressController extends CommonController  {
             "remark" => $post_data["remark"],//备注
             "things" => $post_data["things"]//物件
         );
+        $this->assign('data',$data);
+        $this->display();
 	}
 
 	//打印订单
