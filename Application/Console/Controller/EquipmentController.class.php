@@ -21,16 +21,18 @@ class EquipmentController extends CommonController {
         if($username){            
             
             $parameter['username'] = $username;
-           
-			$where['cdkey']  = array('like','%'.trim($username).'%');
-			$where['xinghao']  = array('like','%'.trim($username).'%');
-            $where['bianhao']  = array('like','%'.trim($username).'%');
-            $where['daiyanren']  = array('like','%'.trim($username).'%');
+                        $where['et.id']  = trim($username);     
+                        $where['staffid']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id'); 
+			$where['et.cdkey']  = array('like','%'.trim($username).'%');
+			$where['et.xinghao']  = array('like','%'.trim($username).'%');
+            $where['et.bianhao']  = array('like','%'.trim($username).'%');
+            $where['et.daiyanren']  = array('like','%'.trim($username).'%');
             $where['et.mobile']  = array('like','%'.trim($username).'%');
-            $where['weixinhao']  = array('like','%'.trim($username).'%');
-            $where['yxemail']  = array('like','%'.trim($username).'%');
-            $where['fuzeren']  = array('like','%'.trim($username).'%');            
-            $where['shiyongren']  = array('like','%'.trim($username).'%');   
+            $where['et.weixinhao']  = array('like','%'.trim($username).'%');
+            $where['et.yxemail']  = array('like','%'.trim($username).'%');
+            $where['et.fuzeren']  = array('like','%'.trim($username).'%');            
+            $where['et.shiyongren']  = array('like','%'.trim($username).'%');
+
             $where['_logic'] = 'or';
             $tw=$where;
         }
@@ -83,7 +85,8 @@ class EquipmentController extends CommonController {
         $list = $User->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
                 ->join('nico_staff as sf on sf.id=et.staffid','left')->where($tw)
                 ->order('et.storzd desc,et.fuzerenid desc')->limit($Page->firstRow.','.$Page->listRows)->select();
-      
+//        echo M()->getLastSql();exit();
+
         $this->assign('list',$list);// 赋值数据集
         $this->assign('page',$show);// 赋值分页输出
 		$this->assign('count',$count);
@@ -228,7 +231,7 @@ class EquipmentController extends CommonController {
         }
         $map['staffid']=I('get.id');
         $track=D('Equipment')->field('et.*,sf.section,sf.departmenttext,sf.quarters,sf.posttext')->alias('et')
-                ->join('nico_staff as sf on sf.id=et.staffid','left')->where($map)->select();
+                ->join('nico_staff as sf on sf.id=et.staffid ','left')->where($map)->select();
         $this->assign('data',$track);
         $this->display();
     }

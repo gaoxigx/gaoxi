@@ -129,8 +129,8 @@ $(document).ready(function(){
                                         
 					
                                         
-					<td>
-                        <p>使用人：<a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"  style="color:#009ceb;">{$vo['shiyongren']}</a></p>
+                    <td>
+                        <p>使用人：<a href="{:U('Equipment/staffequipment',array('id'=>$vo['staffid']))}"  style="color:#009ceb;">{$staff[$vo["staffid"]]}</a></p>
                         <p>部门：{$vo.departmenttext}</p>
                         <p style="color:#404040;">岗位：{$vo.posttext}</p>
                     </td>
