@@ -23,6 +23,11 @@
                     <li><input type="submit" value="查询" class="scbtn" name=""></li>
                 </form>
                 <p style="float:right;" class="file_btn"><a href="{:U('Console/Order/expUser')}">导出表格</a><br/></p>
+                <form action="{:U('Console/Order/import')}" method="post" enctype="multipart/form-data">
+                   <input type="file" name="import"/>
+                   <input type="hidden" name="table" value="tablename"/>
+                   <input type="submit" value="导入"/>
+               </form>
                 
 <!--                <form action="/index.php/Console/Order/Plist" method="post" id="save_excel" enctype="multipart/form-data">  			
                     <ul class="toolbar" style="float:right;">

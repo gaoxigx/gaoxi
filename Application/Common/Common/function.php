@@ -161,6 +161,16 @@ class getpage {
             
 
     */
+    
+    
+   /**
+    * 
+    * @param type $attach_id
+    * @param type $column
+    * @param type $dateColumn
+    * @param type $filepath
+    * @return string
+ 
     function importFormExcel($attach_id, $column, $dateColumn = array(),$filepath='') {
         $attach_id = intval ( $attach_id );
         $res = array (
@@ -236,8 +246,8 @@ class getpage {
         $res ['data'] = $result;
         return $res;
     }
-
-
+   */ 
+    
 }
 
 ?>
