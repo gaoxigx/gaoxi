@@ -41,6 +41,7 @@ class ExpressController extends CommonController  {
 				
 		  		$post_data['orderid']=$orderinfo['order_no'];//订单号
 		  		$post_data['express_type']="2";//快件类型1标准快递 2顺丰特惠 3电商特惠 7电商速配
+		  		$post_data["express_type"]=$orderinfo['express_type'];//快件类型 顺丰次日 顺丰隔日 顺丰次晨 顺丰即日
 		  		$post_data['j_company']=$sender['j_contact'];//寄件方公司
 		  		$post_data['j_contact']=$sender['j_contact'];//寄件方姓名
 		  		$post_data['j_tel']=$sender['j_tel'];//寄件方电话
@@ -49,16 +50,16 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_qu']=$sender['j_qu'];//寄件省市区区
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
-		  		$post_data['d_company']=empty($orderinfo['company'])?$orderinfo['username']:$orderinfo['company'];//到件方公司
+		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
 		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
-		  		$post_data['d_province']=empty($orderinfo['province'])?'上海':$orderinfo['province'];//到件省市区省
-		  		$post_data['d_city']=empty($orderinfo['city'])?'嘉定区':$orderinfo['city'];//到件省市区市
-		  		$post_data['d_qu']=empty($orderinfo['qu'])?'嘉定区':$orderinfo['qu'];//到件省市区
+		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
+		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
+		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		
-		  		$post_data['pay_method']="1";//"寄付月结";//付款方式 1寄付月结  2收方付款
-		  		$post_data['custid']="5322059827";//付款帐号
-		  		$post_data['daishou']="100";//代收金额
+		  		$post_data['pay_method']=$orderinfo['pay_method'];//"寄付月结";//付款方式 1寄付月结  2收方付款
+		  		$post_data['custid']=$orderinfo['custid'];//付款帐号
+		  		$post_data['daishou']=$orderinfo['daishou'];//代收金额
 
 		  		//得到物品信息
 		  		$things="";
@@ -69,32 +70,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['things']=$things;//物品
 		  		$post_data['things_num']="1";//数量
 		  		$post_data['remark']=$orderinfo['note'];//备注
-				// $at=array( 
-				// 	"orderid"=> "32432432" ,
-				// 	"express_type"=>  "1" ,
-				// 	"j_company"=> "西瓜の公司" ,
-				// 	"j_contact"=>  "大西瓜" ,
-				// 	"j_tel"=>  "15842345665" ,
-				// 	"j_province"=>"山东省" ,
-				// 	"j_city"=>  "青岛市" ,
-				// 	"j_qu"=> "崂山区" ,
-				// 	"j_address"=>  "丽达广场对面" ,
-				// 	"d_company"=> "菠萝の公司" ,
-				// 	"d_contact"=> "大菠萝" ,
-				// 	"d_tel"=>  "15544456578" ,
-				// 	"d_province"=> "山东省" ,
-				// 	"d_city"=> "临沂市" ,
-				// 	"d_qu"=> "兰山区" ,
-				// 	"d_address"=>  "金雀山路齐鲁大厦" ,
-				// 	"pay_method"=> "1" ,
-				// 	"custid"=>  "5322059827" ,
-				// 	"daishou"=> "0" ,
-				// 	"things"=> "小笼包" ,
-				// 	"things_num"=>"1" ,
-				// 	"remark"=>"精密仪器，小心轻拿轻放~" 
-				// 	);
-				
-		
+			
 		        $SF = new \SFapi();		   
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();		    
 		 		if(!$data){		 			
@@ -187,8 +163,9 @@ class ExpressController extends CommonController  {
 			exit();
 		}
 		
-		$pay_method=array(1=>'1寄付月结',2=>'2收方付款');
-		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
+		$pay_method=array(1=>'寄付月结',2=>'收方付款');
+		$express_type=array(1=>'顺丰次日', 2=>'顺丰隔日', 5=>'顺丰次晨', 6=>'顺丰即日');
+
 		if($orderinfo){
 
 			$orderid=$orderinfo['id'];
@@ -215,7 +192,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		  		
 
 		  		$post_data['pay_method']=$pay_method[1];//付款方式 1寄付月结  2收方付款
-		  		$post_data['custid']="5322059827";//付款帐号
+		  		$post_data['custid']="";//付款帐号
 		  		$post_data['daishou']="0";//代收金额
 
 		  		//得到物品信息
@@ -344,6 +321,18 @@ class ExpressController extends CommonController  {
         return $data;
 	}
 
+	public function or($route_mailno){
+		$post_data = $_POST;
+        $route_mailno = $post_data["route_mailno"];
+        $SF = new SFapi();
+        $Mode = $post_data["RouteService_Mode"];
+        unset($post_data["RouteService_Mode"]);
+     
+        $data = $SF->RouteService($route_mailno)->Send()->readJSON();
+     
+        echo $data;
+	}
+
 
 	//下订单接口
 	public function orderServer(){
@@ -461,11 +450,11 @@ class ExpressController extends CommonController  {
      
       
         $pay_method=array(1=>'寄付月结',2=>'收方付款');
-		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
+		$express_type=array(1=>'顺丰次日', 2=>'顺丰隔日', 5=>'顺丰次晨', 6=>'顺丰即日');
         $sender=C('SENDER');
         $data = array(
             "mailno" => $orderdata['numberno'],//运单号
-            "express_type" =>$sender['express_type'],//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+            "express_type" =>$express_type[$orderdata['express_type']],//快件类型 顺丰次日 顺丰隔日 顺丰次晨 顺丰即日
             "orderid" =>$orderdata['order_no'],//订单号
             "j_company" => $sender['j_company'],//寄件方公司
             "j_contact" => $sender['j_contact'],//寄件方姓名
@@ -484,11 +473,11 @@ class ExpressController extends CommonController  {
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
             "d_number" => $orderdata["destcode"],//到件地编号
-            "pay_method" => $pay_method[1],//付款方式
-            "custid" => $post_data["custid"],//付款帐号
-            "daishou" => $post_data["daishou"], //代收款项
-            "remark" => $post_data["remark"],//备注
-            "things" => $post_data["things"]//物件
+            "pay_method" => $pay_method[$orderdata['pay_method']],//付款方式
+            "custid" => $orderdata["custid"],//付款帐号
+            "daishou" => $orderdata["daishou"], //代收款项
+            "remark" => $orderdata["remark"],//备注
+            "things" => $orderdata["things"]//物件
         );
         $this->assign('data',$data);
         $this->display();
@@ -539,12 +528,13 @@ class ExpressController extends CommonController  {
         $olderpic =ROOT_PATH . "/" . $pic;
      
         $SF = new \SFprinter();
-        $pay_method=array(1=>'寄付月结',2=>'收方付款');
-		$express_type=array(1=>'标准快递', 2=>'顺丰特惠', 3=>'电商特惠', 7=>'电商速配');
+        $pay_method=array(1=>'寄付月结',2=>'收方付款');//寄付月结//收方付款//
+		
+		$express_type=array(1=>'顺丰次日', 2=>'顺丰隔日', 5=>'顺丰次晨', 6=>'顺丰即日');
         $sender=C('SENDER');
         $data = array(
             "mailno" => $orderdata['numberno'],//运单号
-            "express_type" =>$sender['express_type'],//快件类型 标准快递 顺丰特惠 电商特惠 电商速配
+            "express_type" =>$express_type[$orderdata['express_type']],//快件类型 顺丰次日 顺丰隔日 顺丰次晨 顺丰即日
             "orderid" =>$orderdata['order_no'],//订单号
             "j_company" => $sender['j_company'],//寄件方公司
             "j_contact" => $sender['j_contact'],//寄件方姓名
@@ -563,11 +553,11 @@ class ExpressController extends CommonController  {
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
             "d_number" => $orderdata["destcode"],//到件地编号
-            "pay_method" => $pay_method[1],//付款方式
-            "custid" => $post_data["custid"],//付款帐号
-            "daishou" => $post_data["daishou"], //代收款项
-            "remark" => $post_data["remark"],//备注
-            "things" => $post_data["things"]//物件
+            "pay_method" => $pay_method[$orderdata['pay_method']],//付款方式
+            "custid" => $orderdata["custid"],//付款帐号
+            "daishou" => $orderdata["daishou"], //代收款项
+            "remark" => $orderdata["remark"],//备注
+            "things" => $orderdata["things"]//物件
         );
 
         $SF->SFdata($data)->SFprint($olderpic);

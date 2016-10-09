@@ -521,7 +521,15 @@ class OrderController extends CommonController {
         $data['addtime'] = time();
         $data['status'] = 1;
         $data['payment_status'] = json_encode(I('payment_status'));
-    
+        $pst=I('payment_status');
+        $data['custid']="0205957009";
+        $data['express_type']=1;//快件类型 1顺丰次日 2顺丰隔日 5顺丰次晨 6顺丰即日
+        if(isset($pst[5])){
+            $data['pay_method']=2;
+            $data['daishou']=I('total_price');
+        }
+
+
         $roleList   =  D('order_info');
 
         $mid['c.uid']=session('userid');
