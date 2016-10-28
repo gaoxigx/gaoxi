@@ -11,7 +11,7 @@ class Express {
    }
    //设置测试环境
    public function domain($test=false){
-	   	if($test=false){   		
+	   	if($test==false){   		
 	   	  	$this->domainat="open-sbox.sf-express.com";//沙盒环境
 	   	}else{
 	   		$this->domainat="open-prod.sf-express.com";//生产环境
