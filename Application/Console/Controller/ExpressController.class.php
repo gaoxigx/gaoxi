@@ -321,7 +321,7 @@ class ExpressController extends CommonController  {
         return $data;
 	}
 
-	public function or($route_mailno){
+	public function order($route_mailno){
 		$post_data = $_POST;
         $route_mailno = $post_data["route_mailno"];
         $SF = new SFapi();
