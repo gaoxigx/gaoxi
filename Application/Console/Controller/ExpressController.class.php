@@ -51,16 +51,17 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
 		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
-		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
+		  		$post_data['d_contact']=trim($orderinfo['username']);//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
-		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
-		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
-		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
+		  		$post_data['d_province']=$orderinfo['province']="江苏省";//到件省市区省
+		  		$post_data['d_city']=$orderinfo['city']="无锡市";//到件省市区市
+		  		$post_data['d_qu']=$orderinfo['qu']="滨湖区";//到件省市区
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		
 		  		$post_data['pay_method']=$orderinfo['pay_method'];//"寄付月结";//付款方式 1寄付月结  2收方付款
 		  		$post_data['custid']=$orderinfo['custid'];//付款帐号
 		  		$post_data['daishou']=$orderinfo['daishou'];//代收金额
 
+		  		
 		  		//得到物品信息
 		  		$things="";
 		  		foreach ($proOrder as $k => $vl) {
@@ -71,18 +72,21 @@ class ExpressController extends CommonController  {
 		  		$post_data['things_num']="1";//数量
 		  		$post_data['remark']=$orderinfo['note'];//备注
 			
-		        $SF = new \SFapi();		   
+		        $SF = new \SFapi();		
+		          
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();		    
 		 		if(!$data){		 			
 		 			$this->error('没有得到得运订单号');
 		       		exit();
 		 		}
 		 		
+		 		
 		 		$data=json_decode($data,true);	
 		       	if(empty($data['data'])){
 		       		$this->error('没有得到订单信息');
 		       		exit();
 		    	}
+
 		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){		        	
 		        	if($data['data'][0]['childs'][1]['attr']['code']==8016){ 
 		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
@@ -473,7 +477,7 @@ class ExpressController extends CommonController  {
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
             "d_number" => $orderdata["destcode"],//到件地编号
-            "pay_method" => $pay_method[$orderdata['pay_method']],//付款方式
+            "pay_method" =>$pay_method[$orderdata['pay_method']],//付款方式
             "custid" => $orderdata["custid"],//付款帐号
             "daishou" => $orderdata["daishou"], //代收款项
             "remark" => $orderdata["remark"],//备注
