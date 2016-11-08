@@ -53,9 +53,9 @@ class ExpressController extends CommonController  {
 		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
 		  		$post_data['d_contact']=trim($orderinfo['username']);//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
-		  		$post_data['d_province']=$orderinfo['province']="江苏省";//到件省市区省
-		  		$post_data['d_city']=$orderinfo['city']="无锡市";//到件省市区市
-		  		$post_data['d_qu']=$orderinfo['qu']="滨湖区";//到件省市区
+		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
+		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
+		  		$post_data['d_qu']=$orderinfo['qu'];//到件省市区
 		  		$post_data['d_address']=$orderinfo['address'];//到件方地址		
 		  		$post_data['pay_method']=$orderinfo['pay_method'];//"寄付月结";//付款方式 1寄付月结  2收方付款
 		  		$post_data['custid']=$orderinfo['custid'];//付款帐号
@@ -508,11 +508,7 @@ class ExpressController extends CommonController  {
 				$this->error("订单不存了");
 				exit();
 			}
-			
-			
 		}
-
-
 		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
 		if(!$proOrder){
 			if($ajax==1){
@@ -521,16 +517,14 @@ class ExpressController extends CommonController  {
 				$this->error("订单没有产品请核实");
 				exit();
 			}
-			
 		}
 
-		
         $post_data = $orderdata;
         unset($post_data["action"]);
 
         $pic = "Public/order/old_no" . time() . ".png";
         $olderpic =ROOT_PATH . "/" . $pic;
-     
+      
         $SF = new \SFprinter();
         $pay_method=array(1=>'寄付月结',2=>'收方付款');//寄付月结//收方付款//
 		
@@ -565,15 +559,17 @@ class ExpressController extends CommonController  {
         );
 
         $SF->SFdata($data)->SFprint($olderpic);
+     	
+
         $zipurl = "Public/order/" .$orderdata['order_no'] . ".zip";
         $archive = new \PclZip($zipurl);
 		//$v_list = $archive->create($olderpic, PCLZIP_OPT_REMOVE_PATH, '', PCLZIP_OPT_ADD_PATH, '');
+		
         $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'Public/order', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
+     
         if ($v_list == 0) {
         	die("Error : ".$archive->errorInfo(true));
      	}
-
-     	
 
      	$param['mailnoimg']=$pic;
      	$param['mailnozip']=$zipurl;
@@ -589,7 +585,6 @@ class ExpressController extends CommonController  {
 				echo '<img src="/'.$pic.'" />';
 				exit();
 			}
-        	
         }else{
         	if($ajax==1){
 				return false;
@@ -597,7 +592,6 @@ class ExpressController extends CommonController  {
 				$this->error('请重新生成图片');
 				exit();
 			}
-        	
         }
 	}
 }
