@@ -261,7 +261,7 @@ class SFprinter {
 
 
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2280, self::BLACK, $this->_FONT, "托寄物");
-        //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2285, self::BLACK, $this->_FONT, $data["things"]);
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 4, 720, self::BLACK, $this->_FONT, $data["things"]);
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, "备注");
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, $data["remark"]);
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 965, 2430, self::BLACK, $this->_FONT, "费用合计：");

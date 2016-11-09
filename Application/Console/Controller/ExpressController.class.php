@@ -509,7 +509,7 @@ class ExpressController extends CommonController  {
 				exit();
 			}
 		}
-		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
+		$proOrder=M('order_goods')->alias("og")->field("og.*,pro.things")->join('__PRODUCT__ as pro on og.proid=pro.id','left')->where('order_no=%s',$orderdata['order_no'])->select();
 		if(!$proOrder){
 			if($ajax==1){
 				return false;
@@ -519,6 +519,17 @@ class ExpressController extends CommonController  {
 			}
 		}
 
+		foreach ($proOrder as $kg => $vg) {
+			if($kg%4==0){
+				$orderdata["things"].="\n";
+			}
+			if($vg['things']==""){
+				$orderdata["things"].=$vg['product']."-".$vg["buynum"];
+			}else{
+				$orderdata["things"].=$vg['things']."-".$vg["buynum"];
+			}
+		}
+		
         $post_data = $orderdata;
         unset($post_data["action"]);
 
