@@ -171,9 +171,19 @@ class SFprinter {
        // imagefttext($this->_PIC, 10, 0, 30, 220, self::BLACK, $this->_FONT, $data["d_address"]);
 
         imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 190, self::BLACK, $this->_FONT, $SSQ);
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 205, self::BLACK, $this->_FONT, $data["d_address"]);
-        imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 190, self::BLACK, $this->_FONT, $data["d_company"]);
-        imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 190, self::BLACK, $this->_FONT, trim($data["d_contact"]) . "（收）  " . $data["d_tel"]);
+        $adt1=$data["d_address"];
+
+        if(strlen($adt1)>25){
+            $adt=mb_substr($adt1,0,25,"utf-8"); 
+            $ct=mb_substr($adt1,25,mb_strlen($adt1),"utf-8");
+            $adt=$adt."\n".$ct;
+            imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 202, self::BLACK, $this->_FONT,$adt);
+        }else{
+            imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 205, self::BLACK, $this->_FONT,$adt);
+        }
+        
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 188, self::BLACK, $this->_FONT, $data["d_company"]);
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 188, self::BLACK, $this->_FONT, trim($data["d_contact"]) . "（收）  " . $data["d_tel"]);
        
         imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 270, self::BLACK, $this->_FONT, "付款方式：" . $data["pay_method"]);
        // if ( $data["pay_method"] == "寄付月结") {
@@ -226,11 +236,18 @@ class SFprinter {
         imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 450, self::BLACK, $this->_FONT, "收");
         imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 465, self::BLACK, $this->_FONT, "件");
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 80, 1440, self::BLACK, $this->_FONT, $SSQ);
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 465, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
+        
         imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 450, self::BLACK, $this->_FONT, trim($data["d_contact"]) . "（收） " . $data["d_tel"]);
-
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 200, 490, self::BLACK, $this->_FONT, "订单号：");
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 230, 490, self::BLACK, $this->_FONT, $data["orderid"]);
+        if(strlen($adt1)>25){
+            $adt=mb_substr($adt1,0,25,"utf-8"); 
+            $ct=mb_substr($adt1,25,mb_strlen($adt1),"utf-8");
+            $adt=$adt."\n".$ct;
+            imagefttext($this->_PIC,$this->dpi96(8), 0, 30, 465, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$adt);//$data["d_address"]
+        }else{
+            imagefttext($this->_PIC,$this->dpi96(6), 0, 30, 465, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
+        }
+        imagefttext($this->_PIC, $this->dpi96(6), 0, 200, 500, self::BLACK, $this->_FONT, "订单号：");
+        imagefttext($this->_PIC, $this->dpi96(6), 0, 230, 500, self::BLACK, $this->_FONT, $data["orderid"]);
 
        // imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 1550, self::BLACK, $this->_FONT, "托寄物");
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 1585, self::BLACK, $this->_FONT, $data["things"]);
@@ -253,15 +270,24 @@ class SFprinter {
         imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 680, self::BLACK, $this->_FONT, "收");
         imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 695, self::BLACK, $this->_FONT, "件");
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 80, 1440, self::BLACK, $this->_FONT, $SSQ);
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 695, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
+        //imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 695, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
+        if(strlen($adt1)>25){
+            $adt=mb_substr($adt1,0,25,"utf-8"); 
+            $ct=mb_substr($adt1,25,mb_strlen($adt1),"utf-8");
+            $adt=$adt."\n".$ct;
+            imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 695, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$adt);//$data["d_address"]
+        }else{
+            imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 695, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
+        }
+
         imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 680, self::BLACK, $this->_FONT, trim($data["d_contact"]) . "（收） " . $data["d_tel"]);
 
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 200, 710, self::BLACK, $this->_FONT, "订单号：");
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 230, 710, self::BLACK, $this->_FONT, $data["orderid"]);
+        imagefttext($this->_PIC, $this->dpi96(6), 0, 200, 735, self::BLACK, $this->_FONT, "订单号：");
+        imagefttext($this->_PIC, $this->dpi96(6), 0, 230, 735, self::BLACK, $this->_FONT, $data["orderid"]);
 
 
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2280, self::BLACK, $this->_FONT, "托寄物");
-        imagefttext($this->_PIC, $this->dpi96(8), 0, 4, 720, self::BLACK, $this->_FONT, $data["things"]);
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 4, 740, self::BLACK, $this->_FONT, $data["things"]);
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, "备注");
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, $data["remark"]);
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 965, 2430, self::BLACK, $this->_FONT, "费用合计：");
