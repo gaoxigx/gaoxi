@@ -520,16 +520,16 @@ class ExpressController extends CommonController  {
 		}
 
 		foreach ($proOrder as $kg => $vg) {
-			if($kg%4==0){
+			if($kg%3==0){
 				$orderdata["things"].="\n";
 			}
 			if($vg['things']==""){
-				$orderdata["things"].=$vg['product']."-".$vg["buynum"];
+				$orderdata["things"].=$vg['product'].$vg["quality"].$vg["grade"]."X".$vg["buynum"];
 			}else{
-				$orderdata["things"].=$vg['things']."-".$vg["buynum"];
+				$orderdata["things"].=$vg['things'].$vg["quality"].$vg["grade"]."X".$vg["buynum"];
 			}
 		}
-		
+		$orderdata["things"]=$orderdata["things"]."\n".$orderdata['note'];
         $post_data = $orderdata;
         unset($post_data["action"]);
 
