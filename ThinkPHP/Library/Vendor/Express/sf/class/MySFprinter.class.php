@@ -246,7 +246,7 @@ class SFprinter {
         }else{
             imagefttext($this->_PIC,$this->dpi96(5), 0, 30, 465, self::BLACK, $this->_FONT,  $data["d_province"] . $data["d_city"] . $data["d_qu"].$data["d_address"]);
         }
-        imagefttext($this->_PIC, $this->dpi96(5), 0, 150, 500, self::BLACK, $this->_FONT, "订单号：".$data["orderid"]);
+        imagefttext($this->_PIC, $this->dpi96(5), 0, 155, 505, self::BLACK, $this->_FONT, "订单号：".$data["orderid"]);
      
 
        // imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 1550, self::BLACK, $this->_FONT, "托寄物");

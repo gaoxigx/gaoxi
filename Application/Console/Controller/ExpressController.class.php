@@ -529,6 +529,12 @@ class ExpressController extends CommonController  {
 				$orderdata["things"].=$vg['things'].$vg["quality"].$vg["grade"]."X".$vg["buynum"];
 			}
 		}
+		if(mb_strlen($orderdata['note'])>28){
+			$ns=mb_substr($orderdata['note'],0,28);
+			$nb=mb_substr($orderdata['note'],28,mb_strlen($orderdata['note']));
+			$orderdata['note']=$ns."\n".$nb;
+
+		}
 		$orderdata["things"]=$orderdata["things"]."\n".$orderdata['note'];
         $post_data = $orderdata;
         unset($post_data["action"]);
