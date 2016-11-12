@@ -520,7 +520,7 @@ class ExpressController extends CommonController  {
 		}
 
 		foreach ($proOrder as $kg => $vg) {
-			if($kg%3==0){
+			if($kg%2==0){
 				$orderdata["things"].="\n";
 			}
 			if($vg['things']==""){
