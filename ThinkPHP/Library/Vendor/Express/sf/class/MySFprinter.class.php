@@ -285,7 +285,7 @@ class SFprinter {
         imagefttext($this->_PIC, $this->dpi96(5), 0, 150, 735, self::BLACK, $this->_FONT, "订单号：".$data["orderid"]);
     
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2280, self::BLACK, $this->_FONT, "托寄物");
-        imagefttext($this->_PIC, $this->dpi96(5), 0, 4, 740, self::BLACK, $this->_FONT, $data["things"]);
+        imagefttext($this->_PIC, $this->dpi96(4.5), 0, 4, 740, self::BLACK, $this->_FONT, $data["things"]);
         return $this;
     }
 
