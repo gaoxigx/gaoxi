@@ -185,13 +185,13 @@ class SFprinter {
         imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 188, self::BLACK, $this->_FONT, $data["d_company"]);
         imagefttext($this->_PIC, $this->dpi96(8), 0, 30, 188, self::BLACK, $this->_FONT, trim($data["d_contact"]) . "（收）  " . $data["d_tel"]);
        
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 270, self::BLACK, $this->_FONT, "付款方式：" . $data["pay_method"]);
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 280, self::BLACK, $this->_FONT, "付款方式：" . $data["pay_method"]);
        // if ( $data["pay_method"] == "寄付月结") {
-            imagefttext($this->_PIC, $this->dpi96(6), 0, 30, 285, self::BLACK, $this->_FONT, "月结帐号：".$data["custid"] );
+            imagefttext($this->_PIC, $this->dpi96(8), 0, 6, 295, self::BLACK, $this->_FONT, "月结帐号：".$data["custid"] );
        // }
         
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 180, 270, self::BLACK, $this->_FONT, "实际重量：");
-        imagefttext($this->_PIC, $this->dpi96(6), 0, 180, 285, self::BLACK, $this->_FONT, "计费重量：");
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 180, 280, self::BLACK, $this->_FONT, "实际重量：");
+        imagefttext($this->_PIC, $this->dpi96(8), 0, 180, 295, self::BLACK, $this->_FONT, "计费重量：");
         
         
         imagefttext($this->_PIC, $this->dpi96(8), 0, 290, 235, self::BLACK, $this->_FONT, "定时派送");
@@ -284,14 +284,8 @@ class SFprinter {
 
         imagefttext($this->_PIC, $this->dpi96(6), 0, 200, 735, self::BLACK, $this->_FONT, "订单号：");
         imagefttext($this->_PIC, $this->dpi96(6), 0, 230, 735, self::BLACK, $this->_FONT, $data["orderid"]);
-
-
         //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2280, self::BLACK, $this->_FONT, "托寄物");
         imagefttext($this->_PIC, $this->dpi96(8), 0, 4, 740, self::BLACK, $this->_FONT, $data["things"]);
-        //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, "备注");
-        //imagefttext($this->_PIC, $this->dpi300(8), 0, 20, 2430, self::BLACK, $this->_FONT, $data["remark"]);
-        //imagefttext($this->_PIC, $this->dpi300(8), 0, 965, 2430, self::BLACK, $this->_FONT, "费用合计：");
-        
         return $this;
     }
 
