@@ -32,7 +32,7 @@ class OrderController extends CommonController {
         $Page = new \Think\Page($count,50);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show = $Page->show();// 分页显示输出 
         
-        $data=M('product')->where("status=1")->limit($Page->firstRow.','.$Page->listRows)->order('viewcount desc')->select();
+        $data=M('product')->where("stauts=1")->limit($Page->firstRow.','.$Page->listRows)->order('viewcount desc')->select();
 
         $this->assign('page',$show);// 赋值分页输出
         $this->assign('data',$data);
