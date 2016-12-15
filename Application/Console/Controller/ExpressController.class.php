@@ -51,7 +51,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['j_address']=$sender['j_address'];//寄件方地址
 
 		  		$post_data['d_company']=$orderinfo['company'];//到件方公司
-		  		$post_data['d_contact']=$orderinfo['username'];//到件方姓名
+		  		$post_data['d_contact']=trim($orderinfo['username']);//到件方姓名
 		  		$post_data['d_tel']=$orderinfo['mobile'];//到件方电话
 		  		$post_data['d_province']=$orderinfo['province'];//到件省市区省
 		  		$post_data['d_city']=$orderinfo['city'];//到件省市区市
@@ -61,6 +61,7 @@ class ExpressController extends CommonController  {
 		  		$post_data['custid']=$orderinfo['custid'];//付款帐号
 		  		$post_data['daishou']=$orderinfo['daishou'];//代收金额
 
+		  		
 		  		//得到物品信息
 		  		$things="";
 		  		foreach ($proOrder as $k => $vl) {
@@ -71,18 +72,21 @@ class ExpressController extends CommonController  {
 		  		$post_data['things_num']="1";//数量
 		  		$post_data['remark']=$orderinfo['note'];//备注
 			
-		        $SF = new \SFapi();		   
+		        $SF = new \SFapi();		
+		          
 		    	$data = $SF->OrderService($post_data)->Send()->readJSON();		    
 		 		if(!$data){		 			
 		 			$this->error('没有得到得运订单号');
 		       		exit();
 		 		}
 		 		
+		 		
 		 		$data=json_decode($data,true);	
 		       	if(empty($data['data'])){
 		       		$this->error('没有得到订单信息');
 		       		exit();
 		    	}
+
 		        if($data['data'][0]['childs'][1]['tag']=="ERROR"){		        	
 		        	if($data['data'][0]['childs'][1]['attr']['code']==8016){ 
 		        		$jnorder=$this->OrderSearchService($post_data['orderid']);		        	
@@ -321,7 +325,7 @@ class ExpressController extends CommonController  {
         return $data;
 	}
 
-	public function or($route_mailno){
+	public function order($route_mailno){
 		$post_data = $_POST;
         $route_mailno = $post_data["route_mailno"];
         $SF = new SFapi();
@@ -473,7 +477,7 @@ class ExpressController extends CommonController  {
             "d_qu" => $orderdata['qu'],//到件省市区
             "d_address" =>$orderdata['address'],//到件方地址
             "d_number" => $orderdata["destcode"],//到件地编号
-            "pay_method" => $pay_method[$orderdata['pay_method']],//付款方式
+            "pay_method" =>$pay_method[$orderdata['pay_method']],//付款方式
             "custid" => $orderdata["custid"],//付款帐号
             "daishou" => $orderdata["daishou"], //代收款项
             "remark" => $orderdata["remark"],//备注
@@ -504,12 +508,8 @@ class ExpressController extends CommonController  {
 				$this->error("订单不存了");
 				exit();
 			}
-			
-			
 		}
-
-
-		$proOrder=M('order_goods')->where('order_no=%s',$orderdata['order_no'])->select();
+		$proOrder=M('order_goods')->alias("og")->field("og.*,pro.things")->join('__PRODUCT__ as pro on og.proid=pro.id','left')->where('order_no=%s',$orderdata['order_no'])->select();
 		if(!$proOrder){
 			if($ajax==1){
 				return false;
@@ -517,16 +517,31 @@ class ExpressController extends CommonController  {
 				$this->error("订单没有产品请核实");
 				exit();
 			}
-			
 		}
 
-		
+		foreach ($proOrder as $kg => $vg) {
+			if($kg%2==0){
+				$orderdata["things"].="\n";
+			}
+			if($vg['things']==""){
+				$orderdata["things"].=$vg['product'].$vg["quality"].$vg["grade"]."X".$vg["buynum"];
+			}else{
+				$orderdata["things"].=$vg['things'].$vg["quality"].$vg["grade"]."X".$vg["buynum"];
+			}
+		}
+		if(strlen($orderdata['note'])>80){
+			$ns=mb_substr($orderdata['note'],0,80);
+			$nb=mb_substr($orderdata['note'],80,mb_strlen($orderdata['note']));
+			$orderdata['note']=$ns."\n".$nb;
+
+		}
+		$orderdata["things"]=$orderdata["things"]."\n".$orderdata['note'];
         $post_data = $orderdata;
         unset($post_data["action"]);
 
         $pic = "Public/order/old_no" . time() . ".png";
         $olderpic =ROOT_PATH . "/" . $pic;
-     
+      
         $SF = new \SFprinter();
         $pay_method=array(1=>'寄付月结',2=>'收方付款');//寄付月结//收方付款//
 		
@@ -561,15 +576,17 @@ class ExpressController extends CommonController  {
         );
 
         $SF->SFdata($data)->SFprint($olderpic);
+     	
+
         $zipurl = "Public/order/" .$orderdata['order_no'] . ".zip";
         $archive = new \PclZip($zipurl);
 		//$v_list = $archive->create($olderpic, PCLZIP_OPT_REMOVE_PATH, '', PCLZIP_OPT_ADD_PATH, '');
+		
         $v_list = $archive->create($pic, PCLZIP_OPT_REMOVE_PATH, 'Public/order', PCLZIP_OPT_ADD_PATH, 'PrintOrder');
+     
         if ($v_list == 0) {
         	die("Error : ".$archive->errorInfo(true));
      	}
-
-     	
 
      	$param['mailnoimg']=$pic;
      	$param['mailnozip']=$zipurl;
@@ -585,7 +602,6 @@ class ExpressController extends CommonController  {
 				echo '<img src="/'.$pic.'" />';
 				exit();
 			}
-        	
         }else{
         	if($ajax==1){
 				return false;
@@ -593,7 +609,6 @@ class ExpressController extends CommonController  {
 				$this->error('请重新生成图片');
 				exit();
 			}
-        	
         }
 	}
 }

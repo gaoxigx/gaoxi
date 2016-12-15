@@ -1,10 +1,10 @@
 <?php
 ///顺丰api接口
 class Express {
-	public $domainat="open-sbox.sf-express.com";
+	public $domainat="http://bsp-oisp.sf-express.com/bsp-oisp/sfexpressService";
 	public $orderurl="";
-	public $appid="00019465";
-	public $appkey="7ADD3E012E0EDC9E29C56D4337605D18";
+	public $appid="0205957009";//00019465
+	public $appkey="kCkutN8wYrl7cOUm6FgOt6Wyw2li6tQn";//7ADD3E012E0EDC9E29C56D4337605D18
 
    function __construct(){
    		$this->domain(true);
@@ -14,7 +14,7 @@ class Express {
 	   	if($test==false){   		
 	   	  	$this->domainat="open-sbox.sf-express.com";//沙盒环境
 	   	}else{
-	   		$this->domainat="open-prod.sf-express.com";//生产环境
+	   		$this->domainat="http://bsp-oisp.sf-express.com/bsp-oisp/sfexpressService";//生产环境
 	   	}
    }
 

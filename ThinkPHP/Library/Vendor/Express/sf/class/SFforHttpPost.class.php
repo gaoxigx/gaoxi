@@ -2,9 +2,9 @@
 
 class SFapi {
 
-    var $_CHECKHEADER = 'LSY'; //客户卡号,校验码BSPdevelop
-    var $_CHECKBODY = 'fcSKxT1LyXwfGcB8'; //checkbodyj8DzkIFgmlomPt0aLuwU
-    var $_URL = 'http://bspoisp.sit.sf-express.com:11080/bsp-oisp/sfexpressService'; //http://bspoisp.sit.sf-express.com:11080/bsp-oisp/sfexpressService//快递类服务接口url
+    var $_CHECKHEADER = '0205957009'; //客户卡号,校验码BSPdevelop
+    var $_CHECKBODY = 'kCkutN8wYrl7cOUm6FgOt6Wyw2li6tQn'; //checkbodyj8DzkIFgmlomPt0aLuwU
+    var $_URL = 'http://bsp-oisp.sf-express.com/bsp-oisp/sfexpressService'; //http://bspoisp.sit.sf-express.com:11080/bsp-oisp/sfexpressService//快递类服务接口url
     var $_XML = "";
     var $_RES = "";
 
@@ -24,6 +24,7 @@ class SFapi {
         $xml .= '</Body>';
         $xml .= '</Request>';
         $this->XML($xml);
+       
         return $this;
     }
 
