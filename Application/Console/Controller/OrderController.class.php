@@ -872,12 +872,39 @@ class OrderController extends CommonController {
 // 
 //create_xls($dataAry);
         ob_end_clean();
-        $dataAry=M('order_info')->where('id<100')->select();
-        // $dataAry[0][0]="sdfsdfsd";
-        // $dataAry[0][1]="sdfsdfsd";
-        // $dataAry[0][2]="sdfsdfsd";
-        // $dataAry[0][3]="sdfsdfsd";
-        // $dataAry[0][4]="sdfsdfsd";
+       // $dataAry=M('order_info')->where('id<100')->select();
+
+        
+         $dataAry[0][0]="下单日期";
+         $dataAry[0][1]="分公司";
+         $dataAry[0][2]="订单编号";
+         $dataAry[0][3]="产品名称";
+         $dataAry[0][4]="数量";
+         $dataAry[0][5]="金额";
+         $dataAry[0][6]="下单人";
+
+         $starttime=strtotime(date("Y-m-d",time()));
+  
+         $map['ori.addtime']=array(array("gt",$starttime),array("lt",time()),'and');
+         
+        $order=M('order_info')->alias("ori")
+        ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,ori.username")
+        ->join("__STAFF__ as t on t.id=ori.agent",'left')
+        ->where($map)->select();
+
+
+        foreach ($order as $k => $vl) {
+            $where['order_no']=$vl['order_no'];
+            $product=M("order_goods")->where($where)->getField('product',true);
+            $order[$k]['product']=implode("\n\r,",$product);
+
+            $buynum=M("order_goods")->where($where)->getField('buynum',true);
+            $order[$k]['pro_num']=implode("\n\r,",$buynum);
+        }
+
+  
+        $dataAry=array_merge($dataAry,$order);
+        
         outExcel($dataAry);
 
       
