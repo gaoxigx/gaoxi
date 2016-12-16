@@ -884,14 +884,12 @@ class OrderController extends CommonController {
          $dataAry[0][6]="下单人";
 
          $starttime=strtotime(date("Y-m-d",time()));
-  
-         $map['ori.addtime']=array(array("gt",$starttime),array("lt",time()),'and');
+        $map['ori.addtime']=array(array("gt",$starttime),array("lt",time()),'and');
          
         $order=M('order_info')->alias("ori")
-        ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,ori.username")
+        ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,t.username")
         ->join("__STAFF__ as t on t.id=ori.agent",'left')
         ->where($map)->select();
-
 
         foreach ($order as $k => $vl) {
             $where['order_no']=$vl['order_no'];
