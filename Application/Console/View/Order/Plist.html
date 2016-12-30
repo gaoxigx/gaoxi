@@ -18,7 +18,15 @@
     <div class="rightinfo">
         <div class="tools">
             <ul class="seachform">
-                <form action="/index.php/Console/Order/Plist" method="get" id="form2" name="form2">            
+                <form action="/index.php/Console/Order/Plist" method="get" id="form2" name="form2"> 
+                    <li><select name="protype" class="sciselect">
+                            <option value="">全部</option>
+                            <volist name="protype" id="voo">
+                                <notempty  name="key">
+                                    <option value="{$key}">{$key}</option>
+                                </notempty>
+                            </volist>
+                        </select></li>           
                     <li><input type="text" class="scinpute" name="username" value="" placeholder="ID/订单编号/收货人/销售客服" style="width:180px"></li>
                     <li><input type="submit" value="查询" class="scbtn" name=""></li>
                 </form>
@@ -58,6 +66,7 @@
                                         <a href="{:U('Order/look',array('id'=>$vo['id']))}" >{$vo.order_no}</a>
                                         <p>发布时间：{$vo.addtime|date='Y-m-d H:i:s',###}</p>
                                         <p>销售客服：{$staff[$vo['agent']]}</p>
+                                        <p>销售公司：{$vo['taddress']}</p>
                                     </td>                    
                                     <td>
                                         <php>$goods=get_orderno_to_pro($vo['order_no'])</php>

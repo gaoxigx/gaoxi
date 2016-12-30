@@ -149,7 +149,7 @@ class OrderController extends CommonController {
     //数据列表
     public function Plist($name=''){
         $username = I('username');
-
+        
         if($username){             
                         $map1['id']  = trim($username);                             
                         $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id'); 
@@ -188,18 +188,33 @@ class OrderController extends CommonController {
             $Page->parameter[$key]   =   urlencode($val);
               }
         }
-                
+        $usertype=I("protype");
+        if($usertype){
+            $map['nico_staff.address']=$usertype;
+        }       
                 
         $User = M('order_info'); // 实例化User对象       
-        $count = $User->where($map)->count();// 查询满足要求的总记录数
+
+        $count = $User->Field("nico_order_info.*,nico_staff.address as taddress")->join("__STAFF__ on __STAFF__.id=__ORDER_INFO__.agent",'left')->where($map)->count();// 查询满足要求的总记录数
         $Page = new \Think\Page($count,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show = $Page->show();// 分页显示输出
 
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $User->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select(); 
+        $list = $User->Field("nico_order_info.*,nico_staff.address as taddress")->join("__STAFF__ on __STAFF__.id=__ORDER_INFO__.agent",'left')->where($map)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select(); 
+
+
     
         $staff=D('staff')->getfield('id,name',true);
-        $catdata=D('Category')->categoryone();      
+        $catdata=D('Category')->categoryone(); 
+
+        $userdata = M('staff')->select(); 
+
+        $protype = array();
+        foreach ($userdata as $ku => $vu) {
+             $protype[$vu['address']]=$ku;
+        }  
+   
+        $this->assign('protype',$protype); 
         
         $this->assign('staff',$staff);
         $this->assign('cat',$catdata);
