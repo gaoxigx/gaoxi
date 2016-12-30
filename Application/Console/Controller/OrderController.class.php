@@ -151,10 +151,10 @@ class OrderController extends CommonController {
         $username = I('username');
         
         if($username){             
-                        $map1['id']  = trim($username);                             
-                        $map1['agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id'); 
-            $map1['order_no']  = array('like','%'.trim($username).'%'); 
-            $map1['username']  = array('like','%'.trim($username).'%'); 
+                        $map1['nico_order_info.id']  = trim($username);                             
+                        $map1['nico_order_info.agent']  =M('staff')->where(array('name'=>array('like','%'.trim($username).'%')))->getField('id'); 
+            $map1['nico_order_info.order_no']  = array('like','%'.trim($username).'%'); 
+            $map1['nico_order_info.username']  = array('like','%'.trim($username).'%'); 
             $map1['_logic'] = 'OR';
             $map['_complex'] = $map1;
         }
