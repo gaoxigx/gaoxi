@@ -638,19 +638,100 @@ class ShipmentsController extends CommonController {
          $dataAry[0][5]="金额";
          $dataAry[0][6]="下单人";
 
-         $starttime=strtotime(date("Y-m-d",time()));
-        //$map['ori.addtime']=array(array("gt",$starttime),array("lt",time()),'and');
-         $map['ori.status']=1;
+         if(I("REQUEST.date")){
+         	$starttime=strtotime(I("REQUEST.date"));
+         }else{
+         	$starttime=strtotime(date("Y-m-d",time()));
+         }
+
+         if(!I("date")){
+            $starttime=strtotime(date("Y-m-d",time()));
+            $endtime=time();
+        }else{
+
+            if(I('datet')==1){
+
+                $starttime=strtotime(date("Y-m-d",strtotime(I("date"))));
+                $endtime=strtotime(date("Y-m-d 23:59:59",strtotime(I("date"))));
+            }else{
+            	$starttime=strtotime(date("Y-m",strtotime(I("date"))));
+                $endtime=strtotime(date("Y-m",strtotime("+1 month",strtotime(date("Y-m",strtotime(I("date")))))));
+            }
+        }
+         
+        //$map['ori.addtime']=array(array("gt",$starttime),array("lt",$endtime),'and');
+        $map['ori.status']=1;
+
         $order=M('order_info')->alias("ori")
         ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,t.username")
         ->join("__STAFF__ as t on t.id=ori.agent",'left')
         ->where($map)->select();
-
         foreach ($order as $k => $vl) {
             $where['order_no']=$vl['order_no'];
-            $product=M("order_goods")->where($where)->getField('product',true);
-            $order[$k]['product']=implode("\n\r,",$product);
+            $product=M("order_goods")->where($where)->select();
+            $prt="";
+            foreach ($product as $kp => $vp) {
+            	$prt.=$vp["product"]."(".$vp["quality"].")".$vp["grade"]."(".$vp["box"].")"."，";
+            }
+            $order[$k]['product']=$prt;//implode("\n\r,",$product);
+            unset($prt);
+            $buynum=M("order_goods")->where($where)->getField('buynum',true);
+            $order[$k]['pro_num']=implode("\n\r,",$buynum);
+        }
 
+        $dataAry=array_merge($dataAry,$order);
+        outExcel($dataAry);
+    }
+
+     function yexpUser(){//导出Excel
+
+        ob_end_clean();
+
+         $dataAry[0][0]="下单日期";
+         $dataAry[0][1]="分公司";
+         $dataAry[0][2]="订单编号";
+         $dataAry[0][3]="产品名称";
+         $dataAry[0][4]="数量";
+         $dataAry[0][5]="金额";
+         $dataAry[0][6]="下单人";
+
+         if(I("REQUEST.date")){
+         	$starttime=strtotime(I("REQUEST.date"));
+         }else{
+         	$starttime=strtotime(date("Y-m-d",time()));
+         }
+
+         if(!I("date")){
+            $starttime=strtotime(date("Y-m-d",time()));
+            $endtime=time();
+        }else{
+
+            if(I('datet')==1){
+
+                $starttime=strtotime(date("Y-m-d",strtotime(I("date"))));
+                $endtime=strtotime(date("Y-m-d 23:59:59",strtotime(I("date"))));
+            }else{
+            	$starttime=strtotime(date("Y-m",strtotime(I("date"))));
+                $endtime=strtotime(date("Y-m",strtotime("+1 month",strtotime(date("Y-m",strtotime(I("date")))))));
+            }
+        }
+         
+        $map['ori.addtime']=array(array("gt",$starttime),array("lt",$endtime),'and');
+        $map['ori.status']=2;
+
+        $order=M('order_info')->alias("ori")
+        ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,t.username")
+        ->join("__STAFF__ as t on t.id=ori.agent",'left')
+        ->where($map)->select();
+        foreach ($order as $k => $vl) {
+            $where['order_no']=$vl['order_no'];
+            $product=M("order_goods")->where($where)->select();
+            $prt="";
+            foreach ($product as $kp => $vp) {
+            	$prt.=$vp["product"]."(".$vp["quality"].")".$vp["grade"]."(".$vp["box"].")"."，";
+            }
+            $order[$k]['product']=$prt;//implode("\n\r,",$product);
+            unset($prt);
             $buynum=M("order_goods")->where($where)->getField('buynum',true);
             $order[$k]['pro_num']=implode("\n\r,",$buynum);
         }

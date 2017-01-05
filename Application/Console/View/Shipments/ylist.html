@@ -5,6 +5,8 @@
 <title>无标题文档</title>
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script> 
 </head>
 <body>
     <div class="place">
@@ -17,6 +19,17 @@
     </div>
     <div class="rightinfo">
         <div class="tools">
+            
+            <ul class="toolbar1">
+             <li class="csorder"><a href="{:U('Shipments/bacthprint')}">&nbsp;&nbsp;批量生成快递订单</a></li>
+             <li><input class="dfinput" style="width: 120px"  id="orderdate" name="orderdate" type="text" onClick="WdatePicker()"  placeholder="时间日期" /></li>
+             <li><select id="datet" name="datet" class="sciselect">
+                  <option value="1">日</option>
+                  <option value="2">月</option>           
+                  </select>
+              </li>
+             <li class="dumpexl"><a href="javascript:void(0)">&nbsp;&nbsp;导出exl文档</a></li>              
+            </ul>
             <ul class="seachform">
                 <form action="/index.php/Console/Shipments/ylist" method="get" id="form2" name="form2">            
                     <li><label></label><input type="text" class="scinpute" name="username" value="" placeholder="ID/订单编号/收货人/手机号码/销售客服/物流单号" style="width:280px"></li>
@@ -24,7 +37,7 @@
                 </form>
             </ul>
         </div>
-   
+        
         
         <table class="imgtable">
             <thead>
@@ -123,6 +136,13 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $(".dumpexl").click(function(){
+      var orderdate=$("#orderdate").val();
+      var daydate=$("#datet").val();
+      var t="{:U('Shipments/yexpUser')}"+"?&date="+orderdate+"&datet="+daydate;
+      window.location.href=t;
+    });
+
     $(".suresmall").click(function(){
 
             var id = $(this).attr('name');

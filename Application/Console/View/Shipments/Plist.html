@@ -5,6 +5,8 @@
 <title>无标题文档</title>
 <link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script> 
 <style type="text/css">
 #camera{width:598px; height:525px; position:fixed; bottom:20%; left:50%; margin-left:-300px; border:1px solid #f0f0f0; background:url(__PUBLIC__/photo/images/cam_bg.jpg) repeat-y; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -moz-box-shadow:0 0 4px rgba(0,0,0,0.6); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.6); box-shadow:0 0 4px rgba(0,0,0,0.6);background: #f1f1f1;}
 #cam{width:100%; height:66px; display:block; position:absolute; top:0; left:0; background:url(__PUBLIC__/photo/images/cam.png) no-repeat center center; cursor:pointer}
@@ -41,8 +43,15 @@
                 </form>
             </ul>
             <ul class="toolbar1">
+            <!--
              <li class="csorder"><a href="{:U('Shipments/bacthprint')}">&nbsp;&nbsp;批量生成快递订单</a></li>
-              <li class="dumpexl"><a href="{:U('Shipments/expUser')}">&nbsp;&nbsp;导出exl文档</a></li>              
+             <li><input class="dfinput" style="width: 120px"  id="orderdate" name="orderdate" type="text" onClick="WdatePicker()"  placeholder="时间日期" /></li>
+             <li><select id="datet" name="datet" class="sciselect">
+                  <option value="1">日</option>
+                  <option value="2">月</option>           
+                  </select>
+              </li>-->
+             <li class="dumpexl"><a href="javascript:void(0)">&nbsp;&nbsp;导出exl文档</a></li>              
             </ul>
         </div>
    
@@ -88,9 +97,7 @@
                     <td>{$vo['province']}{$vo['city']}{$vo['qu']}{$vo['address']}</td>
                     <td>￥{$vo['total_price']}</td>
                     <td style="color:red">{$vo.note}</td>
-      
                          <td style="width:320px;">
-              
                                         <switch name="vo.status">
                                                 <case value="1">已下单
                                                 <p>
@@ -177,6 +184,13 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $(".dumpexl").click(function(){
+
+      var orderdate=$("#orderdate").val();
+      var daydate=$("#datet").val();
+      var t="{:U('Shipments/expUser')}"+"?&date="+orderdate+"&datet="+daydate;
+      window.location.href=t;
+    }); 
     $(".suresmall").click(function(){
 
             var id = $(this).attr('name');
