@@ -694,6 +694,10 @@ class ShipmentsController extends CommonController {
          $dataAry[0][4]="数量";
          $dataAry[0][5]="金额";
          $dataAry[0][6]="下单人";
+         $dataAry[0][7]="重量";
+         $dataAry[0][8]="品质";
+         $dataAry[0][9]="品质代号";
+         $dataAry[0][10]="包装";
 
          if(I("REQUEST.date")){
          	$starttime=strtotime(I("REQUEST.date"));
@@ -735,9 +739,46 @@ class ShipmentsController extends CommonController {
             foreach ($product as $kp => $vp) {
             	$prt.=$vp["product"]."(".$vp["quality"].")".$vp["grade"]."(".$vp["box"].")"."，";
 
-            	var_dump($vp);
+            	$vl["product"]=strstr($vp["product"],"（",true);
+            
+            	//$vl["product"]=$vp["product"];
+            	if(strstr($vp["product"],"三两")){
+            		$vl["pro"]=0.3;
+            	}
+
+            	if(strstr($vp["product"],"半斤")){
+            		$vl["pro"]=0.5;
+            	}
+
+            	if(strstr($vp["product"],"一斤")){
+            		$vl["pro"]=1;
+            	}
+
+            	
+            	//$vl['quality']=$vp["quality"];
+            	
+
+            
+            	if(strstr($vp["quality"],"A")){
+            		$vl["grd"]=A;
+            	}
+
+            	if(strstr($vp["quality"],"B")){
+            		$vl["grd"]=B;
+            	}
+
+            	if(strstr($vp["quality"],"C")){
+            		$vl["grd"]=C;
+            	}
+            	$vl['pro_num']=1;
+            	
+            	$vl['grade']=$vp["grade"];
+            	$vl['box']=$vp["box"];
+
+            	 $arydump[]=$vl;
+            	
             	//$arydump[]=
-            	exit();
+            	
             }
             $order[$k]['product']=$prt;//implode("\n\r,",$product);
             unset($prt);
@@ -746,7 +787,7 @@ class ShipmentsController extends CommonController {
 
         }
 
-        $dataAry=array_merge($dataAry,$order);
+        $dataAry=array_merge($dataAry,$arydump);
         outExcel($dataAry);
     }
 
