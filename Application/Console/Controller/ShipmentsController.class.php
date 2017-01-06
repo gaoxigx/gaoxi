@@ -696,8 +696,8 @@ class ShipmentsController extends CommonController {
          $dataAry[0][6]="下单人";
          $dataAry[0][7]="重量";
          $dataAry[0][8]="品质";
-         $dataAry[0][9]="品质代号";
-         $dataAry[0][10]="包装";
+        // $dataAry[0][9]="品质代号";
+         $dataAry[0][9]="包装";
 
          if(I("REQUEST.date")){
          	$starttime=strtotime(I("REQUEST.date"));
