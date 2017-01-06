@@ -723,17 +723,27 @@ class ShipmentsController extends CommonController {
         ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,t.username")
         ->join("__STAFF__ as t on t.id=ori.agent",'left')
         ->where($map)->select();
+
+
+        $arydump=array();
+
         foreach ($order as $k => $vl) {
+
             $where['order_no']=$vl['order_no'];
             $product=M("order_goods")->where($where)->select();
             $prt="";
             foreach ($product as $kp => $vp) {
             	$prt.=$vp["product"]."(".$vp["quality"].")".$vp["grade"]."(".$vp["box"].")"."，";
+
+            	var_dump($vp);
+            	//$arydump[]=
+            	exit();
             }
             $order[$k]['product']=$prt;//implode("\n\r,",$product);
             unset($prt);
             $buynum=M("order_goods")->where($where)->getField('buynum',true);
             $order[$k]['pro_num']=implode("\n\r,",$buynum);
+
         }
 
         $dataAry=array_merge($dataAry,$order);
