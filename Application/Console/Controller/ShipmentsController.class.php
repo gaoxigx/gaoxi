@@ -727,9 +727,6 @@ class ShipmentsController extends CommonController {
         ->field("FROM_UNIXTIME(ori.addtime,'%Y-%m-%d %H:%i:%S') as addtime,t.address,CONCAT(ori.order_no,' ') as order_no,0 as product,ori.pro_num,ori.total_price,t.username")
         ->join("__STAFF__ as t on t.id=ori.agent",'left')
         ->where($map)->select();
-        echo M()->getLastSql();
-
-
 
         $arydump=array();
 
