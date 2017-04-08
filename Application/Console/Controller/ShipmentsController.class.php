@@ -685,6 +685,7 @@ class ShipmentsController extends CommonController {
 
      function yexpUser(){//导出Excel
 
+     	set_time_limit(0);
         ob_end_clean();
 
          $dataAry[0][0]="下单日期";
