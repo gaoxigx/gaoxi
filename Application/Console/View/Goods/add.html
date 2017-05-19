@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Console/js/select-ui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/editor/kindeditor.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/jquery.validate.js"></script>
+<script src="__PUBLIC__/Console/js/validation/dist/localization/messages_zh.js"></script> 
+<style>
+    .fromadd{margin:0px; vertical-align: top; float: none;display: inline-block; line-height: 32px;width: 32px; overflow:hidden; height:32px; text-align: center; }
+    .frommin{margin-left:8px;display: inline-block; vertical-align:middle;}
+    .frommin img{width: 15px; height: 15px;}
+    .fromadd img{padding-top: 5px;}
+    .pzprice{margin-left: 86px;}
+    .pzprice span{display: block;margin-top: 5px;}
+    .lhcl span{margin-left: 86px;display: block;margin-top: 5px;}
+    .pztext{display: inline-block;}
+</style>
+<script type="text/javascript">
+$(function(){
+		$.validator.setDefaults({
+			submitHandler: function(from) {
+                        from.submit();
+			}
+		});
+
+		$("#form1").validate({
+			rules:{
+				roleid:{
+					required: true,
+					minlength: 2
+				},
+				protype:{
+					required: true,
+				},	
+                                product:{
+                                        required:true,
+                                },
+				pic:{
+					required: true,
+				},	
+				price1:{
+					required: true,
+                                        maxlength:19
+				},
+                                price2:{
+					required: true,
+				},	
+                                price3:{
+					required: true,
+				},
+                                discount:{
+					required: true,
+				},
+                                inputnum:{
+					required: true,
+				},
+                                sortnum:{
+					required: true,
+				},
+                                salenum:{
+					required: true,
+				},	
+                               purchaseper:{
+					required: true,
+				}
+			},
+			messages: {
+				protype: {
+					required: "请选择产品类别",
+				},
+				product: {
+					required: "须填写产品名称",
+				},	
+				pic: {
+					required: "需要上传图片",
+				},
+				price1: {
+					required: "请给一级产品定价格",
+				},
+				price2:{
+					required: "请给二级产品定价格",
+				},	                            
+				price3:{
+					required: "请给三级产品定价格",
+				},	                        
+//				discount: {
+//					required: "确认折扣",
+//				},
+				inputnum:{
+					required: "请填写进货数量",
+				},	                            
+//				sortnum:{
+//					required: "请确认剩余的库存",
+//				},
+//				salenum: {
+//					required: "请核对销售的数量",
+//				},
+				purchaseper:{
+					required: "请选择采购负责人",
+				}
+			},
+			errorClass:'cerror',
+			
+		});
+	});
+
+
+    KE.show({
+        id : 'content7',
+        cssPath : './index.css'
+    });
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".click").click(function(){
+  $(".tip").fadeIn(200);
+  });
+  
+  $(".tiptop a").click(function(){
+  $(".tip").fadeOut(200);
+});
+
+  $(".sure").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+  $(".cancel").click(function(){
+  $(".tip").fadeOut(100);
+});
+
+});
+</script>
+
+</head>
+
+<body>
+    
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">产品管理</a></li>
+            <li><a href="#">添加产品</a></li>
+        </ul>
+    </div>
+    
+    <div class="formbody">
+        <div id="usual1" class="usual"> 
+            <div class="itab">
+                <ul> 
+                    <li><a href="#tab1" class="selected">发布信息</a></li> 
+                </ul>
+            </div> 
+			
+            <div id="tab1" class="tabson">
+                <form name="form1" id="form1" enctype="multipart/form-data" method='post' action="__URL__/insert">
+                    <div class="formtext">请正确填写发布信息！</div>
+                    <ul class="forminfo">
+                        <li><label>分类<b>*</b></label>  
+                            <div class="vocation uew-select">
+                                <select name="catid" class="uew-select-value">
+                                    <volist name="protype" id="voo">
+                                            <option value="{$voo.id}">{$voo.typename}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                            <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
+                        </li>
+                        <!--
+                        <li><label>类型<b>*</b></label>  
+                            <div class="vocation uew-select">
+                                <select name="atrtype" class="uew-select-value">
+                                    <volist name="kind" id="vo2">
+                                            <option value="{$vo2.id}">{$vo2.kindname}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </li>
+                        -->
+                        <li><label>产品条型码<b>*</b></label><input name="coding" type="text" class="dfinput" value=""  /></li>
+                        <li><label>产品名称<b>*</b></label><input name="name" type="text" class="dfinput" value=""  /></li>
+                        <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
+                        <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"   checked="checked" value="1" name="pmleave">联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  class="pmleave2" value="0" name="pmleave">对等属性 <input type="radio"  class="pmleave3" value="1" name="pmleave"> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>        
+                           
+                        <li class="jl1"><label>&nbsp;</label><p class="pztext"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  /></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                        </li>
+                        <li class="pzprice jl1">
+                            <p>
+                                <span>
+                                <input name="grade0[]" placeholder="级别分类" v="0" style="width:100px" type="text" class="dfinput" value=""  /><input name="money0[]" v="0" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight0[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:140px" value=""  /><b class="fromadd jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                                </span>               
+                            </p>
+                        </li>
+                        
+                        <li class="lhcl" style="display:none"><label>&nbsp;</label><input name="boxname[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><b class="fromadd lhbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b>
+                        </li> 
+                        <!--  
+                        	<li><label>最低折扣<b>*</b></label>
+                            <div class="vocation uew-select">
+                                <select name="discount"  class="uew-select-value">
+                                    <for start="10" end="0" comparison="gt" step="-1">
+                                        <option value="{$i}">{$i}折</option>
+                                    </for>
+                                </select>
+                            </div>
+                        </li>-->
+                        <li class="jhmoney" style="display:none"><label>&nbsp;</label><input name="price" type="text" class="dfinput" value=""  placeholder="金额"  /></li>
+
+                        <li><label>采购数量<b>*</b></label><input name="qty" type="text" class="dfinput" value=""  /></li>
+                        <li><label>单位<b>*</b></label> 
+                        <select type='text' name="pcs" class="sciselect">
+                                <option value="1">两</option>
+                                <option value="2">个</option>
+                                <option value="3">份</option>
+                                <option value="4">盒</option>
+                                <option value="5">片</option>
+                        </select></li>
+<!--                        <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value=""  /></li>
+                            <li><label>销售数量<b>*</b></label><input name="salenum" type="text" class="dfinput" value=""  /></li>  
+                            <li><label>采购负责人<b>*</b></label><input name="purchaseper" type="text" class="dfinput" value=""  /></li>    -->
+
+                        <li><label>采购负责人<b>*</b></label>          
+                            <select id="purchaseper" name="userid" type='text' class="sciselect">                           
+                                <volist name="list" id='vo'>
+                                    <option  value="{$vo.id}">{$vo.name}</option>
+                                </volist>
+                            </select>
+                            <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
+                        </li>  
+                        <!--
+                        <li><label>是否审核</label><cite><input type="radio" checked="checked" value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="stauts">否</cite></li>
+                        -->
+                        <li><label>产品详情</label>
+                            <textarea id="content7" name="detail"  style="width:700px;height:250px;visibility:hidden;"></textarea>                            
+                        </li>
+                        <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>                      
+                    </ul>
+                </form>    
+            </div> 
+      
+        </div> 
+    </div>
+
+    <div class="tip">
+        <form name="formaddtype" action="__URL__/getaddtype" method="post">
+            <div class="tiptop"><span>新建分类</span><a></a></div>
+
+            <div class="tipinfo">
+                <div class="tipright">
+                    <p>类别名称</p>
+                    <cite>如果确定请点击新建按钮 ，否则请点取消。</cite>
+                    <input name="typename" type="text" class="dfinput" value=""  />
+                </div>
+            </div>
+            <div class="tipbtn">
+                <input name="" type="submit"  class="sure" value="新建" />&nbsp;
+                <input name="" type="button"  class="cancel" value="取消" />
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function(e){
+            $(".pmleave1").click(function(){
+                $('.jhmoney').hide();
+                $('.lhcl').hide();
+                $('.jl1').show();
+            })
+            $(".pmleave2").click(function(){                
+                $('.jhmoney').hide();
+                $('.jl1').hide();
+                $('.lhcl').show();
+                
+                
+            })
+            $(".pmleave3").click(function(){                
+                $('.lhcl').hide();
+                $('.jl1').hide();
+                $('.jhmoney').show();
+            })
+            $(".pzbtn").click(function(){
+                var nmb=$(".pztext input").length;            
+                 var pzhtml='<input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value=""  />';
+                $(".pztext").append(pzhtml);
+                $(".pzprice p").hide();          
+                var pzhtml='<p><span><input name="grade'+nmb+'[]" v="'+nmb+'" placeholder="级别名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+nmb+'[]" v="'+nmb+'" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight'+nmb+'[]" v="0" type="text" placeholder="分量" class="dfinput" style="width:140px" value=""  /><b class="fromadd jqbtn" id="jqbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></b></p>';
+                $(".pzprice").append(pzhtml);
+            });
+            $(document).on("click focus",".pzbtnt",function(){
+                 var index=$(this).index();
+                 $(".pzprice p").hide();
+                 $(".pzprice p").eq(index).show();
+            })
+
+            $(document).on("click",".jqbtn",function(){
+                var vl=$(this).prev().attr("v");
+                 var jqbtn='<span><input name="grade'+vl+'[]" placeholder="包装名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="money'+vl+'[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /><input name="weight'+vl+'[]" v="0" type="text" placeholder="分量 按两如：10两" class="dfinput" style="width:140px" value=""/><b class="frommin " id=""><img src="__PUBLIC__/Console/images/close.png" title="添加"></b></span>';
+                $(this).parent().append(jqbtn);
+            });
+
+            $(document).on("click",".frommin",function(){
+                $(this).parent('span').remove();
+            })
+
+            $(".lhbtn").on("click",function(){
+                var lhbtn='<span><input name="boxname[]" placeholder="礼盒名称" style="width:100px" type="text" class="dfinput" value=""  /><input name="boxvl[]" type="text" placeholder="金额" class="dfinput" style="width:240px" value=""  /></span>';
+                $(this).parent().append(lhbtn);
+            });
+
+
+           
+        });
+    </script>
+</body>
+
+
+</html>

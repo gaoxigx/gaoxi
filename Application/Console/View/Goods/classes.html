@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+</head>
+
+
+<body>
+
+    <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">产品管理</a></li>
+            <li><a href="#">产品列表</a></li>
+        </ul>
+    </div>
+    <div class="rightinfo">
+            <div class="tools">
+                    <ul class="seachform">   
+                        <form action="/index.php/Console/Product/classes" method="post" id="form2" name="form2">   		
+                                <li><span class="fromadd click1"><img src="__PUBLIC__/Console/images/t01.png" /></span>添加</li>     
+                                <li><input type="text" class="scinpute" name="protype" value="" placeholder="ID/分类名称" style="width:150px"></li>
+                                <li><label>&nbsp;</label><input type="submit" value="查询" class="scbtn" name=""></li>
+                        </form>
+                    </ul>
+            </div>
+
+
+            <table class="imgtable">
+                    <thead>
+                            <tr>
+                                    <th style="width:20%;"><p>ID<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></p></th>
+                                    <th style="width:50%;">分类名称</th>					
+                                    <th style="width:30%;">操作</th>
+                            </tr>
+                    </thead>
+                    <tbody> 
+                            <volist name="list" id="vo">
+                                    <tr style="border: dotted 1px #c7c7c7;height:40px;">
+                                            <td>{$vo.id}</td>
+                                            <td>{$vo.typename}</td>
+                                            <td>
+                                                 <a href="__URL__/deletept/id/{$vo.id}" class="tablelink" onclick="return confirm('是否确认删除？');"> 删除</a>
+                                            </td>
+                                    </tr> 
+                            </volist>
+                    </tbody>
+            </table>
+
+            {$page}
+    </div>
+    
+    <div style="display: none;" class="tip">
+        <form name="formaddtype" action="/index.php/Console/Product/getaddclass" method="post">
+            <div class="tiptop"><span>新建分类</span><a></a></div>
+
+            <div class="tipinfo">
+                <div class="tipright">
+                    <p>类别名称</p>
+                    <cite>如果确定请点击新建按钮 ，否则请点取消。</cite>
+                    <input name="typename" class="dfinput" value="" type="text">
+                </div>
+            </div>
+            <div class="tipbtn">
+                <input name="" class="sure" value="新建" type="submit">&nbsp;
+                <input name="" class="cancel" value="取消" type="button">
+            </div>
+        </form>
+    </div>
+    
+    <script type="text/javascript">
+        
+	$('.tablelist tbody tr:odd').addClass('odd');
+        
+        $('.click1').click(function(){
+          
+            $('.tip1').show();
+        });
+        
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $(".click1").click(function(){
+          $(".tip").fadeIn(200);
+          });
+
+          $(".tiptop a").click(function(){
+          $(".tip").fadeOut(200);
+        });
+
+          $(".sure").click(function(){
+          $(".tip").fadeOut(100);
+        });
+
+          $(".cancel").click(function(){
+          $(".tip").fadeOut(100);
+        });
+
+        });
+    </script>   
+
+</body>
+
+</html>

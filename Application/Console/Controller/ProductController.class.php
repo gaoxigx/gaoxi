@@ -6,21 +6,16 @@ class ProductController extends CommonController {
     //产品类别
     private function getprotype(){
         $data=D('protype');
-        $name = $data->where('typename<>""')->order('id desc')->select();
-       
+        $name = $data->where('typename<>""')->order('id desc')->select();       
         $this->assign('protype',$name);
-
     }
     
     //产品类型
     private function getkind(){
         $data=D('kind');
-        $kind = $data->where('kindname<>""')->order('id desc')->select();
-       
+        $kind = $data->where('kindname<>""')->order('id desc')->select();       
         $this->assign('kind',$kind);
-
-    }
-    
+    }   
     
     
     public function getaddtype(){
@@ -354,39 +349,7 @@ class ProductController extends CommonController {
 		}
 	}
 	
-	/**
-	 *上传产品图片
-	 */
-	protected function uploadimg(){
-		$file_image = $_FILES['pic'];
-		$config = array(
-			'maxSize'    =>    31457280,
-			'rootPath'   =>    '.',
-			'savePath'   =>    '/Uploads/',
-			'saveName'   =>    array('uniqid',''),
-			'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
-			'autoSub'    =>    true,
-			'subName'    =>    array('date','Ymd'),
-		);
-		$upload = new \Think\Upload($config);// 实例化上传类
-		
-		if($file_image['name'] != ''){
-			$info   =   $upload->upload();
-			if(!$info) {
-				  $this->error($upload->getError());
-			}else{
-				foreach($info as $file){
-					$data['pic'] = $file['savepath'].$file['savename'];
-					$image = new \Think\Image(); 
-					$image->open($config['rootPath'].$data['pic']);
-					//将图片裁剪为400x400并保存为corp.jpg
-					$image->thumb(200, 200)->save($config['rootPath'].$file['savepath'].'s'.$file['savename']);
-					$data['pic1'] = $file['savepath'].'s'.$file['savename'];
-				}
-			}
-		}
-		return $data;
-	}
+	
 	
  //删除数据
     public function delete(){
