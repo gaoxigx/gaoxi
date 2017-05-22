@@ -7,7 +7,7 @@ class SellController extends Controller {
     }
     public function add(){
     	$data['proid']=I("request.code");
-    	if($data['proid']){
+    	if(empty($data['proid'])){
     		$sul['status']=4;
     		$this->ajaxreturn($sul);
     		exit();
