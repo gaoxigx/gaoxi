@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>物流信息</title>
+<link href="__PUBLIC__/Console/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Console/css/page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script> 
+<style type="text/css">
+#camera{width:598px; height:525px; position:fixed; bottom:20%; left:50%; margin-left:-300px; border:1px solid #f0f0f0; background:url(__PUBLIC__/photo/images/cam_bg.jpg) repeat-y; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -moz-box-shadow:0 0 4px rgba(0,0,0,0.6); -webkit-box-shadow:0 0 4px rgba(0,0,0,0.6); box-shadow:0 0 4px rgba(0,0,0,0.6);background: #f1f1f1;}
+#cam{width:100%; height:66px; display:block; position:absolute; top:0; left:0; background:url(__PUBLIC__/photo/images/cam.png) no-repeat center center; cursor:pointer}
+#webcam{width:520px; height:370px; margin:66px auto 22px; line-height:360px; background:#ccc; color:#666; text-align:center}
+.button_pane{text-align:center;}
+.btn_blue,.btn_green{width:99px; height:38px; line-height:32px; margin:0 4px; border:none; display:inline-block; text-align:center; font-size:14px; color:#fff !important; text-shadow:1px 1px 1px #277c9b; background:url(__PUBLIC__/photo/images/buttons.png) no-repeat}
+.btn_green{background:url(__PUBLIC__/photo/images/buttons.png) no-repeat right top;text-shadow:1px 1px 1px #498917;}
+.hidden{display:none}
+
+#photos{width:80%; margin:40px auto}
+#photos:hover a{opacity:0.5}
+#photos a:hover{opacity:1}
+#webcam{display:block;}
+.seachform{float: left;}
+.center{text-align: center; }
+.txtsum,.txtnum{border:1px solid #2babf5; margin: 0px auto;height:80px; font-size: 24px; line-height: 80px; width:80px; text-align: center;}
+.cl .txtnum{width:600px; font-size: 42px;line-height: 80px; vertical-align: bottom;}
+.ct{width:100%; text-align: center;}
+.cl{display: inline-block; margin: 0px auto;padding-bottom:20px;}
+.txtsbm{border:1px solid #2babf5; margin: 0px auto;height:80px;font-size: 24px; line-height: 80px; width:80px; margin-top:150px; text-align: center;}
+.inft{display: inline-block; vertical-align: bottom;}
+.inft .js,.jx{border:1px solid #2babf5; width: 38px;height: 38px; display: block; text-align: center;line-height: 38px;}
+.jx{margin-top: 2px;}
+</style>
+</head>
+<body>
+	<div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">订单管理</a></li>
+            <li><a href="#">订单列表</a></li>
+        </ul>
+        
+    </div>
+    <div class="rightinfo">
+    <div class="ct">
+    	<div class="cl">
+	    	
+	    		<div class="inft"><i class="js">-</i><i class="jx">+</i></div>
+	    		<input type="text" class="txtsum" value="1" placeholder="数量" />
+	       		<input type="text" class="txtnum" value="" />
+	       		<input type="button" class="txtsbm" onclick="sbtinfo()" value="提交" />
+	       
+       </div>
+      </div>
+       <div class="listcont">
+       		<table class="imgtable">
+	            <thead>
+	            <tr>
+	            <th style="width:20%;"><p>编码<i class="sort"><img src="__PUBLIC__/Console/images/px.gif" /></i></p></th>
+	            <th style="width:50%;">数量</th>					
+	            <th style="width:30%;">操作</th>
+	            </tr>
+	            </thead>
+                <tbody class="tbinfo"> 
+                   
+                </tbody>
+            </table>
+       </div>
+	</div> 
+     <div class="tip" style="">
+        <div class="tiptop"><span>图片预览</span><a></a></div>
+           <img src="" class="picpic" width="100%" />
+    </div>
+<script type="text/javascript" src="__PUBLIC__/Console/js/jquery.js"></script>
+
+  <!---总数---->
+    <script>
+    $(function(){
+    	
+
+    	$(".txtnum").focus();
+    	$(".txtnum").select(); 	
+    
+    	$(".txtnum").focus(function(){
+    		
+    		$(".txtnum").select(); 	
+    	});
+    	$(".js").click(function(){
+    		var sum=$(".txtsum").val();
+    		if(parseInt(sum)<=1){
+    			$(".txtsum").val(1);
+    		}else{
+    			$(".txtsum").val(parseInt(sum)-1);
+    		}
+    		
+    	})
+    	$(".jx").click(function(){
+    		var sum=$(".txtsum").val();
+    		$(".txtsum").val(parseInt(sum)+1);
+    	})
+    	$(document).keypress(function(event){  
+		    	var keycode = (event.keyCode ? event.keyCode : event.which);  
+			    if(keycode == '13'){  
+			        $(".txtnum").select();
+			    }  
+	        });
+
+    	$(".txtnum").change(function(){  
+        	//$(".listcont").append($(".txtnum").val()+"<br/>");
+        	
+            sbtinfo();
+	      });
+
+
+          
+		
+    });
+
+    function  sbtinfo(){
+           	if($(".txtnum").val()!=""){
+            	 var url="{:U('Sell/insert')}";
+	            $.post(url,{'code':$(".txtnum").val(),'number':$(".txtsum").val()},function(data){
+	            	if(data['status']==1 || data['status']=='1'){
+	            		var strino='<tr style="border: dotted 1px #c7c7c7;height:40px;">';
+			            strino+=            '<td>'+$(".txtnum").val()+'</td>';
+			            strino+=            '<td>'+$(".txtsum").val()+'</td>';
+			            strino+=            '<td>';
+			            strino+=                 '<span href="javascript:void(0)" class="tablelink" onclick="odel(this,'+data['id']+')"> 删除</span>';
+			            strino+=            '</td>';
+			            strino+=        '</tr> ';
+
+		            	$(".tbinfo").prepend(strino);
+			        }
+	            })            	
+            } 
+            
+        	$(document).keypress(function(event){  
+		    	var keycode = (event.keyCode ? event.keyCode : event.which);  
+			    if(keycode == '13'){  
+			        $(".txtnum").select();
+			    }  
+	        })
+
+       }     
+    function odel(e,id){   
+    	var info=confirm("确认删除一条数据");    
+    	var url="{:U('Sell/delete')}"+"?id="+id;
+    	$.get(url,function($data){
+    		if($data['status']==1){
+    		
+    			$(e).parents("tr").remove();
+    		}
+    	})
+    }
+        	
+    </script>
+
+
+</body>
+
+</html>
