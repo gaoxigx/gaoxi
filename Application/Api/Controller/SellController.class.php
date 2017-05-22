@@ -3,9 +3,9 @@ namespace Api\Controller;
 use Think\Controller;
 class SellController extends Controller {
     public function index(){
-        $list=M("stocklist")->field("gs.name as name,st.proid as code,st.createtime as time")->alias("st")->join("__GOODS__ as gs on st.proid=gs.coding")->select();
+        $list=M("stocklist")->field("gs.name as name,st.proid as code,DATE_FORMAT(st.createtime,'%m-%d')  as time")->alias("st")->join("__GOODS__ as gs on st.proid=gs.coding")->select();
         $this->ajaxreturn($list);
-
+        exit();
     }
     public function add(){
     	$data['proid']=I("request.code");
