@@ -17,9 +17,15 @@ class ProductController extends CommonController {
         $this->assign('kind',$kind);
     }   
     
+
     
     public function getaddtype(){
       $data   =   D('protype');
+      if(empty($data['proid'])){
+      	$this->error("产品不存在");
+      	return;
+      }
+
         if($data->create()) {
             $result =   $data->add();
             if($result) {
@@ -130,11 +136,7 @@ class ProductController extends CommonController {
             $list[$key]['stk']=M('order_goods')->field("quality,count(*) as cont,sum(`numkg`) as numkg")->where("proid=%d",array($val['id']))->group('quality')->select();
 
             $list[$key]['stnum']=M('stock')->field("storckname,sum(storck) as storck")->where("proid=%d",array($val['atrtype']))->group('storckname')->select();
-
-            
-        }
-
-     
+        }    
 
         $this->getprotype();
         $this->getkind();

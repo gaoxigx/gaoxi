@@ -48,8 +48,8 @@
             <volist name="list" id="vo">
                 <tr>
                     <td>{$vo.id}</td>                   
-                    <td>{$vo.proid}</td>                     
-                    <td>{$vo.userid}</td>
+                    <td>{$vo.proname}</td>                     
+                    <td>{$vo.username}</td>
                     <td>{$vo.qty}</td>
                     <td>{$vo.createtime|date='Y-m-d',###}</td>
                     <!--
@@ -76,6 +76,11 @@
     <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
+    
+    
+    
+    
+    
     </div>
 </body>
 

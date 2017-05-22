@@ -34,19 +34,54 @@ class GoodsController extends Controller {
 		$this->assign('list',$list);
 		$this->display();
     }
-    //入库信息
+    //入库记录表
+    public function purchaselist(){
+    	$list=D("purchase")->alias("pc")->field("pc.*,gs.name as proname")->join("__GOODS__ gs on gs.id=pc.proid","left")->select();
+    	$this->assign("list",$list);
+    	$this->display();
+    }
+    //快递记录表
     public function purche(){
-
     	$list=D("coding")->field("cd.*,gs.name")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')->order("cd.createtime","desc")->select();
     	$this->assign('list',$list);
     	$this->display();
     }
 
+    //增加库存记录
+    public function purchase(){
+    	$requery=I("");
+    	$data=D("purchase")->create($requery);
+
+    	if($data){
+    		$data['status']=1;
+    		$data['createtime']=time();
+    		$result=D("purchase")->add($data);
+	    	if($result){
+	    		$this->success("库存增加成功");
+	    	}else{
+	    		$this->error("数据有误");
+	    	}
+    	}    	
+    }
+
     //出库信息
     public function sell(){
+    	$sell=D("stocklist");
+    	$count = $sell->where($map)->count();// 查询满足要求的总记录数
+		
+        $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+    	$list=$sell->limit($Page->firstRow.','.$Page->listRows)->select();
+    	$this->assign("list",$list);    
+        $this->assign('page',$show);// 赋值分页输出
+
     	$this->display();
     }
 
+    //采购产品
+    public function buy(){    	
+    	$this->display();
+    }
     	//更新数据
     public function update(){
 		$data = I('');
