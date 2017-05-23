@@ -4,6 +4,7 @@ use Think\Controller;
 class CommonController extends Controller{
 	public function __construct(){
 		header("Content-Type: text/html; charset=utf-8");
+
 		parent::__construct();
 		if(session('username')){
 			$this->assign('leftmenu',CONTROLLER_NAME);

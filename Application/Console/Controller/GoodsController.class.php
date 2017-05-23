@@ -5,6 +5,11 @@ namespace Console\Controller;
 use Think\Controller;
 
 class GoodsController extends Controller {
+
+	function __construct(){
+		parent::__construct();
+		
+	}
     
     // 物流页面
     public function index() {
@@ -18,7 +23,9 @@ class GoodsController extends Controller {
     	$this->getprotype();
 		$controller = D('goods');
 		//读取数据
+		$id=I("get.id");
 		$data = $controller->find($id);
+
 		$data['quality']=json_decode($data['quality'],true);
 		$data['grade']=json_decode($data['grade'],true);
 		$data['box']=json_decode($data['box'],true);	
@@ -32,6 +39,7 @@ class GoodsController extends Controller {
 		$kind=M('kind')->select();
 		$this->assign('kind',$kind);
 		$this->assign('list',$list);
+		$this->assign('brand',$this->getbrand());
 		$this->display();
     }
     //入库记录表
@@ -76,6 +84,7 @@ class GoodsController extends Controller {
     	//更新数据
     public function update(){
 		$data = I('');
+
 		$id = I('id');
 		$uploadimg = $this->uploadimg();
 		if($uploadimg['pic'] != ''){
@@ -112,28 +121,41 @@ class GoodsController extends Controller {
 		}
 		unset($data['boxname']);
 		unset($data['boxvl']);
+		unset($data['id']);
 		$data['box']=json_encode($box);
 		$data['price']=I('price');	
+		$data['pd']=strtotime(I("pd"));
+
 		$roleList   =   D('goods');
-		$jumpUrl =U('Console/Product/Plist');
-		if($prodata=$roleList->create($data)) {	
-			$result = $roleList->where('id=%d',array($id))->save($prodata);
-			if($result) {
-				$this->success('修改成功！',$jumpUrl);
-			}else{
+		$jumpUrl =U('Console/Goods/index');
+		if($prodata=$roleList->create($data)) {
+
+			try{
+				$result = $roleList->where('id=%d',array($id))->save($prodata);
+				
+				if($result) {
+					$this->success('修改成功！',$jumpUrl);
+				}else{
+					$this->error('写入错误！');
+				}
+			}catch(exception $e){
 				$this->error('写入错误！');
 			}
+			
 		}else{
 			$this->error("写入错误！");
 		}
 	}
 
-     private function getprotype(){
+	//返回品牌信息
+	public function getbrand(){
+		return $brand=M("brand")->getfield("id,brandname",true);		
+	}
+
+    private function getprotype(){
         $data=D('protype');
         $name = $data->where('typename<>""')->order('id desc')->select();
-       
         $this->assign('protype',$name);
-
     }
 
     public function getaddtype(){
@@ -182,7 +204,7 @@ class GoodsController extends Controller {
 //        $kind = M('kind')->field('id,kindname')->select();
 //        $this->assign('kind',$kind);
         $this->assign('list',$list);
-
+        $this->assign("brand",$this->getbrand());
         $this->display();
     }
 
@@ -233,13 +255,24 @@ class GoodsController extends Controller {
 		$data['box']=json_encode($box);	
 		$data['price']=I('price');
 
+		$data['aqty']=I("aqty");
+		$data['exp']=I("exp");
+		$data['pd']=strtotime(I("pd"));
+		$data['vender']=I("vender");
+
 		if($roleList->create()) {
-			$result =   $roleList->add($data);
-			if($result) {
-				$this->success('数据添加成功！',$jumpUrl);
-			}else{
+			try{
+				$result =   $roleList->add($data);
+				if($result) {
+					$this->success('数据添加成功！',$jumpUrl);
+				}else{
+					$this->error('数据添加错误！');
+				}
+			}catch(exception $e){
 				$this->error('数据添加错误！');
 			}
+
+			
 		}else{
 			$this->error($roleList->getError());
 		}

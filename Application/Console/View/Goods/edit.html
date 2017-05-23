@@ -158,35 +158,36 @@ $(document).ready(function(){
 					<ul class="forminfo">
                         <li><label>类别<b>*</b></label>  
                             <div class="vocation uew-select">
-
-                                <select name="protype" class="uew-select-value" autocomplete="off">
+                                <select name="catid" class="uew-select-value" autocomplete="off">
                                     <volist name="protype" id="voo">
-                                        <option value="{$voo.id}" <if condition="$voo['id'] eq $data['protype']">selected="selected"</if>>{$voo.typename}</option>
+                                        <option value="{$voo.id}" <if condition="$voo['id'] eq $data['catid']">selected="selected"</if>>{$voo.typename}</option>
                                     </volist>
                                 </select>
                             </div>
                             <span class="fromadd click"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span>
                         </li>
-                        <!--
-                          <li><label>类型<b>*</b></label>  
+                    
+                         <li><label>品牌<b>*</b></label>  
                             <div class="vocation uew-select">
-                                <select name="atrtype" class="uew-select-value">
-                                    <volist name="kind" id="vo2">
-                                            <option <if condition="$vo2['id'] eq $data['atrtype']">selected="selected"</if> value="{$vo2.id}">{$vo2.kindname}</option>
+                                <select name="brandid" class="uew-select-value">
+                                    <volist name="brand" id="vo2">
+                                            <option <if condition="$key eq $data['brandid']">selected="selected"</if> value="{$key}">{$vo2}</option>
                                     </volist>
                                 </select>
                             </div>
                         </li>
-                        -->
+                   
 
-                        <li><label>产品名称<b>*</b></label><input name="product" type="text" class="dfinput" value="{$data.name}"  /></li>
+                        <li><label>产品名称<b>*</b></label><input name="name" type="text" class="dfinput" value="{$data.name}"  /></li>
                         <!--<li><label>产品别名<b>*</b></label><input name="things" type="text" class="dfinput" value="{$data.things}"  /></li>-->
                         <li><label>图片上传<b>*</b></label><input name="pic" type="file" value=""  /></li>
                         <li><label>图片预览</label><img src="{$data.pic1}"></li>
-                         <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"  value="1" name="pmleave" <eq name="data.pmleave" value="1"> checked="checked" </eq> >联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"   class="pmleave2" value="2" name="pmleave" <eq name="data.pmleave" value="2"> checked="checked" </eq>>对等属性 <input type="radio"  class="pmleave3"  value="3" name="pmleave" <eq name="data.pmleave" value="3"> checked="checked" </eq>> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>
-                         <li class="jl1" <eq name="data.pmleave" value="1"> style="display:block" <else/>style="display:none"</eq>><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
+                         <li><label>金额属性<b>*</b></label><cite><input type="radio" class="pmleave1"  value="1" name="pmleave" 
+                         <eq name="data.pmleave" value="3"> checked="checked" </eq> >联级属性&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"   class="pmleave2" value="2" name="pmleave" <eq name="data.pmleave" value="2"> checked="checked" </eq>>对等属性 <input type="radio"  class="pmleave3"  value="1" name="pmleave" <eq name="data.pmleave" value="1"> checked="checked" </eq>> 单选&nbsp;&nbsp;&nbsp;&nbsp;</cite></li>
+
+                         <li class="jl1" <eq name="data.pmleave" value="3"> style="display:block" <else/>style="display:none"</eq>><label>&nbsp;&nbsp;</label><p class="pztext"><foreach name="data['quality']" item="vl"><input name="quality[]" placeholder="品质级别" style="width:100px" type="text" class="dfinput pzbtnt" value="{$vl}"  /></foreach></p><span class="fromadd pzbtn"><img src="__PUBLIC__/Console/images/add.png" title="添加"></span><p>
                         </li>
-                        <li class="pzprice jl1" <eq name="data.pmleave" value="1"> style="display:block" <else/>style="display:none"</eq> >
+                        <li class="pzprice jl1" <eq name="data.pmleave" value="3"> style="display:block" <else/>style="display:none"</eq> >
                        <php> <literal>$numbary=0</literal></php>
                         <foreach name="data['grade']"  item="vol"> 
                             <p> 
@@ -210,7 +211,7 @@ $(document).ready(function(){
                                 <php>$tnmb++</php>
                             <endforeach>
                         </li> 
-                        <li class="jhmoney" <eq name="data.pmleave" value="3">style="display:block" <else/>style="display:none"</eq>><label>&nbsp;</label><input name="price" type="text" class="dfinput" value="{$data.price}"  placeholder="金额"  /></li>
+                        <li class="jhmoney" <eq name="data.pmleave" value="1">style="display:block" <else/>style="display:none"</eq>><label>&nbsp;</label><input name="price" type="text" class="dfinput" value="{$data.price}"  placeholder="金额"  /></li>
 
                         <li><label>进货数量<b>*</b></label><input name="inputnum" type="text" class="dfinput" value="{$data.qty}"  /></li>
                         <li><label>剩余库存<b>*</b></label><input name="sortnum" type="text" class="dfinput" value="{$data.stock}"  /></li>
@@ -224,25 +225,23 @@ $(document).ready(function(){
                             </select>
                             <input id="shiyongrentext" name="shiyongren" type="hidden" class="dfinput" value="{$staff[0].name}"  />
                         </li> 
-                        <!--
-                        <li>
-                            <label>是否审核</label>
-                            <cite>
-                                    <input type="radio" <if condition="$data.stauts eq 1">checked="checked"</if> value="1" name="stauts">是&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="radio" <if condition="$data.stauts eq 0">checked="checked"</if> value="0" name="stauts">否
-                            </cite>
-                        </li>	
-                        -->
+
+                       
+
+                        <li><label>厂家<b>*</b></label><input name="vender" type="text" class="dfinput" value="{$data.aqty}"  /></li>
+                        <li><label>生产日期<b>*</b></label><input onclick="WdatePicker()" name="pd" type="text" class="dfinput" value="{$data.pd|date='Y-m-d',###}">
+                        </li>
+                        <li><label>保质期<b>*</b></label><input name="exp" type="text" class="dfinput" value="{$data.exp}"  /></li>
+                        <li><label>整件个数<b>*</b></label><input name="aqty" type="text" class="dfinput" value="{$data.aqty}"  /></li>
                         <li><label>单位<b>*</b></label>
                         <select type='text' name="pcs" class="sciselect">
-                                <option  value="1" <if condition="data.pcs eq 1">selected="selected"</if>>两</option>
-                                <option  value="2" <if condition="data.pcs eq 2">selected="selected"</if>>个</option>
-                                <option  value="3" <if condition="$data.pcs eq 3">selected="selected"</if>>份</option>
-                                <option value="4" <if condition="$data.pcs eq 4">selected="selected"</if>>盒</option>
-                                <option value="5" <if condition="$data.pcs eq 5">selected="selected"</if>>片</option>
+                            <option  value="1" <if condition="data.pcs eq 1">selected="selected"</if>>两</option>
+                            <option  value="2" <if condition="data.pcs eq 2">selected="selected"</if>>个</option>
+                            <option  value="3" <if condition="$data.pcs eq 3">selected="selected"</if>>份</option>
+                            <option value="4" <if condition="$data.pcs eq 4">selected="selected"</if>>盒</option>
+                            <option value="5" <if condition="$data.pcs eq 5">selected="selected"</if>>片</option>
                         </select>
                         </li>
-
                         <li><label>产品详情</label>
                             <textarea id="content7" name="detail" type="text" style="width:700px;height:250px;visibility:hidden;">{$data.detail}</textarea>                            
                         </li>
