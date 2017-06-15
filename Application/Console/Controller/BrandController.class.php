@@ -44,13 +44,13 @@ class BrandController extends CommonController {
    		}catch(\Exception $e){
    			$data['status']=3;
    		}
-   		finally{
+   		
    			if($data['status']==1){
    				$this->success("数据删除成功");	
    			}else{
    				$this->error("数据有误");	
    			}
-   		}   		
+   				
    	}
    	//品牌增加
    	public function add(){
