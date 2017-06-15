@@ -43,7 +43,8 @@ class BrandController extends CommonController {
    			}
    		}catch(\Exception $e){
    			$data['status']=3;
-   		}finally{
+   		}
+   		finally{
    			if($data['status']==1){
    				$this->success("数据删除成功");	
    			}else{
