@@ -41,7 +41,7 @@ class BrandController extends CommonController {
    			else{
    				$data['status']=2;
    			}
-   		}catch(exception $e){
+   		}catch(\Exception $e){
    			$data['status']=3;
    		}finally{
    			if($data['status']==1){
