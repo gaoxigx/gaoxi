@@ -58,7 +58,7 @@ class BrandController extends CommonController {
    	}
    	//品牌插入
    	public function insert(){ 
-   		if(!empty(I("request.brandname"))){
+   		if(!I("request.brandname")){
    			$this->ajaxreturn(array('status'=>4));
    			exit();
    		}
