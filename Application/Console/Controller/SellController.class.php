@@ -45,7 +45,7 @@ class SellController extends Controller {
     	$this->ajaxreturn($sul);
     }
 
-     public function delete($id){
+    public function delete($id){
     	if($id){
     		$codeing=M("stocklist");
     		try{
@@ -61,5 +61,16 @@ class SellController extends Controller {
     		$sul['status']=3;
     	}
     	$this->ajaxreturn($sul);    	
+    }
+
+    public function find(){
+    	$sul=M("goods")->where(array("coding"=>I('code')))->find();
+    	if($sul){
+    		$sul['status']=1;
+    	}else{
+    		$sul['status']=2;
+    	}
+
+    	$this->ajaxreturn($sul);
     }
 }
