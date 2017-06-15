@@ -44,7 +44,7 @@ class BrandController extends CommonController {
    		}catch(\Exception $e){
    			$data['status']=3;
    		}
-   		
+
    			if($data['status']==1){
    				$this->success("数据删除成功");	
    			}else{
@@ -57,9 +57,8 @@ class BrandController extends CommonController {
    		$this->display();
    	}
    	//品牌插入
-   	public function insert(){
- 
-   		if(!empty(I("reqery.brandname"))){
+   	public function insert(){ 
+   		if(!empty(I("request.brandname"))){
    			$this->ajaxreturn(array('status'=>4));
    			exit();
    		}
