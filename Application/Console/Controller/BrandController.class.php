@@ -80,13 +80,12 @@ class BrandController extends CommonController {
    			var_dump($e);exit();
    			$data['status']=3;
    		}
-   		finally{
    			if($data['status']==1){
    				$this->success("数据增加成功");	
    			}else{
    				$this->error("数据有误");	
    			}
-   		}
+   		
 
    		
    	}
