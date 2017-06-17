@@ -50,7 +50,10 @@ class GoodsController extends Controller {
     }
     //快递记录表
     public function purche(){
-    	$list=D("coding")->field("cd.*,gs.name")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')->order("cd.createtime","desc")->select();
+   
+    	$where['cd.userid']=session("userid");
+    	$list=D("coding")->field("cd.*,gs.name")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')->order("cd.createtime","desc")->where($where)->select();
+    
     	$this->assign('list',$list);
     	$this->display();
     }

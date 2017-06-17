@@ -77,7 +77,6 @@ class BrandController extends CommonController {
 	   		}
    		}
    		catch(\Exception $e){
-   			var_dump($e);exit();
    			$data['status']=3;
    		}
    			if($data['status']==1){
@@ -85,8 +84,6 @@ class BrandController extends CommonController {
    			}else{
    				$this->error("数据有误");	
    			}
-   		
-
    		
    	}
 }
