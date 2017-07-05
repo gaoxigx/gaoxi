@@ -56,7 +56,7 @@ class GoodsController extends Controller {
 
 
    		if(I('post.username')){
-   			$where['cd.code']= I('post.username');
+   			$where['cd.code']= trim(I('post.username'));
    		}
     	
     	$coding = M('coding'); // 实例化User对象
