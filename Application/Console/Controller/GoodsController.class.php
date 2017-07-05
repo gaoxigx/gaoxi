@@ -53,9 +53,14 @@ class GoodsController extends Controller {
    		if(session("userid")!=6){
    			$where['cd.userid']=session("userid");
    		}
+
+
+   		if(I('post.username')){
+   			$where['cd.code']= I('post.username');
+   		}
     	
     	$coding = M('coding'); // 实例化User对象
-        $count =$coding->where($where)->count();// 查询满足要求的总记录数
+        $count =$coding->alias('cd')->where($where)->count();// 查询满足要求的总记录数
 		
         $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
