@@ -60,7 +60,9 @@ class GoodsController extends Controller {
         $Page = new \Think\Page($count,15,$parameter);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 		$show = $Page->show();// 分页显示输出
 
-    	$list=D("coding")->field("cd.*,gs.name")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')->order("cd.createtime","desc")->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+    	$list=D("coding")->field("cd.*,gs.name,sf.username")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')
+    		->join("__STAFF__ sf on sf.id=cd.userid",'left')
+    		->order("cd.createtime","desc")->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
   
     	$this->assign('list',$list);
     	$this->assign('page',$show);// 赋值分页输出
