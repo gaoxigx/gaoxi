@@ -50,8 +50,7 @@ class GoodsController extends Controller {
     }
     //快递记录表
     public function purche(){
-    	echo session("userid");
-
+    
    		if(session("userid")!=6&&session("userid")!=24&&session("userid")!=190){
    			$where['cd.userid']=session("userid");
    		}
