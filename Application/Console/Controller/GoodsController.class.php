@@ -68,8 +68,9 @@ class GoodsController extends Controller {
 
     	$list=D("coding")->field("cd.*,gs.name,sf.username")->alias("cd")->join("__GOODS__ gs on gs.coding=cd.code",'left')
     		->join("__STAFF__ sf on sf.id=cd.userid",'left')
-    		->order("cd.createtime","desc")->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
-  
+    		->order("cd.id DESC")->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+
     	$this->assign('list',$list);
     	$this->assign('page',$show);// 赋值分页输出
     	$this->display();
